@@ -1,43 +1,269 @@
 {
-  "added_count": 0,
-  "added_urls": [],
-  "changed": true,
-  "changed_count": 15,
-  "changed_urls": [
-    "https://arxiv.org/abs/1910.14599",
-    "https://github.com/afurm/typesafe-sdk-ruby",
-    "https://github.com/ainame/swift-typesafe",
-    "https://github.com/aminry/decisio",
-    "https://github.com/blaizzy/mlx-vlm",
-    "https://github.com/e-fl/typesafe-as-a-judge",
-    "https://github.com/frodi-karlsson/onesie",
-    "https://github.com/jessie-qingyu/jev-in-the-wild",
-    "https://github.com/kataras/jev",
-    "https://github.com/omnijev/awesome-jev-gallery",
-    "https://github.com/shibing624/train-jev",
-    "https://github.com/sileod/tasksource",
-    "https://github.com/wh000wh000/awesome-jev-live",
-    "https://vllm-sr.ai/blog/decision-models",
-    "https://zenodo.org/records/7299879"
+  "added_count": 323,
+  "added_urls": [
+    "https://aclanthology.org/2023.acl-long.368",
+    "https://aclanthology.org/2024.naacl-long.301",
+    "https://aclanthology.org/2025.findings-naacl.441",
+    "https://arxiv.org/abs/1011.0686",
+    "https://arxiv.org/abs/1508.05326",
+    "https://arxiv.org/abs/1704.05426",
+    "https://arxiv.org/abs/1707.06209",
+    "https://arxiv.org/abs/1707.06347",
+    "https://arxiv.org/abs/1903.00161",
+    "https://arxiv.org/abs/2009.03300",
+    "https://arxiv.org/abs/2103.06268",
+    "https://arxiv.org/abs/2110.00976",
+    "https://arxiv.org/abs/2110.05444",
+    "https://arxiv.org/abs/2212.09251",
+    "https://arxiv.org/abs/2305.11747",
+    "https://arxiv.org/abs/2307.04657",
+    "https://arxiv.org/abs/2308.01263",
+    "https://arxiv.org/abs/2308.13387",
+    "https://arxiv.org/abs/2310.17389",
+    "https://arxiv.org/abs/2401.13919",
+    "https://arxiv.org/abs/2402.04249",
+    "https://arxiv.org/abs/2402.17753",
+    "https://arxiv.org/abs/2402.18091",
+    "https://arxiv.org/abs/2405.14573",
+    "https://arxiv.org/abs/2405.14831",
+    "https://arxiv.org/abs/2406.13743",
+    "https://arxiv.org/abs/2410.10813",
+    "https://arxiv.org/abs/2501.01028",
+    "https://arxiv.org/abs/2503.10291",
+    "https://arxiv.org/abs/2504.08942",
+    "https://arxiv.org/abs/2504.20879",
+    "https://arxiv.org/abs/2506.00641",
+    "https://arxiv.org/abs/2506.20923",
+    "https://arxiv.org/abs/2506.21252",
+    "https://arxiv.org/abs/2509.23938",
+    "https://arxiv.org/abs/2510.10444",
+    "https://arxiv.org/abs/2510.18596",
+    "https://arxiv.org/abs/2511.13029",
+    "https://arxiv.org/abs/2512.01946",
+    "https://arxiv.org/abs/2512.16295",
+    "https://arxiv.org/abs/2512.24601",
+    "https://arxiv.org/abs/2602.08995",
+    "https://arxiv.org/abs/2603.02115",
+    "https://arxiv.org/abs/2603.14465",
+    "https://arxiv.org/abs/2603.25434",
+    "https://arxiv.org/abs/2607.09996",
+    "https://arxiv.org/abs/2610.00381",
+    "https://arxiv.org/abs/2610.02638",
+    "https://arxiv.org/abs/2610.06425",
+    "https://arxiv.org/abs/2610.14112",
+    "https://github.com/adelvillar1/blend1",
+    "https://github.com/adelvillar1/sem1",
+    "https://github.com/adelvillar1/sys1",
+    "https://github.com/agentculture/jev-factory",
+    "https://github.com/agentiloop/agent.xcf.ai",
+    "https://github.com/ai-ecoverse/cua-s1.js",
+    "https://github.com/ai-ecoverse/decision-vision-bench",
+    "https://github.com/ai-ecoverse/jev-omni.js",
+    "https://github.com/ai-forever/frida-decisions",
+    "https://github.com/aianytime/jev-crash-course",
+    "https://github.com/akramovic1/jev-pilot",
+    "https://github.com/alonsuare/typed-decisions-shadow-layer",
+    "https://github.com/amazingljy1206/innerjev",
+    "https://github.com/amyrmahdy/decima",
+    "https://github.com/andyrewlee/awesome-system-one",
+    "https://github.com/anthony-maio/eve-rlcd",
+    "https://github.com/appliedmachinelearning-lab/jev-benchmarking",
+    "https://github.com/atmaneayoubdev/jev-ar",
+    "https://github.com/atoma-run/atoma",
+    "https://github.com/barneyjm/circuit",
+    "https://github.com/bitomule/jevi",
+    "https://github.com/blobfishai/jevfish",
+    "https://github.com/brainstormity/jevsnap",
+    "https://github.com/bufbuild/protoc-gen-jev",
+    "https://github.com/cadence-trading/ai-trading-lab",
+    "https://github.com/camellia86/jev-for-mor-and-moe",
+    "https://github.com/clduab11/jev-test",
+    "https://github.com/coldteadotai/abide",
+    "https://github.com/dabit3/jev-experiments",
+    "https://github.com/dakepeng/bonsai-jev",
+    "https://github.com/deepaleph/jevreel",
+    "https://github.com/devexzh/jev-solver",
+    "https://github.com/djhoomin/local-system-one",
+    "https://github.com/earino/zero-shot-complaint-benchmark",
+    "https://github.com/embabel/embabel-agent",
+    "https://github.com/emretheus/jev-rag-benchmark",
+    "https://github.com/evan-py-chen/jev-survey",
+    "https://github.com/evoscientist/searchjev",
+    "https://github.com/fabric-runtime/jev-fabric",
+    "https://github.com/firelex/jeff",
+    "https://github.com/fstandhartinger/weiche",
+    "https://github.com/garrytan/gbrain-evals",
+    "https://github.com/gopalanj/jevons",
+    "https://github.com/grivn/mnemon-memory-agent",
+    "https://github.com/gsaini/awesome-software-engineering",
+    "https://github.com/gsaini/jev-claude-code-case-study",
+    "https://github.com/hakkisagdic/sosariaai",
+    "https://github.com/harshnandwana/grounding-jet",
+    "https://github.com/iapp-technology/openthai-systemone",
+    "https://github.com/iapp-technology/openthai-systemone-doom"
   ],
-  "completed_at": "2026-10-16T09:07:14+00:00",
+  "changed": true,
+  "changed_count": 132,
+  "changed_urls": [
+    "https://aclanthology.org/2021.acl-long.29",
+    "https://aclanthology.org/2021.findings-emnlp.164",
+    "https://aclanthology.org/2022.semeval-1.111",
+    "https://aclanthology.org/2023.emnlp-main.956",
+    "https://aclanthology.org/2024.lrec-main.1361",
+    "https://aclanthology.org/2025.emnlp-demos.10",
+    "https://aclanthology.org/2025.gem-1.63",
+    "https://aclanthology.org/2025.naacl-long.174",
+    "https://artificialanalysis.ai/evaluations/artificial-analysis-decision-index",
+    "https://artificialanalysis.ai/methodology/decision-index",
+    "https://arxiv.org/abs/2609.14973",
+    "https://arxiv.org/abs/2609.23886",
+    "https://arxiv.org/abs/2609.23986",
+    "https://arxiv.org/abs/2609.26550",
+    "https://arxiv.org/abs/2609.26758",
+    "https://arxiv.org/abs/2609.29283",
+    "https://arxiv.org/abs/2609.29429",
+    "https://arxiv.org/abs/2609.29769",
+    "https://arxiv.org/abs/2609.30706",
+    "https://arxiv.org/abs/2609.31142",
+    "https://arxiv.org/abs/2609.32160",
+    "https://arxiv.org/abs/2609.33209",
+    "https://arxiv.org/abs/2609.33401",
+    "https://arxiv.org/abs/2609.35342",
+    "https://arxiv.org/abs/2609.36965",
+    "https://arxiv.org/abs/2609.37647",
+    "https://arxiv.org/abs/2610.00346",
+    "https://arxiv.org/abs/2610.00437",
+    "https://arxiv.org/abs/2610.00831",
+    "https://arxiv.org/abs/2610.02076",
+    "https://arxiv.org/abs/2610.02293",
+    "https://arxiv.org/abs/2610.03935",
+    "https://arxiv.org/abs/2610.06625",
+    "https://arxiv.org/abs/2610.07716",
+    "https://arxiv.org/abs/2610.07730",
+    "https://arxiv.org/abs/2610.11316",
+    "https://arxiv.org/abs/2610.17205",
+    "https://arxiv.org/abs/2610.17820",
+    "https://arxiv.org/abs/2610.18579",
+    "https://arxiv.org/abs/2610.18773",
+    "https://arxiv.org/abs/2610.19118",
+    "https://arxiv.org/abs/2610.21244",
+    "https://arxiv.org/abs/2610.21412",
+    "https://entagl.com/blog/typesafe-jev-benchmark-ai-decision-models",
+    "https://github.com/0xleonhack/tellagent",
+    "https://github.com/abdelstark/awesome-typesafe-jev",
+    "https://github.com/abovecolin/ha-jev",
+    "https://github.com/abovecolin/jevclient",
+    "https://github.com/acquiredintelligence/attend",
+    "https://github.com/agent-labs-dev/fastbrowse",
+    "https://github.com/aminry/decisio",
+    "https://github.com/appitstudio/awesome-jev",
+    "https://github.com/avinash-jetwani/jevmem",
+    "https://github.com/blaizzy/mlx-vlm",
+    "https://github.com/caglarkc/agent-browser",
+    "https://github.com/caiovicentino/jev-risk-check-provider",
+    "https://github.com/call518/deciflow",
+    "https://github.com/cyber-security-dev-dep-mitake-com-tw/jef",
+    "https://github.com/cybrking/modelrudder",
+    "https://github.com/daftai2026/awesome-jev",
+    "https://github.com/dongtsi/awesome-trustworthy-jev",
+    "https://github.com/eligrip/computer-guidance-with-jev",
+    "https://github.com/eve2512/strayguard",
+    "https://github.com/everyinfra/jev-radar",
+    "https://github.com/gabrielcoelhocruz/jev-scanr",
+    "https://github.com/gudcks0305/jev-java",
+    "https://github.com/hellogumbo/awesome-jev",
+    "https://github.com/hotchpotch/s1mb",
+    "https://github.com/ishantanu/jevmetrics",
+    "https://github.com/jackthony/ia-local",
+    "https://github.com/jessie-qingyu/jev-in-the-wild",
+    "https://github.com/kodr-pro/aiwrangler",
+    "https://github.com/luobosibing2/dsh-jev-plugin",
+    "https://github.com/malevrigns/agent-jev",
+    "https://github.com/maneeshmenongit/model-selector",
+    "https://github.com/mcg-nju/videojev",
+    "https://github.com/mindbreaker81/system-one-bench-public",
+    "https://github.com/monglong0214/jev-gate",
+    "https://github.com/monotykamary/reflex",
+    "https://github.com/nedcut/gm-bench",
+    "https://github.com/neostryder/augur",
+    "https://github.com/omnijev/onejev",
+    "https://github.com/philippelhaus/codex-decision",
+    "https://github.com/posthog/jeeves",
+    "https://github.com/receptron/kenteiscript",
+    "https://github.com/rhighs/jev-code",
+    "https://github.com/run-saina/saina-decision-index",
+    "https://github.com/shibing624/train-jev",
+    "https://github.com/shivanathd/gavel",
+    "https://github.com/shivanathd/jev-playground",
+    "https://github.com/simplejev/jevany",
+    "https://github.com/snapif/snapif",
+    "https://github.com/startluxlabs/startlux-decision",
+    "https://github.com/tanxarx/awesome-jev",
+    "https://github.com/temikus/lgtm",
+    "https://github.com/the-sof/home-assistant-typesafe-conversation-agent",
+    "https://github.com/thiago-lage/jev-claud",
+    "https://github.com/tomerglick57/jevstiller",
+    "https://github.com/uehaj/sys1grep",
+    "https://github.com/usail-hkust/jevlight"
+  ],
+  "completed_at": "2026-10-16T19:37:22+00:00",
   "counts": {
-    "abstract_checked": 1465,
-    "checked_sources": 3441,
-    "content_screened": 1972,
-    "duplicate_records": 14,
+    "abstract_checked": 1872,
+    "checked_sources": 4513,
+    "content_screened": 2637,
+    "duplicate_records": 15,
     "editorial_reviewed": 4,
-    "metadata_only": 47,
-    "raw_records": 3502,
-    "unique_records": 3488
+    "metadata_only": 58,
+    "raw_records": 4586,
+    "unique_records": 4571
   },
   "curation_excluded_count": 3,
   "dry_run": false,
-  "duplicate_candidates_skipped": 1,
+  "duplicate_candidates_skipped": 10,
   "editorial_examples_truncated": false,
-  "editorial_refresh_candidates": [],
-  "editorial_review_required_count": 0,
-  "error_count": 103,
+  "editorial_refresh_candidates": [
+    {
+      "note": "Prior reviewed record preserved; changed content requires maintainer review.",
+      "observed_content_sha256": "243a2c72bebfff94e1a8f7d047b4a3b60b5efa8869972a8d62818245b615f2c3",
+      "observed_verification_level": "content_screened",
+      "old_content_sha256": "40c5d8a9d037456f4a8c35c70a3df93312f2207979cb376dbc442de6ed7463a2",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/README.md",
+      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index"
+    },
+    {
+      "note": "Prior reviewed record preserved; changed content requires maintainer review.",
+      "observed_content_sha256": "23496572ce8da74277208b5796060331b366b015a800f281e7df21960a9ef609",
+      "observed_verification_level": "content_screened",
+      "old_content_sha256": "228e4a762ecdaf8fa17d64bc64bd88fa192da6dcedf1de4aea6cc6a48a8801b2",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/index.json",
+      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/index.json"
+    },
+    {
+      "note": "Prior reviewed record preserved; changed content requires maintainer review.",
+      "observed_content_sha256": "c952b113916d255d926b27e4fc629a767d929f32ba68af0f058caee77fc4bf86",
+      "observed_verification_level": "content_screened",
+      "old_content_sha256": "8f37754c6c66eac7919c96712dce16b9ec7e226cb38b8933483a0a3117bd53cc",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/methodology.json",
+      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/methodology.json"
+    },
+    {
+      "note": "Prior reviewed record preserved; changed content requires maintainer review.",
+      "observed_content_sha256": "7b5a4586e1260d58dd534721d5f7ce278718effe469d3912747cff48cc7b8a51",
+      "observed_verification_level": "content_screened",
+      "old_content_sha256": "ebf80ffe13ba7c00d6ff77abc809f2ebe3bf5cb6dd7875b3be125a4b35cf3a1f",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/v03.json",
+      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/v03.json"
+    }
+  ],
+  "editorial_review_required_count": 4,
+  "error_code_counts": {
+    "insufficient_content": 92,
+    "paper_query_failed:http_429": 4,
+    "unavailable": 57
+  },
+  "error_count": 153,
+  "error_examples_count": 100,
+  "error_examples_truncated": true,
   "errors": [
     {
       "code": "insufficient_content",
@@ -49,11 +275,63 @@
     },
     {
       "code": "insufficient_content",
-      "url": "https://dev.to/nandakishor_m_6cc0adfde9f/i-built-non-autoregressive-decision-models-a-year-ago-then-a-frontier-lab-called-it-a-18me"
+      "url": "https://github.com/adelvillar1/sdm1"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/agentiloop/agentcolorsyntax"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/agentiloop/agentd1f"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/agentiloop/agenteventbridges"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/agentiloop/agentiloopcli"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/agentiloop/agentmcp"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/agentiloop/agentscripts"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/agentiloop/agentswift"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/agentiloop/agentterminalneo"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/agentiloop/agenttools"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/akfamily/akshare"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/all-hands-ai/openhands"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/anthropics/skills"
     },
     {
       "code": "insufficient_content",
       "url": "https://github.com/bebechien/gemma"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/browser-use/browser-harness"
     },
     {
       "code": "insufficient_content",
@@ -73,7 +351,15 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://github.com/dabit3/jev-experiments"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://github.com/dao-ailab/causal-conv1d"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/davila7/claude-code-templates"
     },
     {
       "code": "insufficient_content",
@@ -81,11 +367,35 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://github.com/deepseek-ai/deepseek-harness"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/deepwise-ailab/chestx-det-dataset"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/docwilde/lore"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/ebellocchia/bip_utils"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://github.com/emayfield/afd_decision_corpus"
     },
     {
       "code": "insufficient_content",
-      "url": "https://github.com/futureppo/typesafe_register"
+      "url": "https://github.com/gitleaks/gitleaks"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/goreleaser/goreleaser"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/indonlp/nusax"
     },
     {
       "code": "insufficient_content",
@@ -97,7 +407,19 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://github.com/jorisvink/sanctum"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://github.com/jupyter/governance"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/klinecharts/klinechart"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/komoot/photon"
     },
     {
       "code": "insufficient_content",
@@ -109,11 +431,19 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://github.com/marcelroozekrans/thalos.net"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://github.com/mikesmullin/tetris"
     },
     {
       "code": "insufficient_content",
       "url": "https://github.com/mlc-ai/xgrammar"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/morluto/rea"
     },
     {
       "code": "insufficient_content",
@@ -157,7 +487,27 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://github.com/niiightmarexd/windows-capture"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/nvm-sh/nvm"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://github.com/onionminionops-beep/pdoom-protocol"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/openai/codex"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/opennextjs/opennextjs-cloudflare"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/openssh/openssh-portable"
     },
     {
       "code": "insufficient_content",
@@ -165,7 +515,19 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://github.com/prometheus/client_golang"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/psf/requests"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://github.com/pyris/sentfin"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/ranaroussi/yfinance"
     },
     {
       "code": "insufficient_content",
@@ -189,7 +551,15 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://github.com/typesafe-ai/typesafe-public-examples"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://github.com/vercel-labs/ai-cli"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/vercel-labs/skills"
     },
     {
       "code": "insufficient_content",
@@ -197,7 +567,19 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://github.com/vllm-project/vllm-metal"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/wagner-group/diversevul"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://github.com/yonaskolb/xcodegen"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/zenodo/zenodo-rdm"
     },
     {
       "code": "insufficient_content",
@@ -205,7 +587,23 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://github.com/zhiyiyo/pyqt-fluent-widgets"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/zycck/claude-mods"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/GroNLP/ik-nlp-22_winemag"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://huggingface.co/datasets/Itau-Unibanco/FAQ_BACEN"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/SetFit/sst5"
     },
     {
       "code": "insufficient_content",
@@ -217,6 +615,10 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/kiddothe2b/contract-nli"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://huggingface.co/datasets/liminghao1630/API-Bank"
     },
     {
@@ -224,251 +626,53 @@
       "url": "https://huggingface.co/datasets/theatticusproject/cuad"
     },
     {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judge+bias&limit=120"
+      "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/zhang123434/videorewardbench"
     },
     {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judge+consistency&limit=120"
+      "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/zhiqiulin/GenAI-Bench-800"
     },
     {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judges+uncertainty&limit=120"
-    },
-    {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+model+routing&limit=120"
-    },
-    {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=adaptive+inference+language+models&limit=120"
-    },
-    {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=calibrating+language+model+evaluators&limit=120"
-    },
-    {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=classifier+cascade&limit=120"
-    },
-    {
-      "code": "paper_query_failed:FetchError",
+      "code": "paper_query_failed:http_429",
       "url": "https://huggingface.co/api/papers/search?q=cost+sensitive+classification&limit=120"
     },
     {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=early+exit+neural+classification&limit=120"
-    },
-    {
-      "code": "paper_query_failed:FetchError",
+      "code": "paper_query_failed:http_429",
       "url": "https://huggingface.co/api/papers/search?q=efficient+classifier+early+exit&limit=120"
     },
     {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=language+model+cascades&limit=120"
-    },
-    {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=language+model+self+evaluation+confidence&limit=120"
-    },
-    {
-      "code": "paper_query_failed:FetchError",
+      "code": "paper_query_failed:http_429",
       "url": "https://huggingface.co/api/papers/search?q=learning+to+route+language+models&limit=120"
     },
     {
-      "code": "paper_query_failed:FetchError",
+      "code": "paper_query_failed:http_429",
       "url": "https://huggingface.co/api/papers/search?q=model+routing+calibrated+confidence&limit=120"
     },
     {
-      "code": "paper_query_failed:FetchError",
-      "url": "https://huggingface.co/api/papers/search?q=rubric+language+model+evaluation&limit=120"
+      "code": "unavailable",
+      "url": "https://anonymous.4open.science/r/jev_ordinal_scale_bia"
+    },
+    {
+      "code": "unavailable",
+      "url": "https://github.com/adelvillar1/gen1"
+    },
+    {
+      "code": "unavailable",
+      "url": "https://github.com/agentiloop/bossman"
     },
     {
       "code": "unavailable",
       "url": "https://github.com/arelit/phishnchips"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/bestagentkits/typesafe-demo-mcp"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/choxos/jev-reviewer"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/fastino-ai/flashdeberta"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/getainode/ainode"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/hardel-dw/jev.mods"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/iamno1special/typesafe-sdk-godot"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/jev-chat/jev-chat-jarvis"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/jev-sec/jev-sec.github.io"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/jev27b/jev-27b-desktop"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/markfive-proto/typesafe-vs-deepseek"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/metask-ai/metask-jev-lab"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/shibadogcap/kyotsu-ai-bench"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/shifros/search-function-test"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/thodoh1/financialpredictionjev"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/usenotra/notra"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/user-attachments/assets"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/x0ef/jev_projects"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/your-org/parallel-constrained-decoding"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/MoLeMo-Lab/mojev"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/Idavidrein/gpqa"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/Maincode/matilda-jev-decision-index"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/Mapika/decision-index-results"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/Narsil/asr_dummy"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/Salesforce/xlam-function-calling-60k"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/cais/hle"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/ctaxnagomi/DGUI_HYPERMEM-JEV"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/e12ex2/jev-vision-27b-results"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/jaredpalmer/kev-suites"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/kirp/decision-index-results-jpt-0.8b"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/kirp/decision-index-results-jpt-35b-a3b"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/kirp/decision-index-results-jpt-4b"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/kirp/decision-index-results-jpt-9b"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/kpiya/decision-index-results"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/merve/coco"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/pngwn/typed-decisions-causal-experiment"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/datasets/tasksource/decision-index-results"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/empiriolabsai/aplomb-1"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://huggingface.co/michaljach/jet"
     }
   ],
-  "excluded_discoveries": 161,
-  "index_revision": "5d09dd9cf226338c68fad22284c4982e6680af7d",
-  "maintainer_review": {
-    "accepted_counts": {
-      "abstract_checked": 1465,
-      "checked_sources": 3448,
-      "content_screened": 1979,
-      "duplicate_records": 14,
-      "editorial_reviewed": 4,
-      "metadata_only": 47,
-      "raw_records": 3509,
-      "unique_records": 3495
-    },
-    "accepted_scan_added_records": 0,
-    "accepted_scan_updated_records": 15,
-    "experimental_results_reproduced": false,
-    "follow_up_added_records": 7,
-    "follow_up_report": "data/curated-paper-refresh-2026-10-16.json",
-    "review_note": "docs/reviews/scan-2026-10-16.md",
-    "reviewed_at": "2026-10-16T09:36:42+00:00",
-    "scan_run": "https://github.com/reacher-z/Awesome-Jev/actions/runs/38877935151",
-    "scope": "Record-level provenance, identity, evidence-grade and privacy inspection; no full-paper review or experiment reproduction.",
-    "source_scan_pr": "https://github.com/reacher-z/Awesome-Jev/pull/3"
-  },
-  "network_requests": 2707,
+  "excluded_discoveries": 310,
+  "index_revision": "0ddf6758073eb77ae449a3541f57286d7f39d93f",
+  "network_requests": 3709,
   "preserved_after_failure": 27,
   "privacy_rejected_records": 0,
   "schema_version": 1,
-  "started_at": "2026-10-16T09:04:28+00:00",
+  "started_at": "2026-10-16T19:34:57+00:00",
   "status": "partial",
-  "verification_note": "Public document or original-abstract machine screening only; prior reviewed evidence is preserved and changed editorial sources require human review. Metadata-only records do not count as checked sources."
+  "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources."
 }
