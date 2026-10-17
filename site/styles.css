@@ -709,9 +709,18 @@ figcaption {
   line-clamp: 2;
   overflow: hidden;
 }
+/* The full text stays reachable: hover or focus expands a row, and touch
+   screens, which cannot hover, never clamp. */
+.resource-row:hover .resource-description,
 .resource-row:focus-within .resource-description {
   -webkit-line-clamp: none;
   line-clamp: none;
+}
+@media (hover: none) {
+  .resource-description {
+    -webkit-line-clamp: none;
+    line-clamp: none;
+  }
 }
 .resource-arrow {
   font-size: 19px;
