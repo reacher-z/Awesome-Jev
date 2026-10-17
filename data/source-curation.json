@@ -18,6 +18,42 @@
       "reason": "An applied precipitation-forecasting framework. Its uncertainty assessment is not a contribution about typed decisions or language-model systems.",
       "evidence_url": "https://arxiv.org/abs/2512.09059v1",
       "reviewed_at": "2026-10-16T06:36:48Z"
+    },
+    {
+      "url": "https://doi.org/10.5555/1390681.1442792",
+      "reason": "Unregistered DOI: the doi.org handle API returns responseCode 100 (handle not found) and the resolver returns 404, observed 2026-10-17. The paper itself (Bartlett and Wegkamp, JMLR 9, 2008) remains listed through its JMLR landing page; this exclusion stops a later OpenAlex scan from re-adding the broken DOI link.",
+      "evidence_url": "https://doi.org/api/handles/10.5555/1390681.1442792",
+      "reviewed_at": "2026-10-17T08:42:42Z"
+    },
+    {
+      "url": "https://doi.org/10.64748/8gkysx36",
+      "reason": "Unavailable source: the DOI's only registered target is on subscholar.org, which returned NXDOMAIN from the system resolver and Google Public DNS on 2026-10-17, so the link fails for every reader. OpenAlex lists no other location; a 2025 Wayback Machine copy of the landing page exists but is not a maintained source.",
+      "evidence_url": "https://doi.org/api/handles/10.64748/8gkysx36?type=URL",
+      "reviewed_at": "2026-10-17T08:42:42Z"
+    },
+    {
+      "url": "https://arxiv.org/abs/2604.18170",
+      "reason": "Withdrawn by the author: the current version (v2, 24 May 2026) is a withdrawal notice “following internal review regarding authorship and contribution agreements”. The unversioned link opens the notice, not the paper; the OpenAlex abstract did not reflect the withdrawal. Observed 2026-10-17.",
+      "evidence_url": "https://arxiv.org/abs/2604.18170v2",
+      "reviewed_at": "2026-10-17T08:42:42Z"
+    },
+    {
+      "url": "https://arxiv.org/abs/2508.08204",
+      "reason": "Withdrawn by the authors: the current version (v2, 28 May 2026) is a withdrawal notice reporting a critical normalized-entropy error that “may have substantially inflated nearly all results”. The OpenAlex abstract did not reflect the withdrawal. Observed 2026-10-17.",
+      "evidence_url": "https://arxiv.org/abs/2508.08204v2",
+      "reviewed_at": "2026-10-17T08:42:42Z"
+    },
+    {
+      "url": "https://arxiv.org/abs/2106.09385",
+      "reason": "Withdrawn by the authors: the current version (v3, 4 May 2022) is a withdrawal notice stating that an error in the proof assumption for equation 8 “invalidates the results”. The OpenAlex abstract did not reflect the withdrawal. Observed 2026-10-17.",
+      "evidence_url": "https://arxiv.org/abs/2106.09385v3",
+      "reviewed_at": "2026-10-17T08:42:42Z"
+    },
+    {
+      "url": "https://arxiv.org/abs/1902.06881",
+      "reason": "Withdrawn by the author: v2 (6 February 2020) and the current v3 (1 September 2022) are withdrawal notices citing mistakes in the paper. The OpenAlex abstract did not reflect the withdrawal. Observed 2026-10-17.",
+      "evidence_url": "https://arxiv.org/abs/1902.06881v3",
+      "reviewed_at": "2026-10-17T08:42:42Z"
     }
   ],
   "annotations": [

@@ -3,18 +3,18 @@
   "baseline_commit": "3519c15d7e00686a8dbf9b1e184c68726327ab1e",
   "baseline_source_index_sha256": "8bfdd20564f2cda54bb8264c3c802f315e3e9a11b153bd85dde4325f53c841d5",
   "target_new_sources": 301,
-  "accepted_new_sources": 785,
+  "accepted_new_sources": 780,
   "remaining_to_target": 0,
   "target_count_reached": true,
   "current_index_counts": {
     "editorial_reviewed": 4,
     "content_screened": 2392,
-    "abstract_checked": 1837,
+    "abstract_checked": 1832,
     "metadata_only": 47,
-    "raw_records": 4294,
-    "unique_records": 4280,
+    "raw_records": 4289,
+    "unique_records": 4275,
     "duplicate_records": 14,
-    "checked_sources": 4233
+    "checked_sources": 4228
   },
   "by_category": {
     "Datasets": 101,
@@ -22,15 +22,15 @@
     "Models": 59,
     "Papers": 31,
     "Projects": 215,
-    "Research foundations": 341
+    "Research foundations": 336
   },
   "by_relation": {
     "adjacent": 25,
-    "background": 341,
+    "background": 336,
     "direct": 419
   },
   "by_verification_level": {
-    "abstract_checked": 372,
+    "abstract_checked": 367,
     "content_screened": 413
   },
   "verification_note": "Evidence depth is labeled per source. Content screening and abstract checks do not establish full-paper review, peer review, endorsement, or experimental reproduction.",
@@ -6253,7 +6253,7 @@
     },
     {
       "title": "Classification with a Reject Option using a Hinge Loss",
-      "url": "https://doi.org/10.5555/1390681.1442792",
+      "url": "https://jmlr.org/papers/v9/bartlett08a.html",
       "category": "Research foundations",
       "topic": "selective_prediction",
       "description": "Background for confidence thresholds, abstention, deferral, and the risk versus coverage trade-off.",
@@ -6480,18 +6480,6 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Contrastive Cross-Lingual Calibration for Large Language Models",
-      "url": "https://doi.org/10.64748/8gkysx36",
-      "category": "Research foundations",
-      "topic": "probability_calibration",
-      "description": "Background for checking whether reported decision probabilities agree with observed outcomes.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "16182cabe7a384cf80616b2d246eb60547cc780bb25a191f3e050d058ba207ed",
-      "retrieved_at": "2026-10-16T10:02:36+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
       "title": "Controlled Abstention Neural Networks for Identifying Skillful Predictions for Classification Problems",
       "url": "https://arxiv.org/abs/2104.08281",
       "category": "Research foundations",
@@ -6501,18 +6489,6 @@
       "verification_level": "abstract_checked",
       "content_sha256": "1e459334921035a9d12d1bb81e4b6842dda947d5bf2ecc8b463870916bc63585",
       "retrieved_at": "2026-10-16T10:02:44+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
-      "title": "Copy-as-Decode: Grammar-Constrained Parallel Prefill for LLM Editing",
-      "url": "https://arxiv.org/abs/2604.18170",
-      "category": "Research foundations",
-      "topic": "structured_constrained_decoding",
-      "description": "Comparison background for schema-constrained outputs and the distinction between structural validity and semantic correctness.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "63d935d7e7a056295c57418120ec622040f843d0c15b35942b257da430fe585b",
-      "retrieved_at": "2026-10-16T10:03:11+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -7368,18 +7344,6 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Human-Alignment and Calibration of Inference-Time Uncertainty in Large Language Models",
-      "url": "https://arxiv.org/abs/2508.08204",
-      "category": "Research foundations",
-      "topic": "probability_calibration",
-      "description": "Background for checking whether reported decision probabilities agree with observed outcomes.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "caf025923569250c73ac49f52c6bc6bb8529ef907d5baed31245bce7f08a018c",
-      "retrieved_at": "2026-10-16T10:02:36+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
       "title": "Human-Alignment, Calibration, and Activation Patterns in Large Language Model Uncertainty",
       "url": "https://arxiv.org/abs/2605.30675",
       "category": "Research foundations",
@@ -8100,18 +8064,6 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "On the Dark Side of Calibration for Modern Neural Networks.",
-      "url": "https://arxiv.org/abs/2106.09385",
-      "category": "Research foundations",
-      "topic": "probability_calibration",
-      "description": "Background for checking whether reported decision probabilities agree with observed outcomes.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "95b9cb45cbf4540ab0e2e5a20956f3dbe346f78d6032ba73c5998f77e520c236",
-      "retrieved_at": "2026-10-16T10:02:38+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
       "title": "On the Global and Local Calibration of Graph Neural Networks",
       "url": "https://vbn.aau.dk/da/publications/4eed889a-812e-4e3b-a276-23f7e5918232",
       "category": "Research foundations",
@@ -8397,18 +8349,6 @@
       "verification_level": "abstract_checked",
       "content_sha256": "6e2725af221a74515f8e6601e305090eafbfddffc484f11a6d2befa5ca565bf9",
       "retrieved_at": "2026-10-16T10:02:37+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
-      "title": "Proper-Composite Loss Functions in Arbitrary Dimensions",
-      "url": "https://arxiv.org/abs/1902.06881",
-      "category": "Research foundations",
-      "topic": "proper_scoring_rules",
-      "description": "Background for evaluating probability distributions and incentives for truthful probability reporting.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "b0575f916f3b49e1e44cf2f938a01401289f9f1a01d17488c43d2eb73c4a596e",
-      "retrieved_at": "2026-10-16T10:02:39+00:00",
       "ledger": "research-sources.jsonl"
     },
     {

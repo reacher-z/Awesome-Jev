@@ -3,11 +3,11 @@
   "counts": {
     "editorial_reviewed": 4,
     "content_screened": 2392,
-    "abstract_checked": 1837,
+    "abstract_checked": 1832,
     "metadata_only": 47,
-    "raw_records": 4294,
-    "unique_records": 4280,
+    "raw_records": 4289,
+    "unique_records": 4275,
     "duplicate_records": 14,
-    "checked_sources": 4233
+    "checked_sources": 4228
   }
 }
