@@ -38,6 +38,14 @@ def clean_title(title: str) -> str:
     return SITE_SUFFIX.sub("", re.sub(r"\s+", " ", title).strip())
 
 
+def identifying_query(query: str) -> str:
+    """Query parameters can identify a paper (OpenReview id, CiteSeer doi)
+    or a model report. Strip tracking parameters, never resource identity."""
+    return urlencode(sorted((key, value) for key, value in parse_qsl(query, keep_blank_values=True)
+                            if not key.lower().startswith("utm_")
+                            and key.lower() not in {"fbclid", "gclid", "msclkid"}))
+
+
 def canonical(url: str) -> str:
     p = urlsplit(url.strip())
     host = p.netloc.lower().removeprefix("www.")
@@ -68,12 +76,7 @@ def canonical(url: str) -> str:
         # scanner stores them lowercased; later path segments keep their case.
         repository = "/".join(path.split("/")[:3])
         path = repository.lower() + path[len(repository):]
-    # Query parameters can identify a paper (OpenReview id, CiteSeer doi)
-    # or a model report. Strip tracking parameters, never resource identity.
-    query = urlencode(sorted((key, value) for key, value in parse_qsl(p.query, keep_blank_values=True)
-                             if not key.lower().startswith("utm_")
-                             and key.lower() not in {"fbclid", "gclid", "msclkid"}))
-    return urlunsplit(("https", host, path, query, ""))
+    return urlunsplit(("https", host, path, identifying_query(p.query), ""))
 
 
 # canonical() forces https and drops "www." so that aliases share one identity.

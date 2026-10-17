@@ -4,6 +4,7 @@ import json
 import unittest
 from unittest.mock import patch
 
+from scripts import build_source_index as index
 from scripts import collect_ecosystem as ecosystem
 from scripts import collect_research as research
 from scripts import refresh_sources as refresh
@@ -76,6 +77,33 @@ class EcosystemCanonicalTests(unittest.TestCase):
                 '`https://hf.co/c/d` [x](https://e.org/y] https://f.org/z\\n')
         self.assertEqual(ecosystem.links(text), ["https://github.com/a/b", "https://example.org/x", "https://arxiv.org/abs/2609.1",
                                                  "https://hf.co/c/d", "https://e.org/y", "https://f.org/z"])
+
+
+class EcosystemIdentifyingQueryTests(unittest.TestCase):
+    """docs/maintenance.md: OpenReview's `id` and CiteSeer's `doi` survive normalization."""
+
+    def test_distinct_query_identified_documents_stay_distinct(self):
+        cases = {
+            "https://openreview.net/forum?id=HJz1vo0cYX": "https://openreview.net/forum?id=HJz1vo0cYX",
+            "https://openreview.net/forum?id=BJeB5hVtvB": "https://openreview.net/forum?id=BJeB5hVtvB",
+            "https://openreview.net/pdf?id=HJz1vo0cYX#page=2": "https://openreview.net/pdf?id=HJz1vo0cYX",
+            "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.1.1": "https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.1.1",
+            "https://citeseerx.ist.psu.edu/viewdoc/download?type=pdf&doi=10.1.1.2.2&rep=rep1":
+                "https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.2.2&rep=rep1&type=pdf",
+        }
+        for url, expected in cases.items():
+            with self.subTest(url=url):
+                self.assertEqual(ecosystem.canonical(url), expected)
+
+    def test_only_tracking_parameters_are_dropped(self):
+        url = "https://openreview.net/forum?utm_source=feed&id=HJz1vo0cYX&fbclid=x&gclid=y&msclkid=z&UTM_medium=m"
+        self.assertEqual(ecosystem.canonical(url), "https://openreview.net/forum?id=HJz1vo0cYX")
+
+    def test_query_identity_matches_the_source_index(self):
+        for url in ("https://openreview.net/forum?id=HJz1vo0cYX&utm_campaign=x",
+                    "https://citeseerx.ist.psu.edu/viewdoc/download?type=pdf&doi=10.1.1.2.2"):
+            with self.subTest(url=url):
+                self.assertEqual(ecosystem.canonical(url), index.canonical(url))
 
 
 class EligibilityTests(unittest.TestCase):

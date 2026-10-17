@@ -23,7 +23,12 @@ from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 
-SPACE = "multimodalart/jev-decision-index"
+try:
+    from .build_source_index import identifying_query
+except ImportError:
+    from build_source_index import identifying_query
+
+SPACE ="multimodalart/jev-decision-index"
 SPACE_URL = "https://huggingface.co/spaces/" + SPACE
 KEYWORDS = {
     "Jev": r"\bjev\b|openjev|jev[-_]",
@@ -158,7 +163,8 @@ def canonical(url: str):
     # A PDF has one scholarly landing-page identity when the provider supports it.
     if host == "aclanthology.org":
         path = path.removesuffix(".pdf")
-    return urllib.parse.urlunsplit(("https", host, path or "/", "", ""))
+    # Keep identifying parameters (OpenReview id, CiteSeer doi) as the source index does.
+    return urllib.parse.urlunsplit(("https", host, path or "/", identifying_query(p.query), ""))
 
 
 def links(text: str):
