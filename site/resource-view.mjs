@@ -37,7 +37,7 @@ function provenance(resource) {
 }
 export function renderResource(resource, language, translations) {
  const t=key=>translations[language][key] ?? translations.en[key] ?? key;
- return `<article class="resource-row"><div class="resource-kind"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span><span class="resource-provenance">${escapeHTML(t(provenance(resource)))}</span></div><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle">${escapeHTML(localizedMetadata(resource.by, language))}</p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
+ return `<article class="resource-row"><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span> · ${escapeHTML(localizedMetadata(resource.by, language))} · <span class="resource-provenance">${escapeHTML(t(provenance(resource)))}</span></p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
 }
 
 export function renderModelRow(resource, language) {
