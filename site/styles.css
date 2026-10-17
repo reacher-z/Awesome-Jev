@@ -958,7 +958,7 @@ figcaption {
 .skip-link:focus {
   top: 15px;
 }
-html[lang="zh"] .hero h1 {
+html:lang(zh) .hero h1 {
   font-family: var(--sans);
   font-size: clamp(32px, 4vw, 44px);
   line-height: 1.2;
@@ -966,31 +966,31 @@ html[lang="zh"] .hero h1 {
   margin: 0 0 16px;
   font-weight: 650;
 }
-html[lang="zh"] .hero h1 em {
+html:lang(zh) .hero h1 em {
   font-style: normal;
 }
-html[lang="zh"] .section-heading h2 {
+html:lang(zh) .section-heading h2 {
   font-size: 24px;
   line-height: 1.35;
   letter-spacing: 0;
   font-family: var(--sans);
   font-weight: 600;
 }
-html[lang="zh"] .start-copy h2 {
+html:lang(zh) .start-copy h2 {
   font-size: 24px;
   line-height: 1.35;
   font-family: var(--sans);
   font-weight: 600;
   letter-spacing: 0;
 }
-html[lang="zh"] .contribute-section h2 {
+html:lang(zh) .contribute-section h2 {
   font-size: 24px;
   font-family: var(--sans);
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0;
 }
-html[lang="zh"] .resource-description {
+html:lang(zh) .resource-description {
   line-height: 1.7;
   font-size: 15px;
 }
@@ -1420,7 +1420,7 @@ html[lang="zh"] .resource-description {
     grid-row: 1/4;
     margin: 0;
   }
-  html[lang="zh"] .hero h1 {
+  html:lang(zh) .hero h1 {
     font-size: clamp(32px, 4vw, 44px);
     line-height: 1.2;
   letter-spacing: 0;
@@ -1428,21 +1428,21 @@ html[lang="zh"] .resource-description {
   font-family: var(--sans);
   font-weight: 650;
 }
-  html[lang="zh"] .section-heading h2 {
+  html:lang(zh) .section-heading h2 {
     font-size: 24px;
     line-height: 1.35;
   letter-spacing: 0;
   font-family: var(--sans);
   font-weight: 600;
 }
-  html[lang="zh"] .start-copy h2 {
+  html:lang(zh) .start-copy h2 {
     font-size: 24px;
     font-family: var(--sans);
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0;
 }
-  html[lang="zh"] .contribute-section h2 {
+  html:lang(zh) .contribute-section h2 {
     font-size: 24px;
     font-family: var(--sans);
   font-weight: 600;
@@ -1677,14 +1677,14 @@ html[lang="zh"] .resource-description {
 #corpus-more[hidden] {
   display: none;
 }
-html[lang="zh"] .corpus-heading h2 {
+html:lang(zh) .corpus-heading h2 {
   font-size: 24px;
   font-family: var(--sans);
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0;
 }
-html[lang="zh"] .featured-copy h2 {
+html:lang(zh) .featured-copy h2 {
   font-size: 24px;
   font-family: var(--sans);
   font-weight: 600;
@@ -1836,14 +1836,14 @@ html[lang="zh"] .featured-copy h2 {
   .corpus-entry-meta span {
     display: none;
   }
-  html[lang="zh"] .corpus-heading h2 {
+  html:lang(zh) .corpus-heading h2 {
     font-size: 24px;
     font-family: var(--sans);
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0;
 }
-  html[lang="zh"] .featured-copy h2 {
+  html:lang(zh) .featured-copy h2 {
     font-size: 24px;
     font-family: var(--sans);
   font-weight: 600;
@@ -2196,7 +2196,7 @@ html[lang="zh"] .featured-copy h2 {
   font-family: var(--mono);
   font-variant-numeric: tabular-nums;
 }
-html[lang="zh"] h1, html[lang="zh"] h2, html[lang="zh"] h3 {
+html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3 {
   letter-spacing: 0;
 }
 

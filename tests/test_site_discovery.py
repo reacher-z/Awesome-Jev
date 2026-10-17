@@ -301,6 +301,16 @@ class SiteDiscoveryTests(unittest.TestCase):
             with self.subTest(route=route):
                 self.assertGreater(len(re.findall(r"[\u4e00-\u9fff]", "".join(self.pages[route].body_text))), 30)
 
+    def test_language_and_titles_come_only_from_generated_html(self):
+        for route in ROUTES:
+            with self.subTest(route=route):
+                self.assertEqual(self.pages[route].language, "zh-CN" if route.startswith("/zh/") else "en")
+        app = (ROOT / "site/app.js").read_text(encoding="utf-8")
+        for write in (r"documentElement\.lang\s*=[^=]", r"document\.title\s*=[^=]", r"\.content\s*=[^=]"):
+            self.assertIsNone(re.search(write, app), "site/app.js must not rewrite the generated language, title or meta tags")
+        styles = (ROOT / "site/styles.css").read_text(encoding="utf-8")
+        self.assertIsNone(re.search(r'\[lang="?zh"?\]', styles), 'Chinese rules must also match lang="zh-CN"; use :lang(zh)')
+
     def test_homepage_translation_preserves_interactive_controls(self):
         required = {"resource-search", "resource-list", "result-count", "corpus-search", "corpus-list", "start", "copy-code", "copy-status"}
         for route in ("/", "/zh/"):

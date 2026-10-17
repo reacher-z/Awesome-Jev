@@ -78,28 +78,7 @@ function selectFilter(filter) {
 }
 function setLanguage(next) {
   language = next;
-  document.documentElement.lang = language === "zh" ? "zh" : "en";
-  document.title =
-    language === "zh"
-      ? "Awesome Jev — System One 模型与研究"
-      : "Awesome Jev — System One Models & Research";
-  for (const selector of [
-    'meta[name="description"]',
-    'meta[property="og:description"]',
-    'meta[name="twitter:description"]',
-  ]) {
-    document.querySelector(selector).content = t("metaDescription");
-  }
-  for (const selector of [
-    'meta[property="og:title"]',
-    'meta[name="twitter:title"]',
-  ]) {
-    document.querySelector(selector).content = document.title;
-  }
-  document.querySelector('meta[property="og:locale"]').content =
-    language === "zh" ? "zh_CN" : "en_US";
-  document.querySelector('meta[property="og:locale:alternate"]').content =
-    language === "zh" ? "en_US" : "zh_CN";
+  // The generated HTML owns <html lang>, the title and social metadata for each URL.
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     element.innerHTML = t(element.dataset.i18n);
   });
