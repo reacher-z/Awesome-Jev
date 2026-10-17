@@ -319,6 +319,17 @@
       "note": "The README HTML h1 names mJev. A code-example Markdown heading is not the project title. This display annotation preserves future provider snapshots without validating model behavior.",
       "evidence_url": "https://github.com/somarkai/mjev",
       "reviewed_at": "2026-10-17T04:09:31.259136+00:00"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.18773",
+      "title": "Jeva: System One Models from First Principles",
+      "first_submitted": "2026-10-13",
+      "topic": "direct-decision-research",
+      "relation": "direct",
+      "relevance": "A decision-model architecture exploring null handling, option permutations, scaling, and caching. Its design is Jeva’s, not Jev’s disclosed internals.",
+      "note": "Fixed-v1 abstract and metadata review only. The paper is a curated direct study; its ledger row was collected as a linked dependency of an index-listed artifact, and the collector labels every such row adjacent. Original provider fields and evidence grades are preserved.",
+      "evidence_url": "https://arxiv.org/abs/2610.18773v1",
+      "reviewed_at": "2026-10-17T08:44:12Z"
     }
   ]
 }
