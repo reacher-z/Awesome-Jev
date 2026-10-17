@@ -21,10 +21,21 @@ from urllib.parse import parse_qsl, urlsplit
 DISPLAY_FIELDS = frozenset({"title", "first_submitted", "topic", "relation", "relevance"})
 EVIDENCE_FIELDS = frozenset({"url", "note", "evidence_url", "reviewed_at"})
 EXCLUSION_FIELDS = frozenset({"url", "reason", "evidence_url", "reviewed_at"})
+# Query parameter names that carry a credential or signed-request material,
+# shared by the collectors, the scheduled scan and the validator. Matched
+# case-insensitively: the long words anywhere in a name (X-Amz-Signature,
+# x-amz-security-token), Azure's short "sig" only as the whole name, because
+# as a substring it would also match ordinary names such as "design".
+CREDENTIAL_QUERY_KEY = re.compile(r"token|api.?key|passw(?:or)?d|secret|signature|credential|authorization|^sig$", re.I)
 
 
 class PolicyError(ValueError):
     pass
+
+
+def credential_query(query: str) -> bool:
+    """True when any query parameter name looks like a credential."""
+    return any(CREDENTIAL_QUERY_KEY.search(key) for key, _ in parse_qsl(query, keep_blank_values=True))
 
 
 def _public_url(value: object) -> bool:
@@ -43,7 +54,7 @@ def _public_url(value: object) -> bool:
         except ValueError:
             if "." not in host:
                 return False
-        return not any(re.search(r"token|api.?key|password|secret|signature|credential", key, re.I) for key, _ in parse_qsl(parsed.query))
+        return not credential_query(parsed.query)
     except ValueError:
         return False
 

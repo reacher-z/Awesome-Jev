@@ -32,18 +32,17 @@ try:
     from . import collect_ecosystem as ecosystem
     from . import collect_research as research
     from . import build_source_index as index
-    from .source_policy import load_policy
+    from .source_policy import credential_query, load_policy
     from .validate import LEAK_PATTERNS
 except ImportError:
     import collect_ecosystem as ecosystem
     import collect_research as research
     import build_source_index as index
-    from source_policy import load_policy
+    from source_policy import credential_query, load_policy
     from validate import LEAK_PATTERNS
 
 ROOT = Path(__file__).resolve().parents[1]
 LEVEL = {"metadata_only": 0, "abstract_checked": 1, "content_screened": 2, "editorial_reviewed": 3}
-SECRET_QUERY = re.compile(r"(?:token|api.?key|password|secret|signature|credential|authorization)", re.I)
 DIRECT_QUERIES = ["Jev TypeSafe", "typed decision model", "System One model Jev", "RLCD calibrated decisions"]
 MAX_BODY = 6_000_000
 # Scan-wide deadline for issuing requests, including Retry-After and backoff
@@ -135,7 +134,7 @@ def public_url(url: str):
             raise FetchError("non_public_host")
         if host in {"localhost", "localhost.localdomain"} or host.endswith((".localhost", ".local", ".internal", ".home", ".lan")):
             raise FetchError("non_public_host")
-        if any(SECRET_QUERY.search(k) for k, _ in urllib.parse.parse_qsl(p.query, keep_blank_values=True)):
+        if credential_query(p.query):
             raise FetchError("credential_query_rejected")
         try:
             if not ipaddress.ip_address(host).is_global:

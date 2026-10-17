@@ -302,7 +302,8 @@ class PublicSourceUrlTests(unittest.TestCase):
         self.assertFalse(public_url(value))
 
     def test_secret_query_parameters_are_rejected(self):
-        for key in ("api_key", "apikey", "access_token", "token", "signature", "API_KEY"):
+        for key in ("api_key", "apikey", "access_token", "token", "signature", "API_KEY",
+                    "password", "passwd", "secret", "X-Amz-Signature", "X-Amz-Credential", "sig"):
             with self.subTest(key=key):
                 self.assertFalse(public_url("https://example.org/source?" + key + "=fixture"))
 

@@ -8,6 +8,7 @@ from scripts import build_source_index as index
 from scripts import collect_ecosystem as ecosystem
 from scripts import collect_research as research
 from scripts import refresh_sources as refresh
+from scripts.validate import public_url as validated_public_url
 
 # Neutral 29-word padding: it matches no topic rule, so each case's own sentence decides.
 FILLER = ("The study reports experiments on several public datasets, compares strong baselines under matched budgets, "
@@ -104,6 +105,29 @@ class EcosystemIdentifyingQueryTests(unittest.TestCase):
                     "https://citeseerx.ist.psu.edu/viewdoc/download?type=pdf&doi=10.1.1.2.2"):
             with self.subTest(url=url):
                 self.assertEqual(ecosystem.canonical(url), index.canonical(url))
+
+
+class CredentialQueryTests(unittest.TestCase):
+    """Kept identifying parameters must never carry a credential into a ledger:
+    the legacy collector, the scheduled scan and the validator agree."""
+    KEYS = ("password", "passwd", "secret", "token", "api_key", "apikey", "access_token", "signature",
+            "X-Amz-Signature", "x-amz-credential", "X-Amz-Security-Token", "sig", "PASSWORD", "Sig")
+
+    def test_credential_like_parameters_are_rejected_everywhere(self):
+        for key in self.KEYS:
+            url = "https://example.org/report?id=fixture&" + key + "=fixture-value"
+            with self.subTest(key=key):
+                self.assertIsNone(ecosystem.canonical(url))
+                self.assertFalse(validated_public_url(url))
+                with self.assertRaises(refresh.FetchError):
+                    refresh.public_url(url)
+
+    def test_ordinary_parameters_that_contain_sig_are_kept(self):
+        for url in ("https://example.org/report?design=fixture", "https://example.org/report?signal=fixture"):
+            with self.subTest(url=url):
+                self.assertEqual(ecosystem.canonical(url), url)
+                self.assertTrue(validated_public_url(url))
+                refresh.public_url(url)
 
 
 class EligibilityTests(unittest.TestCase):

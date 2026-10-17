@@ -25,10 +25,12 @@ from pathlib import Path
 
 try:
     from .build_source_index import identifying_query
+    from .source_policy import credential_query
 except ImportError:
     from build_source_index import identifying_query
+    from source_policy import credential_query
 
-SPACE ="multimodalart/jev-decision-index"
+SPACE = "multimodalart/jev-decision-index"
 SPACE_URL = "https://huggingface.co/spaces/" + SPACE
 KEYWORDS = {
     "Jev": r"\bjev\b|openjev|jev[-_]",
@@ -122,7 +124,9 @@ def canonical(url: str):
     except ValueError:
         return None
     host = p.netloc.lower()
-    if p.scheme not in {"http", "https"} or host in BLOCKED_HOSTS or "@" in host:
+    # Identifying query parameters are kept below, so a credential-bearing
+    # link is rejected outright, as the scheduled scan does.
+    if p.scheme not in {"http", "https"} or host in BLOCKED_HOSTS or "@" in host or credential_query(p.query):
         return None
     path = re.sub(r"/+", "/", p.path).rstrip("/")
     if host in {"arxiv.org", "www.arxiv.org", "export.arxiv.org"}:

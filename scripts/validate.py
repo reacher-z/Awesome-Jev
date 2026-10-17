@@ -21,14 +21,14 @@ import re
 import shutil
 import subprocess
 import sys
-from urllib.parse import parse_qsl, unquote, urlsplit
+from urllib.parse import unquote, urlsplit
 
 try:
     from . import build_source_index as source_index
-    from .source_policy import load_policy, PolicyError
+    from .source_policy import credential_query, load_policy, PolicyError
 except ImportError:
     import build_source_index as source_index
-    from source_policy import load_policy, PolicyError
+    from source_policy import credential_query, load_policy, PolicyError
 
 ROOT = Path(__file__).resolve().parents[1]
 SKIP = {".git", "node_modules", ".venv", "__pycache__", ".cache", "tmp", "artifacts"}
@@ -109,7 +109,7 @@ def public_url(value: object) -> bool:
         except ValueError:
             if "." not in p.hostname:
                 return False
-        return not any(k.casefold() in {"api_key", "apikey", "access_token", "token", "signature"} for k, _ in parse_qsl(p.query))
+        return not credential_query(p.query)
     except ValueError:
         return False
 
