@@ -111,7 +111,7 @@ function localizeHTML(html, language) {
   html = html.replace(/<([a-z][a-z0-9]*)\b([^>]*\bdata-i18n="([^"]+)"[^>]*)>[\s\S]*?<\/\1\s*>/g, (all,tag,attrs,key)=>typeof t(language,key)==='string'?`<${tag}${attrs}>${t(language,key)}</${tag}>`:all);
   html = html.replace(/<([a-z][a-z0-9]*)\b([^>]*\bdata-i18n-(placeholder|aria)="([^"]+)"[^>]*)>/g, (all,tag,attrs,kind,key)=>{
     const name = kind === 'aria' ? 'aria-label' : 'placeholder';
-    return `<${tag}${attrs.replace(new RegExp(`${name}="[^"]*"`), `${name}="${esc(t(language,key))}"`)}>`;
+    return `<${tag}${attrs.replace(new RegExp(`${name}="[^"]*"`), ()=>`${name}="${esc(t(language,key))}"`)}>`;
   });
   return html;
 }
@@ -129,13 +129,14 @@ function home(language) {
   values.COLLECTION_STATS = `<dl class="collection-stats">${[[resources.length,language==='zh'?'精选资源':'curated resources',route(language)+'#collection'],[papers.length,language==='zh'?'论文':'papers',route(language,'papers')],[models.length,language==='zh'?'模型':'models',route(language,'models')],[expansion.accepted_new_sources,language==='zh'?'扩展来源':'reviewed additions',route(language,'discoveries')]].map(([number,label,url])=>`<div><dt><a href="${url}">${label}</a></dt><dd>${number}</dd></div>`).join('')}</dl>`;
   values.APP_MODULE_URL = esc(assetURLs['app.js']);
   values.STYLESHEET_URL = esc(assetURLs['styles.css']);
-  for (const [key,value] of Object.entries(values)) html=html.replaceAll(`{{${key}}}`,value);
+  // Function replacers keep `$&`, `$1` and `$$` in curated text literal.
+  for (const [key,value] of Object.entries(values)) html=html.replaceAll(`{{${key}}}`,()=>value);
   html=localizeHTML(html,language)
-    .replace(/(<meta\s+(?:name="description"|property="og:description"|name="twitter:description")\s+content=")[^"]*("\s*\/>)/g,`$1${esc(description)}$2`)
-    .replace(/(<meta\s+(?:property="og:title"|name="twitter:title")\s+content=")[^"]*("\s*\/>)/g,`$1${esc(title)}$2`)
-    .replace(/(<meta property="og:url" content=")[^"]+/,`$1${origin+route(language)}`)
-    .replace(/(<meta property="og:locale" content=")[^"]+/,`$1${language==='zh'?'zh_CN':'en_US'}`)
-    .replace(/(<meta property="og:locale:alternate" content=")[^"]+/,`$1${language==='zh'?'en_US':'zh_CN'}`)
+    .replace(/(<meta\s+(?:name="description"|property="og:description"|name="twitter:description")\s+content=")[^"]*("\s*\/>)/g,(_,start,end)=>start+esc(description)+end)
+    .replace(/(<meta\s+(?:property="og:title"|name="twitter:title")\s+content=")[^"]*("\s*\/>)/g,(_,start,end)=>start+esc(title)+end)
+    .replace(/(<meta property="og:url" content=")[^"]+/,(_,start)=>start+origin+route(language))
+    .replace(/(<meta property="og:locale" content=")[^"]+/,(_,start)=>start+(language==='zh'?'zh_CN':'en_US'))
+    .replace(/(<meta property="og:locale:alternate" content=")[^"]+/,(_,start)=>start+(language==='zh'?'en_US':'zh_CN'))
     .replace(/(data-language="(en|zh)")/g,(_,attr,code)=>`${attr} aria-current="${code===language?'page':'false'}"`)
     .replace(/href="\/guide\/" data-document="survey"/,`href="${route(language,'guide')}" data-document="survey"`);
   if(language==='zh')html=html.replace('href="https://github.com/reacher-z/Awesome-Jev/blob/main/README.md" data-document="readme"','href="https://github.com/reacher-z/Awesome-Jev/blob/main/README.zh-CN.md" data-document="readme"');
