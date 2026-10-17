@@ -426,6 +426,53 @@ class IncrementalEvidenceTests(unittest.TestCase):
         self.assertFalse(changed)
 
 
+class JsonlLineSeparatorTests(unittest.TestCase):
+    """U+2028, U+2029 and U+0085 in fetched text must never split a ledger record."""
+    TITLE = "Jev Router\u2028typed decisions\u2029v2\u0085notes"
+
+    def test_scraped_unicode_line_breaks_round_trip_as_one_ledger_record(self):
+        url = "https://github.com/fixture/router"
+        body = ("# " + self.TITLE + "\n\n## Usage\u2028examples\n\n"
+                + "Jev typed decision models need calibrated probability readouts for routing. " * 6).encode()
+        seed = {"url": url, "title": "router", "topic": "implementation-repository", "relation": "adjacent",
+                "relevance": "Synthetic regression fixture.", "discovered_from": ["https://example.org/index"], "discovery_depth": 0}
+        with patch.object(refresh.ecosystem, "fetch", return_value=(body, "https://raw.githubusercontent.com/fixture/router/main/README.md", "text/plain")):
+            record, _ = refresh.ecosystem.audit(seed)
+        self.assertEqual(record["title"], self.TITLE)
+        merged, changes = refresh.merge_records(ledger(), [record])
+        self.assertEqual(changes["added"], [url])
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "sources.jsonl"
+            refresh.write_if_changed(path, "".join(merged.lines))
+            raw = path.read_bytes()
+            self.assertEqual(len(raw.decode("utf-8").splitlines()), 1)
+            loaded = refresh.Ledger.read(path)
+        self.assertEqual(loaded.rows[0]["title"], self.TITLE)
+        self.assertEqual(loaded.rows[0]["section_headings"][:2], [self.TITLE, "Usage\u2028examples"])
+        self.assertEqual(loaded.lines, merged.lines)
+
+    def test_every_ledger_reader_splits_records_only_at_newline(self):
+        from scripts import open_scan_pr
+        rows = [row("https://example.org/a", title=self.TITLE, status="screened"),
+                row("https://example.org/b", body="other", status="screened")]
+        # The unescaped form an earlier writer produced: four splitlines() pieces.
+        text = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows)
+        self.assertGreater(len(text.splitlines()), len(rows))
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "data").mkdir()
+            path = root / "data/ecosystem-sources.jsonl"
+            path.write_text(text, encoding="utf-8")
+            self.assertEqual([r["title"] for r in refresh.Ledger.read(path).rows], [self.TITLE, "Fixture source"])
+            with patch.object(refresh.index, "ROOT", root):
+                self.assertEqual(refresh.index.build()["counts"]["raw_records"], 2)
+            with patch.object(validate, "ROOT", root), patch.object(validate, "errors", []) as errors:
+                self.assertEqual(len(validate.check_ledger(path)), 2)
+                self.assertEqual(errors, [])
+            self.assertEqual(open_scan_pr.read_data(path), text.encode("utf-8"))
+            open_scan_pr.meaningful_fingerprint({name: text.encode("utf-8") for name in open_scan_pr.LEDGERS})
+
+
 class PinnedArxivObservationTests(unittest.TestCase):
     def scan(self, fetcher, prior):
         url = prior["url"]

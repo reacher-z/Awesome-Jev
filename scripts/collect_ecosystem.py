@@ -293,7 +293,9 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     cache = {}
     if args.resume and out.exists():
-        for line in out.read_text().splitlines():
+        for line in out.read_text().split("\n"):
+            if not line.strip():
+                continue
             old = json.loads(line)
             key = canonical(old["url"])
             if key and old.get("content_sha256") and (key == old["url"] or key.lower() == old["url"].lower()):

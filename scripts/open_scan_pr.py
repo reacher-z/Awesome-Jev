@@ -89,7 +89,7 @@ def read_data(path: Path) -> bytes:
     try:
         text = data.decode("utf-8")
         if path.suffix == ".jsonl":
-            for line in text.splitlines():
+            for line in text.split("\n"):
                 if line.strip() and not isinstance(json.loads(line), dict):
                     raise ValueError("record")
         elif not isinstance(json.loads(text), dict):
@@ -104,7 +104,7 @@ def meaningful_fingerprint(files: dict[str, bytes]) -> str:
     normalized = []
     for name in LEDGERS:
         rows = []
-        for line in files[name].decode("utf-8").splitlines():
+        for line in files[name].decode("utf-8").split("\n"):
             if not line.strip():
                 continue
             row = json.loads(line)
@@ -337,7 +337,7 @@ def ensure_pending_continuity(previous: dict[str, bytes], fresh: dict[str, bytes
     def records(payload):
         found = {}
         for name in LEDGERS:
-            for line in payload[name].decode("utf-8").splitlines():
+            for line in payload[name].decode("utf-8").split("\n"):
                 if not line.strip():
                     continue
                 row = json.loads(line)

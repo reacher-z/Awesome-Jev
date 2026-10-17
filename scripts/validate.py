@@ -157,7 +157,7 @@ def check_text(path: Path, text: str) -> None:
 def check_ledger(path: Path, policy=None) -> list[dict]:
     result: list[dict] = []
     urls: set[str] = set()
-    for number, line in enumerate(path.read_text().splitlines(), 1):
+    for number, line in enumerate(path.read_text().split("\n"), 1):
         if not line.strip():
             continue
         location = f"{path.relative_to(ROOT)}:{number}"

@@ -55,6 +55,9 @@ SAFE_FETCH_ERRORS = frozenset({
     "invalid_arxiv_abstract_page", "arxiv_version_mismatch",
 })
 CURATED_PAPERS_ORIGIN = "https://awesomejev.github.io/papers.json"
+# json.dumps(ensure_ascii=False) leaves these unescaped, but str.splitlines()
+# and many line-oriented tools treat them as record breaks.
+LINE_BREAK_ESCAPES = str.maketrans({"\u0085": "\\u0085", "\u2028": "\\u2028", "\u2029": "\\u2029"})
 
 
 def now():
@@ -280,6 +283,11 @@ def identity(row):
     return key
 
 
+def jsonl_record(row):
+    """Serialize one ledger record as exactly one newline-terminated line."""
+    return json.dumps(row, ensure_ascii=False, sort_keys=True).translate(LINE_BREAK_ESCAPES) + "\n"
+
+
 def content_hash(row):
     return row.get("content_sha256") or row.get("abstract_sha256")
 
@@ -307,7 +315,9 @@ class Ledger:
     def read(cls, path):
         if not path.exists():
             return cls([], [])
-        lines = path.read_bytes().decode("utf-8").splitlines(keepends=True)
+        # Records end at "\n" only; splitlines() would also break a record at
+        # U+2028, U+2029 or U+0085 inside a JSON string.
+        lines = re.findall(r"[^\n]*\n|[^\n]+\Z", path.read_bytes().decode("utf-8"))
         if any(not line.strip() for line in lines):
             raise ValueError("blank_ledger_record")
         return cls([json.loads(line) for line in lines], lines)
@@ -438,7 +448,7 @@ def merge_records(old: Ledger, incoming, max_new=None, policy=None):
                     # retain every other field, including prior abstract evidence.
                     repaired = {**prior, "canonical_page_separately_fetched": True}
                     rows[i] = repaired
-                    lines[i] = json.dumps(repaired, ensure_ascii=False, sort_keys=True) + "\n"
+                    lines[i] = jsonl_record(repaired)
                     changes["changed"].append(key)
                 continue
             if LEVEL.get(new.get("verification_level"), 0) < LEVEL.get(prior.get("verification_level"), 0) and prior.get("verification_level") != "editorial_reviewed":
@@ -467,7 +477,7 @@ def merge_records(old: Ledger, incoming, max_new=None, policy=None):
             if has_abstract_provenance(merged) and new.get("verification_level") == "content_screened":
                 merged["canonical_page_separately_fetched"] = canonical_page_observed(new)
             rows[i] = merged
-            lines[i] = json.dumps(merged, ensure_ascii=False, sort_keys=True) + "\n"
+            lines[i] = jsonl_record(merged)
             if content_hash(merged):
                 hashes.add(content_hash(merged))
             changes["changed"].append(key)
@@ -482,7 +492,7 @@ def merge_records(old: Ledger, incoming, max_new=None, policy=None):
             positions[key] = len(rows)
             rows.append(new)
             separator = "\n" if lines and not lines[-1].endswith("\n") else ""
-            lines.append(separator + json.dumps(new, ensure_ascii=False, sort_keys=True) + "\n")
+            lines.append(separator + jsonl_record(new))
             if content_hash(new):
                 hashes.add(content_hash(new))
             changes["added"].append(key)
