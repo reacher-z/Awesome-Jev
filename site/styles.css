@@ -539,6 +539,10 @@ figcaption {
   font: 13px var(--sans);
   white-space: nowrap;
 }
+/* Every <time> holds an ISO date; keep it on one line (browsers may break after a hyphen). */
+time {
+  white-space: nowrap;
+}
 .collection-section {
   padding: 18px 0 40px;
 }
@@ -1664,6 +1668,14 @@ html:lang(zh) .resource-description {
 .corpus-entry-meta span {
   font-size: 18px;
   margin-left: auto;
+}
+/* Long unbroken tokens (URLs, markup left in collected titles) wrap instead of widening phone
+   pages. "anywhere" also lowers the min-content width, so the 1fr grid columns can shrink. */
+.corpus-row h3,
+.corpus-row p,
+.resource-title,
+.resource-description {
+  overflow-wrap: anywhere;
 }
 .corpus-empty {
   font-size: 13px;
