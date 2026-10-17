@@ -111,8 +111,21 @@ def category(row: dict) -> str:
     return "Guides and evaluations"
 
 
+def chinese_descriptions() -> dict[str, str]:
+    """Reviewed zh-CN text keyed by the exact English description it translates."""
+    path = ROOT / "data/discovery-translations.zh-CN.json"
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("schema_version") != 1 or data.get("language") != "zh-CN" or not isinstance(data.get("translations"), dict):
+        raise ValueError("Invalid Chinese discovery translations.")
+    return {english: chinese for english, chinese in data["translations"].items()
+            if isinstance(chinese, str) and re.search(r"[\u3400-\u9fff]", chinese)}
+
+
 def build() -> dict:
     policy = load_policy(ROOT / "data/source-curation.json", canonical)
+    translations = chinese_descriptions()
     raw = []
     for name in ("ecosystem-sources.jsonl", "research-sources.jsonl"):
         source = ROOT / "data" / name
@@ -167,6 +180,12 @@ def build() -> dict:
             "retrieved_at": row.get("retrieved_at", ""),
             "ledger": row["ledger"],
         }
+        # relevance_zh translates the ledger's own relevance; after a curated
+        # English correction only an exact-text translation may apply.
+        chinese = row.get("relevance_zh") if entry["description"] == row.get("relevance") else None
+        chinese = chinese or translations.get(entry["description"])
+        if chinese:
+            entry["description_zh"] = chinese
         if curation:
             entry["curation"] = curation
         rows.append(entry)

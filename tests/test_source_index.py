@@ -84,6 +84,42 @@ class SourceIdentityTests(unittest.TestCase):
         self.assertEqual(sources[current]["content_sha256"], "b" * 64)
         self.assertEqual(sources[current]["verification_level"], "editorial_reviewed")
 
+    def test_reviewed_chinese_descriptions_reach_the_corpus(self):
+        translated = "Synthetic relevance with a reviewed translation."
+        rows = [
+            {"url": "https://example.org/translated", "relevance": translated},
+            {"url": "https://example.org/ledger-zh", "relevance": "Synthetic relevance reviewed in the ledger.",
+             "relevance_zh": "账本中已审阅的中文说明。"},
+            {"url": "https://example.org/curated", "relevance": "Superseded provider relevance.",
+             "relevance_zh": "已过时的中文说明。"},
+            {"url": "https://example.org/untranslated", "relevance": "Synthetic relevance without a translation."},
+        ]
+        curation = {"schema_version": 1, "exclusions": [], "annotations": [{
+            "url": "https://example.org/curated", "relevance": "Corrected relevance without a translation.",
+            "note": "Synthetic correction.", "evidence_url": "https://example.org/evidence",
+            "reviewed_at": "2026-10-17T00:00:00+00:00"}]}
+        localization = {"schema_version": 1, "language": "zh-CN", "translations": {translated: "已审阅的中文说明。"}}
+        with tempfile.TemporaryDirectory(prefix="awesome-jev-test-") as directory:
+            root = Path(directory)
+            (root / "data").mkdir()
+            (root / "data/ecosystem-sources.jsonl").write_text(
+                "".join(json.dumps({**row, "title": "Synthetic " + row["url"].rsplit("/", 1)[1],
+                                    "relation": "adjacent", "verification_level": "metadata_only",
+                                    "retrieved_at": "2026-10-17T00:00:00+00:00"}) + "\n"
+                        for row in rows), encoding="utf-8")
+            (root / "data/source-curation.json").write_text(json.dumps(curation), encoding="utf-8")
+            (root / "data/discovery-translations.zh-CN.json").write_text(json.dumps(localization), encoding="utf-8")
+            with patch.object(index, "ROOT", root):
+                payload = index.build()
+        chinese = {row["url"]: row.get("description_zh") for row in payload["sources"]}
+        self.assertEqual(chinese, {
+            "https://example.org/translated": "已审阅的中文说明。",
+            "https://example.org/ledger-zh": "账本中已审阅的中文说明。",
+            # A curated English correction must not keep the stale translation.
+            "https://example.org/curated": None,
+            "https://example.org/untranslated": None,
+        })
+
     def test_hub_experiment_code_is_a_project_not_model_weights(self):
         code = {"url":"https://huggingface.co/example/experiment-code", "source_type":"hf_repository", "topic":"implementation-repository", "relation":"direct"}
         self.assertEqual(index.category(code), "Projects")
