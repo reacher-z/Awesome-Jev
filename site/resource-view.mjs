@@ -1,6 +1,10 @@
 export const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"})[char]);
 const icon = name => `<svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#${name}"></use></svg>`;
-const categoryIcons={Papers:"paper",Models:"foundation",Tools:"code",Datasets:"foundation",Evaluations:"evaluation",Guides:"guide",Foundations:"foundation"};
+const categoryIcons={All:"filter",Papers:"paper",Models:"foundation",Tools:"code",Datasets:"foundation",Evaluations:"evaluation",Guides:"guide",Foundations:"foundation"};
+// Filter-button content. The build and app.js render identical markup, so the
+// buttons keep their size when the script initialises the page.
+export const renderFilterLabel = (category, label, count) =>
+  `${icon(categoryIcons[category])}<span>${escapeHTML(label)}</span><span class="filter-count" aria-hidden="true">${count}</span>`;
 // Descriptive parts of `by` ("Publisher · descriptor · license"), matched whole so a
 // short phrase such as "runtime" cannot rewrite part of a longer one. Names, venues,
 // dates, versions and license identifiers stay as written.

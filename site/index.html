@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#111418" media="(prefers-color-scheme: dark)" />
+    <!-- Reveal the script-only controls before first paint, so they do not push the list down later. -->
+    <script>document.documentElement.classList.add("js")</script>
     <meta
       name="description"
       content="Explore Jev and System One decision models through research papers, benchmarks, models and tools, with primary sources and English–Chinese guides."
@@ -68,8 +70,8 @@
       crossorigin
     />
     <link rel="stylesheet" href="/styles.css?v=d364fe764aba" />
-    <script type="importmap">{"imports":{"/catalog.mjs":"/catalog.mjs?v=82b2f054f4f4","/resource-view.mjs":"/resource-view.mjs?v=c0ee2e81b636"}}</script>
-    <script type="module" src="/app.js?v=f8f4cf6cf5d6"></script>
+    <script type="importmap">{"imports":{"/catalog.mjs":"/catalog.mjs?v=82b2f054f4f4","/resource-view.mjs":"/resource-view.mjs?v=2cb4ded359ee"}}</script>
+    <script type="module" src="/app.js?v=005bee677f4f"></script>
   </head>
   <body>
     <a class="skip-link" href="#collection" data-i18n="skip"
@@ -153,14 +155,14 @@
               aria-label="Filter resources"
               data-i18n-aria="filterLabel"
             >
-              <button type="button" class="filter-button active" data-filter="All" aria-pressed="true" data-i18n="filterAll">All<span class="filter-count" aria-hidden="true">156</span></button>
-              <button type="button" class="filter-button" data-filter="Papers" aria-pressed="false" data-i18n="filterPapers">Papers<span class="filter-count" aria-hidden="true">78</span></button>
-              <button type="button" class="filter-button" data-filter="Models" aria-pressed="false" data-i18n="filterModels">Models<span class="filter-count" aria-hidden="true">15</span></button>
-              <button type="button" class="filter-button" data-filter="Tools" aria-pressed="false" data-i18n="filterTools">Tools<span class="filter-count" aria-hidden="true">16</span></button>
-              <button type="button" class="filter-button" data-filter="Datasets" aria-pressed="false" data-i18n="filterDatasets">Datasets<span class="filter-count" aria-hidden="true">6</span></button>
-              <button type="button" class="filter-button" data-filter="Evaluations" aria-pressed="false" data-i18n="filterEvaluations">Evaluations<span class="filter-count" aria-hidden="true">16</span></button>
-              <button type="button" class="filter-button" data-filter="Guides" aria-pressed="false" data-i18n="filterGuides">Guides<span class="filter-count" aria-hidden="true">17</span></button>
-              <button type="button" class="filter-button" data-filter="Foundations" aria-pressed="false" data-i18n="filterFoundations">Foundations<span class="filter-count" aria-hidden="true">8</span></button>
+              <button type="button" class="filter-button active" data-filter="All" aria-pressed="true" data-i18n="filterAll"><svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#filter"></use></svg><span>All</span><span class="filter-count" aria-hidden="true">156</span></button>
+              <button type="button" class="filter-button" data-filter="Papers" aria-pressed="false" data-i18n="filterPapers"><svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#paper"></use></svg><span>Papers</span><span class="filter-count" aria-hidden="true">78</span></button>
+              <button type="button" class="filter-button" data-filter="Models" aria-pressed="false" data-i18n="filterModels"><svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#foundation"></use></svg><span>Models</span><span class="filter-count" aria-hidden="true">15</span></button>
+              <button type="button" class="filter-button" data-filter="Tools" aria-pressed="false" data-i18n="filterTools"><svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#code"></use></svg><span>Tools</span><span class="filter-count" aria-hidden="true">16</span></button>
+              <button type="button" class="filter-button" data-filter="Datasets" aria-pressed="false" data-i18n="filterDatasets"><svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#foundation"></use></svg><span>Datasets</span><span class="filter-count" aria-hidden="true">6</span></button>
+              <button type="button" class="filter-button" data-filter="Evaluations" aria-pressed="false" data-i18n="filterEvaluations"><svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#evaluation"></use></svg><span>Evaluations</span><span class="filter-count" aria-hidden="true">16</span></button>
+              <button type="button" class="filter-button" data-filter="Guides" aria-pressed="false" data-i18n="filterGuides"><svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#guide"></use></svg><span>Guides</span><span class="filter-count" aria-hidden="true">17</span></button>
+              <button type="button" class="filter-button" data-filter="Foundations" aria-pressed="false" data-i18n="filterFoundations"><svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#foundation"></use></svg><span>Foundations</span><span class="filter-count" aria-hidden="true">8</span></button>
               <label class="filter-toggle"><input type="checkbox" id="code-filter" /><span data-i18n="filterHasCode">Papers with code</span><span class="filter-count" aria-hidden="true">43</span></label>
             </div>
             <form class="search-field" role="search">
