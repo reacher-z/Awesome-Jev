@@ -1136,6 +1136,30 @@ Author-run labeled decisions and workflow replays. Private customer cases limit 
 
 Primary source: https://www.entagl.com/blog/typesafe-jev-benchmark-ai-decision-models
 
+## jev-benchmarking
+
+Evaluations · AppliedMachineLearning-Lab · paper code · MIT
+
+Code accompanying Deußer et al.'s 37-dataset study.
+
+Primary source: https://github.com/AppliedMachineLearning-Lab/jev-benchmarking
+
+## jev-bench
+
+Evaluations · PavelRavvich · benchmark code
+
+Classification, raw predictions, calibration, latency, cost, and cascades. Check sampling and confidence definitions before comparing results.
+
+Primary source: https://github.com/PavelRavvich/jev-bench
+
+## AY Automate benchmark
+
+Evaluations · AY Automate · benchmark write-up
+
+Routing and injection-detection experiments with linked code and raw calls. Reported by the benchmark author.
+
+Primary source: https://www.ayautomate.com/blog/jev-vs-llm-benchmark
+
 ## A Survey on Jev: Prior Research, Adaptation Costs, and Evidence of System One Models
 
 Guides · Chen et al. · community survey v0.5
@@ -1231,6 +1255,46 @@ Guides · TypeSafe · Official cookbook
 Restore Markdown structure through line-continuation and block-type decisions while code retains the original wording.
 
 Primary source: https://docs.typesafe.ai/cookbooks/autoformat
+
+## Confidence-gated routing
+
+Guides · TypeSafe · Official pattern
+
+Route uncertain cases to another system or a person.
+
+Primary source: https://docs.typesafe.ai/patterns/confidence-routing
+
+## Composite scoring
+
+Guides · TypeSafe · Official pattern
+
+Combine separate judgments with weights controlled by code.
+
+Primary source: https://docs.typesafe.ai/patterns/composite-scoring
+
+## RAG passage classification
+
+Guides · TypeSafe · Official cookbook
+
+Filter retrieved context: score each passage, then decide in code which ones reach the answering model.
+
+Primary source: https://docs.typesafe.ai/cookbooks/classifying_rag_passages
+
+## Pre-parsed value extraction
+
+Guides · TypeSafe · Official cookbook
+
+Choose among bounded candidates found by patterns, then normalize the verbatim value in code.
+
+Primary source: https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook
+
+## Date extraction
+
+Guides · TypeSafe · Official cookbook
+
+Ask for the date parts a document names; resolve, calculate and validate them in code.
+
+Primary source: https://docs.typesafe.ai/cookbooks/date_extraction_cookbook
 
 ## Strictly Proper Scoring Rules, Prediction, and Estimation
 

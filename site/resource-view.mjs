@@ -8,6 +8,7 @@ function localizedMetadata(value, language) {
   if (language !== "zh") return value;
   const labels = {
     "Official cookbook": "官方实践教程",
+    "Official pattern": "官方设计模式",
     "API concepts": "API 概念",
     "Probability & routing": "概率与路由",
     "Limitations": "已知局限",
@@ -47,6 +48,9 @@ function localizedMetadata(value, language) {
     "Methodology v1.0": "方法说明 v1.0",
     "community survey v0.5": "社区综述 v0.5",
     "author report": "作者报告",
+    "paper code": "论文配套代码",
+    "benchmark code": "评测代码",
+    "benchmark write-up": "评测文章",
   };
   return value
     .split(" · ")

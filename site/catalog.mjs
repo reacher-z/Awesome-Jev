@@ -1739,6 +1739,31 @@ const resources = [
     "zh": "作者开展的标注决策与工作流重放评测；私有客户案例限制公开复现。"
   },
   {
+    "category": "Evaluations",
+    "title": "jev-benchmarking",
+    "by": "AppliedMachineLearning-Lab · paper code · MIT",
+    "url": "https://github.com/AppliedMachineLearning-Lab/jev-benchmarking",
+    "en": "Code accompanying Deußer et al.'s 37-dataset study.",
+    "zh": "Deußer 等人 37 数据集研究的配套代码。"
+  },
+  {
+    "category": "Evaluations",
+    "title": "jev-bench",
+    "by": "PavelRavvich · benchmark code",
+    "url": "https://github.com/PavelRavvich/jev-bench",
+    "en": "Classification, raw predictions, calibration, latency, cost, and cascades. Check sampling and confidence definitions before comparing results.",
+    "zh": "分类、原始预测、校准、延迟、成本与级联分析；比较前需核对采样和置信度定义。"
+  },
+  {
+    "category": "Evaluations",
+    "title": "AY Automate benchmark",
+    "by": "AY Automate · benchmark write-up",
+    "provenance": "reportedEvaluation",
+    "url": "https://www.ayautomate.com/blog/jev-vs-llm-benchmark",
+    "en": "Routing and injection-detection experiments with linked code and raw calls. Reported by the benchmark author.",
+    "zh": "路由与注入检测实验，附代码和原始调用；结果由评测作者报告。"
+  },
+  {
     "category": "Guides",
     "title": "SDE cascade",
     "by": "TypeSafe · Official cookbook",
@@ -1755,6 +1780,51 @@ const resources = [
     "url": "https://docs.typesafe.ai/cookbooks/autoformat",
     "en": "Restore Markdown structure through line-continuation and block-type decisions while code retains the original wording.",
     "zh": "通过续行和块类型判断恢复 Markdown 结构，由代码保留原始措辞。"
+  },
+  {
+    "category": "Guides",
+    "title": "Confidence-gated routing",
+    "by": "TypeSafe · Official pattern",
+    "provenance": "official",
+    "url": "https://docs.typesafe.ai/patterns/confidence-routing",
+    "en": "Route uncertain cases to another system or a person.",
+    "zh": "将不确定案例转交其他系统或人工。"
+  },
+  {
+    "category": "Guides",
+    "title": "Composite scoring",
+    "by": "TypeSafe · Official pattern",
+    "provenance": "official",
+    "url": "https://docs.typesafe.ai/patterns/composite-scoring",
+    "en": "Combine separate judgments with weights controlled by code.",
+    "zh": "在代码中按权重组合独立判断。"
+  },
+  {
+    "category": "Guides",
+    "title": "RAG passage classification",
+    "by": "TypeSafe · Official cookbook",
+    "provenance": "official",
+    "url": "https://docs.typesafe.ai/cookbooks/classifying_rag_passages",
+    "en": "Filter retrieved context: score each passage, then decide in code which ones reach the answering model.",
+    "zh": "筛选检索上下文：逐段评分，再由代码决定哪些段落交给回答模型。"
+  },
+  {
+    "category": "Guides",
+    "title": "Pre-parsed value extraction",
+    "by": "TypeSafe · Official cookbook",
+    "provenance": "official",
+    "url": "https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook",
+    "en": "Choose among bounded candidates found by patterns, then normalize the verbatim value in code.",
+    "zh": "从规则匹配出的有限候选中选择，再在代码中规范化原文取值。"
+  },
+  {
+    "category": "Guides",
+    "title": "Date extraction",
+    "by": "TypeSafe · Official cookbook",
+    "provenance": "official",
+    "url": "https://docs.typesafe.ai/cookbooks/date_extraction_cookbook",
+    "en": "Ask for the date parts a document names; resolve, calculate and validate them in code.",
+    "zh": "询问文档中提到的日期组成部分，在代码中解析、计算并校验。"
   },
 ];
 
