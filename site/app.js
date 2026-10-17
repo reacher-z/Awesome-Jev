@@ -1,5 +1,5 @@
 import { resources, translations } from "./catalog.mjs";
-import { renderResource } from "./resource-view.mjs";
+import { englishLang, renderResource } from "./resource-view.mjs";
 
 document.documentElement.classList.add("js");
 let language = document.documentElement.lang.startsWith("zh") ? "zh" : "en";
@@ -281,8 +281,11 @@ function renderCorpus() {
   $("#corpus-list").innerHTML = filtered
     .slice(0, corpusLimit)
     .map(
-      (source) =>
-        `<article class="corpus-row"><div><h3><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)}</a></h3><p>${escapeHTML(language === "zh" && source.zh ? source.zh : source.description)}</p>${curationDisclosure(source)}</div><div class="corpus-entry-meta" data-verification="${escapeHTML(source.verification)}">${escapeHTML(corpusMetadata(source))}<span aria-hidden="true">${icon("external")}</span></div></article>`,
+      (source) => {
+        const description =
+          language === "zh" && source.zh ? source.zh : source.description;
+        return `<article class="corpus-row"><div><h3><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer"${englishLang(source.title, language)}>${escapeHTML(source.title)}</a></h3><p${englishLang(description, language)}>${escapeHTML(description)}</p>${curationDisclosure(source)}</div><div class="corpus-entry-meta" data-verification="${escapeHTML(source.verification)}">${escapeHTML(corpusMetadata(source))}<span aria-hidden="true">${icon("external")}</span></div></article>`;
+      },
     )
     .join("");
   if (corpusSources.length && !filtered.length)

@@ -63,14 +63,18 @@ function provenance(resource) {
         : "community")
   );
 }
+// Chinese pages show most titles and some fallbacks in English; mark them so screen
+// readers switch voice (WCAG 3.1.2 Language of Parts).
+export const englishLang = (text, language) =>
+  language === "zh" && !/[\u3400-\u9fff]/u.test(String(text ?? "")) ? ' lang="en"' : "";
 export function renderResource(resource, language, translations) {
  const t=key=>translations[language][key] ?? translations.en[key] ?? key;
- return `<article class="resource-row"><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span> · ${escapeHTML(localizedMetadata(resource.by, language))} · <span class="resource-provenance">${escapeHTML(t(provenance(resource)))}</span></p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
+ return `<article class="resource-row"><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span> · ${escapeHTML(localizedMetadata(resource.by, language))} · <span class="resource-provenance">${escapeHTML(t(provenance(resource)))}</span></p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
 }
 
 export function renderModelRow(resource, language) {
  const zh=language==='zh';
  const license=zh ? ({'Not declared':'未声明','Apache-2.0 weights; MIT server':'权重 Apache-2.0；服务代码 MIT'})[resource.license] || resource.license : resource.license;
  const group=resource.license==='CC BY-NC 4.0'?'noncommercial':resource.license==='Qwen Research'?'research':resource.license==='Not declared'?'undeclared':resource.license.startsWith('Apache-2.0')?'apache':'other';
- return `<tr class="model-row" data-license-group="${group}"><th scope="row"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(resource.title)} ${icon('external')}</a><span class="model-publisher">${escapeHTML(resource.publisher)}</span></th><td class="model-license" data-label="${zh?'声明许可':'Declared license'}">${escapeHTML(license)}</td><td class="model-scope" data-label="${zh?'范围与证据':'Scope and evidence'}">${escapeHTML(resource[language])}</td></tr>`;
+ return `<tr class="model-row" data-license-group="${group}"><th scope="row"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)} ${icon('external')}</a><span class="model-publisher">${escapeHTML(resource.publisher)}</span></th><td class="model-license" data-label="${zh?'声明许可':'Declared license'}">${escapeHTML(license)}</td><td class="model-scope" data-label="${zh?'范围与证据':'Scope and evidence'}">${escapeHTML(resource[language])}</td></tr>`;
 }
