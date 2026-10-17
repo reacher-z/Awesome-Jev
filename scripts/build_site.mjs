@@ -85,7 +85,10 @@ const discoveries = [...expansion.additions].sort((a,b)=>categoryRank(a.category
 const discoveryCategories = [...new Set(discoveries.map(row=>row.category))];
 const discoveryCounts = Object.fromEntries(discoveryCategories.map(category=>[category,discoveries.filter(row=>row.category===category).length]));
 if (!expansion.by_category || Object.keys(expansion.by_category).length!==discoveryCategories.length || discoveryCategories.some(category=>expansion.by_category[category]!==discoveryCounts[category])) throw new Error('Expansion category counts do not match accepted sources.');
-const discoveryDate = String(expansion.updated_at || expansion.completed_at || expansion.generated_at || contentDate).slice(0,10);
+// A directory's date is the newest date among the entries it renders, so new content moves its sitemap lastmod.
+const newestDate = dates => dates.filter(date => /^\d{4}-\d{2}-\d{2}$/.test(date)).sort().at(-1);
+const discoveryDate = newestDate(expansion.additions.map(row => typeof row.retrieved_at === 'string' ? row.retrieved_at.slice(0,10) : '')) || contentDate;
+const topicsDate = newestDate([contentDate, ...topics.map(topic => topic.updated)]);
 const outputs = new Map();
 const route = (language, section = '') => `${language === 'zh' ? '/zh/' : '/'}${section ? section + '/' : ''}`;
 const t = (language, key) => translations[language][key] ?? translations.en[key];
@@ -239,7 +242,7 @@ for (const language of ['en','zh']) {
   for (const topic of topics) outputs.set(`site${route(language,'topics/'+topic.slug)}index.html`,topicPage(language,topic));
 }
 const sections=['','guide','papers','models','discoveries','topics',...topics.map(topic=>'topics/'+topic.slug)];
-const sectionDate=section=>section==='guide'?guide.updated:section==='discoveries'?discoveryDate:section.startsWith('topics/')?topics.find(topic=>'topics/'+topic.slug===section).updated:contentDate;
+const sectionDate=section=>section==='guide'?guide.updated:section==='discoveries'?discoveryDate:section==='topics'?topicsDate:section.startsWith('topics/')?topics.find(topic=>'topics/'+topic.slug===section).updated:contentDate;
 outputs.set('site/sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sections.flatMap(section=>['en','zh'].map(language=>`  <url><loc>${origin+route(language,section)}</loc><lastmod>${sectionDate(section)}</lastmod>${alternateLinks(section).map(({hreflang,href})=>`<xhtml:link rel="alternate" hreflang="${hreflang}" href="${href}" />`).join('')}</url>`)).join('\n')}\n</urlset>\n`);
 outputs.set('site/data/expansion-progress.json',JSON.stringify(expansion,null,2)+'\n');
 outputs.set('site/references.bib',await readFile(resolve(root,'references.bib'),'utf8'));
