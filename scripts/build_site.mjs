@@ -150,21 +150,28 @@ function home(language) {
   html=html.replace(/<button\b([^>]*data-filter="([^"]+)"[^>]*)>([\s\S]*?)<\/button>/g,(_,attrs,category,label)=>`<button${attrs}>${label}<span class="filter-count" aria-hidden="true">${category==='All'?resources.length:resources.filter(row=>row.category===category).length}</span></button>`);
   return html;
 }
-function shell(language, section, title, description, body, list, article) {
+// indexable=false keeps the site chrome but drops canonical, alternates, social and
+// structured data, for pages served at arbitrary URLs such as 404.html.
+function shell(language, section, title, description, body, list, article, indexable=true) {
   const isZh=language==='zh', pageURL=origin+route(language,section);
   return `<!doctype html>
 <html lang="${isZh?'zh-CN':'en'}"><head>
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>${esc(title)} | Awesome Jev</title><meta name="description" content="${esc(description)}" />
-<meta name="robots" content="index,follow,max-image-preview:large" /><link rel="canonical" href="${pageURL}" />
+${indexable?`<meta name="robots" content="index,follow,max-image-preview:large" /><link rel="canonical" href="${pageURL}" />
 ${alternates(section)}
 <meta property="og:type" content="${section==='guide'||article?'article':'website'}" /><meta property="og:site_name" content="AwesomeJev" />
 <meta property="og:title" content="${esc(title)}" /><meta property="og:description" content="${esc(description)}" /><meta property="og:url" content="${pageURL}" />
-<meta property="og:locale" content="${isZh?'zh_CN':'en_US'}" /><meta property="og:image" content="${origin}/assets/social.png" /><meta name="twitter:card" content="summary_large_image" />
+<meta property="og:locale" content="${isZh?'zh_CN':'en_US'}" /><meta property="og:image" content="${origin}/assets/social.png" /><meta name="twitter:card" content="summary_large_image" />`:'<meta name="robots" content="noindex" />'}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" /><link rel="stylesheet" href="${assetURLs['styles.css']}" />
+<<<<<<< HEAD
 ${schemaTag(pageSchema(language,section,title,description,list,article))}
 </head><body><a class="skip-link" href="#main">${isZh?'跳转到正文':'Skip to content'}</a><div class="page-shell">
 <header class="masthead document-masthead"><a class="wordmark" href="${route(language)}"><span class="brand-mark" aria-hidden="true">aj</span>AwesomeJev.</a>
+=======
+${indexable?schemaTag(pageSchema(language,section,title,description,list,article))+'\n':''}</head><body><a class="skip-link" href="#main">${isZh?'跳转到正文':'Skip to content'}</a><div class="page-shell">
+<header class="masthead"><a class="wordmark" href="${route(language)}"><span class="brand-mark" aria-hidden="true">aj</span>AwesomeJev.</a>
+>>>>>>> 1b79185 (Generate a bilingual noindex 404 page that links back to both homepages)
 <nav class="main-nav" aria-label="${isZh?'主导航':'Main navigation'}"><a href="${route(language)}">${isZh?'资源索引':'Resources'}</a><a href="${route(language,'papers')}">${isZh?'论文':'Papers'}</a><a href="${route(language,'models')}">${isZh?'模型':'Models'}</a><a href="${route(language,'topics')}">${isZh?'研究专题':'Topics'}</a><a href="${route(language,'discoveries')}">${isZh?'新增资源':'New resources'}</a><a href="${route(language,'guide')}">${isZh?'研究指南':'Research guide'}</a><a href="${repo}">GitHub</a></nav>
 <div class="language-switch"><a href="${route('en',section)}" lang="en" hreflang="en" aria-current="${isZh?'false':'page'}">EN</a><span>/</span><a href="${route('zh',section)}" lang="zh-CN" hreflang="zh-CN" aria-current="${isZh?'page':'false'}">中文</a></div></header>
 <main id="main" class="document-main${section==='models'?' model-directory':''}"><nav class="breadcrumbs" aria-label="${isZh?'当前位置':'Breadcrumb'}"><a href="${route(language)}">Awesome Jev</a><span aria-hidden="true"> / </span>${section.startsWith('topics/')?`<a href="${route(language,'topics')}">${isZh?'研究专题':'Research topics'}</a><span aria-hidden="true"> / </span>`:''}<span>${esc(section==='models'?(isZh?'模型目录':'Model directory'):title)}</span></nav>
@@ -221,6 +228,13 @@ function discoveriesPage(language) {
   const body=`<p class="document-date"><strong>${discoveries.length.toLocaleString('en-US')}</strong> ${isZh?'项新增来源':'added sources'} · <time datetime="${discoveryDate}">${discoveryDate}</time> · <a href="/data/expansion-progress.json">${isZh?'下载 JSON':'Download JSON'}</a></p><p>${isZh?'条目标明与 Jev 直接相关、邻近领域或背景研究。正文筛查与摘要检查不代表全文评审、质量背书或实验复现。':'Entries distinguish direct Jev resources, related methods and research background. Source-page and abstract checks do not imply full-paper review, endorsement or experimental reproduction.'}</p>${toc}<details class="verification-legend"><summary>${isZh?'核查与计数方法':'Verification and counting method'}</summary><p>${isZh?'本目录相对冻结版本新增，排除旧链接、重复正文和论文题名。基线：':'This directory excludes prior URLs, repeated evidence and duplicate paper titles. Baseline:'}${baseline || (isZh?'见 JSON':'see JSON')}.</p><p><a href="${repo}/blob/main/docs/reviews/expansion-2026-10-16.md">${isZh?'查看本轮审阅记录':'Read the expansion review'}</a> · <a href="${repo}/blob/main/docs/source-audit.md">${isZh?'证据等级说明':'Evidence-level definitions'}</a></p></details><p><a href="${route(language)}#corpus">${isZh?'搜索完整来源库':'Search the complete source corpus'} →</a></p>${cards || `<p>${isZh?'本轮尚无已接受的新增来源。':'No new sources have been accepted in this expansion yet.'}</p>`}`;
   return shell(language,'discoveries',title,description,body,discoveries);
 }
+// GitHub Pages serves one 404.html for every unknown path, in either language, so the
+// page is bilingual, noindex and uses only root-absolute links and assets.
+function notFoundPage() {
+  const body=`<div class="prose"><section><h2>Continue browsing</h2><ul><li><a href="${route('en')}">Resource collection</a></li><li><a href="${route('en','topics')}">Research topics</a></li><li><a href="/sitemap.xml">Sitemap of every page</a></li></ul></section><section lang="zh-CN"><h2>继续浏览</h2><p>地址可能有误，或页面已经移动或下线。</p><ul><li><a href="${route('zh')}">中文资源索引</a></li><li><a href="${route('zh','topics')}">研究专题</a></li><li><a href="/sitemap.xml">网站地图（全部页面）</a></li></ul></section></div>`;
+  return shell('en','','Page not found · 页面未找到','The address may be mistyped, or the page may have moved or been retired.',body,undefined,undefined,false);
+}
+outputs.set('site/404.html',notFoundPage());
 for (const language of ['en','zh']) {
   outputs.set(`site${route(language)}index.html`,home(language));
   outputs.set(`site${route(language,'guide')}index.html`,guidePage(language));
