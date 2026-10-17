@@ -154,6 +154,14 @@ def check_text(path: Path, text: str) -> None:
             fail(relative, f"Python syntax error at line {exc.lineno}")
 
 
+def check_json(path: Path, text: str) -> None:
+    # Published data files must parse even when no script reads them.
+    try:
+        json.loads(text)
+    except json.JSONDecodeError as exc:
+        fail(str(path.relative_to(ROOT)), f"invalid JSON at line {exc.lineno}, column {exc.colno}")
+
+
 def check_ledger(path: Path, policy=None) -> list[dict]:
     result: list[dict] = []
     urls: set[str] = set()
@@ -285,6 +293,8 @@ def main() -> int:
                 fail(str(relative), "expected UTF-8 text")
                 continue
             check_text(path, text)
+            if path.suffix == ".json":
+                check_json(path, text)
         if path.suffix == ".jsonl" and path.parent == ROOT / "data":
             rows = check_ledger(path, policy)
             if ".excluded." not in path.name:
