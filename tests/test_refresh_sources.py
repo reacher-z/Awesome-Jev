@@ -534,6 +534,59 @@ class PinnedArxivObservationTests(unittest.TestCase):
         self.assertFalse(changes["added"] or changes["changed"])
 
 
+class MalformedPinnedPageTests(unittest.TestCase):
+    """Malformed fetched HTML is one document error, never an aborted scan."""
+    PROSE = b"Typed decision models require careful probability calibration and reliable evaluation. " * 8
+
+    def scan(self, pinned_page):
+        prior = primary_abstract()
+        other = "https://example.org/other-source"
+        seeds = {
+            prior["url"]: {"url": prior["url"], "title": prior["title"], "topic": "research-paper", "relation": "direct",
+                           "relevance": "Fixture paper.", "discovery_depth": 0, "fetch_url": prior["reviewed_version_url"],
+                           "discovered_from": [refresh.CURATED_PAPERS_ORIGIN]},
+            other: {"url": other, "title": "Other source", "topic": "research-paper", "relation": "adjacent",
+                    "relevance": "Fixture source.", "discovery_depth": 0, "discovered_from": [refresh.CURATED_PAPERS_ORIGIN]},
+        }
+        fetcher = Mock()
+        fetcher.fetch.side_effect = lambda target: ((pinned_page if "arxiv.org" in target else b"<html><p>" + self.PROSE + b"</p></html>"),
+                                                    target, "text/html")
+        scan = refresh.Scan(fetcher, curated_seeds=seeds, pinned_sources={prior["url"]: prior})
+        with patch.object(scan, "discover_index", return_value=([], {})), contextlib.redirect_stdout(io.StringIO()):
+            records = scan.scan_ecosystem(ledger())
+        return scan, records, other
+
+    def test_valueless_attributes_do_not_break_the_abstract_parser(self):
+        parser = refresh.ArxivAbstractPage()
+        parser.feed('<td class>x</td><blockquote class>y</blockquote><meta name="citation_date" content>')
+        self.assertEqual((parser.parts, parser.version, parser.published_at), ([], None, None))
+        parser = refresh.ArxivAbstractPage()
+        parser.feed("<td class><a>v9</a></td><blockquote class>noise</blockquote>" + arxiv_page().decode())
+        self.assertEqual(parser.version, "https://arxiv.org/abs/2609.10000v2")
+        self.assertEqual(parser.published_at, "2026-09-01")
+        self.assertIn("Typed decisions require", " ".join(parser.parts))
+
+    def test_malformed_pinned_page_is_a_document_error_and_scan_continues(self):
+        scan, records, other = self.scan(b"<html><blockquote class>" + self.PROSE + b"</blockquote></html>")
+        self.assertEqual([r["url"] for r in records], [other])
+        self.assertEqual({e["code"] for e in scan.errors}, {"pinned_paper_observation_failed:invalid_arxiv_abstract_page"})
+
+    def test_other_attribute_errors_stay_contained_to_one_document(self):
+        with patch.object(refresh.ArxivAbstractPage, "handle_starttag", side_effect=AttributeError("fixture")):
+            scan, records, other = self.scan(arxiv_page())
+        self.assertEqual([r["url"] for r in records], [other])
+        self.assertEqual({e["code"] for e in scan.errors}, {"pinned_paper_observation_failed:AttributeError"})
+        original = refresh.ecosystem.audit
+        def audit(seed):
+            if seed["url"] == other:
+                raise AttributeError("fixture")
+            return original(seed)
+        with patch.object(refresh.ecosystem, "audit", side_effect=audit):
+            scan, records, _ = self.scan(arxiv_page())
+        self.assertEqual({r["observed_version_url"] for r in records}, {"https://arxiv.org/abs/2609.10000v2"})
+        self.assertEqual(scan.errors, [{"url": other, "code": "document_failed:AttributeError"}])
+
+
 class PublicFetchTests(unittest.TestCase):
     def test_discovery_excludes_inference_api_and_normalizes_acl_pdf(self):
         with self.assertRaises(refresh.FetchError):

@@ -520,14 +520,14 @@ class ArxivAbstractPage(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
-        if tag == "blockquote" and "abstract" in attrs.get("class", "").split():
+        if tag == "blockquote" and "abstract" in (attrs.get("class") or "").split():
             self.in_abstract = True
-        if tag == "td" and "arxividv" in attrs.get("class", "").split():
+        if tag == "td" and "arxividv" in (attrs.get("class") or "").split():
             self.in_version = True
         if self.in_version and tag == "a":
             self.version = arxiv_version_url(attrs.get("href")) or self.version
         if tag == "meta" and attrs.get("name") == "citation_date":
-            value = attrs.get("content", "").replace("/", "-")
+            value = (attrs.get("content") or "").replace("/", "-")
             if re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
                 self.published_at = value
 
@@ -662,7 +662,7 @@ class Scan:
                     "canonical_page_separately_fetched": True, "full_text_reviewed": False, "editorial_reviewed": False,
                     "relevance": "Observed primary abstract for a pinned paper; changes require maintainer review.",
                     "screening_method": "Primary arXiv abstract and version metadata only; no full-paper review or reproduction."})
-            except (FetchError, ValueError, UnicodeError) as error:
+            except (FetchError, ValueError, UnicodeError, AttributeError) as error:
                 self.error(requested, "pinned_paper_observation_failed:" + safe_exception_code(error))
         return observations, children if observations else []
 
@@ -723,7 +723,7 @@ class Scan:
                                     seeds.setdefault(key, child)
                                 except FetchError:
                                     self.excluded += 1
-                        except (FetchError, ValueError, TypeError, KeyError) as e:
+                        except (FetchError, ValueError, TypeError, KeyError, AttributeError) as e:
                             self.error(seed["url"], "document_failed:" + safe_exception_code(e))
                         if i % 200 == 0:
                             print(json.dumps({"phase": "ecosystem", "completed": i}), flush=True)
