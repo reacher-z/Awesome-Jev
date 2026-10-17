@@ -145,7 +145,7 @@ function pageSchema(language, section, title, description, list, article) {
   const url = origin + route(language, section);
   const page = {'@type':list ? 'CollectionPage' : 'WebPage','@id':url+'#page',url,name:title,description,inLanguage:language==='zh'?'zh-CN':'en',isPartOf:{'@id':origin+'/#website'}};
   if (list) page.mainEntity = {'@type':'ItemList',numberOfItems:list.length,itemListElement:list.map((row, i)=>({'@type':'ListItem',position:i+1,name:row.title,url:row.url}))};
-  else page.mainEntity = {'@type':'Article',headline:title,inLanguage:page.inLanguage,dateModified:article?.updated || guide.updated,...(article?{datePublished:article.published}:{}),author:{'@id':origin+'/#organization'},publisher:{'@id':origin+'/#organization'},mainEntityOfPage:{'@id':page['@id']},citation:article?.citations || [...new Set(guide[language].sections.flatMap(s=>s.paragraphs.flatMap(p=>p.sources.map(source=>source.url))))]};
+  else page.mainEntity = {'@type':'Article',headline:title,inLanguage:page.inLanguage,dateModified:article?.updated || guide.updated,...(article?{datePublished:article.published}:{}),author:{'@id':origin+'/#organization'},publisher:{'@id':origin+'/#organization'},mainEntityOfPage:{'@id':page['@id']},image:{'@type':'ImageObject',...socialImage},citation:article?.citations || [...new Set(guide[language].sections.flatMap(s=>s.paragraphs.flatMap(p=>p.sources.map(source=>source.url))))]};
   const graph = [...identity, page];
   if (section) {
     const crumbs=[{'@type':'ListItem',position:1,name:'Awesome Jev',item:origin+route(language)}];
@@ -159,6 +159,16 @@ function pageSchema(language, section, title, description, list, article) {
 const alternateLinks = section => [{hreflang:'en',href:origin+route('en',section)},{hreflang:'zh-CN',href:origin+route('zh',section)},{hreflang:'x-default',href:origin+route('en',section)}];
 function alternates(section) {
   return alternateLinks(section).map(({hreflang,href})=>`<link rel="alternate" hreflang="${hreflang}" href="${href}" />`).join('\n');
+}
+// One social card for every indexable page: locale pair, the share image with its
+// dimensions and alt text in the page language, and the large Twitter card.
+// tests/test_site_social_alt.py checks the dimensions against site/assets/social.png.
+const socialImage = {url:`${origin}/assets/social.png`, width:1200, height:630};
+function socialMeta(language) {
+  const isZh=language==='zh', alt=esc(t(language,'socialImageAlt'));
+  return `<meta property="og:locale" content="${isZh?'zh_CN':'en_US'}" /><meta property="og:locale:alternate" content="${isZh?'en_US':'zh_CN'}" />
+<meta property="og:image" content="${socialImage.url}" /><meta property="og:image:type" content="image/png" /><meta property="og:image:width" content="${socialImage.width}" /><meta property="og:image:height" content="${socialImage.height}" /><meta property="og:image:alt" content="${alt}" />
+<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:image" content="${socialImage.url}" /><meta name="twitter:image:alt" content="${alt}" />`;
 }
 function localizeHTML(html, language) {
   html = html.replace(/<([a-z][a-z0-9]*)\b([^>]*\bdata-i18n="([^"]+)"[^>]*)>[\s\S]*?<\/\1\s*>/g, (all,tag,attrs,key)=>typeof t(language,key)==='string'?`<${tag}${attrs}>${t(language,key)}</${tag}>`:all);
@@ -174,6 +184,7 @@ function home(language) {
   let html = template.replace('<html lang="en">',`<html lang="${language==='zh'?'zh-CN':'en'}">`);
   const values = {TITLE:esc(title),CANONICAL:origin+route(language),STRUCTURED_DATA:schemaTag(pageSchema(language,'',title,description,resources)),PAPERS_URL:route(language,'papers'),PAPERS_LABEL:language==='zh'?'论文目录':'Research papers',DISCOVERIES_URL:route(language,'discoveries'),DISCOVERIES_LABEL:language==='zh'?'新增资源':'New resources',RESOURCE_ROWS:resources.map(row=>renderResource(row,language,translations)).join('\n'),RESOURCE_COUNT:esc(t(language,'resourceCount')(resources.length,resources.length)),NOSCRIPT_NOTE:language==='zh'?'所有精选资源已列在本页。启用 JavaScript 后可使用搜索与筛选；也可浏览独立论文目录。':'All curated resources are listed on this page. Enable JavaScript to search and filter, or browse the dedicated papers directory.'};
   values.IMPORT_MAP = `<script type="importmap">${json(importMap)}</script>`;
+  values.SOCIAL_META = socialMeta(language);
   values.TOPICS_URL = route(language,'topics');
   values.TOPICS_LABEL = language==='zh'?'研究专题':'Research topics';
   values.MODELS_URL = route(language,'models');
@@ -189,10 +200,7 @@ function home(language) {
   html=localizeHTML(html,language)
     .replace(/(<meta\s+(?:name="description"|property="og:description"|name="twitter:description")\s+content=")[^"]*("\s*\/>)/g,(_,start,end)=>start+esc(description)+end)
     .replace(/(<meta\s+(?:property="og:title"|name="twitter:title")\s+content=")[^"]*("\s*\/>)/g,(_,start,end)=>start+esc(title)+end)
-    .replace(/(<meta\s+(?:property="og:image:alt"|name="twitter:image:alt")\s+content=")[^"]*("\s*\/>)/g,(_,start,end)=>start+esc(t(language,'socialImageAlt'))+end)
     .replace(/(<meta property="og:url" content=")[^"]+/,(_,start)=>start+origin+route(language))
-    .replace(/(<meta property="og:locale" content=")[^"]+/,(_,start)=>start+(language==='zh'?'zh_CN':'en_US'))
-    .replace(/(<meta property="og:locale:alternate" content=")[^"]+/,(_,start)=>start+(language==='zh'?'en_US':'zh_CN'))
     .replace(/(data-language="(en|zh)")/g,(_,attr,code)=>`${attr} aria-current="${code===language?'page':'false'}"`)
     .replace(/href="\/guide\/" data-document="survey"/,`href="${route(language,'guide')}" data-document="survey"`);
   if(language==='zh')html=html.replace('href="https://github.com/reacher-z/Awesome-Jev/blob/main/README.md" data-document="readme"','href="https://github.com/reacher-z/Awesome-Jev/blob/main/README.zh-CN.md" data-document="readme"');
@@ -205,6 +213,8 @@ function shell(language, section, title, description, body, list, article, index
   const isZh=language==='zh', pageURL=origin+route(language,section);
   // A section's link is the current page there; on a topic note it marks the current section.
   const current=navSection=>navSection===section?' aria-current="page"':section.startsWith(navSection+'/')?' aria-current="true"':'';
+  // Article pages (og:type article) state their dates; the guide records only its last update.
+  const articleDates=article || (section==='guide' ? {updated:guide.updated} : null);
   return `<!doctype html>
 <html lang="${isZh?'zh-CN':'en'}"><head>
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -213,7 +223,8 @@ ${indexable?`<meta name="robots" content="index,follow,max-image-preview:large" 
 ${alternates(section)}
 <meta property="og:type" content="${section==='guide'||article?'article':'website'}" /><meta property="og:site_name" content="AwesomeJev" />
 <meta property="og:title" content="${esc(title)}" /><meta property="og:description" content="${esc(description)}" /><meta property="og:url" content="${pageURL}" />
-<meta property="og:locale" content="${isZh?'zh_CN':'en_US'}" /><meta property="og:image" content="${origin}/assets/social.png" /><meta name="twitter:card" content="summary_large_image" />`:'<meta name="robots" content="noindex" />'}
+${socialMeta(language)}${articleDates?`
+${articleDates.published?`<meta property="article:published_time" content="${articleDates.published}" />`:''}<meta property="article:modified_time" content="${articleDates.updated}" />`:''}`:'<meta name="robots" content="noindex" />'}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" /><link rel="stylesheet" href="${assetURLs['styles.css']}" />
 ${indexable?schemaTag(pageSchema(language,section,title,description,list,article))+'\n':''}</head><body><a class="skip-link" href="#main">${isZh?'跳转到正文':'Skip to content'}</a><div class="page-shell">
 <header class="masthead document-masthead"><a class="wordmark" href="${route(language)}"><span class="brand-mark" aria-hidden="true">aj</span>AwesomeJev.</a>
