@@ -5,7 +5,7 @@ import { readFile, writeFile, mkdir, readdir, rm, rmdir } from 'node:fs/promises
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
-import { resources, translations } from '../site/catalog.mjs';
+import { resources, translations, paperThemes } from '../site/catalog.mjs';
 import { renderResource, renderModelRow, renderEvidenceLegend, evidenceOf, englishLang, escapeHTML as esc, artifactKinds, hasCode } from '../site/resource-view.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -87,6 +87,11 @@ for (const {title, artifacts} of resources.filter(row => row.artifacts)) {
   const {unverified, ...links} = artifacts;
   const valid = Object.entries(links).every(([kind, urls]) => artifactKinds.includes(kind) && [urls].flat().length && [urls].flat().every(url => /^https:\/\/\S+$/.test(url)));
   if (!valid || (unverified !== undefined && !artifactKinds.includes(unverified))) throw new Error(`Invalid artifact links for ${title}.`);
+}
+// Every paper names one of the README sections; an artifact caveat comes in both languages.
+for (const paper of papers) {
+  if (!paperThemes.some(theme=>theme.id===paper.theme)) throw new Error(`Paper without a known README theme: ${paper.url}`);
+  if (paper.artifact_note!==undefined && ['en','zh'].some(language=>typeof paper.artifact_note[language]!=='string' || !paper.artifact_note[language].trim())) throw new Error(`Incomplete bilingual artifact note: ${paper.url}`);
 }
 const categoryOrder = ['Papers','Models','Datasets','Projects','Tools','Evaluations','Guides and evaluations','Guides','Research foundations','Foundations'];
 const relationLabels = {direct:['Directly related','直接相关'],adjacent:['Related field','邻近领域'],background:['Research background','研究背景']};
@@ -287,7 +292,7 @@ const sectionDate=section=>section==='guide'?guide.updated:section==='discoverie
 outputs.set('site/sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sections.flatMap(section=>['en','zh'].map(language=>`  <url><loc>${origin+route(language,section)}</loc><lastmod>${sectionDate(section)}</lastmod>${alternateLinks(section).map(({hreflang,href})=>`<xhtml:link rel="alternate" hreflang="${hreflang}" href="${href}" />`).join('')}</url>`)).join('\n')}\n</urlset>\n`);
 outputs.set('site/data/expansion-progress.json',JSON.stringify(expansion,null,2)+'\n');
 outputs.set('site/references.bib',await readFile(resolve(root,'references.bib'),'utf8'));
-outputs.set('site/papers.json',JSON.stringify({title:'Awesome Jev research papers',url:origin+'/papers/',updated:contentDate,scope:'Curated direct preprints; findings remain author-reported. No experimental reproduction implied.',papers},null,2)+'\n');
+outputs.set('site/papers.json',JSON.stringify({title:'Awesome Jev research papers',url:origin+'/papers/',updated:contentDate,scope:'Curated direct preprints; findings remain author-reported. No experimental reproduction implied.',themes:paperThemes,papers},null,2)+'\n');
 outputs.set('site/models.json',JSON.stringify({title:'Awesome Jev decision model directory',url:origin+'/models/',updated:contentDate,scope:'Independent publisher releases and model-card summaries. Declared licenses and reported capabilities are not independently reproduced results or a universal ranking.',models},null,2)+'\n');
 // llms.txt lists the sitemap's routes in both languages, so a new topic note appears automatically.
 const pageSummaries={

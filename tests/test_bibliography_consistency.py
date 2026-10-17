@@ -2,8 +2,9 @@
 
 Paper metadata is maintained by hand in README.md, README.zh-CN.md, references.bib and
 site/catalog.mjs. These tests parse all four and require, for every arXiv ID, the same
-version, version date, first-submission date, title, author credit and artifact links, and
-require the counts the READMEs state to equal the counted entries.
+version, version date, first-submission date, title, author credit, artifact links and
+artifact caveat, and the same theme (README section), and require the counts the READMEs
+state to equal the counted entries.
 """
 
 from pathlib import Path
@@ -102,20 +103,30 @@ def bibliography():
 
 
 def catalog_papers():
+    """Return {arXiv ID: catalog row}, repeated IDs and the catalog's ordered paper themes."""
     script = (
-        'import {resources} from "./site/catalog.mjs";'
-        'console.log(JSON.stringify(resources.filter(row => row.category === "Papers")));'
+        'import {resources, paperThemes} from "./site/catalog.mjs";'
+        'console.log(JSON.stringify({papers: resources.filter(row => row.category === "Papers"), themes: paperThemes}));'
     )
     result = subprocess.run(["node", "--input-type=module", "-e", script],
                             cwd=ROOT, text=True, capture_output=True, check=True)
+    catalog = json.loads(result.stdout)
     papers, repeated = {}, []
-    for row in json.loads(result.stdout):
+    for row in catalog["papers"]:
         match = re.fullmatch(r"https://arxiv\.org/abs/(\d{4}\.\d{4,5})v(\d+)", row["url"])
         row["id"], row["version"] = (match[1], match[2]) if match else (row["url"], None)
         if row["id"] in papers:
             repeated.append(row["id"])
         papers[row["id"]] = row
-    return papers, repeated
+    return papers, repeated, catalog["themes"]
+
+
+def artifact_caveat(cell):
+    """The README Artifacts text beside the links, or None when the cell has no links or no caveat."""
+    link = r"\[[^\]]+\]\(https?://[^)\s]+\)"
+    if not re.search(link, cell):
+        return None
+    return re.sub(r"^(?:\s*[·;,；，]\s*)+", "", re.sub(link, "", cell)).strip() or None
 
 
 def plain_title(title):
@@ -134,7 +145,7 @@ class BibliographyConsistencyTests(unittest.TestCase):
         for language in README:
             cls.readme[language], cls.malformed[language], cls.papers_text[language] = readme_papers(language)
         cls.bib_keys, cls.bib, cls.bib_repeated = bibliography()
-        cls.catalog, cls.catalog_repeated = catalog_papers()
+        cls.catalog, cls.catalog_repeated, cls.themes = catalog_papers()
 
     def test_every_paper_table_row_parses(self):
         for language, rows in self.malformed.items():
@@ -230,6 +241,28 @@ class BibliographyConsistencyTests(unittest.TestCase):
                 self.assertEqual(linked, set(row["artifact_urls"]), "README Artifacts links and catalog artifacts")
                 self.assertEqual(unverified is not None, "not verified" in row["artifacts"],
                                  "README and catalog mark the same unverified artifacts")
+
+    def test_artifact_caveats_agree(self):
+        for paper, entry in self.catalog.items():
+            with self.subTest(paper=paper):
+                for language, papers in self.readme.items():
+                    if paper in papers:
+                        self.assertEqual(entry.get("artifact_note", {}).get(language), artifact_caveat(papers[paper]["artifacts"]),
+                                         f"{README[language].name} Artifacts caveat and catalog artifact_note")
+
+    def test_readme_sections_are_the_catalog_paper_themes(self):
+        for language, path in README.items():
+            sections = [line[4:] for line in self.papers_text[language].split("\n") if line.startswith("### ")]
+            self.assertEqual(sections, [theme[language] for theme in self.themes],
+                             f"{path.name}: paper sections differ from paperThemes in site/catalog.mjs")
+        themes = {theme["id"]: theme for theme in self.themes}
+        for paper, entry in self.catalog.items():
+            with self.subTest(paper=paper):
+                self.assertIn(entry.get("theme"), themes, "catalog theme")
+                for language, papers in self.readme.items():
+                    if paper in papers:
+                        self.assertEqual(papers[paper]["theme"], themes[entry["theme"]][language],
+                                         f"{README[language].name} section and catalog theme")
 
     def test_whats_new_lists_the_ten_newest_table_rows(self):
         for language, path in README.items():

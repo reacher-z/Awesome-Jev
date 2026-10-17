@@ -34,7 +34,7 @@ Then run `node scripts/build_site.mjs` and commit the regenerated files under `s
 
 Credit a paper's authors the same way in both README paper tables and its catalog `by` field: name every author by surname when there are up to four (`Rao & Callison-Burch`, `Deng, Fan, Zhang & Xie`), and write the first author's surname followed by `et al.` when there are five or more.
 
-A paper's links in the README Artifacts column also go in its catalog `artifacts` field, grouped by kind: `code`, `data`, `model`, `demo` or `page`. A link to both code and data is listed under both kinds. Where the README says an artifact was not verified, record its kind as `unverified` instead of a link. The website shows these as link chips, and the tests require the README and catalog links to match.
+A paper's links in the README Artifacts column also go in its catalog `artifacts` field, grouped by kind: `code`, `data`, `model`, `demo` or `page`. A link to both code and data is listed under both kinds. Where the README says an artifact was not verified, record its kind as `unverified` instead of a link. The website shows these as link chips, and the tests require the README and catalog links to match. Text the README cell gives beside its links ("README inspected, not executed.") goes in `artifact_note` in both languages, and `theme` names the README section the paper sits in, one of `paperThemes`.
 
 ## Evidence quality
 
@@ -107,7 +107,7 @@ Submit only public source material and original summaries. Keep API keys, `.env`
 
 论文作者在两份 README 的论文表格与 catalog 的 `by` 字段中以同一方式署名：作者不超过四人时列出全部作者的姓（如 `Rao & Callison-Burch`、`Deng, Fan, Zhang & Xie`），五人及以上时写第一作者的姓加 `et al.`。
 
-论文在 README「材料」列中的链接也要按类型写入 catalog 的 `artifacts` 字段：`code`、`data`、`model`、`demo` 或 `page`。同时提供代码与数据的链接在两种类型下各列一次。README 注明某项材料未核验时，用 `unverified` 记录其类型，不写链接。网站据此显示链接标签，测试要求 README 与 catalog 的链接一致。
+论文在 README「材料」列中的链接也要按类型写入 catalog 的 `artifacts` 字段：`code`、`data`、`model`、`demo` 或 `page`。同时提供代码与数据的链接在两种类型下各列一次。README 注明某项材料未核验时，用 `unverified` 记录其类型，不写链接。网站据此显示链接标签，测试要求 README 与 catalog 的链接一致。README 单元格中链接旁的说明文字（如“仅检查 README，未执行。”）以中英文写入 `artifact_note`；`theme` 注明论文所在的 README 章节，取值为 `paperThemes` 之一。
 
 ### 证据质量
 

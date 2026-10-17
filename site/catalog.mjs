@@ -366,6 +366,7 @@ const resources = [
     "date": "2026-10-09",
     "first_submitted": "2026-10-08",
     "url": "https://arxiv.org/abs/2610.11392v2",
+    "theme": "evaluation",
     "en": "The hosted model is wording-sensitive and underconfident, and under asymmetric costs acting on its probabilities can cost more than taking its top answer; synthetic policy-labelled suites also report paraphrase ranges and calibration against a finite-sample noise floor.",
     "zh": "托管模型对措辞敏感且系统性信心不足，在非对称成本下按其概率行动的代价可能高于直接采用最高答案；基于带策略标签的合成测试集，还报告不同改写下的准确率范围及相对有限样本噪声下限的校准误差。"
   },
@@ -376,6 +377,7 @@ const resources = [
     "date": "2026-10-12",
     "first_submitted": "2026-10-12",
     "url": "https://arxiv.org/abs/2610.16655v1",
+    "theme": "calibration",
     "en": "Adding an irrelevant option shifts jev-1.13.0’s gold-versus-rival log-odds, more so as options grow, so its probabilities are relative to the option list; independent yes/no scoring removes this but is less accurate (pre-registered, 299,463 calls, three datasets).",
     "zh": "加入无关选项会改变 jev-1.13.0 对正确标签与最强错误标签的对数几率，选项越多偏移越大，因此其概率只相对于所给选项列表成立；逐项独立的是非评分可消除这种依赖，但准确率更低（预注册，299,463 次调用，三个数据集）。"
   },
@@ -387,6 +389,8 @@ const resources = [
     "first_submitted": "2026-10-13",
     "artifacts": {"code": "https://github.com/xiaoxiaohg8d/JevProbe-", "data": "https://github.com/xiaoxiaohg8d/JevProbe-"},
     "url": "https://arxiv.org/abs/2610.18612v1",
+    "theme": "robustness",
+    "artifact_note": {"en": "README inspected, not executed.", "zh": "仅检查 README，未执行。"},
     "en": "JevProbe traces attacker-controlled context into the decisions that 228 popular Jev applications act on; in 2,273 curated cases (at most ten per app, flips selected first, so not an unbiased sample) 81.5% flip, 98.6% of flips with potential downstream security impact, and existing defenses offer limited protection.",
     "zh": "JevProbe 追踪攻击者可控的上下文如何影响 228 个热门 Jev 应用据以执行的决策；在 2,273 个精选用例中（每个应用至多十条、优先选取翻转案例，并非无偏样本），81.5% 出现决策翻转，其中 98.6% 可能造成下游安全影响，现有防御作用有限。"
   },
@@ -397,6 +401,7 @@ const resources = [
     "date": "2026-10-14",
     "first_submitted": "2026-10-14",
     "url": "https://arxiv.org/abs/2610.20907v1",
+    "theme": "robustness",
     "en": "On 47,611 held-out prompt-injection examples, Jev ranks second in AUROC after an LLM judge, its native probabilities do not consistently beat post-hoc calibrated classifiers, and a 1% false-negative target forces over 91.8% escalation in every gate-reviewer system.",
     "zh": "在 47,611 条留出的提示注入样本上，Jev 的 AUROC 仅次于 LLM 评审，其原生概率并不总优于事后校准的分类器分数；若把漏报率目标定为 1%，所有门控—复核系统都需升级处理超过 91.8% 的输入。"
   },
@@ -407,6 +412,7 @@ const resources = [
     "date": "2026-10-13",
     "first_submitted": "2026-10-13",
     "url": "https://arxiv.org/abs/2610.18529v1",
+    "theme": "applications",
     "en": "Across 15 medical datasets (8,742 instances), Jev rivals leading models on text-driven tasks, is weaker on numerical ones and is the most stable under question-format changes; most models miss absent correct answers. A benchmark study, not clinical validation.",
     "zh": "在 15 个医学数据集（8,742 个实例）上，Jev 在文本主导任务上可比肩领先模型、数值任务较弱，题目格式变化下最稳定；多数模型难以识别正确答案缺失。这是基准研究，不是临床验证。"
   },
@@ -418,6 +424,8 @@ const resources = [
     "first_submitted": "2026-10-13",
     "artifacts": {"data": "https://github.com/HKUST-KnowComp/Jev-ToM"},
     "url": "https://arxiv.org/abs/2610.18610v1",
+    "theme": "evaluation",
+    "artifact_note": {"en": "source-benchmark terms apply.", "zh": "各来源基准的使用条款仍然适用。"},
     "en": "On 11,117 English Theory of Mind questions from nine benchmarks, Jev reaches 73.2% source-balanced accuracy and ranks first or second in all six capability groups among twelve typed and generative models; confidence-based selection is benchmark-dependent, and supplied reasons repair or overturn answers depending on how they are attached.",
     "zh": "在来自九个基准的 11,117 道英文心智理论题上，Jev 的来源均衡准确率为 73.2%，在十二个类型化与生成式模型中六类能力均列前二；基于置信度的选择效果因基准而异，附加理由则视其附加方式，可能纠错，也可能推翻正确答案。"
   },
@@ -428,6 +436,7 @@ const resources = [
     "date": "2026-10-09",
     "first_submitted": "2026-10-09",
     "url": "https://arxiv.org/abs/2610.13092v1",
+    "theme": "evaluation",
     "en": "Jev cut decision cost and latency for five agents in ALFWorld and AndroidWorld (4,500 runs), but two mobile agents lost more success, extra reasoning and interactions absorbed the savings, and cost per success rose for one agent.",
     "zh": "Jev 让 ALFWorld 与 AndroidWorld 中五个 agent 的决策成本和时延下降（共 4,500 次运行），但两个移动端 agent 成功率降幅较大，辅助推理与额外交互抵消了节省，其中一个 agent 的单次成功成本反而上升。"
   },
@@ -438,6 +447,7 @@ const resources = [
     "date": "2026-10-15",
     "first_submitted": "2026-10-15",
     "url": "https://arxiv.org/abs/2610.21614v1",
+    "theme": "architectures",
     "en": "An independent Jev-style decision head on Qwen-Audio-3.1-ASR-Flash-Next gives Choice, Noul and Score readouts over audio, reporting 84.06% on MMSU, a 6.50% speaker-verification equal error rate and about 20× faster inference than its own base model.",
     "zh": "在 Qwen-Audio-3.1-ASR-Flash-Next 上加入独立实现的 Jev 式决策头，对音频给出 Choice、Noul 与 Score 读出；报告 MMSU 准确率 84.06%、说话人验证等错误率 6.50%，推理速度约为其基础模型的 20 倍。"
   },
@@ -448,6 +458,7 @@ const resources = [
     "date": "2026-10-14",
     "first_submitted": "2026-10-14",
     "url": "https://arxiv.org/abs/2610.19619v1",
+    "theme": "calibration",
     "en": "In 41,500 responses Jev's selected answers look largely unbiased, but its judgments shift with irrelevant numbers and option order, and several bias manipulations move its probabilities even when the answer stays the same; on 30 adapted conjunction tasks it violates the conjunction rule in 54% of 15,000 responses.",
     "zh": "在 41,500 次回答中，Jev 选出的答案大体未显示偏差，但其判断会受无关数字和选项顺序影响，部分认知偏差操纵即使不改变所选答案也会明显改变返回的概率；在 30 个改编的合取任务上，15,000 次回答中有 54% 违反合取规则。"
   },
@@ -459,6 +470,8 @@ const resources = [
     "first_submitted": "2026-10-04",
     "artifacts": {"code": "https://github.com/shihe98/Security_Privacy_Jev"},
     "url": "https://arxiv.org/abs/2610.04985v1",
+    "theme": "robustness",
+    "artifact_note": {"en": "no license declared.", "zh": "未声明许可。"},
     "en": "Tests the official Jev API and the local NanoJev for prompt injection, data-poisoning backdoors, membership, attribute and knowledge inference, and dual use in four detection tasks; the authors report Jev remains vulnerable to the examined threats.",
     "zh": "以官方 Jev API 和本地模型 NanoJev 检验提示注入、数据投毒后门，成员、属性与内部知识推断，以及四项检测任务中的双重用途；作者报告 Jev 对所考察的威胁仍然脆弱。"
   },
@@ -469,6 +482,7 @@ const resources = [
     "date": "2026-10-14",
     "first_submitted": "2026-10-14",
     "url": "https://arxiv.org/abs/2610.19811v1",
+    "theme": "calibration",
     "en": "Jev and other System One models make binary allow/block or retain/discard decisions without human deferral; across six moderation, safety and reranking datasets, naive threshold selection exceeds the target risk in about half the settings, against 7.8% for Learn Then Test.",
     "zh": "Jev 等 System One 模型在无法转交人工时做二元放行／拦截或保留／丢弃决策；在六个审核、安全与重排序数据集上，朴素阈值选择约在一半设置中超出目标风险，Learn Then Test 仅为 7.8%。"
   },
@@ -480,6 +494,8 @@ const resources = [
     "first_submitted": "2026-10-05",
     "artifacts": {"code": "https://github.com/ufakai/ufakzeka-karar", "model": "https://huggingface.co/ufakai/ufakzeka-karar"},
     "url": "https://arxiv.org/abs/2610.06744v1",
+    "theme": "architectures",
+    "artifact_note": {"en": "Apache-2.0.", "zh": "Apache-2.0。"},
     "en": "An open 182M-parameter Turkish model scores each option blind to the others, so answers ignore option order, and adds a “not sure” signal; its 7th-of-16 HakemBench rank is not blind, since later runs trained after full-test results were read.",
     "zh": "开源的 1.82 亿参数土耳其语模型对每个选项独立评分，答案不受选项顺序影响，并提供“不确定”信号；其在 HakemBench 16 行中排第 7 的结果并非盲测，因为后续训练是在读过完整测试结果后进行的。"
   },
@@ -491,6 +507,7 @@ const resources = [
     "first_submitted": "2026-09-30",
     "artifacts": {"code": "https://github.com/lytang63/OmniMed-Jev"},
     "url": "https://arxiv.org/abs/2610.00381v1",
+    "theme": "applications",
     "en": "Medical candidate-conditioned decisions are compared with a matched generative baseline; calibration gains do not isolate interface effects from training differences or establish clinical readiness.",
     "zh": "将医学候选条件决策与匹配的生成式基线比较；校准收益未分离接口与训练差异的影响，也不能证明临床部署成熟度。"
   },
@@ -502,6 +519,7 @@ const resources = [
     "first_submitted": "2026-10-02",
     "artifacts": {"code": "https://github.com/adventists-ai/duplexjev"},
     "url": "https://arxiv.org/abs/2610.02638v1",
+    "theme": "architectures",
     "en": "DuplexJev connects ASR hidden states to a frozen LLM for batched answer-token readout; connector-specific speech tasks and eight-GPU timing do not establish single-device or live-agent latency.",
     "zh": "DuplexJev 将 ASR 隐藏状态接入冻结 LLM，通过答案 token 读出批量决策；连接器相关的语音任务结果与八 GPU 计时，不能证明单设备或实时 agent 延迟。"
   },
@@ -512,6 +530,7 @@ const resources = [
     "date": "2026-10-05",
     "first_submitted": "2026-10-05",
     "url": "https://arxiv.org/abs/2610.06425v1",
+    "theme": "evaluation",
     "en": "Surveys semantic engines in network control loops; separates valid decisions, action feasibility, service checks and deadline attainment, with bounded event-model tests rather than production validation.",
     "zh": "综述网络控制环中的语义引擎，区分决策格式有效、动作可行、服务核查与期限达成；验证来自有界事件模型测试，而非生产部署。"
   },
@@ -523,6 +542,7 @@ const resources = [
     "first_submitted": "2026-10-09",
     "artifacts": {"code": "https://github.com/tnromy/evaluating-system-one-models-for-indonesian-regional-languages"},
     "url": "https://arxiv.org/abs/2610.14112v1",
+    "theme": "evaluation",
     "en": "Tests Jev and multilingual Laya on Indonesian regional-language tasks; stable expected calibration error can coexist with worse error ranking, while human translation, label budgets and cascade choices change comparisons.",
     "zh": "在印尼地方语言任务中测试 Jev 与多语言 Laya；预期校准误差稳定仍可伴随错误排序变差，人类翻译、标签预算与级联选择会改变比较条件。"
   },
@@ -533,6 +553,7 @@ const resources = [
     "date": "2026-10-01",
     "first_submitted": "2026-10-01",
     "url": "https://arxiv.org/abs/2610.02586v1",
+    "theme": "robustness",
     "en": "Studies option-label bias in open-weight decision models; prompt-rendering changes with fixed weights implicate the label/definition interface, without testing hosted Jev.",
     "zh": "研究开放权重决策模型的选项标签偏置；固定权重后改变提示渲染，指向标签／定义接口的影响，未测试托管 Jev。"
   },
@@ -544,6 +565,7 @@ const resources = [
     "first_submitted": "2026-10-05",
     "artifacts": {"code": "https://github.com/VictorYXL/GraphDecisionBench"},
     "url": "https://arxiv.org/abs/2610.06354v3",
+    "theme": "evaluation",
     "en": "Compares graph decisions across fourteen model-interface configurations; local adjacency, graph-text evidence use and sequential solution quality are separate capabilities.",
     "zh": "比较十四种模型—接口配置的图决策；局部邻接识别、图文证据利用与序列构造解的质量是不同能力。"
   },
@@ -555,6 +577,7 @@ const resources = [
     "first_submitted": "2026-10-01",
     "artifacts": {"code": "https://github.com/SihanLv/AudioJev-Inference", "model": "https://huggingface.co/shlv/AudioJev"},
     "url": "https://arxiv.org/abs/2610.01293v1",
+    "theme": "architectures",
     "en": "Learns audio-conditioned candidate probabilities with aligned option-permutation training; order stability and empirical correctness calibration remain different properties.",
     "zh": "通过按候选身份对齐的选项重排训练学习音频条件概率；顺序稳定性与概率符合实际正确率仍是不同性质。"
   },
@@ -640,6 +663,7 @@ const resources = [
     "date": "2026-09-24",
     "first_submitted": "2026-09-24",
     "url": "https://arxiv.org/abs/2609.30186v1",
+    "theme": "applications",
     "en": "Uses VLM local-goal planning with Jev action selection over Android accessibility-tree candidates; reported time and API-cost savings are conditional on successful trajectories and the tested controller configurations.",
     "zh": "用 VLM 规划局部目标，再由 Jev 从 Android 无障碍树候选中选动作；报告的时延和 API 成本节省仅针对成功轨迹及所测控制器配置。"
   },
@@ -651,6 +675,7 @@ const resources = [
     "first_submitted": "2026-09-23",
     "artifacts": {"code": "https://github.com/sc2musa/Jev_Star"},
     "url": "https://arxiv.org/abs/2609.27331v1",
+    "theme": "applications",
     "en": "Combines Jev action selection with persistent language-model planning for StarCraft II; limited full-game evidence and simultaneous interface changes prevent isolating the planning contribution.",
     "zh": "在星际争霸 II 中结合 Jev 动作选择与持续的语言模型规划；完整对局证据有限，同时发生的接口变化使规划贡献无法单独归因。"
   },
@@ -661,6 +686,7 @@ const resources = [
     "date": "2026-10-06",
     "first_submitted": "2026-10-06",
     "url": "https://arxiv.org/abs/2610.08155v1",
+    "theme": "applications",
     "en": "Separates bounded multi-agent coordination from LLM reasoning through a controller–reader loop; reported GPT-4o-token and end-to-end latency reductions concern complete framework comparisons on seven benchmarks.",
     "zh": "通过控制器—读取器循环分离多智能体的有界协调与 LLM 推理；报告的 GPT-4o token 用量和端到端时延下降来自七个基准上的完整框架比较。"
   },
@@ -711,6 +737,7 @@ const resources = [
     "date": "2026-10-06",
     "first_submitted": "2026-09-29",
     "url": "https://arxiv.org/abs/2610.00346v2",
+    "theme": "evaluation",
     "en": "A common-request harness compares typed decision models, generative readouts and trained classifiers; accuracy, selective coverage and out-of-scope acceptance depend on label access and task.",
     "zh": "用共同请求框架比较类型化决策模型、生成模型读出与训练分类器；准确率、选择性覆盖率和域外接纳取决于是否有任务标签及具体任务。"
   },
@@ -721,6 +748,7 @@ const resources = [
     "date": "2026-10-13",
     "first_submitted": "2026-10-01",
     "url": "https://arxiv.org/abs/2610.02076v3",
+    "theme": "architectures",
     "en": "Compares frozen Qwen decision readouts with optional KL-anchored fine-tuning and budgeted reasoning; reported gains depend on backbone size and routing workload, not disclosure of hosted Jev internals.",
     "zh": "比较冻结 Qwen 的决策读出、带 KL 锚定的可选微调与限预算推理；所报收益依赖骨干规模和路由任务，并不揭示托管 Jev 内部实现。"
   },
@@ -732,6 +760,7 @@ const resources = [
     "first_submitted": "2026-10-01",
     "artifacts": {"code": ["https://github.com/ufakai/hakembench", "https://github.com/ufakai/ufakzeka-karar"], "data": "https://github.com/ufakai/hakembench", "model": "https://huggingface.co/ufakai/ufakzeka-karar"},
     "url": "https://arxiv.org/abs/2610.02293v1",
+    "theme": "evaluation",
     "en": "Turkish typed-decision evaluation reports decision quality, Brier-based probability quality and risk–coverage alongside input probes; most labels are AI-derived, and the lab’s model used feedback from earlier test results.",
     "zh": "土耳其语类型化决策评测同时报告决策质量、基于 Brier 的概率质量、风险—覆盖及输入探查；多数标签由 AI 产生，实验室自身模型还使用过先前测试结果的反馈。"
   },
@@ -754,6 +783,7 @@ const resources = [
     "first_submitted": "2026-09-24",
     "artifacts": {"code": "https://github.com/sumleo/RLCDAlignBench", "data": "https://github.com/sumleo/RLCDAlignBench"},
     "url": "https://arxiv.org/abs/2609.29429v1",
+    "theme": "robustness",
     "en": "Benchmarks Jev alignment-failure detection while separating question wording from input context; benchmark-scorer labels dominate, and context gains often depend on fields encoding the label.",
     "zh": "评测 Jev 对 AI 对齐失效的检测，分别改变提问与输入上下文；参考标签主要来自基准评分器，上下文收益常依赖编码标签的字段。"
   },
@@ -791,6 +821,7 @@ const resources = [
     "date": "2026-09-23",
     "first_submitted": "2026-09-23",
     "url": "https://arxiv.org/abs/2609.27607v1",
+    "theme": "applications",
     "en": "Jev checks support between generated and reference radiology reports in both directions; expert agreement depends on report size and error definitions and does not establish prospective clinical effectiveness.",
     "zh": "Jev 双向检查生成与参考放射学报告之间的陈述支持关系；与专家的一致性受报告长度和错误定义影响，并不证明前瞻性临床效果。"
   },
@@ -802,6 +833,8 @@ const resources = [
     "first_submitted": "2026-09-30",
     "artifacts": {"code": "https://anonymous.4open.science/r/jev_ordinal_scale_bia/"},
     "url": "https://arxiv.org/abs/2609.38827v2",
+    "theme": "calibration",
+    "artifact_note": {"en": "anonymous mirror, expires 2027-04-10.", "zh": "匿名镜像，2027-04-10 到期。"},
     "en": "Audits ordinal label underuse across selected decision models; finer scales increase compression, while accuracy, final-label utilization and averaged candidate probabilities remain distinct measures.",
     "zh": "审查所选决策模型对有序标签的使用不足；细化量表会加重压缩，准确率、最终标签利用率和平均候选概率仍是不同测量。"
   },
@@ -813,6 +846,7 @@ const resources = [
     "first_submitted": "2026-09-22",
     "artifacts": {"code": "https://github.com/guanxuyu-sv/Visual-Jev"},
     "url": "https://arxiv.org/abs/2609.25845v1",
+    "theme": "architectures",
     "en": "An independent visual decision architecture shares image context across batched questions using an LM-head readout; warm amortized speedups trade higher peak memory, while accuracy gains concentrate on trained task families.",
     "zh": "独立的视觉决策架构以语言模型头读出，让批处理问题共享图像上下文；预热后的摊销加速伴随更高峰值内存，准确率收益集中于训练覆盖的任务家族。"
   },
@@ -823,6 +857,7 @@ const resources = [
     "date": "2026-09-23",
     "first_submitted": "2026-09-23",
     "url": "https://arxiv.org/abs/2609.28613v1",
+    "theme": "robustness",
     "en": "Audits Jev injection on reconstructed InjecAgent cases, separating probability shifts from attacker-target selections; optimization results are checked on fresh calls, within this benchmark setting.",
     "zh": "在重构的 InjecAgent 案例中审查 Jev 提示注入，区分概率偏移与攻击目标选择；优化结果通过新调用验证，结论限于该基准设置。"
   },
@@ -834,6 +869,7 @@ const resources = [
     "first_submitted": "2026-09-24",
     "artifacts": {"code": "https://github.com/xzx34/JevOut"},
     "url": "https://arxiv.org/abs/2609.30243v2",
+    "theme": "robustness",
     "en": "Optimizes context additions around unchanged questions and options in four decision systems; results concern initially correct decisions, and human validity checks cover a sampled subset of successful attacks.",
     "zh": "在四种决策系统中围绕不变的题目和选项优化上下文补充；结果针对原本答对的决策，人工有效性检查仅覆盖成功攻击的抽样子集。"
   },
@@ -844,6 +880,7 @@ const resources = [
     "date": "2026-09-28",
     "first_submitted": "2026-09-28",
     "url": "https://arxiv.org/abs/2609.34862v1",
+    "theme": "judging",
     "en": "Compares Jev and generative judges on retrospective agent-trace risk classification; dataset rankings vary, and successful-call latency and valid-judgment cost must be read with coverage.",
     "zh": "比较 Jev 与生成式评判模型对历史 agent 轨迹的风险分类；排名因数据集而异，成功调用耗时和有效判断成本需结合覆盖率解读。"
   },
@@ -855,6 +892,7 @@ const resources = [
     "first_submitted": "2026-09-21",
     "artifacts": {"code": "https://github.com/hazemibrahim97/decision-models-css"},
     "url": "https://arxiv.org/abs/2609.24574v2",
+    "theme": "applications",
     "en": "Evaluates zero-shot social-science annotation and confidence-routed LLM cascades; lower costs coexist with task-dependent errors and overconfidence, so confidence cannot substitute for label validation.",
     "zh": "评估零样本社会科学标注与按置信度分流的 LLM 级联；低成本仍伴随任务相关误差和过度自信，置信度不能替代标签验证。"
   },
@@ -866,6 +904,7 @@ const resources = [
     "first_submitted": "2026-09-21",
     "artifacts": {"code": "https://github.com/bydeng01/scientific-decision-eval"},
     "url": "https://arxiv.org/abs/2609.24965v3",
+    "theme": "applications",
     "en": "In ten prepared scientific cases, the authors separate semantic selections, computed quantities and final labels; comparison-model errors can be hidden by unchanged final labels.",
     "zh": "作者在十个预设科学案例中分别评估语义选择、计算得到的数值与最终标签；对比模型的错误可能被不变的最终标签掩盖。"
   },
@@ -877,6 +916,7 @@ const resources = [
     "first_submitted": "2026-09-23",
     "artifacts": {"code": "https://github.com/ZF-Utokyo/Jev-Benchmark"},
     "url": "https://arxiv.org/abs/2609.27678v2",
+    "theme": "applications",
     "en": "ContractNLI request variations can change which answers are wrong while aggregate accuracy stays unchanged; stable answers may preserve errors. This benchmark does not validate real legal deployment.",
     "zh": "ContractNLI 请求变化可能改变具体错误答案，而总体准确率保持不变；稳定答案也可能保留错误。该基准不能验证真实法律场景的部署有效性。"
   },
@@ -888,6 +928,7 @@ const resources = [
     "first_submitted": "2026-09-27",
     "artifacts": {"data": "https://zenodo.org/records/23008156"},
     "url": "https://arxiv.org/abs/2609.34024v4",
+    "theme": "applications",
     "en": "Preliminary medical-benchmark evaluation of Jev 1.13 reports task-dependent accuracy, calibration and weak unanswerable-question detection; it does not establish clinical deployment validity.",
     "zh": "Jev 1.13 的初步医学基准评测报告了随任务变化的准确率、校准表现及较弱的不可回答问题识别能力；这不能证明临床部署有效性。"
   },
@@ -899,6 +940,7 @@ const resources = [
     "first_submitted": "2026-09-23",
     "artifacts": {"code": "https://github.com/HengyuLi-Ozaki-lab/kite_population_simulator"},
     "url": "https://arxiv.org/abs/2609.27535v1",
+    "theme": "applications",
     "en": "Jev state tables and sparse flagship-model anchors support population simulations with shared human–model discrepancy estimates; larger simulations do not add human evidence or establish prospective intervention effects.",
     "zh": "Jev 状态表与少量强模型锚点支持纳入共享人—模型差异估计的群体模拟；扩大模拟规模不会增加人类证据，也不能确立前瞻性干预效果。"
   },
@@ -910,6 +952,7 @@ const resources = [
     "first_submitted": "2026-10-01",
     "artifacts": {"code": "https://github.com/Syntheme/beyond-answer-confidence"},
     "url": "https://arxiv.org/abs/2610.01006v1",
+    "theme": "calibration",
     "en": "Controls information and surface cues to distinguish Jev answer confidence from self-knowledge; black-box behavior does not establish access to an internal knowledge state.",
     "zh": "通过控制信息与表面线索，区分 Jev 的答案置信度与是否知道答案的自评；黑盒表现并不证明能读取内部知识状态。"
   },
@@ -920,6 +963,7 @@ const resources = [
     "date": "2026-10-08",
     "first_submitted": "2026-10-08",
     "url": "https://arxiv.org/abs/2610.11978v1",
+    "theme": "evaluation",
     "en": "Knowledge, reasoning and multilingual multiple-choice evaluation of Jev; reported rankings and mathematical weaknesses apply to the selected models and benchmarks.",
     "zh": "在知识、推理和多语言选择题中评测 Jev；报告的排名及数学弱点仅适用于所选模型与基准。"
   },
@@ -931,6 +975,7 @@ const resources = [
     "first_submitted": "2026-10-08",
     "artifacts": {"code": "https://github.com/ArminAzizi98/option-channel-attack"},
     "url": "https://arxiv.org/abs/2610.12292v1",
+    "theme": "robustness",
     "en": "Tests option-channel attacks on seven open-weight models; reversed decisions can remain confident. The reported experiments do not test hosted Jev.",
     "zh": "测试七个开放权重模型的选项通道攻击；决策翻转后仍可能高置信。报告中的实验未测试托管 Jev。"
   },
@@ -941,6 +986,7 @@ const resources = [
     "date": "2026-10-03",
     "first_submitted": "2026-09-28",
     "url": "https://arxiv.org/abs/2609.36399v2",
+    "theme": "evaluation",
     "en": "English/Arabic persona-conditioned Jev survey audit; the effects concern simulated respondents in one model, not measurements of real populations.",
     "zh": "对 Jev 进行英语和阿拉伯语人物设定条件下的问卷审查；观察的是单一模型的模拟受访者，并非对真实人群的测量。"
   },
@@ -951,6 +997,7 @@ const resources = [
     "date": "2026-10-11",
     "first_submitted": "2026-10-11",
     "url": "https://arxiv.org/abs/2610.15710v1",
+    "theme": "judging",
     "en": "Jev memory-retirement evaluation separates confirmed updates from suggestions; mixed LLM/human labels, shared errors and selection on a small development set constrain cascade claims.",
     "zh": "Jev 旧记忆停用评测区分已确认更新与变化暗示；LLM／人工混合标注、共享错误及小型开发集上的选择限制了级联收益主张。"
   },
@@ -962,6 +1009,8 @@ const resources = [
     "first_submitted": "2026-10-13",
     "artifacts": {"code": "https://github.com/SarielMa/DeRef_release", "data": "https://huggingface.co/datasets/lm2445/DeRef"},
     "url": "https://arxiv.org/abs/2610.18497v1",
+    "theme": "judging",
+    "artifact_note": {"en": "model outputs are not included.", "zh": "不包含模型输出。"},
     "en": "Tool-argument judges including Jev reject some correct derived values without visible references; model-generated references are evaluated on three benchmarks.",
     "zh": "包括 Jev 在内的工具参数评判模型，在缺少可见参考时会拒绝部分正确推导值；模型生成的参考在三个基准上接受评测。"
   },
@@ -973,6 +1022,7 @@ const resources = [
     "first_submitted": "2026-10-14",
     "artifacts": {"unverified": "code"},
     "url": "https://arxiv.org/abs/2610.19536v1",
+    "theme": "evaluation",
     "en": "Tests classification and verification under content-preserving table rewrites across three task families; confidence can flag instability without proving correctness.",
     "zh": "在三类表格任务中检验保持内容不变的改写对分类与验证的影响；置信度可提示不稳定，但不证明正确性。"
   },
@@ -984,6 +1034,8 @@ const resources = [
     "first_submitted": "2026-10-14",
     "artifacts": {"code": "https://github.com/binzheng-joey/selective-reasoning"},
     "url": "https://arxiv.org/abs/2610.19644v1",
+    "theme": "judging",
+    "artifact_note": {"en": "README inspected, not executed.", "zh": "仅检查 README，未执行。"},
     "en": "Gates reasoning start, candidate-answer reading and generation stopping; evidence is limited to a frozen Qwen backbone and three task families.",
     "zh": "控制推理启动、候选答案读取与生成停止的时机；证据限于冻结的 Qwen 骨干及三类任务。"
   },
@@ -994,6 +1046,7 @@ const resources = [
     "date": "2026-10-06",
     "first_submitted": "2026-10-06",
     "url": "https://arxiv.org/abs/2610.08675v1",
+    "theme": "robustness",
     "en": "Same-number citation swaps probe financial-evidence verification; rejecting wrong roles trades off with accepting equivalent support in a constructed test.",
     "zh": "以同数值引用替换检验金融证据验证；在构造测试中，识别财务项目错配与接受等价证据之间存在权衡。"
   },
@@ -1004,6 +1057,7 @@ const resources = [
     date: "2026-09-22",
     first_submitted: "2026-09-22",
     url: "https://arxiv.org/abs/2609.26532v1",
+    theme: "judging",
     en: "Confidence-gated Jev control with LLM fallback; gains depend on action alternatives and baseline routing.",
     zh: "以置信度控制 Jev 与 LLM 回退；收益取决于候选动作与基线路由。",
   },
@@ -1015,6 +1069,7 @@ const resources = [
     first_submitted: "2026-09-28",
     artifacts: { code: "https://github.com/Grivn/mnemon-memory-agent" },
     url: "https://arxiv.org/abs/2609.36059v1",
+    theme: "architectures",
     en: "Keeps raw memory records, separating Jev relevance judgments from LLM search planning and answer generation.",
     zh: "保留原始记忆记录，将 Jev 相关性判断与 LLM 检索规划、回答生成分开。",
   },
@@ -1026,6 +1081,7 @@ const resources = [
     first_submitted: "2026-09-30",
     artifacts: { model: "https://huggingface.co/AgentBull/bongard-mini" },
     url: "https://arxiv.org/abs/2609.39111v1",
+    theme: "architectures",
     en: "Shared evidence encoding and candidate-probability readout, trained with representation and action-outcome feedback.",
     zh: "共享证据编码与候选概率读出，结合表征学习和行动结果反馈训练。",
   },
@@ -1037,6 +1093,7 @@ const resources = [
     first_submitted: "2026-10-13",
     artifacts: { page: "https://mcg-nju.github.io/VideoJev/" },
     url: "https://arxiv.org/abs/2610.18615v1",
+    theme: "architectures",
     en: "Structured video decisions with temporal spans and candidate scores; cached and joint inference reuse visual computation.",
     zh: "以时间区间和候选分数表达视频决策，通过缓存与联合推理复用视觉计算。",
   },
@@ -1048,6 +1105,7 @@ const resources = [
     first_submitted: "2026-10-12",
     artifacts: { code: "https://github.com/j-geuter/jeff-serve", data: "https://huggingface.co/datasets/jgeuter/OpenDecisions" },
     url: "https://arxiv.org/abs/2610.17205v1",
+    theme: "architectures",
     en: "Answer-letter readout and supervised LoRA baselines; evaluation includes model-generated labels.",
     zh: "答案字母概率读出与监督式 LoRA 基线；评测包含模型生成的标签。",
   },
@@ -1059,6 +1117,8 @@ const resources = [
     first_submitted: "2026-10-06",
     artifacts: { code: "https://github.com/minnesotanlp/Sansi" },
     url: "https://arxiv.org/abs/2610.07730v2",
+    theme: "architectures",
+    artifact_note: {en: "covering part of the paper's experiments.", zh: "覆盖论文的部分实验。"},
     en: "Looped hidden-state computation for typed decisions; additional loops trade compute for accuracy.",
     zh: "通过隐状态循环计算输出类型化决策；额外循环以计算成本换取准确率。",
   },
@@ -1070,6 +1130,7 @@ const resources = [
     first_submitted: "2026-10-06",
     artifacts: { code: "https://github.com/rlisml/jev-cascade", data: "https://github.com/rlisml/jev-cascade" },
     url: "https://arxiv.org/abs/2610.07716v2",
+    theme: "judging",
     en: "Candidate-menu interventions and confidence cascades; ranking stability does not establish probability calibration.",
     zh: "研究候选集合干预与置信度级联；排序稳定性并不等同概率校准。",
   },
@@ -1081,6 +1142,7 @@ const resources = [
     first_submitted: "2026-09-30",
     artifacts: { code: "https://github.com/Hoyant-Su/JevSpawn" },
     url: "https://arxiv.org/abs/2610.00437v1",
+    theme: "architectures",
     en: "Composes finite action fields and explores alternatives using interaction feedback.",
     zh: "组合有限行动字段，利用交互反馈探索候选路径。",
   },
@@ -1092,6 +1154,7 @@ const resources = [
     first_submitted: "2026-10-08",
     artifacts: { code: "https://github.com/facebook/meta-encoder-eval" },
     url: "https://arxiv.org/abs/2610.11316v1",
+    theme: "architectures",
     en: "Bi-encoder approach to multimodal decisions and retrieval through natural-language interfaces.",
     zh: "通过自然语言接口实现多模态决策与检索的双编码器方法。",
   },
@@ -1103,6 +1166,7 @@ const resources = [
     first_submitted: "2026-10-13",
     artifacts: { page: "https://yubol-bobo.github.io/System_one_model_evaluation/" },
     url: "https://arxiv.org/abs/2610.18579v1",
+    theme: "evaluation",
     en: "Pairs factual probes with action choices to diagnose decision failures.",
     zh: "将事实探针与行动选择配对，诊断决策失败。",
   },
@@ -1114,6 +1178,7 @@ const resources = [
     first_submitted: "2026-10-13",
     artifacts: { code: "https://github.com/Yifan-Lan/DecisionRobust", page: "https://yifan-lan.github.io/DecisionRobust/" },
     url: "https://arxiv.org/abs/2610.19118v1",
+    theme: "robustness",
     en: "Text and vision attacks with label-validity checks and held-out evaluation models.",
     zh: "结合标签有效性检查与留出评测模型，考察文本和视觉攻击。",
   },
@@ -1124,6 +1189,7 @@ const resources = [
     date: "2026-10-08",
     first_submitted: "2026-09-22",
     url: "https://arxiv.org/abs/2609.26758v3",
+    theme: "robustness",
     en: "Tests conflicts between option names and definitions despite structurally valid outputs.",
     zh: "检验输出结构合法时，选项名称与定义之间的冲突。",
   },
@@ -1135,6 +1201,7 @@ const resources = [
     first_submitted: "2026-09-30",
     artifacts: { code: "https://github.com/nokia-applied-research/AnyJev" },
     url: "https://arxiv.org/abs/2610.00831v1",
+    theme: "calibration",
     en: "Training-free decision readout with label-prior and option-order correction.",
     zh: "无需训练的决策读出，修正标签先验与选项顺序偏差。",
   },
@@ -1146,6 +1213,7 @@ const resources = [
     first_submitted: "2026-09-25",
     artifacts: { code: "https://github.com/moganai/lavoir", model: "https://huggingface.co/moganai/lavoir" },
     url: "https://arxiv.org/abs/2609.30706v1",
+    theme: "judging",
     en: "Estimates whether asking for missing information would improve a typed decision.",
     zh: "估计追问缺失信息是否有助于改进类型化决策。",
   },
@@ -1157,6 +1225,7 @@ const resources = [
     first_submitted: "2026-10-02",
     artifacts: { code: "https://github.com/amazingljy1206/SII-Decision", data: "https://huggingface.co/datasets/carlosxiang/JEVal" },
     url: "https://arxiv.org/abs/2610.03935v2",
+    theme: "evaluation",
     en: "Bilingual decision evaluation and reliability when local decisions compose into larger systems.",
     zh: "双语决策评估，以及局部决策组合成更大系统时的可靠性。",
   },
@@ -1168,6 +1237,7 @@ const resources = [
     first_submitted: "2026-10-15",
     artifacts: { code: "https://github.com/JevAgentHarness/JevAgentHarness" },
     url: "https://arxiv.org/abs/2610.21412v1",
+    theme: "judging",
     en: "Studies fitted confidence thresholds for sharing agent control with decision models.",
     zh: "研究通过拟合置信度阈值，让决策模型参与 agent 控制。",
   },
@@ -1234,6 +1304,7 @@ const resources = [
     first_submitted: "2026-09-20",
     artifacts: { code: "https://github.com/FLock-io/this-that-model", data: "https://huggingface.co/datasets/limberc/this-that-spatial-bench", model: "https://huggingface.co/flock-io/this-that-model-1.0" },
     url: "https://arxiv.org/abs/2609.23886v1",
+    theme: "architectures",
     en: "An open typed-decision model using hidden-state readout. The abstract reports a small external comparison.",
     zh: "采用隐藏状态读出的开放类型化决策模型。摘要报告了一项小规模外部比较。",
   },
@@ -1245,6 +1316,7 @@ const resources = [
     first_submitted: "2026-09-21",
     artifacts: { code: "https://github.com/libingzheren/Jev-Mem" },
     url: "https://arxiv.org/abs/2609.23986v1",
+    theme: "architectures",
     en: "Studies Jev as a controller for agent memory. Reported outcomes concern the complete memory workflow.",
     zh: "研究以 Jev 控制 agent 记忆；报告结果衡量完整记忆工作流。",
   },
@@ -1256,6 +1328,7 @@ const resources = [
     date: "2026-09-24",
     first_submitted: "2026-09-24",
     url: "https://arxiv.org/abs/2609.29283v1",
+    theme: "architectures",
     en: "A Jev-style visual-choice study separating adaptation gains, candidate-readout validity, and calibration limits.",
     zh: "Jev 风格视觉选择模型研究，区分适配收益、候选读出有效性与校准局限。",
   },
@@ -1268,6 +1341,7 @@ const resources = [
     first_submitted: "2026-09-25",
     artifacts: { code: "https://github.com/JevAdvBench/JevAdvBench", data: "https://huggingface.co/datasets/Hangtao/JevAdvBench" },
     url: "https://arxiv.org/abs/2609.31142v1",
+    theme: "robustness",
     en: "A black-box adversarial benchmark. A changed decision is not necessarily an incorrect decision.",
     zh: "黑盒对抗评测基准。决策发生变化，并不必然代表决策错误。",
   },
@@ -1280,6 +1354,7 @@ const resources = [
     first_submitted: "2026-09-27",
     artifacts: { code: "https://github.com/bro789/typed-decision-coherence" },
     url: "https://arxiv.org/abs/2609.33209v1",
+    theme: "calibration",
     en: "Tests coherence between logically related probabilities, separately from accuracy and calibration.",
     zh: "检验逻辑相关命题的概率一致性，与准确率和校准分别考察。",
   },
@@ -1292,6 +1367,7 @@ const resources = [
     first_submitted: "2026-09-27",
     artifacts: { code: "https://github.com/yxsec/system-one-security-eval" },
     url: "https://arxiv.org/abs/2609.33401v3",
+    theme: "robustness",
     en: "Examines reliability, group-specific confident errors, and selective automation in security decisions.",
     zh: "研究安全决策中的可靠性、不同群体的高置信错误与选择性自动化。",
   },
@@ -1304,6 +1380,7 @@ const resources = [
     first_submitted: "2026-09-28",
     artifacts: { code: "https://github.com/little-g-ai/Sys1Cal-v1", data: "https://github.com/little-g-ai/Sys1Cal-v1" },
     url: "https://arxiv.org/abs/2609.35342v1",
+    theme: "calibration",
     en: "A controlled calibration study using constructed probabilities. Interpretations of latent uncertainty remain hypotheses.",
     zh: "使用构造概率进行受控校准测试；对潜在不确定性的解释仍属研究假说。",
   },
@@ -1315,6 +1392,7 @@ const resources = [
     first_submitted: "2026-09-29",
     artifacts: { code: "https://github.com/gulucaptain/Chinese-Jev", data: ["https://huggingface.co/datasets/bbldCVer-hf/CJ-Bench", "https://huggingface.co/datasets/bbldCVer-hf/CJ-Dataset"] },
     url: "https://arxiv.org/abs/2609.36965v1",
+    theme: "architectures",
     en: "A Chinese typed-decision model and proposed benchmark; domain-specific training calls for independent validation.",
     zh: "面向中文的类型化决策模型与新基准；领域专用训练的效果仍需独立验证。",
   },
@@ -1326,6 +1404,7 @@ const resources = [
     first_submitted: "2026-10-13",
     artifacts: { code: "https://github.com/LiQiiiii/Jeva", model: "https://huggingface.co/LIQIIIII/Jeva-4B" },
     url: "https://arxiv.org/abs/2610.18773v1",
+    theme: "architectures",
     en: "A decision-model architecture exploring null handling, option permutations, scaling, and caching. Its design is Jeva’s, not Jev’s disclosed internals.",
     zh: "探索空答案、选项排列、规模扩展与缓存的决策架构。这是 Jeva 的设计，并非 Jev 已披露的内部实现。",
   },
@@ -1337,6 +1416,7 @@ const resources = [
     first_submitted: "2026-10-15",
     artifacts: { code: "https://github.com/TianyuCodings/S1-Arena", data: "https://huggingface.co/datasets/C-Tianyu/S1-Arena" },
     url: "https://arxiv.org/abs/2610.21244v1",
+    theme: "evaluation",
     en: "A benchmark spanning matched requests and closed-loop tasks. Experiments have not been reproduced here.",
     zh: "涵盖匹配请求与闭环任务的基准；本项目尚未复现其实验。",
   },
@@ -1436,6 +1516,7 @@ const resources = [
     first_submitted: "2026-09-29",
     artifacts: { code: "https://github.com/AppliedMachineLearning-Lab/jev-benchmarking" },
     url: "https://arxiv.org/abs/2609.37647v1",
+    theme: "evaluation",
     en: "An early benchmark study of Jev. Read the task selection and evaluation setup alongside its reported results.",
     zh: "Jev 的早期基准研究。阅读报告结果时，同时检查任务选择与评测设置。",
   },
@@ -1447,6 +1528,7 @@ const resources = [
     date: "2026-09-26",
     first_submitted: "2026-09-26",
     url: "https://arxiv.org/abs/2609.32160v1",
+    theme: "evaluation",
     en: "An evidence audit and a checklist for evaluating typed decision models.",
     zh: "围绕类型化决策模型的证据审查与评估清单。",
   },
@@ -1458,6 +1540,7 @@ const resources = [
     date: "2026-10-13",
     first_submitted: "2026-10-13",
     url: "https://arxiv.org/abs/2610.17820v1",
+    theme: "robustness",
     en: "A controlled adversarial comparison of Jev, LLM judges, and purpose-built safety classifiers.",
     zh: "对 Jev、LLM 评判模型与专用安全分类器进行受控对抗比较。",
   },
@@ -1469,6 +1552,7 @@ const resources = [
     date: "2026-10-06",
     first_submitted: "2026-10-05",
     url: "https://arxiv.org/abs/2610.06625v2",
+    theme: "evaluation",
     en: "Studies accuracy, cost, and calibration in seven political-science replication tasks.",
     zh: "在七项政治学复现任务中考察准确率、成本与校准。",
   },
@@ -1480,6 +1564,7 @@ const resources = [
     first_submitted: "2026-09-22",
     artifacts: { page: "https://yubol-bobo.github.io/jev-as-a-judge/" },
     url: "https://arxiv.org/abs/2609.26550v5",
+    theme: "judging",
     en: "Studies confidence-based escalation from Jev to a reasoning judge, including limits under distribution shift.",
     zh: "研究基于置信度从 Jev 升级到推理评判模型的方法，以及分布变化下的局限。",
   },
@@ -1491,6 +1576,7 @@ const resources = [
     date: "2026-10-13",
     first_submitted: "2026-09-24",
     url: "https://arxiv.org/abs/2609.29769v3",
+    theme: "judging",
     en: "Compares rubric judges and examines correlated errors that can limit cascade improvements.",
     zh: "比较评分准则评判模型，考察相关错误如何限制级联系统的收益。",
   },
@@ -1839,4 +1925,16 @@ resources.sort((a, b) => {
   return paperId(b).localeCompare(paperId(a), "en", { numeric: true });
 });
 
-export { resources, translations };
+// The six paper sections of the READMEs, in README order. Every paper names one in `theme`, and
+// `artifact_note` repeats the caveat its README Artifacts cell gives beside the links, if any.
+// tests/test_bibliography_consistency.py keeps both equal to the READMEs.
+const paperThemes = [
+  { id: "evaluation", en: "Evaluation and benchmarking", zh: "评测与基准", short: { en: "Evaluation", zh: "评测" } },
+  { id: "calibration", en: "Probability calibration and coherence", zh: "概率校准与一致性", short: { en: "Calibration", zh: "校准" } },
+  { id: "judging", en: "Judging and selective automation", zh: "评判与选择性自动化", short: { en: "Judging", zh: "评判" } },
+  { id: "robustness", en: "Robustness and security", zh: "鲁棒性与安全", short: { en: "Robustness", zh: "鲁棒性" } },
+  { id: "architectures", en: "Architectures, memory, and multimodality", zh: "架构、记忆与多模态", short: { en: "Architectures", zh: "架构" } },
+  { id: "applications", en: "Applications and domain studies", zh: "应用与领域研究", short: { en: "Applications", zh: "应用" } },
+];
+
+export { resources, translations, paperThemes };
