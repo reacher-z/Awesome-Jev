@@ -160,7 +160,8 @@ def now() -> str:
 
 
 def normalize_title(title: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", title.lower())
+    # Keep letters of every script, as build_source_index does.
+    return re.sub(r"\W+", "", title.casefold())
 
 
 def sha(text: str) -> str:
@@ -331,7 +332,10 @@ def build_records(results: list[tuple[str, str, dict]]) -> tuple[list[dict], dic
             if not matched:
                 stats["topic_screen_rejected_appearances"] += 1
                 continue
+            # A short key (empty or uninformative title) carries no identity, as
+            # in build_source_index: such papers are deduplicated by ID only.
             title_key = normalize_title(title)
+            title_key = title_key if len(title_key) > 20 else None
             existing_id = title_ids.get(title_key, paper_id)
             if existing_id in records:
                 previous = records[existing_id]
@@ -374,7 +378,8 @@ def build_records(results: list[tuple[str, str, dict]]) -> tuple[list[dict], dic
                 "_rank": rank,
             }
             records[paper_id] = record
-            title_ids[title_key] = paper_id
+            if title_key:
+                title_ids[title_key] = paper_id
     stats["distinct_screened_candidates"] = len(records)
     return list(records.values()), {"counts": dict(stats), "direct_jev_discoveries": direct}
 

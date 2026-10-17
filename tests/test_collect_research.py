@@ -79,5 +79,53 @@ class OfflineRescreenTests(unittest.TestCase):
             self.assertEqual([r["id"] for r in records], ["arxiv:2609.00002"])
 
 
+def response(query, *papers):
+    return ("probability_calibration", query, {
+        "data": [{"paper": {"summary": ABSTRACT, "authors": [{"name": "A. Author"}],
+                            "publishedAt": "2026-09-01", **paper}} for paper in papers],
+        "retrieved_at": "2026-10-15T00:00:00+00:00", "http_status": 200,
+        "retrieval_url": "https://example.org/search?q=" + query, "provider": collect.PROVIDER,
+    })
+
+
+class BuildRecordsTitleKeyTests(unittest.TestCase):
+    def test_empty_and_non_latin_titles_keep_distinct_ids(self):
+        records, audit = collect.build_records([response(
+            "calibration",
+            {"id": "2401.00001", "title": ""},
+            {"id": "2401.00002", "title": "神经网络置信度校准"},
+            {"id": "2401.00003", "title": "Калибровка уверенности"},
+        )])
+        self.assertEqual([r["id"] for r in records], ["arxiv:2401.00001", "arxiv:2401.00002", "arxiv:2401.00003"])
+        self.assertNotIn("deduplicated_appearances", audit["counts"])
+        self.assertEqual(audit["counts"]["distinct_screened_candidates"], 3)
+
+    def test_long_non_latin_title_keys_keep_their_letters(self):
+        self.assertEqual(collect.normalize_title("Калибровка уверенности, нейронных сетей!"), "калибровкауверенностинейронныхсетей")
+        self.assertNotEqual(collect.normalize_title("Калибровка уверенности нейронных сетей"),
+                            collect.normalize_title("Оценка неопределенности нейронных сетей"))
+
+    def test_same_long_title_with_different_ids_still_merges(self):
+        title = "Confidence Calibration of Neural Classifiers"
+        records, audit = collect.build_records([
+            response("calibration", {"id": "2401.00004v2", "title": title}),
+            response("temperature scaling", {"id": "doi:10.1000/example", "_record_id": "doi:10.1000/example",
+                                             "_canonical_url": "https://doi.org/10.1000/example",
+                                             "title": title.upper() + "."}),
+        ])
+        self.assertEqual([r["id"] for r in records], ["arxiv:2401.00004"])
+        self.assertEqual(records[0]["discovery_queries"], ["calibration", "temperature scaling"])
+        self.assertEqual(audit["counts"]["deduplicated_appearances"], 1)
+
+    def test_short_titles_still_merge_on_the_same_id(self):
+        records, audit = collect.build_records([
+            response("calibration", {"id": "2401.00005v1", "title": ""}),
+            response("temperature scaling", {"id": "2401.00005v2", "title": ""}),
+        ])
+        self.assertEqual([r["id"] for r in records], ["arxiv:2401.00005"])
+        self.assertEqual(records[0]["discovery_queries"], ["calibration", "temperature scaling"])
+        self.assertEqual(audit["counts"]["deduplicated_appearances"], 1)
+
+
 if __name__ == "__main__":
     unittest.main()
