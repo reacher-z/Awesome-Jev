@@ -199,5 +199,58 @@ class PublicSourceUrlTests(unittest.TestCase):
                 self.assertTrue(public_url(value))
 
 
+class ReservedSiteRouteTests(unittest.TestCase):
+    """GitHub and Hub site routes are never discovered as repositories."""
+    ROUTES = (
+        "https://github.com/user-attachments/assets/0f3c5e1a-1111-4222-8333-944445555666",
+        "https://github.com/User-Attachments/assets/0f3c5e1a-1111-4222-8333-944445555666",
+        "https://github.com/apps/fixture-bot",
+        "https://github.com/marketplace/actions/fixture",
+        "https://github.com/search/advanced",
+        "https://github.com/advisories/fixture",
+        "https://github.com/customer-stories/fixture",
+        "https://huggingface.co/api/models/fixture/model",
+        "https://huggingface.co/api/datasets/fixture/data/tree/main",
+        "https://huggingface.co/learn/nlp-course/chapter1/1",
+        "https://huggingface.co/tasks/text-classification",
+        "https://huggingface.co/models/fixture",
+        "https://huggingface.co/posts/fixture/123",
+    )
+
+    def test_site_routes_are_not_canonical_sources(self):
+        from scripts import collect_ecosystem as ecosystem
+        from scripts import refresh_sources as refresh
+        for url in self.ROUTES:
+            with self.subTest(url=url):
+                self.assertIsNone(ecosystem.canonical(url))
+                with self.assertRaises(refresh.FetchError):
+                    refresh.canonical_source(url)
+
+    def test_repository_routes_still_canonicalize(self):
+        from scripts import collect_ecosystem as ecosystem
+        cases = {
+            "https://github.com/Fixture-Owner/Router/blob/main/README.md": "https://github.com/fixture-owner/router",
+            "https://github.com/fixture/search-tools": "https://github.com/fixture/search-tools",
+            "https://huggingface.co/fixture/jev-model/tree/main": "https://huggingface.co/fixture/jev-model",
+            "https://huggingface.co/datasets/fixture/decisions": "https://huggingface.co/datasets/fixture/decisions",
+            "https://huggingface.co/spaces/fixture/demo": "https://huggingface.co/spaces/fixture/demo",
+        }
+        for url, expected in cases.items():
+            with self.subTest(url=url):
+                self.assertEqual(ecosystem.canonical(url), expected)
+
+    def test_readme_image_embed_is_not_an_implementation_child(self):
+        from scripts import collect_ecosystem as ecosystem
+        readme = ("# Jev router\n\n![diagram](https://github.com/user-attachments/assets/0f3c5e1a-1111-4222-8333-944445555666)\n\n"
+                  "Built on https://github.com/fixture/decision-core for typed decisions.\n\n"
+                  + "Jev typed decision models need calibrated probability readouts for routing. " * 6)
+        seed = {"url": "https://github.com/fixture/router", "title": "router", "topic": "implementation-repository",
+                "relation": "direct", "relevance": "Fixture.", "discovered_from": ["https://example.org/index"], "discovery_depth": 0}
+        with patch.object(ecosystem, "fetch", return_value=(readme.encode(), "https://raw.githubusercontent.com/fixture/router/main/README.md", "text/plain")):
+            record, children = ecosystem.audit(seed)
+        self.assertEqual(record["verification_level"], "content_screened")
+        self.assertEqual([child["url"] for child in children], ["https://github.com/fixture/decision-core"])
+
+
 if __name__ == "__main__":
     unittest.main()

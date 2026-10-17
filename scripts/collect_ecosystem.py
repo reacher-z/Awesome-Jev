@@ -42,6 +42,17 @@ BLOCKED_HOSTS = {
     "api.openai.com", "api.typesafe.ai", "wandb.ai", "www.youtube.com", "youtu.be",
 }
 SKIP_GH = {"huggingface/transformers", "huggingface/huggingface_hub", "pytorch/pytorch"}
+# Site routes whose first path segment is not an owner or namespace; for
+# example README image embeds under github.com/user-attachments/assets/<id>.
+GH_RESERVED = {
+    "topics", "orgs", "settings", "features", "sponsors", "user-attachments", "apps", "marketplace",
+    "login", "about", "pricing", "enterprise", "security", "search", "explore", "trending",
+    "advisories", "customer-stories",
+}
+HF_RESERVED = {
+    "docs", "collections", "organizations", "blog", "join", "settings", "api", "tasks", "learn",
+    "models", "new", "pricing", "login", "chat", "posts", "search",
+}
 REQ_HEADERS = {"User-Agent": "Awesome-Jev-public-source-audit/1.0", "Accept": "text/plain,text/html,application/json"}
 NOW = lambda: datetime.now(timezone.utc).isoformat(timespec="seconds")
 
@@ -114,7 +125,7 @@ def canonical(url: str):
         return "https://arxiv.org/abs/" + m.group(1) if m else None
     if host in {"github.com", "www.github.com", "raw.githubusercontent.com"}:
         seg = path.strip("/").split("/")
-        if len(seg) < 2 or seg[0] in {"topics", "orgs", "settings", "features", "sponsors"}:
+        if len(seg) < 2 or seg[0].lower() in GH_RESERVED:
             return None
         owner = re.match(r"[A-Za-z0-9_.-]+", seg[0])
         name = re.match(r"[A-Za-z0-9_.-]+", seg[1])
@@ -126,7 +137,7 @@ def canonical(url: str):
         return "https://github.com/" + repo.lower()
     if host in {"huggingface.co", "www.huggingface.co", "hf.co"}:
         seg = path.strip("/").split("/")
-        if len(seg) < 2 or seg[0] in {"docs", "collections", "organizations", "blog", "join", "settings"}:
+        if len(seg) < 2 or seg[0] in HF_RESERVED:
             return None
         if seg[0] == "papers":
             if re.fullmatch(r"\d{4}\.\d{4,5}", seg[1]):
