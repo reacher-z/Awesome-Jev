@@ -6,15 +6,29 @@
 
 - [Resource collection](https://awesomejev.github.io/): curated primary sources and verification labels.
 - [Research guide](https://awesomejev.github.io/guide/): source-backed answers about Jev, typed decisions, probabilities and evaluation.
-- [Decision model directory](https://awesomejev.github.io/models/): independent releases, declared licenses and model-card evidence.
-- [Research topics](https://awesomejev.github.io/topics/): focused, source-backed notes with direct answers and evaluation limits.
 - [Papers](https://awesomejev.github.io/papers/): versioned preprints; findings remain author-reported.
+- [Decision model directory](https://awesomejev.github.io/models/): independent releases, declared licenses and model-card evidence.
 - [New resources](https://awesomejev.github.io/discoveries/): new direct resources, related work and background research with evidence labels.
-- [中文](https://awesomejev.github.io/zh/): Chinese collection and guide.
+- [Research topics](https://awesomejev.github.io/topics/): focused, source-backed notes with direct answers and evaluation limits.
+- [Option-label bias in Jev-style decision models](https://awesomejev.github.io/topics/option-label-bias/): How option names, definitions and prompt rendering affect typed decisions, with three distinct studies and a practical diagnostic.
+- [AudioJev: audio decisions, order calibration and release limits](https://awesomejev.github.io/topics/audiojev/): Read AudioJev’s paper, checkpoint and inference library together: candidate-order stability, seed-specific results, data overlap and separate licenses.
+- [GraphDecisionBench: evaluating Jev on graph decisions](https://awesomejev.github.io/topics/graph-decision-benchmarks/): Understand graph structure, graph-text evidence and sequential construction as separate tasks, with versioned sources and reproduction limits.
+
+## Chinese pages
+
+- [资源索引](https://awesomejev.github.io/zh/): 精选一手来源与核查标签。
+- [研究指南](https://awesomejev.github.io/zh/guide/): 有来源支撑的 Jev、类型化决策、概率与评测解答。
+- [论文目录](https://awesomejev.github.io/zh/papers/): 按版本整理的预印本；结论仍为作者报告。
+- [模型目录](https://awesomejev.github.io/zh/models/): 独立发布的模型、声明许可与模型卡证据。
+- [新增资源](https://awesomejev.github.io/zh/discoveries/): 新增的直接相关资源、相关研究与背景研究，附证据标签。
+- [研究专题](https://awesomejev.github.io/zh/topics/): 有来源支撑的专题笔记，附简明回答与评估局限。
+- [Jev 类决策模型的选项标签偏置](https://awesomejev.github.io/zh/topics/option-label-bias/): 区分选项名称、定义与提示渲染的影响，比较三篇独立研究，并给出可操作的诊断方法。
+- [AudioJev：音频决策、顺序校准与发布范围](https://awesomejev.github.io/zh/topics/audiojev/): 结合论文、检查点与推理库，理解候选顺序稳定性、单种子结果、数据重叠和不同许可。
+- [GraphDecisionBench：怎样评估 Jev 的图决策能力](https://awesomejev.github.io/zh/topics/graph-decision-benchmarks/): 分别理解图结构、图文证据与序列构造任务，核对论文版本和公开材料的复现范围。
 
 ## Source formats
 
-- [Guide and curated resources in Markdown](https://awesomejev.github.io/llms-full.txt)
+- [Guide, curated resources and research topics in Markdown](https://awesomejev.github.io/llms-full.txt)
 - [Paper metadata](https://awesomejev.github.io/papers.json)
 - [Model metadata](https://awesomejev.github.io/models.json)
 - [Expansion report](https://awesomejev.github.io/data/expansion-progress.json)
