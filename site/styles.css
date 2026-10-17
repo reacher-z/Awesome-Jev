@@ -662,6 +662,16 @@ time {
 .filter-toggle input:focus-visible {
   outline-offset: 3px;
 }
+/* Disabled in categories without artifact records. */
+.filter-toggle:has(:disabled) {
+  background: none;
+  color: var(--muted);
+  opacity: 0.5;
+  cursor: default;
+}
+.filter-toggle input:disabled {
+  cursor: default;
+}
 .search-field {
   display: flex;
   align-items: center;

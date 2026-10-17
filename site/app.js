@@ -50,9 +50,20 @@ const safeURL = (value) => {
 function t(key) {
   return translations[language][key] ?? translations.en[key] ?? key;
 }
+// "Papers with code" narrows only categories whose entries carry an `artifacts` record.
+// Elsewhere it is cleared and disabled, so it cannot empty a list of tools or models.
+const artifactCategories = new Set(
+  resources.filter((resource) => resource.artifacts).map((resource) => resource.category),
+);
 function renderResources() {
   const query = $("#resource-search").value.trim().toLocaleLowerCase();
-  const codeOnly = $("#code-filter").checked;
+  const codeFilter = $("#code-filter");
+  codeFilter.disabled =
+    activeFilter === "All"
+      ? artifactCategories.size === 0
+      : !artifactCategories.has(activeFilter);
+  if (codeFilter.disabled) codeFilter.checked = false;
+  const codeOnly = codeFilter.checked;
   const filtered = resources.filter(
     (resource) =>
       (activeFilter === "All" || resource.category === activeFilter) &&
