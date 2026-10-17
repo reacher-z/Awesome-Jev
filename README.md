@@ -250,7 +250,7 @@ The four TypeSafe datasets contain workflow cases, model-generated references, a
 
 ## Practical guides
 
-Implementation recipes and community research. Validate thresholds on held-out examples from your own workload.
+Implementation recipes and community research; the TypeSafe recipes are written by the vendor. Validate thresholds on held-out examples from your own workload.
 
 | Guide | Publisher | Topic |
 | :--- | :--- | :--- |
