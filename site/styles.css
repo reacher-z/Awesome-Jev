@@ -41,6 +41,7 @@
   --red: #c81d25;
   --line: #d1d5db;
   --accent: #ff5a5f;
+  --badge: #087e8b;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   --mono: "IBM Plex Mono", monospace;
 }
@@ -68,6 +69,7 @@ html {
     --link: #9cc9ea;
     --red: #ff8a8f;
     --line: #5d6571;
+    --badge: #4fb8c2;
   }
 }
 body {
@@ -679,6 +681,32 @@ time {
 .index-meta p {
   margin: 0;
 }
+/* One-line legend for the row markers, linked to the method; it wraps below the count on phones. */
+.index-meta #result-count {
+  flex: none;
+}
+.evidence-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 2px 14px;
+}
+.evidence-legend strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.evidence-legend a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.evidence-legend a .icon {
+  width: 10px;
+  height: 10px;
+}
 /* Compact rows: category, byline and provenance share one metadata line; descriptions clamp to two lines. */
 .resource-row {
   display: grid;
@@ -711,6 +739,34 @@ time {
   font-size: 13px;
   line-height: 1.55;
   font-weight: 400;
+}
+/* Evidence marker: the glyph's fill names the source (solid official, half preprint, outline
+   community, dotted background) and the same words follow in text, so colour is never the only cue. */
+.evidence-marker {
+  white-space: nowrap;
+}
+.evidence-glyph {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 5px;
+  border: 1.5px solid var(--badge);
+  vertical-align: 0;
+}
+.evidence-glyph[data-source="official"] {
+  background: var(--badge);
+}
+.evidence-glyph[data-source="preprint"] {
+  background: linear-gradient(to top right, var(--badge) 50%, transparent 50%);
+}
+.evidence-glyph[data-source="background"] {
+  border-style: dotted;
+}
+@media (forced-colors: active) {
+  .evidence-glyph {
+    forced-color-adjust: none;
+    --badge: CanvasText;
+  }
 }
 .resource-description {
   font-size: 15px;
@@ -1305,6 +1361,7 @@ html:lang(zh) .resource-description {
     gap: 13px;
   }
   .index-meta {
+    flex-direction: column;
     font-size: 13px;
     gap: 10px;
     padding-top: 16px;
@@ -1312,9 +1369,8 @@ html:lang(zh) .resource-description {
   line-height: 1.55;
   letter-spacing: 0;
 }
-  .index-meta > span {
-    font-size: 13px;
-    letter-spacing: 0.2px;
+  .evidence-legend {
+    justify-content: flex-start;
   }
   .resource-row {
     grid-template-columns: minmax(0, 1fr) 16px;

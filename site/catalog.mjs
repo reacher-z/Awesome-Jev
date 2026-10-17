@@ -9,13 +9,11 @@ const translations = {
       "Explore Jev and System One decision models through research papers, benchmarks, models and tools, with primary sources and English–Chinese guides.",
     socialImageAlt:
       "AwesomeJev — an independent field guide to typed decision models. Research, models, tools, and evidence.",
-    heroEyebrow: "AN INDEPENDENT FIELD GUIDE",
     heroLine1: "Awesome Jev",
     heroLine2: "by design.",
     heroDescription:
       "Research, models and tools for Jev and System One decision models.",
     explore: "Explore the collection",
-    figureTitle: "FROM CONTEXT TO CHOICE",
     figureInput: "“I was charged twice.<br>Could you help?”",
     figureCaption: "Illustrative output. Not a live call or a benchmark.",
     figureAria:
@@ -27,11 +25,9 @@ const translations = {
     pathBuildSub: "SDKs, patterns, working examples",
     pathEvaluate: "Inspect the evidence",
     pathEvaluateSub: "Methods, datasets, reproducibility",
-    snapshot: "CURRENT SNAPSHOT",
     versionNote:
       "Stable: Jev 1.13 · Preview: Jev 1.14.",
     modelNotes: "Model notes ↗",
-    collectionEyebrow: "THE CURATED INDEX",
     collectionTitle: "Resource index",
     collectionIntro:
       "Filter by type or search titles and descriptions.",
@@ -46,13 +42,11 @@ const translations = {
     filterFoundations: "Foundations",
     searchLabel: "Search resources",
     searchPlaceholder: "Find something useful…",
-    sourceNote: "DIRECT LINKS · CLEAR PROVENANCE",
     emptyTitle: "No matches, yet.",
     emptyDescription: "Try a broader term, or explore the full collection.",
     resetFilters: "Clear search & filters",
     editorialNote:
       "Preprints report their authors’ findings; listing is not independent validation. Foundations provide context, not evidence of Jev’s internal architecture.",
-    startEyebrow: "A SMALL, PRACTICAL START",
     startTitle: "One call.<br><em>Typed decisions.</em>",
     startDescription:
       "Give Jev the context and a bounded question. Keep the next action in your code.",
@@ -63,7 +57,6 @@ const translations = {
     copied: "Copied",
     copyFailed: "Select code to copy",
     keyNote: "Set TYPESAFE_API_KEY in your environment, then run:",
-    contributeEyebrow: "A LIVING COLLECTION",
     contributeTitle: "Good work belongs here.",
     contributeDescription:
       "Found a thoughtful paper, a useful tool, or a result worth reproducing? Help make the collection better.",
@@ -72,13 +65,21 @@ const translations = {
     lastCurated: "Last curated",
     backTop: "Back to top",
     sourceLink: "Website source",
-    official: "Official",
-    preprint: "Preprint · author-reported",
-    background: "Background literature",
-    community: "Community resource",
-    independent: "Independent evaluation",
-    reportedEvaluation: "Author-reported evaluation",
-    modelcard: "Publisher model card",
+    // Evidence markers: who published a source, then how far its claims were checked here.
+    // docs/source-audit.md#evidence-markers defines the same terms.
+    sourceOfficial: "Official",
+    sourcePreprint: "Preprint",
+    sourceCommunity: "Community",
+    sourceBackground: "Background",
+    evidenceAuthorReported: "author-reported",
+    evidenceScreened: "screened",
+    evidenceReproduced: "reproduced",
+    evidenceAuthorReportedNote: "not re-run here",
+    evidenceScreenedNote: "page checked",
+    evidenceReproducedNote: "none so far",
+    evidenceLegendLabel: "Evidence markers",
+    evidenceSeparator: ": ",
+    evidenceMethod: "How we check",
     readFurther: "Project links",
     readmeLink: "README",
     surveyLink: "Research guide",
@@ -88,14 +89,12 @@ const translations = {
     // Announced by the #result-count live region: plain words, no padding or capitals.
     resourceCount: (n, total) =>
       n ? `${n} of ${total} resources` : "No resources match",
-    indexEyebrow: "AN ECOSYSTEM WORTH EXPLORING",
     indexTitle: "Decision Index",
     indexDescription:
       "Explore decision models and community evaluations, including open Jev-inspired alternatives.",
     indexLink: "Open the Decision Index",
     indexCaveat:
       "Community-maintained. Full scores include private tests; public materials do not reproduce the entire ranking.",
-    corpusEyebrow: "THE WIDER RESEARCH CORPUS",
     corpusTitle: "Follow the connections.",
     corpusIntro:
       "Mixed screening levels: editorial review, automated content screening, abstract checks, and metadata-only discovery. Inspect each entry’s label; inclusion is a research lead, not an endorsement.",
@@ -134,8 +133,6 @@ const translations = {
     corpusCount: (n) => `${n.toLocaleString("en-US")} indexed sources`,
     corpusResults: (n, total) =>
       `${n.toLocaleString("en-US")} of ${total.toLocaleString("en-US")} sources`,
-    screened: "Content-screened",
-    corpusToggle: "SEARCHABLE SOURCE REGISTER",
   },
   zh: {
     skip: "跳转至资源索引",
@@ -147,13 +144,11 @@ const translations = {
       "探索 Jev 与 System One 决策模型的论文、基准、模型和工具，提供原始来源、中英文研究指南与证据局限。",
     socialImageAlt:
       "AwesomeJev：类型化决策模型的独立研究指南，汇集研究、模型、工具与证据。",
-    heroEyebrow: "一份独立的研究与实践指南",
     heroLine1: "Awesome Jev",
     heroLine2: "始于设计。",
     heroDescription:
       "Jev 与 System One 决策模型的论文、模型和工具。",
     explore: "探索精选资源",
-    figureTitle: "从上下文到决策",
     figureInput: "“我被重复扣费了，<br>可以帮忙处理吗？”",
     figureCaption: "示意输出。并非实时调用或评测结果。",
     figureAria: "示意概率：账单问题 84%，技术问题 11%，其他 5%",
@@ -164,11 +159,9 @@ const translations = {
     pathBuildSub: "SDK、设计模式与代码示例",
     pathEvaluate: "检查证据",
     pathEvaluateSub: "方法、数据集与可复现性",
-    snapshot: "当前版本快照",
     versionNote:
       "稳定版：Jev 1.13 · 预览版：Jev 1.14。",
     modelNotes: "模型说明 ↗",
-    collectionEyebrow: "精选资源索引",
     collectionTitle: "资源索引",
     collectionIntro:
       "按类型筛选，或搜索标题与简介。",
@@ -183,13 +176,11 @@ const translations = {
     filterFoundations: "基础研究",
     searchLabel: "搜索资源",
     searchPlaceholder: "搜索论文、工具或主题…",
-    sourceNote: "直达来源 · 标注出处",
     emptyTitle: "暂时没有匹配项。",
     emptyDescription: "试试更宽泛的关键词，或浏览完整资源库。",
     resetFilters: "清除搜索与筛选",
     editorialNote:
       "预印本呈现作者报告的结果，收录不代表我们已独立验证。基础文献提供研究背景，不代表 Jev 内部架构的证据。",
-    startEyebrow: "从一个小例子开始",
     startTitle: "一次调用。<br><em>类型化决策。</em>",
     startDescription: "给出上下文与边界清晰的问题。让代码决定下一步行动。",
     fullQuickstart: "阅读官方快速入门",
@@ -199,7 +190,6 @@ const translations = {
     copied: "已复制",
     copyFailed: "请选择代码后复制",
     keyNote: "先在环境变量中设置 TYPESAFE_API_KEY，然后运行：",
-    contributeEyebrow: "持续更新的资源库",
     contributeTitle: "让好工作被更多人看见。",
     contributeDescription:
       "发现了值得读的论文、实用的工具，或值得复现的结果？欢迎一起完善这份资源库。",
@@ -208,13 +198,19 @@ const translations = {
     lastCurated: "最近整理",
     backTop: "返回顶部",
     sourceLink: "网站源码",
-    official: "官方资源",
-    preprint: "预印本 · 作者报告",
-    background: "背景文献",
-    community: "社区资源",
-    independent: "独立评测",
-    reportedEvaluation: "作者报告的评测",
-    modelcard: "发布者模型卡",
+    sourceOfficial: "官方",
+    sourcePreprint: "预印本",
+    sourceCommunity: "社区",
+    sourceBackground: "背景文献",
+    evidenceAuthorReported: "作者报告",
+    evidenceScreened: "已筛查",
+    evidenceReproduced: "已复现",
+    evidenceAuthorReportedNote: "未在此重跑",
+    evidenceScreenedNote: "已查页面内容",
+    evidenceReproducedNote: "暂无",
+    evidenceLegendLabel: "证据标记",
+    evidenceSeparator: "：",
+    evidenceMethod: "核查方法",
     readFurther: "项目链接",
     readmeLink: "项目说明",
     surveyLink: "研究指南",
@@ -223,12 +219,10 @@ const translations = {
       "模型能力和许可依据发布者模型卡。API 兼容并不证明行为或准确率等同。",
     resourceCount: (n, total) =>
       n ? `${total} 项资源中匹配 ${n} 项` : "没有匹配的资源",
-    indexEyebrow: "探索决策模型生态",
     indexTitle: "Decision Index",
     indexDescription: "查看决策模型与社区评测，包括受 Jev 启发的开放模型。",
     indexLink: "打开 Decision Index",
     indexCaveat: "社区维护。完整分数包含私有测试，公开材料无法复现全部排名。",
-    corpusEyebrow: "更广泛的研究语料",
     corpusTitle: "沿着线索，继续探索。",
     corpusIntro:
       "各来源核查深度不同：编辑审阅、自动内容筛查、摘要核查或仅元数据发现。请查看条目标注；收录代表研究线索，而非质量背书。",
@@ -266,8 +260,6 @@ const translations = {
     corpusCount: (n) => `${n.toLocaleString("zh-CN")} 项索引来源`,
     corpusResults: (n, total) =>
       `${total.toLocaleString("zh-CN")} 项中匹配 ${n.toLocaleString("zh-CN")} 项`,
-    screened: "已做内容筛查",
-    corpusToggle: "可搜索的来源目录",
   },
 };
 
@@ -1594,6 +1586,7 @@ const resources = [
     url: "https://huggingface.co/collections/typesafeAI/workflowevals",
     en: "Published cases, model-generated references, and recorded runs for inspecting reproducibility.",
     zh: "公开案例、模型生成的参考标签与运行记录，便于检查可复现性。",
+    provenance: "official",
   },
   {
     category: "Foundations",

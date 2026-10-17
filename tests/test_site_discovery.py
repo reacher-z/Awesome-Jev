@@ -390,7 +390,7 @@ class SiteDiscoveryTests(unittest.TestCase):
             "en": {"direct": "Directly related", "adjacent": "Related field", "background": "Research background",
                    "editorial_reviewed": "Editorially reviewed", "content_screened": "Content screened", "abstract_checked": "Abstract checked"},
             "zh": {"direct": "直接相关", "adjacent": "邻近领域", "background": "研究背景",
-                   "editorial_reviewed": "编辑复核", "content_screened": "正文筛查", "abstract_checked": "摘要检查"},
+                   "editorial_reviewed": "编辑审阅", "content_screened": "内容筛查", "abstract_checked": "摘要核查"},
         }
         for route, language in (("/discoveries/", "en"), ("/zh/discoveries/", "zh")):
             with self.subTest(route=route):

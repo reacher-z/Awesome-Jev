@@ -101,8 +101,33 @@ The current reviewed Space commit is `0ddf6758073eb77ae449a3541f57286d7f39d93f`.
 
 The 0.2/0.5/0.3 public/same-skills/new-domains weights and scoring-rule objects are unchanged. Private evaluations remain unavailable for complete independent reconstruction. This was a metadata, structure and changed-field review, not execution of the evaluator or validation of its model scores. Previous hashes and source metadata remain in the [refresh record](../data/scan-review-2026-10-17.json).
 
-## Publisher badges
+## Evidence markers
 
-Publisher badges on the curated cards describe attribution, separately from source-verification tiers. TypeSafe’s own entries explicitly carry the Official badge. Other tools, guides and evaluations default to Community resource unless a more specific reviewed label is supplied; models retain their model-card labels. This does not certify code behavior or reproduce a reported result.
+Each curated row on the website ends its metadata line with one marker: a small glyph, then two words. The first word says who published the source. The second says how far its claims were checked here. The glyph's fill repeats the first word, so the marker never relies on colour. A one-line legend under the homepage filters links to this section.
 
-**中文：** 精选卡片的发布者标记与证据核查等级分开。TypeSafe自身资源明确标记为“官方资源”；其他工具、指南与评测默认采用“社区资源”，或使用另行核查的更具体标记。该标记不证明代码行为或实验结果已被验证。
+| Source | Glyph | Meaning |
+| --- | --- | --- |
+| Official | Filled square | Published by TypeSafe. TypeSafe's own entries carry this marker explicitly. |
+| Preprint | Half-filled square | A research paper posted without peer review, linked at a fixed arXiv version. |
+| Community | Outlined square | Published by anyone other than TypeSafe, including companies, model publishers and independent evaluators. |
+| Background | Dotted square | Background literature. It gives context; it is not evidence about Jev's internal architecture. |
+
+| Evidence | Meaning |
+| --- | --- |
+| author-reported | Findings are given as their authors or publisher state them, and nothing was re-run here. Papers, official pages, model cards, background literature and evaluation reports carry this word. |
+| screened | The linked page passed a recorded relevance and substance check (`content_screened` or `editorial_reviewed` in the source ledgers). The source's claims were not tested. |
+| reproduced | Results were re-run independently. No curated entry carries this word so far. |
+
+The marker describes attribution and checking depth, not quality. It does not certify code behavior or reproduce a reported result. Several finer provenance values in `site/catalog.mjs` all display as "Community · author-reported": `modelcard`, `independent` and `reportedEvaluation`. The research corpus and the new-resources page keep the four verification tiers defined above. On a curated row, "screened" covers the editorially reviewed and content-screened tiers.
+
+**中文：** 网站上每个精选条目的信息行末尾都有一个证据标记：一个小图形加两个词。第一个词说明来源由谁发布，第二个词说明本项目对其结论核查到什么程度。图形的填充方式与第一个词一一对应，因此不只依靠颜色区分。首页筛选栏下方的一行图例链接到本节。
+
+- **官方**（实心方块）：TypeSafe 发布；TypeSafe 自身资源明确标注。
+- **预印本**（半填充方块）：未经同行评审的论文，链接到固定的 arXiv 版本。
+- **社区**（空心方块）：TypeSafe 以外的发布者，包括公司、模型发布者与独立评测方。
+- **背景文献**（虚线方块）：提供研究背景，不是 Jev 内部架构的证据。
+- **作者报告**：按作者或发布者的说法转述，本项目未重跑。论文、官方页面、模型卡、背景文献和评测报告均属此类。
+- **已筛查**：链接页面通过了有记录的相关性与实质内容检查（来源台账中的 `content_screened` 或 `editorial_reviewed`），其结论未经检验。
+- **已复现**：结果经独立重跑。目前没有精选条目属于此类。
+
+该标记说明出处与核查深度，不代表质量评价，也不证明代码行为或实验结果。`site/catalog.mjs` 中更细的出处值都显示为“社区 · 作者报告”，包括 `modelcard`、`independent` 与 `reportedEvaluation`。研究来源库与新增资源目录沿用上文的四个核查等级；精选条目上的“已筛查”对应其中的编辑审阅与内容筛查两级。

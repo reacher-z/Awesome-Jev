@@ -53,6 +53,30 @@ function localizedMetadata(value, language) {
     .map((part) => (Object.hasOwn(labels, part) ? labels[part] : part))
     .join(" · ");
 }
+// Evidence marker: who published a source, then how far its claims were checked here.
+// Finer provenance values collapse onto the shared vocabulary in site/catalog.mjs.
+const evidenceMarkers = {
+  official: ["official", "authorReported"],
+  preprint: ["preprint", "authorReported"],
+  background: ["background", "authorReported"],
+  modelcard: ["community", "authorReported"],
+  independent: ["community", "authorReported"],
+  reportedEvaluation: ["community", "authorReported"],
+  community: ["community", "screened"],
+};
+const capitalized = word => word[0].toUpperCase() + word.slice(1);
+const evidenceGlyph = source => `<span class="evidence-glyph" data-source="${source}" aria-hidden="true"></span>`;
+export const evidenceOf = resource => evidenceMarkers[provenance(resource)];
+function renderEvidence(resource, t) {
+  const [source, evidence] = evidenceOf(resource);
+  return `<span class="evidence-marker">${evidenceGlyph(source)}${escapeHTML(t("source" + capitalized(source)))} · ${escapeHTML(t("evidence" + capitalized(evidence)))}</span>`;
+}
+export function renderEvidenceLegend(language, translations, methodURL) {
+  const t = key => translations[language][key] ?? translations.en[key] ?? key;
+  const sources = ["official", "preprint", "community", "background"].map(source => `<span class="evidence-key">${evidenceGlyph(source)}${escapeHTML(t("source" + capitalized(source)))}</span>`);
+  const levels = ["authorReported", "screened", "reproduced"].map(level => `<span class="evidence-key"><strong>${escapeHTML(t("evidence" + capitalized(level)))}</strong>${escapeHTML(t("evidenceSeparator"))}${escapeHTML(t("evidence" + capitalized(level) + "Note"))}</span>`);
+  return `<span class="sr-only">${escapeHTML(t("evidenceLegendLabel") + t("evidenceSeparator"))}</span>${sources.join("")}${levels.join("")}<a href="${escapeHTML(methodURL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(t("evidenceMethod"))}${icon("external")}</a>`;
+}
 function provenance(resource) {
   return (
     resource.provenance ||
@@ -69,7 +93,7 @@ export const englishLang = (text, language) =>
   language === "zh" && !/[\u3400-\u9fff]/u.test(String(text ?? "")) ? ' lang="en"' : "";
 export function renderResource(resource, language, translations) {
  const t=key=>translations[language][key] ?? translations.en[key] ?? key;
- return `<article class="resource-row"><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span> · ${escapeHTML(localizedMetadata(resource.by, language))} · <span class="resource-provenance">${escapeHTML(t(provenance(resource)))}</span></p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
+ return `<article class="resource-row"><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span> · ${escapeHTML(localizedMetadata(resource.by, language))} · ${renderEvidence(resource, t)}</p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
 }
 
 export function renderModelRow(resource, language) {
