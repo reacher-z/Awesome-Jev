@@ -340,6 +340,52 @@ class IncrementalEvidenceTests(unittest.TestCase):
         self.assertEqual(result.rows, old.rows)
         self.assertFalse(changes["added"] or changes["changed"])
 
+    def test_refetched_content_drops_fields_of_the_earlier_observation(self):
+        # #103: a relevance rescreen of earlier bytes does not cover new content,
+        # and a later successful fetch supersedes an earlier failure's errors.
+        rescreened = row(status="screened", relevance_rescreened_at="2026-10-15T01:00:00Z")
+        failed = row(level="metadata_only", status="unavailable", fetch_errors=["network_failure"])
+        failed.pop("content_sha256")
+        fresh = row(body="changed bytes", status="screened", retrieved_at="2026-10-16T04:00:00Z")
+        for prior, dropped in ((rescreened, "relevance_rescreened_at"), (failed, "fetch_errors")):
+            with self.subTest(dropped=dropped):
+                result, changes = refresh.merge_records(ledger(prior), [fresh])
+                self.assertEqual(changes["changed"], [prior["url"]])
+                self.assertNotIn(dropped, result.rows[0])
+                self.assertEqual(result.rows[0], {k: v for k, v in {**prior, **fresh}.items() if k != dropped})
+                with tempfile.TemporaryDirectory() as tmp:
+                    path = Path(tmp) / "sources.jsonl"
+                    path.write_text("".join(result.lines), encoding="utf-8")
+                    with patch.object(validate, "ROOT", Path(tmp)), patch.object(validate, "errors", []) as errors:
+                        validate.check_ledger(path)
+                        self.assertEqual(errors, [])
+        # A rescreen of the bytes the row still holds is kept.
+        same = row(status="screened", relevance_rescreened_at="2026-10-16T05:00:00Z")
+        result, _ = refresh.merge_records(ledger(same), [row(status="screened", retrieved_at="2026-10-16T06:00:00Z")])
+        self.assertEqual(result.rows, [same])
+
+    def test_validator_rejects_a_stale_rescreen_and_errors_on_a_screened_row(self):
+        cases = {
+            "relevance_rescreened_at predates retrieved_at": row(status="screened", retrieved_at="2026-10-16T04:04:00+00:00",
+                                                                 relevance_rescreened_at="2026-10-16T01:23:38+00:00"),
+            "relevance_rescreened_at must be an ISO timestamp": row(status="screened", relevance_rescreened_at="yesterday"),
+            "must not keep fetch_errors": row(status="screened", fetch_errors=["network_failure"]),
+        }
+        valid = [row(status="screened", relevance_rescreened_at="2026-10-15T00:00:00Z"),
+                 row(status="screened", relevance_rescreened_at="2026-10-16T00:00:00+00:00"),
+                 row(level="metadata_only", status="unavailable", fetch_errors=["network_failure"])]
+        for message, record in [*cases.items(), *((None, record) for record in valid)]:
+            with self.subTest(message=message, record=record), tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / "sources.jsonl"
+                path.write_text(json.dumps(record) + "\n", encoding="utf-8")
+                with patch.object(validate, "ROOT", Path(tmp)), patch.object(validate, "errors", []) as errors:
+                    validate.check_ledger(path)
+                    if message is None:
+                        self.assertEqual(errors, [])
+                    else:
+                        self.assertEqual(len(errors), 1)
+                        self.assertIn(message, errors[0])
+
     def test_partial_failure_keeps_prior_success_and_accepts_new_source(self):
         old = ledger(row())
         failed = row(level="metadata_only", status="unavailable")

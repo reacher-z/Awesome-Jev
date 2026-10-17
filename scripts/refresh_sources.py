@@ -508,6 +508,13 @@ def merge_records(old: Ledger, incoming, max_new=None, policy=None):
             # Retain fields the machine collector does not own, including any
             # manually supplied notes; preserve explicit editorial annotations.
             merged = {**prior, **new}
+            # Fields that describe an earlier observation must not outlive it:
+            # a relevance rescreen of the old bytes does not cover the new ones,
+            # and a successful fetch supersedes the errors of a failed attempt.
+            if content_hash(new) != content_hash(prior) and "relevance_rescreened_at" not in new:
+                merged.pop("relevance_rescreened_at", None)
+            if new.get("status") == "screened" and "fetch_errors" not in new:
+                merged.pop("fetch_errors", None)
             if aliases.get(key, 0) > 1:
                 # Refresh one owner without turning another retained alias
                 # into an exact duplicate of its stored URL identity.

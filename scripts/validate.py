@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import ast
 import collections
-from datetime import datetime
+from datetime import datetime, timezone
 import html
 from html.parser import HTMLParser
 import ipaddress
@@ -290,6 +290,14 @@ def check_ledger(path: Path, policy=None) -> list[dict]:
                 fail(location, "content screening requires retrieved content hash and screened status")
         if row.get("verification_level") == "metadata_only" and row.get("status") == "screened":
             fail(location, "metadata-only record must not claim content-screened status")
+        # Timestamps and errors describe the evidence the row holds now.
+        rescreened, retrieved = row.get("relevance_rescreened_at"), row.get("retrieved_at")
+        if rescreened is not None and (not isinstance(rescreened, str) or not timestamp(rescreened)):
+            fail(location, "relevance_rescreened_at must be an ISO timestamp")
+        elif rescreened is not None and isinstance(retrieved, str) and timestamp(retrieved) and instant(rescreened) < instant(retrieved):
+            fail(location, "relevance_rescreened_at predates retrieved_at, so the rescreen did not cover the stored content")
+        if row.get("status") == "screened" and row.get("fetch_errors"):
+            fail(location, "screened record must not keep fetch_errors from an earlier failed attempt")
         if any(key in row for key in ("abstract", "full_text", "raw_html", "raw_response")):
             fail(location, "bulk source text must stay outside the public ledger")
     return result
@@ -314,9 +322,15 @@ def check_ledger_overlap(accepted: dict[Path, list[dict]], excluded: dict[Path, 
                 fail(str(path.relative_to(ROOT)), f"excluded record is also in an accepted ledger: {key}")
 
 
+def instant(value: str) -> datetime:
+    """An ISO timestamp as an aware datetime; one without an offset is read as UTC."""
+    moment = datetime.fromisoformat(value[:-1] + "+00:00" if value.endswith("Z") else value)
+    return moment if moment.tzinfo else moment.replace(tzinfo=timezone.utc)
+
+
 def timestamp(value: str) -> bool:
     try:
-        datetime.fromisoformat(value[:-1] + "+00:00" if value.endswith("Z") else value)
+        instant(value)
         return True
     except ValueError:
         return False
