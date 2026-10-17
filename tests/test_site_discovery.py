@@ -311,6 +311,18 @@ class SiteDiscoveryTests(unittest.TestCase):
         styles = (ROOT / "site/styles.css").read_text(encoding="utf-8")
         self.assertIsNone(re.search(r'\[lang="?zh"?\]', styles), 'Chinese rules must also match lang="zh-CN"; use :lang(zh)')
 
+    def test_result_count_live_region_uses_speakable_text(self):
+        statuses = json.loads(subprocess.check_output(
+            [shutil.which("node"), "--input-type=module", "-e",
+             "import {translations as t} from './site/catalog.mjs'; process.stdout.write(JSON.stringify(['en', 'zh'].map(l => [t[l].resourceCount(5, 134), t[l].resourceCount(0, 134)])));"],
+            cwd=ROOT, text=True))
+        for language, (some, none) in zip(("en", "zh"), statuses):
+            with self.subTest(language=language):
+                self.assertIn("5", some)
+                self.assertIn("134", some)
+                self.assertNotRegex(some + none, r"\b0\d|/|[A-Z]{2,}", "Screen readers announce this text as written")
+                self.assertNotRegex(none, r"\d", "An empty result needs words, not a zero count")
+
     def test_homepage_translation_preserves_interactive_controls(self):
         required = {"resource-search", "resource-list", "result-count", "corpus-search", "corpus-list", "start", "copy-code", "copy-status"}
         for route in ("/", "/zh/"):

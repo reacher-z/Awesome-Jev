@@ -82,8 +82,9 @@ const translations = {
     bibtexLink: "BibTeX",
     modelEvidence:
       "Model capabilities and licenses follow publisher cards. API compatibility does not establish equivalent behavior or accuracy.",
+    // Announced by the #result-count live region: plain words, no padding or capitals.
     resourceCount: (n, total) =>
-      `${String(n).padStart(2, "0")} / ${total} RESOURCES`,
+      n ? `${n} of ${total} resources` : "No resources match",
     indexEyebrow: "AN ECOSYSTEM WORTH EXPLORING",
     indexTitle: "Decision Index",
     indexDescription:
@@ -215,7 +216,7 @@ const translations = {
     modelEvidence:
       "模型能力和许可依据发布者模型卡。API 兼容并不证明行为或准确率等同。",
     resourceCount: (n, total) =>
-      `${String(n).padStart(2, "0")} / ${total} 项资源`,
+      n ? `${total} 项资源中匹配 ${n} 项` : "没有匹配的资源",
     indexEyebrow: "探索决策模型生态",
     indexTitle: "Decision Index",
     indexDescription: "查看决策模型与社区评测，包括受 Jev 启发的开放模型。",
