@@ -321,19 +321,32 @@ def main():
     add("https://arxiv.org/abs/2609.35342", "research-paper", "direct", "https://huggingface.co/papers/2609.35342", "Sys1Cal-v1 is a Jev probability-calibration dataset study.")
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
+    previous = []
+    if out.exists():
+        previous = [json.loads(line) for line in out.read_text(encoding="utf-8").split("\n") if line.strip()]
     cache = {}
-    if args.resume and out.exists():
-        for line in out.read_text(encoding="utf-8").split("\n"):
-            if not line.strip():
-                continue
-            old = json.loads(line)
+    if args.resume:
+        for old in previous:
             key = canonical(old["url"])
             if key and old.get("content_sha256") and (key == old["url"] or key.lower() == old["url"].lower()):
                 cache[key] = old
+    reviewed = {old["url"]: old for old in previous if old.get("verification_level") == "editorial_reviewed"}
+
+    def keep_review(record):
+        """The ledger is rewritten whole, but like scripts/refresh_sources.py a
+        documented editorial review stays while its URL, revision and fetched
+        bytes are unchanged. Changed content keeps this run's automated grade."""
+        prior = reviewed.get(record["url"])
+        if (prior and record.get("status") == "screened" and record.get("content_sha256")
+                and record["content_sha256"] == prior.get("content_sha256")
+                and record.get("resolved_revision") == prior.get("resolved_revision")):
+            return dict(prior)
+        return record
     results = {}
     # Source files are distinct datasets/documents, not per-model report URLs.
     # Automated collection never grants editorial_reviewed (docs/maintenance.md),
-    # and evidence states only what this run parsed from the fetched bytes.
+    # and evidence states only what this run parsed from the fetched bytes;
+    # keep_review() only retains an earlier documented review of unchanged bytes.
     for f, raw in files.items():
         url = SPACE_URL if f == "README.md" else SPACE_URL + "/blob/" + revision + "/" + f
         data = json.loads(raw) if f.endswith(".json") else None
@@ -345,7 +358,7 @@ def main():
             evidence = f"Methodology lists {count} benchmark entries; parsed for upstream benchmark sources."
         elif f == "news.html":
             evidence = f"Static news page; {len(links(raw.decode()))} links extracted without executing JavaScript."
-        results[url] = {"url": url, "title": "Jev Decision Index — " + f, "topic": "community-evaluation-index", "relation": "direct", "verification_level": "content_screened", "status": "screened", "retrieved_at": NOW(), "checked_via": "Automated retrieval and structural inspection of community index source; not editorial review.", "retrieved_url": root + f, "resolved_revision": revision, "content_sha256": hashlib.sha256(raw).hexdigest(), "content_bytes": len(raw), "evidence": evidence, "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.", "discovered_from": [SPACE_URL]}
+        results[url] = keep_review({"url": url, "title": "Jev Decision Index — " + f, "topic": "community-evaluation-index", "relation": "direct", "verification_level": "content_screened", "status": "screened", "retrieved_at": NOW(), "checked_via": "Automated retrieval and structural inspection of community index source; not editorial review.", "retrieved_url": root + f, "resolved_revision": revision, "content_sha256": hashlib.sha256(raw).hexdigest(), "content_bytes": len(raw), "evidence": evidence, "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.", "discovered_from": [SPACE_URL]})
     def save():
         kept = [(u, r) for u, r in sorted(results.items()) if eligible(r)]
         excluded = [dict(r, exclusion_reason="Explicit Jev, TypeSafe AI, or typed-decision content was not established for this one-hop implementation; excluded from checked-source totals.") for u, r in sorted(results.items()) if not eligible(r)]
@@ -378,7 +391,7 @@ def main():
                 except Exception as e:
                     record = dict(seed, retrieved_at=NOW(), verification_level="metadata_only", status="audit_error", evidence=str(e)[:200])
                     children = []
-                results[record["url"]] = classify_relation(record)
+                results[record["url"]] = keep_review(classify_relation(record))
                 candidates.extend(children)
                 if i % 30 == 0:
                     save()
