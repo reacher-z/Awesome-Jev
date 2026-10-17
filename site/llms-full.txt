@@ -56,7 +56,7 @@ Before reusing a confidence gate in a new language or domain, build a target-spe
 
 The social-science audit reports task-dependent confidence failures using benchmark labels; JevOut’s human checks cover only sampled successful perturbations. Neither abstract establishes multilingual transfer. Language-specific label checks and threshold-transfer comparisons are our proposed protocol, not reproduced findings or population-wide guarantees. [Social-science annotation audit, v2](https://arxiv.org/abs/2609.24574v2) · [JevOut, v2](https://arxiv.org/abs/2609.30243v2)
 
-Implementation documentation supplies additional transfer limits. FRIDA-Decisions recommends short Russian–English states and uses Russian instruction suffixes. Jev-AR reports synthetic Arabic training without native-speaker validation and says confidence fitted to its built-in routes is approximate on custom lists. These are documented operating conditions, not evidence that a confidence gate transfers; we did not run either implementation. [FRIDA-Decisions limits](https://github.com/ai-forever/frida-decisions) · [Jev-AR limitations](https://github.com/atmaneayoubdev/jev-ar)
+Implementation documentation supplies additional transfer limits. FRIDA-Decisions recommends short Russian–English states and uses Russian instruction suffixes. Jev-AR reports synthetic Arabic training without native-speaker validation and says confidence fitted to its built-in routes is approximate on custom lists. These are documented operating conditions, not evidence that a confidence gate transfers; we did not run either implementation. [FRIDA-Decisions limits](https://github.com/ai-forever/FRIDA-Decisions) · [Jev-AR limitations](https://github.com/atmaneayoubdev/jev-ar)
 
 The Indonesian regional-language study supplies a concrete separation: expected calibration error did not increase while error-ranking ability degraded. Its translation comparison uses human Indonesian translations; classifier comparisons depend on label budgets, and cascades on the chosen fallback and routing fraction. Evaluate those factors separately before transferring a threshold. The preregistration and release claims remain author-reported here; no prediction files were audited. [Indonesian regional-language transfer study, v1](https://arxiv.org/abs/2610.14112v1)
 
@@ -878,7 +878,7 @@ Tools · EvoScientist · training code · Apache-2.0
 
 Search-agent decision training with soft-label and Brier losses, reliability weights and per-question-type temperature fitting; the documented pipeline and split controls were not reproduced.
 
-Primary source: https://github.com/evoscientist/searchjev
+Primary source: https://github.com/EvoScientist/SearchJev
 
 ## mJev
 
@@ -886,7 +886,7 @@ Tools · SoMarkAI · multimodal runtime · Apache-2.0
 
 Shared-context candidate scoring with HF/vLLM routes; normalized option probabilities are not calibrated confidence, and the reported cache speedup trades higher memory in one controlled video setup.
 
-Primary source: https://github.com/somarkai/mjev
+Primary source: https://github.com/SoMarkAI/mJev
 
 ## FRIDA-Decisions
 
@@ -894,7 +894,7 @@ Tools · SberAI · independent runtime · MIT code
 
 Packed Russian–English encoder runtime for typed questions and ranking; state truncation, Russian instruction suffixes and margin-versus-probability semantics remain explicit.
 
-Primary source: https://github.com/ai-forever/frida-decisions
+Primary source: https://github.com/ai-forever/FRIDA-Decisions
 
 ## OpenThai-SystemOne
 
@@ -914,11 +914,11 @@ Primary source: https://github.com/ncchinh/quyet
 
 ## JevLang
 
-Tools · timmikeladze · policy and replay
+Tools · TimMikeladze · policy and replay
 
 TypeScript/Python policy layer separates typed model answers from routing and action dispatch, with documented journals and replay; a trace does not establish truthful inputs or calibrated thresholds.
 
-Primary source: https://github.com/timmikeladze/jevlang
+Primary source: https://github.com/TimMikeladze/JevLang
 
 ## sysone decision-learning library
 
@@ -1054,7 +1054,7 @@ Evaluations · raxIT Labs · partial public split
 
 Common policy benchmark compares decision models and managed guardrails with fixed scoring; an unpublished test slice prevents exact full-board reproduction from the public clone.
 
-Primary source: https://github.com/raxitlabs/decision-models-as-guardrails
+Primary source: https://github.com/raxITlabs/decision-models-as-guardrails
 
 ## 113-class complaint classification benchmark
 

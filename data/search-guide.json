@@ -210,7 +210,7 @@
             "sources": [
               {
                 "label": "FRIDA-Decisions limits",
-                "url": "https://github.com/ai-forever/frida-decisions"
+                "url": "https://github.com/ai-forever/FRIDA-Decisions"
               },
               {
                 "label": "Jev-AR limitations",
@@ -679,7 +679,7 @@
             "sources": [
               {
                 "label": "FRIDA-Decisions 的限制",
-                "url": "https://github.com/ai-forever/frida-decisions"
+                "url": "https://github.com/ai-forever/FRIDA-Decisions"
               },
               {
                 "label": "Jev-AR 的限制",

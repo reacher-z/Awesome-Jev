@@ -287,7 +287,7 @@ const resources = [
     "category": "Tools",
     "title": "SearchJev training pipeline",
     "by": "EvoScientist · training code · Apache-2.0",
-    "url": "https://github.com/evoscientist/searchjev",
+    "url": "https://github.com/EvoScientist/SearchJev",
     "en": "Search-agent decision training with soft-label and Brier losses, reliability weights and per-question-type temperature fitting; the documented pipeline and split controls were not reproduced.",
     "zh": "面向搜索 agent 决策的训练流程，包含软标签与 Brier 损失、可靠性权重及按问题类型拟合温度；文档中的流程与切分控制尚未复现。"
   },
@@ -295,7 +295,7 @@ const resources = [
     "category": "Tools",
     "title": "mJev",
     "by": "SoMarkAI · multimodal runtime · Apache-2.0",
-    "url": "https://github.com/somarkai/mjev",
+    "url": "https://github.com/SoMarkAI/mJev",
     "en": "Shared-context candidate scoring with HF/vLLM routes; normalized option probabilities are not calibrated confidence, and the reported cache speedup trades higher memory in one controlled video setup.",
     "zh": "通过 HF/vLLM 路径进行共享上下文候选评分；选项归一化概率不是已校准置信度，所报缓存加速在一个受控视频设置中需要更多显存。"
   },
@@ -548,7 +548,7 @@ const resources = [
     "category": "Tools",
     "title": "FRIDA-Decisions",
     "by": "SberAI · independent runtime · MIT code",
-    "url": "https://github.com/ai-forever/frida-decisions",
+    "url": "https://github.com/ai-forever/FRIDA-Decisions",
     "en": "Packed Russian–English encoder runtime for typed questions and ranking; state truncation, Russian instruction suffixes and margin-versus-probability semantics remain explicit.",
     "zh": "面向类型化问题与排序的俄英双语编码器运行库；需注意状态截断、俄语指令后缀，以及边际分数与归一化概率的区别。"
   },
@@ -587,8 +587,8 @@ const resources = [
   {
     "category": "Tools",
     "title": "JevLang",
-    "by": "timmikeladze · policy and replay",
-    "url": "https://github.com/timmikeladze/jevlang",
+    "by": "TimMikeladze · policy and replay",
+    "url": "https://github.com/TimMikeladze/JevLang",
     "en": "TypeScript/Python policy layer separates typed model answers from routing and action dispatch, with documented journals and replay; a trace does not establish truthful inputs or calibrated thresholds.",
     "zh": "TypeScript／Python 策略层将类型化模型答案与路由、动作分发分开，提供日志与重放说明；可追溯记录不证明输入真实或阈值已校准。"
   },
@@ -604,7 +604,7 @@ const resources = [
     "category": "Evaluations",
     "title": "Decision models as guardrails",
     "by": "raxIT Labs · partial public split",
-    "url": "https://github.com/raxitlabs/decision-models-as-guardrails",
+    "url": "https://github.com/raxITlabs/decision-models-as-guardrails",
     "en": "Common policy benchmark compares decision models and managed guardrails with fixed scoring; an unpublished test slice prevents exact full-board reproduction from the public clone.",
     "zh": "用固定评分规则比较决策模型与托管护栏的共同策略基准；未发布的测试切片使公开克隆无法精确复现完整榜单。"
   },

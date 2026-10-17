@@ -106,7 +106,7 @@ TypeSafe 的 Jev 接收状态与类型化问题，为应用代码返回决策和
 | 2026-10-14<br>v1 | [Are AI Decision Models Biased? A Case Study of Jev](https://arxiv.org/abs/2610.19619v1)<br>Imperatrice, Kameneva, Greenberg & Romano | 在 41,500 次回答中，Jev 选出的答案大体未显示偏差，但其判断会受无关数字和选项顺序影响，部分认知偏差操纵即使不改变所选答案也会明显改变返回的概率；在 30 个改编的合取任务上，15,000 次回答中有 54% 违反合取规则。 | — |
 | 2026-10-14<br>v2<br>首次提交<br>2026-09-30 | [More Choices, Fewer Decisions: Ordinal-Scale Bias in JEV-like Direct-Decision Models](https://arxiv.org/abs/2609.38827v2)<br>Gao et al. | 审查所选决策模型对有序标签的使用不足；细化量表会加重压缩，准确率、最终标签利用率和平均候选概率仍是不同测量。 | [匿名代码材料](https://anonymous.4open.science/r/jev_ordinal_scale_bia/)；匿名镜像，2027-04-10 到期。 |
 | 2026-10-12<br>v1 | [Does a Hosted Decision Model Respect Irrelevant Alternatives? A Pre-Registered Test of Option-Set Dependence in Jev](https://arxiv.org/abs/2610.16655v1)<br>Rajput, Chauhan & Kosaraju | 加入无关选项会改变 jev-1.13.0 对正确标签与最强错误标签的对数几率，选项越多偏移越大，因此其概率只相对于所给选项列表成立；逐项独立的是非评分可消除这种依赖，但准确率更低（预注册，299,463 次调用，三个数据集）。 | — |
-| 2026-10-01<br>v1 | [Beyond Answer Confidence: A Controlled Audit of Self-Knowledge in a Black-Box Decision Model](https://arxiv.org/abs/2610.01006v1)<br>Shankaranarayana, Runje & Jannink | 通过控制信息与表面线索，区分 Jev 的答案置信度与是否知道答案的自评；黑盒表现并不证明能读取内部知识状态。 | [代码](https://github.com/syntheme/beyond-answer-confidence) |
+| 2026-10-01<br>v1 | [Beyond Answer Confidence: A Controlled Audit of Self-Knowledge in a Black-Box Decision Model](https://arxiv.org/abs/2610.01006v1)<br>Shankaranarayana, Runje & Jannink | 通过控制信息与表面线索，区分 Jev 的答案置信度与是否知道答案的自评；黑盒表现并不证明能读取内部知识状态。 | [代码](https://github.com/Syntheme/beyond-answer-confidence) |
 | 2026-09-30<br>v1 | [AnyJev Technical Report](https://arxiv.org/abs/2610.00831v1)<br>Zhang et al. | 无需训练的概率读出，修正标签先验与选项顺序偏差。 | [代码](https://github.com/nokia-applied-research/AnyJev) |
 | 2026-09-28<br>v1 | [Jev thinks “I don’t know”, but doesn’t say it: Introducing Sys1Cal-v1 Dataset for Probability Calibration](https://arxiv.org/abs/2609.35342v1)<br>Porcedda | 以构造概率目标进行受控校准测试。 | [代码与合成基准](https://github.com/little-g-ai/Sys1Cal-v1) |
 | 2026-09-27<br>v1 | [Beyond Calibration: Do a Typed-Decision Model’s Probabilities Obey the Probability Axioms?](https://arxiv.org/abs/2609.33209v1)<br>Li, He & Li | 检验逻辑相关问题之间的概率一致性。 | [代码与调用记录](https://github.com/bro789/typed-decision-coherence) |
@@ -118,7 +118,7 @@ TypeSafe 的 Jev 接收状态与类型化问题，为应用代码返回决策和
 | 2026-10-15<br>v1 | [JevAgentHarness: Benchmarking, Deploying and Training Decision Models That Share Control with LLMs](https://arxiv.org/abs/2610.21412v1)<br>Zhu et al. | 为各类选择拟合阈值，让决策模型与 LLM 共享 agent 控制。 | [代码](https://github.com/JevAgentHarness/JevAgentHarness) |
 | 2026-10-14<br>v1 | [Selective Reasoning for Typed Decision Models: When to Start, Read, and Stop](https://arxiv.org/abs/2610.19644v1)<br>Zheng & Chen | 控制推理启动、候选答案读取与生成停止的时机；证据限于冻结的 Qwen 骨干及三类任务。 | [代码与已保存的测量材料](https://github.com/binzheng-joey/selective-reasoning)；仅检查 README，未执行。 |
 | 2026-10-13<br>v3<br>首次提交<br>2026-09-24 | [Decision Models vs. LLMs as Rubric Judges: Cheaper, Faster, and Wrong in the Same Places](https://arxiv.org/abs/2609.29769v3)<br>Rao & Callison-Burch | 评分准则评判、相关错误与级联收益的局限。 | — |
-| 2026-10-13<br>v1 | [Judges Follow the Reference: The Derivation Gap in Verifying Tool-Call Arguments](https://arxiv.org/abs/2610.18497v1)<br>Ma et al. | 包括 Jev 在内的工具参数评判模型，在缺少可见参考时会拒绝部分正确推导值；模型生成的参考在三个基准上接受评测。 | [代码](https://github.com/sarielma/deref_release) · [评测数据](https://huggingface.co/datasets/lm2445/DeRef)；不包含模型输出。 |
+| 2026-10-13<br>v1 | [Judges Follow the Reference: The Derivation Gap in Verifying Tool-Call Arguments](https://arxiv.org/abs/2610.18497v1)<br>Ma et al. | 包括 Jev 在内的工具参数评判模型，在缺少可见参考时会拒绝部分正确推导值；模型生成的参考在三个基准上接受评测。 | [代码](https://github.com/SarielMa/DeRef_release) · [评测数据](https://huggingface.co/datasets/lm2445/DeRef)；不包含模型输出。 |
 | 2026-10-11<br>v1 | [Suggested Is Not Superseded: A Pre-Registered Evaluation of a System-One Model as a Memory-Retirement Gate](https://arxiv.org/abs/2610.15710v1)<br>Chen & Le | Jev 旧记忆停用评测区分已确认更新与变化暗示；LLM／人工混合标注、共享错误及小型开发集上的选择限制了级联收益主张。 | — |
 | 2026-10-10<br>v2<br>首次提交<br>2026-10-06 | [JevCascade: Readout Stability and Inference-Time Compute Allocation for Prefill-Only Decision Models](https://arxiv.org/abs/2610.07716v2)<br>Li & Chen | 研究候选集合干预与置信度级联；排序稳定性并不等同概率校准。 | [代码与数据](https://github.com/rlisml/jev-cascade) |
 | 2026-10-09<br>v5<br>首次提交<br>2026-09-22 | [JEV-as-a-Judge: Accept When Confident, Escalate When Unsure](https://arxiv.org/abs/2609.26550v5)<br>Li, Miao, Krishnan & Padman | 基于置信度从 Jev 升级到推理评判模型。 | [项目页](https://yubol-bobo.github.io/jev-as-a-judge/) |
@@ -135,7 +135,7 @@ TypeSafe 的 Jev 接收状态与类型化问题，为应用代码返回决策和
 | 2026-10-13<br>v1 | [Nudge the Judge: Uncovering Program Decision Hijacking in Real-World Jev Applications](https://arxiv.org/abs/2610.18612v1)<br>Luo et al. | JevProbe 追踪攻击者可控的上下文如何影响 228 个热门 Jev 应用据以执行的决策；在 2,273 个精选用例中（每个应用至多十条、优先选取翻转案例，并非无偏样本），81.5% 出现决策翻转，其中 98.6% 可能造成下游安全影响，现有防御作用有限。 | [代码与 JevProbeBench](https://github.com/xiaoxiaohg8d/JevProbe-)；仅检查 README，未执行。 |
 | 2026-10-13<br>v1 | [Same Attack, Different Judge: A First Controlled Adversarial Comparison of Jev, LLM Judges, and Purpose-Built Safety Classifiers](https://arxiv.org/abs/2610.17820v1)<br>Li, Huang, Zhang & Liu | 对决策模型与安全分类器进行受控对抗比较。 | — |
 | 2026-10-08<br>v3<br>首次提交<br>2026-09-22 | [Type-Safe Is Not Error-Free: Typed Decision Models Follow the Option Name, Not the Definition Bound to It](https://arxiv.org/abs/2609.26758v3)<br>Sun, Xu, Shi & Yang | 检验结构合法的输出是否仍会服从选项名称而非定义。 | — |
-| 2026-10-08<br>v1 | [One Word Opens the Gate: The Option-Channel Attack on Typed Decision Models as Agent Guardrails](https://arxiv.org/abs/2610.12292v1)<br>Azizi, Baghaei Potraghloo & Pedram | 测试七个开放权重模型的选项通道攻击；决策翻转后仍可能高置信。报告中的实验未测试托管 Jev。 | [代码与缓存分析材料](https://github.com/arminazizi98/option-channel-attack) |
+| 2026-10-08<br>v1 | [One Word Opens the Gate: The Option-Channel Attack on Typed Decision Models as Agent Guardrails](https://arxiv.org/abs/2610.12292v1)<br>Azizi, Baghaei Potraghloo & Pedram | 测试七个开放权重模型的选项通道攻击；决策翻转后仍可能高置信。报告中的实验未测试托管 Jev。 | [代码与缓存分析材料](https://github.com/ArminAzizi98/option-channel-attack) |
 | 2026-10-08<br>v2<br>首次提交<br>2026-09-24 | [JevOut: Natural Context Can Flip Decision Models](https://arxiv.org/abs/2609.30243v2)<br>Xu et al. | 在四种决策系统中围绕不变的题目和选项优化上下文补充；结果针对原本答对的决策，人工有效性检查仅覆盖成功攻击的抽样子集。 | [代码](https://github.com/xzx34/JevOut) |
 | 2026-10-06<br>v1 | [Same-Number Citation Swaps: Stress-Testing Jev as a Financial Evidence Judge](https://arxiv.org/abs/2610.08675v1)<br>Xu et al. | 以同数值引用替换检验金融证据验证；在构造测试中，识别财务项目错配与接受等价证据之间存在权衡。 不构成总体金融判断准确率估计。 | — |
 | 2026-10-04<br>v1 | [Hidden Risks of Jev: An Empirical Study of Security, Privacy, and Dual Use](https://arxiv.org/abs/2610.04985v1)<br>Wang et al. | 以官方 Jev API 和本地模型 NanoJev 检验提示注入、数据投毒后门，成员、属性与内部知识推断，以及四项检测任务中的双重用途；作者报告 Jev 对所考察的威胁仍然脆弱。 | [部分代码：NanoJev 后门实验](https://github.com/shihe98/Security_Privacy_Jev)；未声明许可。 |
@@ -177,12 +177,12 @@ TypeSafe 的 Jev 接收状态与类型化问题，为应用代码返回决策和
 | 2026-10-10<br>v2<br>首次提交<br>2026-09-23 | [Same Scores, Different Decisions: Evaluating JEV and Language Models for Legal Document Understanding](https://arxiv.org/abs/2609.27678v2)<br>Zhang et al. | ContractNLI 请求变化可能改变具体错误答案，而总体准确率保持不变；稳定答案也可能保留错误。该基准不能验证真实法律场景的部署有效性。 | [初始比较材料](https://github.com/ZF-Utokyo/Jev-Benchmark) |
 | 2026-10-10<br>v4<br>首次提交<br>2026-09-27 | [Jev in Medicine: A Benchmark Evaluation](https://arxiv.org/abs/2609.34024v4)<br>Madrid-García & Merino-Barbancho | Jev 1.13 的初步医学基准评测报告了随任务变化的准确率、校准表现及较弱的不可回答问题识别能力；这不能证明临床部署有效性。 | [作者补充材料](https://zenodo.org/records/23008156) |
 | 2026-10-06<br>v1 | [Token-Efficient Multi-Agent Collaboration via System One-Guided Computational Division of Labor](https://arxiv.org/abs/2610.08155v1)<br>Zhou et al. | 通过控制器—读取器循环分离多智能体的有界协调与 LLM 推理；报告的 GPT-4o token 用量和端到端时延下降来自七个基准上的完整框架比较。 | — |
-| 2026-09-30<br>v1 | [OmniMed-Jev: Calibrating LVLM Confidence for Trustworthy Medical Multimodal Decisions via System One](https://arxiv.org/abs/2610.00381v1)<br>Tang & Chen | 将医学候选条件决策与匹配的生成式基线比较；校准收益未分离接口与训练差异的影响，也不能证明临床部署成熟度。 | [作者链接的代码](https://github.com/lytang63/omnimed-jev) |
+| 2026-09-30<br>v1 | [OmniMed-Jev: Calibrating LVLM Confidence for Trustworthy Medical Multimodal Decisions via System One](https://arxiv.org/abs/2610.00381v1)<br>Tang & Chen | 将医学候选条件决策与匹配的生成式基线比较；校准收益未分离接口与训练差异的影响，也不能证明临床部署成熟度。 | [作者链接的代码](https://github.com/lytang63/OmniMed-Jev) |
 | 2026-09-24<br>v1 | [Jev-Mobile: Jev as an Executor for Mobile GUI Agents](https://arxiv.org/abs/2609.30186v1)<br>Zhang | 用 VLM 规划局部目标，再由 Jev 从 Android 无障碍树候选中选动作；报告的时延和 API 成本节省仅针对成功轨迹及所测控制器配置。 | — |
 | 2026-09-23<br>v2<br>首次提交<br>2026-09-21 | [Evaluating Decision Models for Text Annotation in Computational Social Science](https://arxiv.org/abs/2609.24574v2)<br>Ibrahim & Zaki | 评估零样本社会科学标注与按置信度分流的 LLM 级联；低成本仍伴随任务相关误差和过度自信，置信度不能替代标签验证。 | [代码与调用记录](https://github.com/hazemibrahim97/decision-models-css) |
 | 2026-09-23<br>v1 | [KITE: Scaling Jev Population Experiments with Sparse Flagship Calibration](https://arxiv.org/abs/2609.27535v1)<br>Li | Jev 状态表与少量强模型锚点支持纳入共享人—模型差异估计的群体模拟；扩大模拟规模不会增加人类证据，也不能确立前瞻性干预效果。 | [代码与汇总记录](https://github.com/HengyuLi-Ozaki-lab/kite_population_simulator) |
 | 2026-09-23<br>v1 | [Can Jev Judge Radiology Reports? Evaluating a System One Model for Clinical Factuality](https://arxiv.org/abs/2609.27607v1)<br>Huang et al. | Jev 双向检查生成与参考放射学报告之间的陈述支持关系；与专家的一致性受报告长度和错误定义影响，并不证明前瞻性临床效果。 | — |
-| 2026-09-23<br>v1 | [JEV-Star: Fast, Low-Cost StarCraft II Control with Language-Model Planning](https://arxiv.org/abs/2609.27331v1)<br>Ma, Zhao, Zeng & Zhao | 在星际争霸 II 中结合 Jev 动作选择与持续的语言模型规划；完整对局证据有限，同时发生的接口变化使规划贡献无法单独归因。 | [代码与部分比较材料](https://github.com/sc2musa/jev_star) |
+| 2026-09-23<br>v1 | [JEV-Star: Fast, Low-Cost StarCraft II Control with Language-Model Planning](https://arxiv.org/abs/2609.27331v1)<br>Ma, Zhao, Zeng & Zhao | 在星际争霸 II 中结合 Jev 动作选择与持续的语言模型规划；完整对局证据有限，同时发生的接口变化使规划贡献无法单独归因。 | [代码与部分比较材料](https://github.com/sc2musa/Jev_Star) |
 
 ## 模型
 
@@ -212,7 +212,7 @@ TypeSafe 的 Jev 接收状态与类型化问题，为应用代码返回决策和
 | :--- | :--- | :--- |
 | [Browser decision-vision benchmark](https://github.com/ai-ecoverse/decision-vision-bench) | 以各模型原生格式比较浏览器视觉／文本决策。 | GUI 标签歧义、共享硬件及不同浏览器限制了通用排名和时延结论。 |
 | [English Jev RAG Benchmark](https://github.com/emretheus/jev-rag-benchmark) | 英文 RAG 研究区分固定候选池重排与固定上下文回答生成。 | 门控分析属探索性，免费通道限速下的时延不等于模型推理耗时。 |
-| [Decision models as guardrails](https://github.com/raxitlabs/decision-models-as-guardrails) | 用固定评分规则比较决策模型与托管护栏的共同策略基准。 | 未发布的测试切片使公开克隆无法精确复现完整榜单。 |
+| [Decision models as guardrails](https://github.com/raxITlabs/decision-models-as-guardrails) | 用固定评分规则比较决策模型与托管护栏的共同策略基准。 | 未发布的测试切片使公开克隆无法精确复现完整榜单。 |
 | [113 类投诉分类基准](https://github.com/earino/zero-shot-complaint-benchmark) | 使用已记录输出比较零样本、检索和已训练分类器。 | 分析重算与重新运行模型分开。 |
 | [中文 RAG 重排基准](https://github.com/vicfei/jev-rag-zh-benchmark) | 使用固定代理模型与候选池的 100 条查询单次评测。 | 不代表通用重排器排名。 |
 | [JevAdvBench 代码](https://github.com/JevAdvBench/JevAdvBench) | 攻击生成、已记录响应分析和新 API 评测，以相同输入重跑为对照。 | 声明代码采用 MIT、数据采用 CC BY-NC 4.0；多数标签来自模型，本项目未运行分析。 |
@@ -246,12 +246,12 @@ TypeSafe 的四个数据集提供工作流案例、模型生成的参考标签�
 | :--- | :--- | :--- |
 | [cua-s1.js](https://github.com/ai-ecoverse/cua-s1.js) | ai-ecoverse | Cua 表单与下一步动作模型的浏览器移植；输出一致性检查不证明泛化，小型表单模型可能高置信度跳过陌生字段。 |
 | [jev-omni.js](https://github.com/ai-ecoverse/jev-omni.js) | ai-ecoverse | 开发中的 Jev-Omni 文本与图像决策 WebGPU 移植；音视频未完成、模型下载体积较大，一致性结果仅覆盖指定样本与硬件。 |
-| [SearchJev training pipeline](https://github.com/evoscientist/searchjev) | EvoScientist | 面向搜索 agent 决策的训练流程，包含软标签与 Brier 损失、可靠性权重及按问题类型拟合温度；文档中的流程与切分控制尚未复现。 |
-| [mJev](https://github.com/somarkai/mjev) | SoMarkAI | 通过 HF/vLLM 路径进行共享上下文候选评分；选项归一化概率不是已校准置信度，所报缓存加速在一个受控视频设置中需要更多显存。 |
-| [FRIDA-Decisions](https://github.com/ai-forever/frida-decisions) | SberAI | 面向类型化问题与排序的俄英双语编码器运行库；需注意状态截断、俄语指令后缀，以及边际分数与归一化概率的区别。 |
+| [SearchJev training pipeline](https://github.com/EvoScientist/SearchJev) | EvoScientist | 面向搜索 agent 决策的训练流程，包含软标签与 Brier 损失、可靠性权重及按问题类型拟合温度；文档中的流程与切分控制尚未复现。 |
+| [mJev](https://github.com/SoMarkAI/mJev) | SoMarkAI | 通过 HF/vLLM 路径进行共享上下文候选评分；选项归一化概率不是已校准置信度，所报缓存加速在一个受控视频设置中需要更多显存。 |
+| [FRIDA-Decisions](https://github.com/ai-forever/FRIDA-Decisions) | SberAI | 面向类型化问题与排序的俄英双语编码器运行库；需注意状态截断、俄语指令后缀，以及边际分数与归一化概率的区别。 |
 | [OpenThai-SystemOne](https://github.com/iapp-technology/openthai-systemone) | iapp-technology | 采用槽位读出的泰英文本决策模型训练与服务流程；文档中的配方不代表校准或接口等价性已获独立验证。 |
 | [Quyet runtime](https://github.com/ncchinh/quyet) | ncchinh | Quyet 决策模型运行库，英越语言覆盖依检查点而异；文档说明最多十个选项及状态截断，尚未确立对抗鲁棒性。 |
-| [JevLang](https://github.com/timmikeladze/jevlang) | timmikeladze | TypeScript／Python 策略层将类型化模型答案与路由、动作分发分开，提供日志与重放说明；可追溯记录不证明输入真实或阈值已校准。 |
+| [JevLang](https://github.com/TimMikeladze/JevLang) | TimMikeladze | TypeScript／Python 策略层将类型化模型答案与路由、动作分发分开，提供日志与重放说明；可追溯记录不证明输入真实或阈值已校准。 |
 | [sysone decision-learning library](https://github.com/sgaseretto/sysonelib) | sgaseretto | 提供多种文本、图像及蛋白质后端的训练、校准和解释工具；文档中的兼容检查与小实验不代表所有后端和任务已获验证。 |
 | [Protobuf 客户端生成器](https://github.com/bufbuild/protoc-gen-jev) | Buf | 生成 Go、TypeScript 和 Python 类型化客户端；生成器与运行库需匹配版本。 |
 | [Python SDK](https://github.com/typesafe-ai/typesafe-sdk-python) | TypeSafe | 官方 Python 同步与异步客户端。 |
