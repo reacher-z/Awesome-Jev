@@ -174,6 +174,11 @@ input:focus-visible {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
+.main-nav a[aria-current] {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
 .language-switch {
   display: flex;
   align-items: center;
