@@ -205,7 +205,7 @@ const translations = {
     evidenceAuthorReported: "作者报告",
     evidenceScreened: "已筛查",
     evidenceReproduced: "已复现",
-    evidenceAuthorReportedNote: "未在此重跑",
+    evidenceAuthorReportedNote: "本项目未重跑",
     evidenceScreenedNote: "已查页面内容",
     evidenceReproducedNote: "暂无",
     evidenceLegendLabel: "证据标记",
