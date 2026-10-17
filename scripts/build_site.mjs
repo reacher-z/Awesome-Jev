@@ -224,8 +224,10 @@ ${indexable?schemaTag(pageSchema(language,section,title,description,list,article
 <footer class="document-footer"><p>${isZh?'独立社区项目，与 TypeSafe AI 无隶属关系。':'Independent community project. Not affiliated with TypeSafe AI.'}</p><p><a href="${repo}">GitHub</a> · <a href="/references.bib">BibTeX</a> · <a href="${repo}/blob/main/LICENSE">MIT</a> · <a href="https://github.com/reacher-z">reacher-z</a></p></footer>
 </div></body></html>\n`;
 }
+// A topic note continues to its sibling notes; other pages point to related topics. The visible heading names the list.
 function topicLinks(language, currentSlug) {
-  return `<nav class="document-toc" aria-label="${language==='zh'?'研究专题':'Research topics'}"><ul>${topics.filter(topic=>topic.slug!==currentSlug).map(topic=>`<li><a href="${route(language,'topics/'+topic.slug)}">${esc(topic[language].title)}</a></li>`).join('')}</ul></nav>`;
+  const heading = currentSlug ? (language==='zh'?'继续阅读':'Continue reading') : (language==='zh'?'相关研究专题':'Related research topics');
+  return `<h2 id="related-topics">${heading}</h2><nav class="document-toc" aria-labelledby="related-topics"><ul>${topics.filter(topic=>topic.slug!==currentSlug).map(topic=>`<li><a href="${route(language,'topics/'+topic.slug)}">${esc(topic[language].title)}</a></li>`).join('')}</ul></nav>`;
 }
 function topicsPage(language) {
   const isZh=language==='zh', title=isZh?'Jev 决策模型研究专题':'Jev decision model research topics';
@@ -236,7 +238,7 @@ function topicsPage(language) {
 function topicPage(language, topic) {
   const doc=topic[language], isZh=language==='zh';
   const citations=[...new Set(doc.sections.flatMap(section=>section.sources.map(source=>source.url)))];
-  const body=`<p class="document-date">${isZh?'AwesomeJev 整理 · 更新':'By AwesomeJev · Updated'} <time datetime="${topic.updated}">${topic.updated}</time></p><div class="prose"><p><strong>${isZh?'简明回答：':'Short answer: '}</strong>${esc(doc.answer)}</p><p>${esc(doc.scope)}</p></div><nav class="document-toc" aria-label="${isZh?'本页目录':'On this page'}"><ol>${doc.sections.map(section=>`<li><a href="#${section.id}">${esc(section.title)}</a></li>`).join('')}</ol></nav><div class="prose">${doc.sections.map(section=>`<section id="${section.id}"><h2>${esc(section.title)}</h2><p>${esc(section.text)}${section.sources.length?' <span class="source-links">'+section.sources.map(source=>`<a href="${esc(source.url)}" rel="noopener noreferrer">${esc(source.label)}</a>`).join(' · ')+'</span>':''}</p></section>`).join('')}</div><p><a href="${guideLink(language,topic.guide_section)}">${isZh?'相关评估指南':'Related evaluation guide'} →</a> · <a href="${route(language,'papers')}">${isZh?'全部精选论文':'All selected papers'}</a></p><h2>${isZh?'继续阅读':'Continue reading'}</h2>${topicLinks(language,topic.slug)}`;
+  const body=`<p class="document-date">${isZh?'AwesomeJev 整理 · 更新':'By AwesomeJev · Updated'} <time datetime="${topic.updated}">${topic.updated}</time></p><div class="prose"><p><strong>${isZh?'简明回答：':'Short answer: '}</strong>${esc(doc.answer)}</p><p>${esc(doc.scope)}</p></div><nav class="document-toc" aria-label="${isZh?'本页目录':'On this page'}"><ol>${doc.sections.map(section=>`<li><a href="#${section.id}">${esc(section.title)}</a></li>`).join('')}</ol></nav><div class="prose">${doc.sections.map(section=>`<section id="${section.id}"><h2>${esc(section.title)}</h2><p>${esc(section.text)}${section.sources.length?' <span class="source-links">'+section.sources.map(source=>`<a href="${esc(source.url)}" rel="noopener noreferrer">${esc(source.label)}</a>`).join(' · ')+'</span>':''}</p></section>`).join('')}</div><p><a href="${guideLink(language,topic.guide_section)}">${isZh?'相关评估指南':'Related evaluation guide'} →</a> · <a href="${route(language,'papers')}">${isZh?'全部精选论文':'All selected papers'}</a></p>${topicLinks(language,topic.slug)}`;
   return shell(language,'topics/'+topic.slug,doc.title,doc.description,body,undefined,{published:topic.published,updated:topic.updated,citations});
 }
 function guidePage(language) {
