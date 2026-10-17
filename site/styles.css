@@ -205,7 +205,8 @@ input:focus-visible {
   color: var(--muted);
 }
 html:not(.js) .collection-controls,
-html:not(.js) .corpus-disclosure {
+html:not(.js) .corpus-disclosure,
+html:not(.js) #copy-code {
   display: none;
 }
 .document-main {
@@ -1714,9 +1715,25 @@ html:lang(zh) .resource-description {
   max-width: 340px;
   justify-self: end;
 }
-.corpus-disclosure {
+.corpus-disclosure,
+.corpus-noscript {
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--line);
+}
+/* Without JavaScript the corpus disclosure is hidden; its data files stay reachable. */
+.corpus-noscript {
+  padding: 22px 0;
+  font-size: 14px;
+}
+.corpus-noscript p {
+  margin: 0 0 12px;
+}
+.corpus-noscript .reference-links {
+  margin: 0;
+}
+.collection-section noscript a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .corpus-disclosure summary {
   display: flex;
