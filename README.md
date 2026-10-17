@@ -20,8 +20,24 @@ The [new-resource directory](https://awesomejev.github.io/discoveries/) adds hun
 | Investigate a question | [Research topics](https://awesomejev.github.io/topics/) · [Guide](https://awesomejev.github.io/guide/) | Source-backed explanations and evaluation protocols. |
 | Explore more sources | [New resources](https://awesomejev.github.io/discoveries/) | Broader projects, datasets and background research with screening labels. |
 
+## What's new
+
+The ten most recent studies by linked-version date, newest first. [Papers](#papers) has the full list; [New resources](https://awesomejev.github.io/discoveries/) has broader screened sources.
+
+- 2026-10-15 · v1 · [JevAgentHarness: Benchmarking, Deploying and Training Decision Models That Share Control with LLMs](https://arxiv.org/abs/2610.21412v1) — in [Judging and selective automation](#judging-and-selective-automation)
+- 2026-10-15 · v1 · [System1-Arena: Which Decisions Can Be Left to System 1?](https://arxiv.org/abs/2610.21244v1) — in [Evaluation and benchmarking](#evaluation-and-benchmarking)
+- 2026-10-15 · v3 · [Jev for Scientific Decisions: Evaluating Semantic Choices and Their Consequences](https://arxiv.org/abs/2609.24965v3) — in [Applications and domain studies](#applications-and-domain-studies)
+- 2026-10-14 · v1 · [Selective Reasoning for Typed Decision Models: When to Start, Read, and Stop](https://arxiv.org/abs/2610.19644v1) — in [Judging and selective automation](#judging-and-selective-automation)
+- 2026-10-14 · v1 · [Typed Decision Models on Tabular Data](https://arxiv.org/abs/2610.19536v1) — in [Evaluation and benchmarking](#evaluation-and-benchmarking)
+- 2026-10-14 · v2 · [More Choices, Fewer Decisions: Ordinal-Scale Bias in JEV-like Direct-Decision Models](https://arxiv.org/abs/2609.38827v2) — in [Probability calibration and coherence](#probability-calibration-and-coherence)
+- 2026-10-13 · v1 · [DecisionRobust: Benchmarking Robustness for JEV Style Decision Models Across Text and Vision](https://arxiv.org/abs/2610.19118v1) — in [Robustness and security](#robustness-and-security)
+- 2026-10-13 · v1 · [Jeva: System One Models from First Principles](https://arxiv.org/abs/2610.18773v1) — in [Architectures, memory, and multimodality](#architectures-memory-and-multimodality)
+- 2026-10-13 · v1 · [VideoJev: System One Model for Video Understanding and Interaction](https://arxiv.org/abs/2610.18615v1) — in [Architectures, memory, and multimodality](#architectures-memory-and-multimodality)
+- 2026-10-13 · v1 · [Reading Right, Acting Wrong: Diagnosing Decision Failures of System One Models in Agent Loops](https://arxiv.org/abs/2610.18579v1) — in [Evaluation and benchmarking](#evaluation-and-benchmarking)
+
 ## Contents
 
+- [What's new](#whats-new)
 - [Overview and official resources](#overview-and-official-resources)
 - [Papers](#papers)
   - [Evaluation and benchmarking](#evaluation-and-benchmarking)

@@ -20,8 +20,24 @@
 | 深入一个问题 | [研究专题](https://awesomejev.github.io/zh/topics/) · [指南](https://awesomejev.github.io/zh/guide/) | 带原始引用的解释与评估流程。 |
 | 探索更多来源 | [新增资源](https://awesomejev.github.io/zh/discoveries/) | 标明核查等级的项目、数据集与背景研究。 |
 
+## 最近更新
+
+按所链接版本的日期排列、最新的十项研究。完整列表见[论文](#论文)；更广泛的已筛查来源见[新增资源](https://awesomejev.github.io/zh/discoveries/)。
+
+- 2026-10-15 · v1 · [JevAgentHarness: Benchmarking, Deploying and Training Decision Models That Share Control with LLMs](https://arxiv.org/abs/2610.21412v1) — 见[评判与选择性自动化](#评判与选择性自动化)
+- 2026-10-15 · v1 · [System1-Arena: Which Decisions Can Be Left to System 1?](https://arxiv.org/abs/2610.21244v1) — 见[评测与基准](#评测与基准)
+- 2026-10-15 · v3 · [Jev for Scientific Decisions: Evaluating Semantic Choices and Their Consequences](https://arxiv.org/abs/2609.24965v3) — 见[应用与领域研究](#应用与领域研究)
+- 2026-10-14 · v1 · [Selective Reasoning for Typed Decision Models: When to Start, Read, and Stop](https://arxiv.org/abs/2610.19644v1) — 见[评判与选择性自动化](#评判与选择性自动化)
+- 2026-10-14 · v1 · [Typed Decision Models on Tabular Data](https://arxiv.org/abs/2610.19536v1) — 见[评测与基准](#评测与基准)
+- 2026-10-14 · v2 · [More Choices, Fewer Decisions: Ordinal-Scale Bias in JEV-like Direct-Decision Models](https://arxiv.org/abs/2609.38827v2) — 见[概率校准与一致性](#概率校准与一致性)
+- 2026-10-13 · v1 · [DecisionRobust: Benchmarking Robustness for JEV Style Decision Models Across Text and Vision](https://arxiv.org/abs/2610.19118v1) — 见[鲁棒性与安全](#鲁棒性与安全)
+- 2026-10-13 · v1 · [Jeva: System One Models from First Principles](https://arxiv.org/abs/2610.18773v1) — 见[架构、记忆与多模态](#架构记忆与多模态)
+- 2026-10-13 · v1 · [VideoJev: System One Model for Video Understanding and Interaction](https://arxiv.org/abs/2610.18615v1) — 见[架构、记忆与多模态](#架构记忆与多模态)
+- 2026-10-13 · v1 · [Reading Right, Acting Wrong: Diagnosing Decision Failures of System One Models in Agent Loops](https://arxiv.org/abs/2610.18579v1) — 见[评测与基准](#评测与基准)
+
 ## 目录
 
+- [最近更新](#最近更新)
 - [概览与官方资源](#概览与官方资源)
 - [论文](#论文)
   - [评测与基准](#评测与基准)

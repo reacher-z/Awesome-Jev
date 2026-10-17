@@ -114,7 +114,7 @@ When an update PR is still open, the publisher refuses to replace it with data t
 
 ## Maintain the editorial collection
 
-For a promoted resource, read the original source, pin the relevant version, state its purpose and a material limitation, and verify any license or access label. Synchronize its English and Chinese descriptions across `README.md`, `README.zh-CN.md`, and `site/catalog.mjs`. Add scholarly metadata to `references.bib`; update survey or audit prose only when the new evidence changes it.
+For a promoted resource, read the original source, pin the relevant version, state its purpose and a material limitation, and verify any license or access label. Synchronize its English and Chinese descriptions across `README.md`, `README.zh-CN.md`, and `site/catalog.mjs`. Add scholarly metadata to `references.bib`; update survey or audit prose only when the new evidence changes it. When adding a paper, refresh *What's new* in both READMEs so it keeps only the ten most recent studies by linked-version date.
 
 Review the site locally after interface changes:
 
@@ -170,6 +170,8 @@ Preserve the individual licenses of third-party resources. A repository license 
 ### 人工维护与发布
 
 维护顺序是：刷新公开来源清单 → 生成网站索引与计数 → 运行校验和回归测试 → 同步中英文精选内容 → 检查暂存区后发布。`--resume` 与 `--offline` 会复用已有材料，不能写成全部来源重新抓取。旧版全量收集脚本会整体替换默认台账，只保留它们能重新生成的记录；固定版本原始摘要（`arxiv_primary_abstract_page`）等仅由增量扫描写入的记录会被丢弃，需要保留既有证据时改用 `python3 scripts/refresh_sources.py`。`--offline` 不发网络请求，只能复用同一台机器上此前联网运行留下的缓存；任一查询缺少缓存或没有记录通过筛选时，脚本报错退出，不改动 `data/research-sources.jsonl`。
+
+新增论文时，同步更新两份 README 的“最近更新”，只保留按所链接版本日期排列的最新十项研究。
 
 [reacher-z/Awesome-Jev](https://github.com/reacher-z/Awesome-Jev) 是资源主仓库，也是 issue 和 PR 的统一入口；[组织仓库](https://github.com/AwesomeJev/AwesomeJev.github.io) 是网站部署镜像。维护者将验证通过的同一个 `main` 提交推送到 `origin` 与 `awesomejev`，并核对两边提交一致；当前没有自动镜像同步。
 
