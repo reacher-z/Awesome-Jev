@@ -68,8 +68,9 @@ TypeSafe 的 Jev 接收状态与类型化问题，为应用代码返回决策和
 - [Noul](https://docs.typesafe.ai/primitives/noul) — 返回“是”的概率，没有独立的 confidence 字段。
 - [置信度说明](https://docs.typesafe.ai/confidence) · [Jev 1.13 已知局限](https://docs.typesafe.ai/model-jaggedness/jev-1.13)。
 - [实验性图片输入](https://docs.typesafe.ai/images) · [Box](https://docs.typesafe.ai/primitives/box) — 需显式开启；Box 要求 Jev 1.14。
+- [Jev 1.14 官方发布说明](https://typesafe.ai/blog/jev-1-14) — 2026-10-14 官方博文：`jev-1.14.0` 经 `jev-preview` 提供，图像与长上下文须通过请求头开关启用，Box 仅限 1.14。文中的能力对比由厂商自行测得，且自称可能偏向自家模型。
 
-截至 **2026-10-17**，`jev-latest` 指向 `jev-1.13.0`，`jev-preview` 指向 `jev-1.14.0`。评测时应固定版本。概念区别与评估协议见[综述](docs/survey.zh-CN.md)。
+截至 **2026-10-17**，`jev-latest` 指向 `jev-1.13.0`，`jev-preview` 指向 `jev-1.14.0`；发布说明称 `jev-latest` 将在 2026-10-14 之后约一周改指 `jev-1.14.0`。评测时应固定版本。概念区别与评估协议见[综述](docs/survey.zh-CN.md)。
 
 ## 论文
 
@@ -267,6 +268,7 @@ TypeSafe 的四个数据集提供工作流案例、模型生成的参考标签�
 | 指南 | 发布者 | 主题 |
 | :--- | :--- | :--- |
 | [Jev 社区综述](https://github.com/evan-py-chen/jev-survey) | Chen 等 | 前期研究、适配成本与证据边界；手稿 v0.5，已收入书目。 |
+| [Jev Cookbook 中文教程](https://github.com/datawhalechina/jev-cookbook) · [在线阅读](https://datawhalechina.github.io/jev-cookbook/) | Datawhale | 社区维护的中文课程，共十一章可运行 Notebook：从三种原语与架构模式，到 18 篇官方配方复刻、语音智能家居实验、231 题评测、Agent 集成，以及用 RLCD 微调开源 Laya 模型；离线示例无需 API Key。采用 CC BY-NC-SA 4.0（非商业）许可；文档中译为非官方翻译，应以[官方文档](https://docs.typesafe.ai/introduction)为准。 |
 | [SDE 级联](https://docs.typesafe.ai/cookbooks/sde_cascade) | TypeSafe | 用逐字段 Jev 问题核查低成本结构化抽取，再决定是否升级；教程使用缓存与示意输出。 |
 | [结构恢复](https://docs.typesafe.ai/cookbooks/autoformat) | TypeSafe | 用续行与块类型判断恢复 Markdown 结构，不重写输入措辞。 |
 | [置信度路由](https://docs.typesafe.ai/patterns/confidence-routing) | TypeSafe | 将不确定案例转交其他系统或人工。 |

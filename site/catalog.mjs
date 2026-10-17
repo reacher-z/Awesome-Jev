@@ -670,6 +670,14 @@ const resources = [
     "zh": "综述手稿联系路由、标签概率读出与适配成本；本次检查了 README 摘要，收录不代表全文审阅或实证复现。"
   },
   {
+    "category": "Guides",
+    "title": "Jev Cookbook (Chinese)",
+    "by": "Datawhale · CC BY-NC-SA 4.0",
+    "url": "https://github.com/datawhalechina/jev-cookbook",
+    "en": "Community Chinese course of eleven notebook chapters, from the three primitives and design patterns to 18 walkthroughs of official cookbook recipes, a smart-home experiment, a 231-question evaluation, agent integration and RLCD fine-tuning of the open Laya model; offline examples need no API key. Noncommercial license; documentation translations are unofficial.",
+    "zh": "社区维护的中文课程，共十一章 Notebook：从三种原语与架构模式，到 18 篇官方配方复刻、智能家居实验、231 题评测、Agent 集成，以及用 RLCD 微调开源 Laya 模型；离线示例无需 API Key。采用非商业许可，文档中译为非官方翻译。"
+  },
+  {
     "category": "Papers",
     "title": "Benchmarking System One decision models against trained classifiers and language models for automated decision gates",
     "by": "Rafe & Das · 2026-10-06 · v2",
@@ -1481,6 +1489,15 @@ const resources = [
     url: "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
     en: "The launch article. A primary source for the provider’s design claims and their stated caveats.",
     zh: "发布文章：了解厂商设计主张及其限定条件的一手来源。",
+  },
+  {
+    provenance: "official",
+    category: "Guides",
+    title: "Jev: For the builders AND dreamers",
+    by: "TypeSafe · 2026-10-14 · jev-1.14.0",
+    url: "https://typesafe.ai/blog/jev-1-14",
+    en: "Release notes for jev-1.14.0 under jev-preview: opt-in header flags for images (also on jev-1.13.0) and long context, Box for 1.14 only, and the deprecation-notice plan. Its intelligence chart is provider-run and, by its own account, likely biased toward TypeSafe’s models.",
+    zh: "jev-1.14.0 的官方发布说明（经 jev-preview 提供）：图像（jev-1.13.0 同样可用）与长上下文须通过请求头开关启用，Box 仅限 1.14，并说明弃用前的通知安排。文中的能力对比由厂商自行测得，且自称可能偏向自家模型。",
   },
   {
     provenance: "official",

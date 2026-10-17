@@ -409,6 +409,13 @@
       "note": "Fixed-v1 abstract and metadata review for a curated direct study (source issue #40). The fresh abstract hash matches this row's existing abstract_sha256, so no second ledger row was added; this annotation replaces the generic relevance note only. Original provider fields and evidence grades are preserved.",
       "evidence_url": "https://arxiv.org/abs/2610.06744v1",
       "reviewed_at": "2026-10-17T12:40:09Z"
+    },
+    {
+      "url": "https://github.com/datawhalechina/jev-cookbook",
+      "relevance": "Community Chinese course of eleven notebook chapters, from the three primitives and design patterns to 18 walkthroughs of official cookbook recipes, a smart-home experiment, a 231-question evaluation, agent integration and RLCD fine-tuning of the open Laya model; offline examples need no API key. Noncommercial license; documentation translations are unofficial.",
+      "note": "README, LICENSE and top-level file list read at commit 73f8c9af9c62a0b3bbc9930834be25e3441acdff for source issue #54; notebooks were not executed. The LICENSE designates CC BY-NC-SA 4.0 for original content and keeps third-party and TypeSafe documentation rights with their owners. This annotation replaces the generic relevance note only; original provider fields and evidence grades are preserved.",
+      "evidence_url": "https://github.com/datawhalechina/jev-cookbook",
+      "reviewed_at": "2026-10-17T12:55:00Z"
     }
   ]
 }

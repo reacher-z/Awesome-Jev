@@ -68,8 +68,9 @@ TypeSafe's Jev accepts a state and typed questions, returning decisions and prob
 - [Noul](https://docs.typesafe.ai/primitives/noul) — the probability of yes; no separate confidence field.
 - [Confidence](https://docs.typesafe.ai/confidence) · [Jev 1.13 limitations](https://docs.typesafe.ai/model-jaggedness/jev-1.13).
 - [Experimental images](https://docs.typesafe.ai/images) · [Box](https://docs.typesafe.ai/primitives/box) — opt-in capabilities; Box requires Jev 1.14.
+- [Jev 1.14 release notes](https://typesafe.ai/blog/jev-1-14) — 2026-10-14 provider post: `jev-1.14.0` under `jev-preview`, opt-in header flags for images and long context, and Box for 1.14 only. Its intelligence chart is provider-run and, by its own account, likely biased toward TypeSafe's models.
 
-On **2026-10-17**, `jev-latest` points to `jev-1.13.0` and `jev-preview` to `jev-1.14.0`. Pin the version for evaluation. See the [survey](docs/survey.md) for the conceptual distinctions and evaluation protocol.
+On **2026-10-17**, `jev-latest` points to `jev-1.13.0` and `jev-preview` to `jev-1.14.0`; the release notes say `jev-latest` moves to `jev-1.14.0` about a week after 2026-10-14. Pin the version for evaluation. See the [survey](docs/survey.md) for the conceptual distinctions and evaluation protocol.
 
 ## Papers
 
@@ -267,6 +268,7 @@ Implementation recipes and community research. Validate thresholds on held-out e
 | Guide | Publisher | Topic |
 | :--- | :--- | :--- |
 | [Community survey on Jev](https://github.com/evan-py-chen/jev-survey) | Chen&nbsp;et&nbsp;al. | Prior research, adaptation costs and evidence limits; manuscript v0.5, also included in the bibliography. |
+| [Jev Cookbook (Chinese)](https://github.com/datawhalechina/jev-cookbook) · [Site](https://datawhalechina.github.io/jev-cookbook/) | Datawhale | Community Chinese course in eleven chapters of runnable notebooks, from the three primitives and design patterns to 18 walkthroughs of official cookbook recipes, a voice-controlled smart-home experiment, a 231-question evaluation, agent integration and RLCD fine-tuning of the open Laya model; offline examples need no API key. CC BY-NC-SA 4.0 (noncommercial); its documentation translations are unofficial, so treat the [official docs](https://docs.typesafe.ai/introduction) as the reference. |
 | [SDE cascade](https://docs.typesafe.ai/cookbooks/sde_cascade) | TypeSafe | Check inexpensive structured extraction with per-field Jev questions before escalation; the walkthrough uses cached and illustrative outputs. |
 | [Structure recovery](https://docs.typesafe.ai/cookbooks/autoformat) | TypeSafe | Use continuation and block-type decisions to recover Markdown structure without rewriting the input text. |
 | [Confidence-gated routing](https://docs.typesafe.ai/patterns/confidence-routing) | TypeSafe | Route uncertain cases to another system or a person. |

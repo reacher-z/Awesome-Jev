@@ -1144,6 +1144,14 @@ Survey manuscript connecting routing, label-probability readout and adaptation c
 
 Primary source: https://github.com/evan-py-chen/jev-survey
 
+## Jev Cookbook (Chinese)
+
+Guides · Datawhale · CC BY-NC-SA 4.0
+
+Community Chinese course of eleven notebook chapters, from the three primitives and design patterns to 18 walkthroughs of official cookbook recipes, a smart-home experiment, a 231-question evaluation, agent integration and RLCD fine-tuning of the open Laya model; offline examples need no API key. Noncommercial license; documentation translations are unofficial.
+
+Primary source: https://github.com/datawhalechina/jev-cookbook
+
 ## Introducing System One Models & Jev
 
 Guides · TypeSafe · September 15, 2026
@@ -1151,6 +1159,14 @@ Guides · TypeSafe · September 15, 2026
 The launch article. A primary source for the provider’s design claims and their stated caveats.
 
 Primary source: https://typesafe.ai/blog/introducing-system-one-models-and-jev
+
+## Jev: For the builders AND dreamers
+
+Guides · TypeSafe · 2026-10-14 · jev-1.14.0
+
+Release notes for jev-1.14.0 under jev-preview: opt-in header flags for images (also on jev-1.13.0) and long context, Box for 1.14 only, and the deprecation-notice plan. Its intelligence chart is provider-run and, by its own account, likely biased toward TypeSafe’s models.
+
+Primary source: https://typesafe.ai/blog/jev-1-14
 
 ## Primitives: Choice, Score, Noul
 
