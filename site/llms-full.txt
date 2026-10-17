@@ -200,7 +200,7 @@ Tool-argument judges including Jev reject some correct derived values without vi
 
 Primary source: https://arxiv.org/abs/2610.18497v1
 
-## Same Attack, Different Judge
+## Same Attack, Different Judge: A First Controlled Adversarial Comparison of Jev, LLM Judges, and Purpose-Built Safety Classifiers
 
 Papers · Li et al. · 2026-10-13 · v1
 
@@ -216,7 +216,7 @@ Compares frozen Qwen decision readouts with optional KL-anchored fine-tuning and
 
 Primary source: https://arxiv.org/abs/2610.02076v3
 
-## Decision Models vs. LLMs as Rubric Judges
+## Decision Models vs. LLMs as Rubric Judges: Cheaper, Faster, and Wrong in the Same Places
 
 Papers · Rao & Callison-Burch · 2026-10-13 · v3
 
@@ -392,7 +392,7 @@ English/Arabic persona-conditioned Jev survey audit; the effects concern simulat
 
 Primary source: https://arxiv.org/abs/2609.36399v2
 
-## System One Models for Agent Security Decisions
+## Evaluating System One Models for Agent Security Decisions: Reliability, Calibration, and Selective Automation
 
 Papers · Liu · 2026-10-03 · v3
 
@@ -480,7 +480,7 @@ An early benchmark study of Jev. Read the task selection and evaluation setup al
 
 Primary source: https://arxiv.org/abs/2609.37647v1
 
-## Chinese-Jev: Bringing System One Models to Chinese-Language Tasks
+## Chinese-Jev: Bringing System One Model to Chinese-Language Tasks
 
 Papers · Wang et al. · 2026-09-29 · v1
 
@@ -496,7 +496,7 @@ Keeps raw memory records, separating Jev relevance judgments from LLM search pla
 
 Primary source: https://arxiv.org/abs/2609.36059v1
 
-## Sys1Cal-v1: A Dataset for Probability Calibration
+## Jev thinks “I don't know”, but doesn't say it: Introducing Sys1Cal-v1 Dataset for Probability Calibration
 
 Papers · Porcedda · 2026-09-28 · v1
 
@@ -512,7 +512,7 @@ Compares Jev and generative judges on retrospective agent-trace risk classificat
 
 Primary source: https://arxiv.org/abs/2609.34862v1
 
-## Beyond Calibration: Do Typed Decisions Obey the Probability Axioms?
+## Beyond Calibration: Do a Typed-Decision Model's Probabilities Obey the Probability Axioms?
 
 Papers · Li et al. · 2026-09-27 · v1
 
@@ -528,7 +528,7 @@ An evidence audit and a checklist for evaluating typed decision models.
 
 Primary source: https://arxiv.org/abs/2609.32160v1
 
-## JevAdvBench
+## JevAdvBench: A Benchmark and Black-Box Attacks for Reinforcement Learning for Calibrated Decisions Models
 
 Papers · Hu et al. · 2026-09-25 · v1
 
@@ -560,7 +560,7 @@ Benchmarks Jev alignment-failure detection while separating question wording fro
 
 Primary source: https://arxiv.org/abs/2609.29429v1
 
-## From Text Decisions to Pixels
+## From Text Decisions to Pixels: An Study of Jev-Style Visual Choice Model
 
 Papers · Zhou et al. · 2026-09-24 · v1
 
@@ -624,7 +624,7 @@ An independent visual decision architecture shares image context across batched 
 
 Primary source: https://arxiv.org/abs/2609.25845v1
 
-## Jev-Mem: System-One-Controlled Agentic Memory
+## Jev-Mem: System-One-Controlled Agentic Memory for Efficient AI Agents
 
 Papers · Jiang et al. · 2026-09-21 · v1
 
@@ -632,7 +632,7 @@ Studies Jev as a controller for agent memory. Reported outcomes concern the comp
 
 Primary source: https://arxiv.org/abs/2609.23986v1
 
-## this-that-model-1.0
+## this-that-model-1.0: A typed decision model that decides in 30 ms, for a millionth of a cent
 
 Papers · Cheng et al. · 2026-09-20 · v1
 

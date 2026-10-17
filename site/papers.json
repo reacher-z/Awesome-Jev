@@ -107,7 +107,7 @@
     },
     {
       "category": "Papers",
-      "title": "Same Attack, Different Judge",
+      "title": "Same Attack, Different Judge: A First Controlled Adversarial Comparison of Jev, LLM Judges, and Purpose-Built Safety Classifiers",
       "by": "Li et al. · 2026-10-13 · v1",
       "date": "2026-10-13",
       "url": "https://arxiv.org/abs/2610.17820v1",
@@ -126,7 +126,7 @@
     },
     {
       "category": "Papers",
-      "title": "Decision Models vs. LLMs as Rubric Judges",
+      "title": "Decision Models vs. LLMs as Rubric Judges: Cheaper, Faster, and Wrong in the Same Places",
       "by": "Rao & Callison-Burch · 2026-10-13 · v3",
       "date": "2026-10-13",
       "url": "https://arxiv.org/abs/2609.29769v3",
@@ -331,7 +331,7 @@
     },
     {
       "category": "Papers",
-      "title": "System One Models for Agent Security Decisions",
+      "title": "Evaluating System One Models for Agent Security Decisions: Reliability, Calibration, and Selective Automation",
       "by": "Liu · 2026-10-03 · v3",
       "date": "2026-10-03",
       "url": "https://arxiv.org/abs/2609.33401v3",
@@ -435,7 +435,7 @@
     },
     {
       "category": "Papers",
-      "title": "Chinese-Jev: Bringing System One Models to Chinese-Language Tasks",
+      "title": "Chinese-Jev: Bringing System One Model to Chinese-Language Tasks",
       "by": "Wang et al. · 2026-09-29 · v1",
       "date": "2026-09-29",
       "url": "https://arxiv.org/abs/2609.36965v1",
@@ -453,7 +453,7 @@
     },
     {
       "category": "Papers",
-      "title": "Sys1Cal-v1: A Dataset for Probability Calibration",
+      "title": "Jev thinks “I don't know”, but doesn't say it: Introducing Sys1Cal-v1 Dataset for Probability Calibration",
       "by": "Porcedda · 2026-09-28 · v1",
       "date": "2026-09-28",
       "url": "https://arxiv.org/abs/2609.35342v1",
@@ -471,7 +471,7 @@
     },
     {
       "category": "Papers",
-      "title": "Beyond Calibration: Do Typed Decisions Obey the Probability Axioms?",
+      "title": "Beyond Calibration: Do a Typed-Decision Model's Probabilities Obey the Probability Axioms?",
       "by": "Li et al. · 2026-09-27 · v1",
       "date": "2026-09-27",
       "url": "https://arxiv.org/abs/2609.33209v1",
@@ -489,7 +489,7 @@
     },
     {
       "category": "Papers",
-      "title": "JevAdvBench",
+      "title": "JevAdvBench: A Benchmark and Black-Box Attacks for Reinforcement Learning for Calibrated Decisions Models",
       "by": "Hu et al. · 2026-09-25 · v1",
       "date": "2026-09-25",
       "url": "https://arxiv.org/abs/2609.31142v1",
@@ -527,7 +527,7 @@
     },
     {
       "category": "Papers",
-      "title": "From Text Decisions to Pixels",
+      "title": "From Text Decisions to Pixels: An Study of Jev-Style Visual Choice Model",
       "by": "Zhou et al. · 2026-09-24 · v1",
       "date": "2026-09-24",
       "url": "https://arxiv.org/abs/2609.29283v1",
@@ -603,7 +603,7 @@
     },
     {
       "category": "Papers",
-      "title": "Jev-Mem: System-One-Controlled Agentic Memory",
+      "title": "Jev-Mem: System-One-Controlled Agentic Memory for Efficient AI Agents",
       "by": "Jiang et al. · 2026-09-21 · v1",
       "date": "2026-09-21",
       "url": "https://arxiv.org/abs/2609.23986v1",
@@ -612,7 +612,7 @@
     },
     {
       "category": "Papers",
-      "title": "this-that-model-1.0",
+      "title": "this-that-model-1.0: A typed decision model that decides in 30 ms, for a millionth of a cent",
       "by": "Cheng et al. · 2026-09-20 · v1",
       "date": "2026-09-20",
       "url": "https://arxiv.org/abs/2609.23886v1",
