@@ -14,6 +14,7 @@ import html
 from html.parser import HTMLParser
 import ipaddress
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -54,6 +55,17 @@ def fail(location: str, message: str) -> None:
 
 def files() -> list[Path]:
     return sorted(p for p in ROOT.rglob("*") if p.is_file() and not any(part in SKIP for part in p.relative_to(ROOT).parts))
+
+
+def check_symlinks() -> None:
+    # files() keeps only regular files, so a symlinked directory, which the Pages
+    # artifact dereferences, or a dangling link would escape the rule and leak scan.
+    for directory, names, filenames in os.walk(ROOT):
+        names[:] = sorted(name for name in names if name not in SKIP)
+        for name in names + sorted(filenames):
+            path = Path(directory, name)
+            if path.is_symlink() and not path.is_file():
+                fail(str(path.relative_to(ROOT)), "symlinks are not supported in the published artifact")
 
 
 def public_url(value: object) -> bool:
@@ -263,6 +275,7 @@ def check_index(expected_raw_records: int) -> None:
 
 def main() -> int:
     all_files = files()
+    check_symlinks()
     try:
         policy = load_policy(ROOT / "data/source-curation.json", source_index.canonical)
     except PolicyError as exc:
