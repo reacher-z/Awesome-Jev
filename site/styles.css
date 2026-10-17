@@ -2424,6 +2424,42 @@ html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3 {
 /* Print: content only. The skip link is position: fixed, so Chrome repeats it over every printed
    page; it, the navigation, the language switch and the interactive controls are hidden, the
    screen gutters are dropped, and external source links print their address after the text. */
+/* Papers per week (scripts/paper_activity.mjs): a small supporting figure that floats beside the
+   papers page introduction on wide screens. Series steps are validated per scheme for adjacent
+   stacks; the legend and the table of numbers keep identity and values off colour alone. */
+.paper-activity { max-width:400px; margin:18px 0 22px; }
+.activity-chart { display:block; width:100%; height:auto; font-family:var(--sans); font-variant-numeric:tabular-nums;
+  --viz-1:#2a78d6; --viz-2:#eb6834; --viz-3:#1baf7a; --viz-4:#eda100; --viz-5:#e87ba4; --viz-6:#008300; --viz-grid:#e5e7eb; --viz-axis:#9ca3af; }
+@media screen and (prefers-color-scheme: dark) {
+  .activity-chart { --viz-1:#3987e5; --viz-2:#d95926; --viz-3:#199e70; --viz-4:#c98500; --viz-5:#d55181; --viz-grid:#30363d; --viz-axis:#6b7280; }
+}
+.activity-chart .viz-series1 { fill:var(--viz-1); }
+.activity-chart .viz-series2 { fill:var(--viz-2); }
+.activity-chart .viz-series3 { fill:var(--viz-3); }
+.activity-chart .viz-series4 { fill:var(--viz-4); }
+.activity-chart .viz-series5 { fill:var(--viz-5); }
+.activity-chart .viz-series6 { fill:var(--viz-6); }
+.activity-chart .viz-ink { fill:var(--ink); }
+.activity-chart .viz-muted { fill:var(--muted); }
+.activity-chart .viz-grid { stroke:var(--viz-grid); }
+.activity-chart .viz-axis { stroke:var(--viz-axis); }
+/* Forced colours would paint every segment alike; keep the hues (the table carries the values). */
+@media (forced-colors: active) {
+  .activity-chart [class^="viz-series"] { forced-color-adjust:none; }
+}
+.paper-activity figcaption { display:block; margin-top:6px; padding:0; border:0; font-size:13px; line-height:1.5; color:var(--muted); }
+.paper-activity details { overflow-x:auto; font-size:13px; color:var(--muted); }
+.paper-activity details p { margin:6px 0 0; line-height:1.5; }
+.paper-activity summary { margin-top:4px; cursor:pointer; font-size:13px; }
+.paper-activity table { margin-top:6px; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums; color:var(--ink); }
+.paper-activity :is(th,td) { padding:3px 0 3px 10px; text-align:right; border-bottom:1px solid var(--line); font-weight:400; }
+.paper-activity :is(th,td):first-child { padding-left:0; text-align:left; }
+.paper-activity thead th, .paper-activity tbody tr:last-child > * { font-weight:600; }
+@media (min-width:1240px) {
+  .paper-activity { float:right; width:400px; margin:0 0 16px 32px; }
+  .paper-activity ~ .document-toc { display:flow-root; }
+  #paper-list { clear:both; }
+}
 @media print {
   :root {
     color-scheme: light;

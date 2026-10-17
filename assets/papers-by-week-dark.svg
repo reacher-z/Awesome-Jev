@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 196" width="400" height="196" role="img" aria-labelledby="chart-title chart-desc" font-family="system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="13">
+<title id="chart-title">Papers per week of first arXiv submission, by theme</title><desc id="chart-desc">Stacked columns of the 78 selected papers by ISO week of first arXiv submission, coloured by theme: 2026-W38: 1; 2026-W39: 23; 2026-W40: 20; 2026-W41: 15; 2026-W42: 19 (2026-W42 through 2026-10-17).</desc>
+<rect x="0" y="5" width="10" height="10" rx="2" fill="#3987e5"/><text x="15" y="15" fill="#e6e8eb">Evaluation</text>
+<rect x="134" y="5" width="10" height="10" rx="2" fill="#d95926"/><text x="149" y="15" fill="#e6e8eb">Calibration</text>
+<rect x="268" y="5" width="10" height="10" rx="2" fill="#199e70"/><text x="283" y="15" fill="#e6e8eb">Judging</text>
+<rect x="0" y="26" width="10" height="10" rx="2" fill="#c98500"/><text x="15" y="36" fill="#e6e8eb">Robustness</text>
+<rect x="134" y="26" width="10" height="10" rx="2" fill="#d55181"/><text x="149" y="36" fill="#e6e8eb">Architectures</text>
+<rect x="268" y="26" width="10" height="10" rx="2" fill="#008300"/><text x="283" y="36" fill="#e6e8eb">Applications</text>
+<line x1="30" x2="400" y1="158.5" y2="158.5" stroke="#6b7280" stroke-width="1"/><text x="22" y="162" text-anchor="end" fill="#b0b8c4">0</text>
+<line x1="30" x2="400" y1="115.5" y2="115.5" stroke="#30363d" stroke-width="1"/><text x="22" y="119" text-anchor="end" fill="#b0b8c4">10</text>
+<line x1="30" x2="400" y1="73.5" y2="73.5" stroke="#30363d" stroke-width="1"/><text x="22" y="77" text-anchor="end" fill="#b0b8c4">20</text>
+<path d="M55 158V157.74Q55 153.74 59 153.74H75Q79 153.74 79 157.74V158Z" fill="#d55181"><title>2026-W38 (Sep 14–20) · Architectures: 1</title></path>
+<text x="67" y="147.74" text-anchor="middle" font-weight="600" fill="#e6e8eb">1</text>
+<text x="67" y="176" text-anchor="middle" fill="#e6e8eb">W38</text><text x="67" y="192" text-anchor="middle" font-size="12" fill="#b0b8c4">Sep 14</text>
+<rect x="129" y="153.74" width="24" height="4.26" fill="#3987e5"><title>2026-W39 (Sep 21–27) · Evaluation: 1</title></rect>
+<rect x="129" y="149.48" width="24" height="2.26" fill="#d95926"><title>2026-W39 (Sep 21–27) · Calibration: 1</title></rect>
+<rect x="129" y="132.43" width="24" height="15.04" fill="#199e70"><title>2026-W39 (Sep 21–27) · Judging: 4</title></rect>
+<rect x="129" y="106.87" width="24" height="23.57" fill="#c98500"><title>2026-W39 (Sep 21–27) · Robustness: 6</title></rect>
+<rect x="129" y="94.09" width="24" height="10.78" fill="#d55181"><title>2026-W39 (Sep 21–27) · Architectures: 3</title></rect>
+<path d="M129 92.09V64Q129 60 133 60H149Q153 60 153 64V92.09Z" fill="#008300"><title>2026-W39 (Sep 21–27) · Applications: 8</title></path>
+<text x="141" y="54" text-anchor="middle" font-weight="600" fill="#e6e8eb">23</text>
+<text x="141" y="176" text-anchor="middle" fill="#e6e8eb">W39</text><text x="141" y="192" text-anchor="middle" font-size="12" fill="#b0b8c4">Sep 21</text>
+<rect x="203" y="136.7" width="24" height="21.3" fill="#3987e5"><title>2026-W40 (Sep 28–Oct 4) · Evaluation: 5</title></rect>
+<rect x="203" y="119.65" width="24" height="15.04" fill="#d95926"><title>2026-W40 (Sep 28–Oct 4) · Calibration: 4</title></rect>
+<rect x="203" y="115.39" width="24" height="2.26" fill="#199e70"><title>2026-W40 (Sep 28–Oct 4) · Judging: 1</title></rect>
+<rect x="203" y="106.87" width="24" height="6.52" fill="#c98500"><title>2026-W40 (Sep 28–Oct 4) · Robustness: 2</title></rect>
+<rect x="203" y="77.04" width="24" height="27.83" fill="#d55181"><title>2026-W40 (Sep 28–Oct 4) · Architectures: 7</title></rect>
+<path d="M203 75.04V75.04Q203 72.78 205.26 72.78H224.74Q227 72.78 227 75.04V75.04Z" fill="#008300"><title>2026-W40 (Sep 28–Oct 4) · Applications: 1</title></path>
+<text x="215" y="66.78" text-anchor="middle" font-weight="600" fill="#e6e8eb">20</text>
+<text x="215" y="176" text-anchor="middle" fill="#e6e8eb">W40</text><text x="215" y="192" text-anchor="middle" font-size="12" fill="#b0b8c4">Sep 28</text>
+<rect x="277" y="128.17" width="24" height="29.83" fill="#3987e5"><title>2026-W41 (Oct 5–11) · Evaluation: 7</title></rect>
+<rect x="277" y="119.65" width="24" height="6.52" fill="#199e70"><title>2026-W41 (Oct 5–11) · Judging: 2</title></rect>
+<rect x="277" y="111.13" width="24" height="6.52" fill="#c98500"><title>2026-W41 (Oct 5–11) · Robustness: 2</title></rect>
+<rect x="277" y="98.35" width="24" height="10.78" fill="#d55181"><title>2026-W41 (Oct 5–11) · Architectures: 3</title></rect>
+<path d="M277 96.35V96.35Q277 94.09 279.26 94.09H298.74Q301 94.09 301 96.35V96.35Z" fill="#008300"><title>2026-W41 (Oct 5–11) · Applications: 1</title></path>
+<text x="289" y="88.09" text-anchor="middle" font-weight="600" fill="#e6e8eb">15</text>
+<text x="289" y="176" text-anchor="middle" fill="#e6e8eb">W41</text><text x="289" y="192" text-anchor="middle" font-size="12" fill="#b0b8c4">Oct 5</text>
+<rect x="351" y="140.96" width="24" height="17.04" fill="#3987e5"><title>2026-W42 (Oct 12–17) · Evaluation: 4</title></rect>
+<rect x="351" y="128.17" width="24" height="10.78" fill="#d95926"><title>2026-W42 (Oct 12–17) · Calibration: 3</title></rect>
+<rect x="351" y="115.39" width="24" height="10.78" fill="#199e70"><title>2026-W42 (Oct 12–17) · Judging: 3</title></rect>
+<rect x="351" y="98.35" width="24" height="15.04" fill="#c98500"><title>2026-W42 (Oct 12–17) · Robustness: 4</title></rect>
+<rect x="351" y="81.3" width="24" height="15.04" fill="#d55181"><title>2026-W42 (Oct 12–17) · Architectures: 4</title></rect>
+<path d="M351 79.3V79.3Q351 77.04 353.26 77.04H372.74Q375 77.04 375 79.3V79.3Z" fill="#008300"><title>2026-W42 (Oct 12–17) · Applications: 1</title></path>
+<text x="363" y="71.04" text-anchor="middle" font-weight="600" fill="#e6e8eb">19</text>
+<text x="363" y="176" text-anchor="middle" fill="#e6e8eb">W42</text><text x="363" y="192" text-anchor="middle" font-size="12" fill="#b0b8c4">Oct 12</text>
+</svg>

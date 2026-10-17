@@ -46,7 +46,7 @@ Do not count search results, mirror URLs, different versions of the same paper, 
 
 Use Python 3.13 and Node 24, the versions CI uses, and run every command from the repository root.
 
-Most files under `site/` are generated. `node scripts/build_site.mjs` writes the HTML pages, `sitemap.xml`, `llms.txt`, `llms-full.txt`, `papers.json`, `models.json`, and `references.bib` in `site/` from `site/catalog.mjs`, `templates/`, `data/search-guide.json`, `data/research-topics.json`, `data/discovery-translations.zh-CN.json`, and `references.bib`. Edit those inputs, not the generated files, which the next build overwrites. Rebuild after changing any input or the site scripts and stylesheet (`site/*.js`, `site/*.mjs`, `site/styles.css`), because the pages embed their content hashes. After editing a source ledger (`data/*.jsonl`), run `python3 scripts/build_source_index.py` to regenerate `data/source-counts.json` and the source index in `site/data/`.
+Most files under `site/` are generated. `node scripts/build_site.mjs` writes the HTML pages, `sitemap.xml`, `llms.txt`, `llms-full.txt`, `papers.json`, `models.json`, and `references.bib` in `site/` from `site/catalog.mjs`, `templates/`, `data/search-guide.json`, `data/research-topics.json`, `data/discovery-translations.zh-CN.json`, and `references.bib`. It also draws the papers-per-week chart into `assets/papers-by-week*.svg` and rewrites the block between the `papers-by-week` markers in both READMEs. Edit those inputs, not the generated files, which the next build overwrites. Rebuild after changing any input or the site scripts and stylesheet (`site/*.js`, `site/*.mjs`, `site/styles.css`), because the pages embed their content hashes. After editing a source ledger (`data/*.jsonl`), run `python3 scripts/build_source_index.py` to regenerate `data/source-counts.json` and the source index in `site/data/`.
 
 Preview the website:
 
@@ -119,7 +119,7 @@ Submit only public source material and original summaries. Keep API keys, `.env`
 
 使用与 CI 相同的 Python 3.13 与 Node 24，并在仓库根目录运行所有命令。
 
-`site/` 下的大部分文件是生成的。`node scripts/build_site.mjs` 根据 `site/catalog.mjs`、`templates/`、`data/search-guide.json`、`data/research-topics.json`、`data/discovery-translations.zh-CN.json` 与 `references.bib`，在 `site/` 中写入 HTML 页面、`sitemap.xml`、`llms.txt`、`llms-full.txt`、`papers.json`、`models.json` 与 `references.bib`。请修改这些输入文件，不要手改生成文件，下次构建会覆盖它们。修改任一输入或网站脚本与样式表（`site/*.js`、`site/*.mjs`、`site/styles.css`）后都要重新构建，因为页面嵌入了它们的内容哈希。修改来源台账（`data/*.jsonl`）后，运行 `python3 scripts/build_source_index.py`，重新生成 `data/source-counts.json` 与 `site/data/` 中的来源索引。
+`site/` 下的大部分文件是生成的。`node scripts/build_site.mjs` 根据 `site/catalog.mjs`、`templates/`、`data/search-guide.json`、`data/research-topics.json`、`data/discovery-translations.zh-CN.json` 与 `references.bib`，在 `site/` 中写入 HTML 页面、`sitemap.xml`、`llms.txt`、`llms-full.txt`、`papers.json`、`models.json` 与 `references.bib`，并把每周论文图写入 `assets/papers-by-week*.svg`、重写两份 README 中 `papers-by-week` 标记之间的内容。请修改这些输入文件，不要手改生成文件，下次构建会覆盖它们。修改任一输入或网站脚本与样式表（`site/*.js`、`site/*.mjs`、`site/styles.css`）后都要重新构建，因为页面嵌入了它们的内容哈希。修改来源台账（`data/*.jsonl`）后，运行 `python3 scripts/build_source_index.py`，重新生成 `data/source-counts.json` 与 `site/data/` 中的来源索引。
 
 预览网站：
 

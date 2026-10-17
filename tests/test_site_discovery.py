@@ -26,6 +26,8 @@ BUILD_INPUTS = (
     "data/expansion-progress-2026-10-16.json", "data/discovery-translations.zh-CN.json", "references.bib",
     "site/app.js", "site/model-directory.js", "site/paper-directory.js", "site/catalog.mjs", "site/resource-view.mjs", "site/styles.css",
 )
+# The build also draws the papers-per-week chart and rewrites its region in both READMEs.
+BUILD_INPUTS += ("scripts/paper_activity.mjs", "README.md", "README.zh-CN.md")
 
 
 def words(value):

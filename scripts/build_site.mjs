@@ -5,6 +5,7 @@ import { readFile, writeFile, mkdir, readdir, rm, rmdir } from 'node:fs/promises
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
+import { weeklyPaperCounts, activitySVG, activityTable, activityText } from './paper_activity.mjs';
 import { resources, translations, paperThemes } from '../site/catalog.mjs';
 import { renderResource, renderModelRow, renderPaperRow, renderEvidenceLegend, evidenceOf, englishLang, escapeHTML as esc, artifactKinds, hasCode } from '../site/resource-view.mjs';
 
@@ -93,6 +94,7 @@ for (const paper of papers) {
   if (!paperThemes.some(theme=>theme.id===paper.theme)) throw new Error(`Paper without a known README theme: ${paper.url}`);
   if (paper.artifact_note!==undefined && ['en','zh'].some(language=>typeof paper.artifact_note[language]!=='string' || !paper.artifact_note[language].trim())) throw new Error(`Incomplete bilingual artifact note: ${paper.url}`);
 }
+const activity = weeklyPaperCounts(papers, paperThemes, contentDate);
 const categoryOrder = ['Papers','Models','Datasets','Projects','Tools','Evaluations','Guides and evaluations','Guides','Research foundations','Foundations'];
 const relationLabels = {direct:['Directly related','直接相关'],adjacent:['Related field','邻近领域'],background:['Research background','研究背景']};
 // Discovery rows name the same verification tiers as the homepage corpus legend.
@@ -277,6 +279,11 @@ function discoveriesPage(language) {
   const body=`<p class="document-date"><strong>${discoveries.length.toLocaleString('en-US')}</strong> ${isZh?'项新增来源':'added sources'} · <time datetime="${discoveryDate}">${discoveryDate}</time> · <a href="/data/expansion-progress.json">${isZh?'下载 JSON':'Download JSON'}</a></p><p>${isZh?'条目标明与 Jev 直接相关、邻近领域或背景研究。内容筛查与摘要核查不代表全文评审、质量背书或实验复现。':'Entries distinguish direct Jev resources, related methods and research background. Source-page and abstract checks do not imply full-paper review, endorsement or experimental reproduction.'}</p>${toc}<details class="verification-legend"><summary>${isZh?'核查与计数方法':'Verification and counting method'}<span aria-hidden="true">+</span></summary><p>${isZh?'本目录相对冻结版本新增，排除旧链接、重复正文和论文题名。基线：':'This directory excludes prior URLs, repeated evidence and duplicate paper titles. Baseline:'}${baseline || (isZh?'见 JSON':'see JSON')}.</p><p><a href="${repo}/blob/main/docs/reviews/expansion-2026-10-16.md">${isZh?'查看本轮审阅记录':'Read the expansion review'}</a> · <a href="${repo}/blob/main/docs/source-audit.md">${isZh?'证据等级说明':'Evidence-level definitions'}</a></p></details><p><a href="${homeLink(language,'corpus')}">${isZh?'搜索完整来源库':'Search the complete source corpus'} →</a></p>${cards || `<p>${isZh?'本轮尚无已接受的新增来源。':'No new sources have been accepted in this expansion yet.'}</p>`}`;
   return shell(language,'discoveries',title,description,body,discoveries);
 }
+// A small papers-per-week chart; on wide screens it sits beside the papers page introduction.
+function activityFigure(language) {
+  const text=activityText(activity,paperThemes,language,papers.length);
+  return `<figure class="paper-activity">${activitySVG(activity,paperThemes,language,papers.length,'inline')}<figcaption>${esc(text.title)}</figcaption><details><summary>${esc(text.tableSummary)}</summary><p>${esc(text.note)}</p>${activityTable(activity,paperThemes,language)}</details></figure>`;
+}
 // GitHub Pages serves one 404.html for every unknown path, in either language, so the
 // page is bilingual, noindex and uses only root-absolute links and assets.
 function notFoundPage() {
@@ -287,7 +294,7 @@ outputs.set('site/404.html',notFoundPage());
 for (const language of ['en','zh']) {
   outputs.set(`site${route(language)}index.html`,home(language));
   outputs.set(`site${route(language,'guide')}index.html`,guidePage(language));
-  outputs.set(`site${route(language,'papers')}index.html`,papersPage(language));
+  outputs.set(`site${route(language,'papers')}index.html`,papersPage(language).replace(/<p class="document-deck">[^<]*<\/p>/,deck=>deck+activityFigure(language)));
   outputs.set(`site${route(language,'models')}index.html`,modelsPage(language));
   outputs.set(`site${route(language,'discoveries')}index.html`,discoveriesPage(language));
   outputs.set(`site${route(language,'topics')}index.html`,topicsPage(language));
@@ -300,6 +307,16 @@ outputs.set('site/data/expansion-progress.json',JSON.stringify(expansion,null,2)
 outputs.set('site/references.bib',await readFile(resolve(root,'references.bib'),'utf8'));
 outputs.set('site/papers.json',JSON.stringify({title:'Awesome Jev research papers',url:origin+'/papers/',updated:contentDate,scope:'Curated direct preprints; findings remain author-reported. No experimental reproduction implied.',themes:paperThemes,papers},null,2)+'\n');
 outputs.set('site/models.json',JSON.stringify({title:'Awesome Jev decision model directory',url:origin+'/models/',updated:contentDate,scope:'Independent publisher releases and model-card summaries. Declared licenses and reported capabilities are not independently reproduced results or a universal ranking.',models},null,2)+'\n');
+// The READMEs embed committed SVG files (GitHub shows the -dark file in its dark theme) and the
+// numbers behind them, both regenerated between the papers-by-week markers.
+for (const [language,readme,suffix] of [['en','README.md',''],['zh','README.zh-CN.md','.zh-CN']]) {
+  for (const mode of ['light','dark']) outputs.set(`assets/papers-by-week${mode==='dark'?'-dark':''}${suffix}.svg`,activitySVG(activity,paperThemes,language,papers.length,mode));
+  const text=activityText(activity,paperThemes,language,papers.length);
+  const block=`<!-- papers-by-week: generated by scripts/build_site.mjs from site/catalog.mjs -->\n<p><picture>\n  <source media="(prefers-color-scheme: dark)" srcset="assets/papers-by-week-dark${suffix}.svg">\n  <img src="assets/papers-by-week${suffix}.svg" width="400" alt="${esc(text.summary)}">\n</picture><br><sub>${esc(text.title)}${language==='zh'?'。':'. '}${esc(text.note)}</sub></p>\n\n<details><summary>${esc(text.tableSummary)}</summary>\n\n${activityTable(activity,paperThemes,language)}\n\n</details>\n<!-- /papers-by-week -->`;
+  const source=await readFile(resolve(root,readme),'utf8'), markers=/<!-- papers-by-week:[^\n]*-->[\s\S]*?<!-- \/papers-by-week -->/;
+  if(!markers.test(source))throw new Error(`${readme} lacks the papers-by-week markers.`);
+  outputs.set(readme,source.replace(markers,()=>block));
+}
 // llms.txt lists the sitemap's routes in both languages, so a new topic note appears automatically.
 const pageSummaries={
   '':{en:['Resource collection','curated primary sources and verification labels.'],zh:['资源索引','精选一手来源与核查标签。']},
