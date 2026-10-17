@@ -88,6 +88,17 @@ class OwnSiteRouteNormalisationTests(unittest.TestCase):
         self.assertEqual(self.errors("/../docs/source-audit.md", source="site/index.html"),
                          ["site/index.html: local link escapes site/"])
 
+    def test_relative_links_in_published_pages_cannot_leave_the_site(self):
+        # site/ is the published web root, so these 404 once deployed although
+        # the files exist in the repository.
+        self.assertEqual(self.errors("../docs/source-audit.md", "../LICENSE", "./../data/README.md", source="site/index.html"),
+                         ["site/index.html: local link escapes site/"] * 3)
+        self.assertEqual(self.errors("../../docs/source-audit.md", source="site/papers/index.html"),
+                         ["site/papers/index.html: local link escapes site/"])
+        # Relative links that stay inside site/, and the same links outside site/, still pass.
+        self.assertEqual(self.errors("../index.html", "../papers/", "../references.bib", source="site/zh/index.html"), [])
+        self.assertEqual(self.errors("../LICENSE", source="docs/guide.md"), [])
+
     def test_dot_segments_inside_the_site_resolve(self):
         self.assertEqual(self.errors(SITE + "/papers/../references.bib", SITE + "/papers/./#papers"), [])
 

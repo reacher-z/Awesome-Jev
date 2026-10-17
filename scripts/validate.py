@@ -175,7 +175,10 @@ def local_link(path: Path, value: str) -> None:
         fail(str(path.relative_to(ROOT)), "local link escapes repository")
         return
     # A route is served from its base folder: /../docs/x.md is not a file of the site.
-    if route and not target.is_relative_to(base):
+    # site/ is also the web root for relative links in its pages: ../docs/x.md
+    # from site/index.html 404s once published.
+    served = base if route else ROOT / "site" if path.is_relative_to(ROOT / "site") else None
+    if served and not target.is_relative_to(served):
         fail(str(path.relative_to(ROOT)), "local link escapes site/")
         return
     if target.is_dir():
