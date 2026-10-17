@@ -67,8 +67,8 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="/styles.css?v=d364fe764aba" />
-    <script type="importmap">{"imports":{"/catalog.mjs":"/catalog.mjs?v=82b2f054f4f4","/resource-view.mjs":"/resource-view.mjs?v=c0ee2e81b636"}}</script>
+    <link rel="stylesheet" href="/styles.css?v=7687e754e4f2" />
+    <script type="importmap">{"imports":{"/catalog.mjs":"/catalog.mjs?v=ac3ccfa16cf2","/resource-view.mjs":"/resource-view.mjs?v=c0ee2e81b636"}}</script>
     <script type="module" src="/app.js?v=f8f4cf6cf5d6"></script>
   </head>
   <body>
@@ -356,7 +356,7 @@
             <p data-i18n="emptyDescription">试试更宽泛的关键词，或浏览完整资源库。</p>
             <button type="button" id="reset-filters" data-i18n="resetFilters">清除搜索与筛选</button>
           </div>
-          <noscript><p>所有精选资源已列在本页。启用 JavaScript 后可使用搜索与筛选；也可浏览独立论文目录。</p></noscript>
+          <noscript><p>所有精选资源已列在本页。启用 JavaScript 后可使用搜索与筛选；也可浏览独立<a href="/zh/papers/">论文目录</a>。</p></noscript>
           <p class="editorial-note">
             <span aria-hidden="true">↳</span
             ><span data-i18n="editorialNote"
@@ -456,6 +456,15 @@
               >显示更多来源</button>
             </div>
           </details>
+          <noscript>
+            <div class="corpus-noscript">
+              <p data-i18n="corpusNoscript">在此浏览来源库需要 JavaScript。同样的来源也以数据文件形式提供：</p>
+              <p class="reference-links">
+                <a href="/data/source-index.json" data-i18n="corpusJSON">打开来源索引（JSON）</a>
+                <a href="https://github.com/reacher-z/Awesome-Jev/tree/main/data" target="_blank" rel="noopener noreferrer" data-i18n="corpusLedger">浏览来源记录</a>
+              </p>
+            </div>
+          </noscript>
         </section>
     </div>
 

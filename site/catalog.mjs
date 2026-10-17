@@ -135,6 +135,8 @@ const translations = {
     corpusRetry: "Retry loading",
     corpusJSON: "Open source index (JSON)",
     corpusLedger: "Browse source ledgers",
+    corpusNoscript:
+      "Browsing the corpus here needs JavaScript. The same sources are published as data files:",
     corpusUnavailable: "The source index contains no available entries.",
     corpusEmpty: "No sources match this search.",
     corpusMore: "Show more sources",
@@ -270,6 +272,7 @@ const translations = {
     corpusRetry: "重新加载",
     corpusJSON: "打开来源索引（JSON）",
     corpusLedger: "浏览来源记录",
+    corpusNoscript: "在此浏览来源库需要 JavaScript。同样的来源也以数据文件形式提供：",
     corpusUnavailable: "来源索引中暂无可用条目。",
     corpusEmpty: "没有匹配的来源。",
     corpusMore: "显示更多来源",
