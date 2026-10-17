@@ -35,7 +35,7 @@ Canonical paper identities are shared across both ledgers, while a curated versi
 
 Fixed-version primary-abstract records retain their original evidence, dates and `abstract_checked` grade. The scanner also observes the current public arXiv version; a changed abstract or newly observed version becomes a review candidate instead of silently replacing the pinned record. A new version with an unchanged abstract still remains distinguishable. Repeated identical observations preserve the pending record, and later fetch failures do not erase it. These items use the existing `editorial_refresh_candidates` report field for compatibility; that field does not grant an editorial-review grade.
 
-The PR publisher checks this version continuity too: a pending v3 cannot be replaced by an unknown-version or v2 candidate from a later scan. Accepting a pending revision requires both its version and evidence hash to match the retained record. The six-file publication allowlist and separate read-only collection/write-publication jobs are unchanged. Validation for this fix included 107 offline tests and a bounded replay of six previously retrieved primary pages through parsing, routing and merging; the replay preserved the research ledger byte-for-byte with no false additions. It made no network requests and was not a full live source scan.
+The PR publisher checks this version continuity too: a pending v3 cannot be replaced by an unknown-version or v2 candidate from a later scan. Accepting a pending revision requires both its version and evidence hash to match the retained record. Publication stays limited to the six-file data allowlist, with read-only collection and write publication in separate jobs. The validation of this continuity check is recorded in the [scan review](reviews/scan-2026-10-16.md#pinned-version-continuity-2026-10-16).
 
 The scan report records `error_code_counts` across **all** issues before limiting `errors` to 100 examples. `error_count`, `error_examples_count`, and `error_examples_truncated` distinguish the total from the displayed sample. Fetch diagnostics retain only fixed, allowlisted codes such as `http_429` or `network_failure`; arbitrary exception messages and response bodies are not published. These fields describe observed failures, not an inferred provider outage or cause.
 
@@ -98,7 +98,7 @@ Retain document identifiers when normalizing URLs: OpenReview's `id` and CiteSee
 | Recorded tier | What it means |
 | --- | --- |
 | `metadata_only` | Discovered or identified, without a successful substantive content check. Excluded from checked counts. |
-| `abstract_checked` | Original abstract screened through Hugging Face or reconstructed from OpenAlex metadata. Neither full-paper review nor necessarily a fetched publisher page. |
+| `abstract_checked` | Original abstract screened through Hugging Face Papers, reconstructed from OpenAlex metadata, or read from a fixed-version arXiv abstract page (`abstract_provider: arxiv_primary_abstract_page`). Only the arXiv route fetches the primary page itself, recorded as `canonical_page_separately_fetched: true`. None of these is a full-paper review. |
 | `content_screened` | Retrieved README, model card, dataset card or web-page text passed explicit automated relevance rules. An abstract landing page is not a full paper. |
 | `editorial_reviewed` | A documented, focused editorial review of the source. It does not by itself mean experimental reproduction. |
 
