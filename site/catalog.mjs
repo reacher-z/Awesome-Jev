@@ -344,6 +344,66 @@ const resources = [
   },
   {
     "category": "Papers",
+    "title": "TypedBench: A Benchmark for Calibration, Framing Sensitivity, and Cost in System One Decision Models",
+    "by": "Sharma, Duncan, Caron & Vollmer · 2026-10-09 · v2",
+    "date": "2026-10-09",
+    "first_submitted": "2026-10-08",
+    "url": "https://arxiv.org/abs/2610.11392v2",
+    "en": "The hosted model is wording-sensitive and underconfident, and under asymmetric costs acting on its probabilities can cost more than taking its top answer; synthetic policy-labelled suites also report paraphrase ranges and calibration against a finite-sample noise floor.",
+    "zh": "托管模型对措辞敏感且系统性信心不足，在非对称成本下按其概率行动的代价可能高于直接采用最高答案；基于带策略标签的合成测试集，还报告不同改写下的准确率范围及相对有限样本噪声下限的校准误差。"
+  },
+  {
+    "category": "Papers",
+    "title": "Does a Hosted Decision Model Respect Irrelevant Alternatives? A Pre-Registered Test of Option-Set Dependence in Jev",
+    "by": "Rajput, Chauhan & Kosaraju · 2026-10-12 · v1",
+    "date": "2026-10-12",
+    "first_submitted": "2026-10-12",
+    "url": "https://arxiv.org/abs/2610.16655v1",
+    "en": "Adding an irrelevant option shifts jev-1.13.0’s gold-versus-rival log-odds, more so as options grow, so its probabilities are relative to the option list; independent yes/no scoring removes this but is less accurate (pre-registered, 299,463 calls, three datasets).",
+    "zh": "加入无关选项会改变 jev-1.13.0 对正确标签与最强错误标签的对数几率，选项越多偏移越大，因此其概率只相对于所给选项列表成立；逐项独立的是非评分可消除这种依赖，但准确率更低（预注册，299,463 次调用，三个数据集）。"
+  },
+  {
+    "category": "Papers",
+    "title": "Nudge the Judge: Uncovering Program Decision Hijacking in Real-World Jev Applications",
+    "by": "Luo et al. · 2026-10-13 · v1",
+    "date": "2026-10-13",
+    "first_submitted": "2026-10-13",
+    "url": "https://arxiv.org/abs/2610.18612v1",
+    "en": "JevProbe traces attacker-controlled context into the decisions that 228 popular Jev applications act on; in 2,273 curated cases (at most ten per app, flips selected first, so not an unbiased sample) 81.5% flip, 98.6% of flips with potential downstream security impact, and existing defenses offer limited protection.",
+    "zh": "JevProbe 追踪攻击者可控的上下文如何影响 228 个热门 Jev 应用据以执行的决策；在 2,273 个精选用例中（每个应用至多十条、优先选取翻转案例，并非无偏样本），81.5% 出现决策翻转，其中 98.6% 可能造成下游安全影响，现有防御作用有限。"
+  },
+  {
+    "category": "Papers",
+    "title": "From Detection to Decision: Calibration and Deferral for Prompt-Injection Detection",
+    "by": "Lan, Kaul, Pandurangan & Sanyal · 2026-10-14 · v1",
+    "date": "2026-10-14",
+    "first_submitted": "2026-10-14",
+    "url": "https://arxiv.org/abs/2610.20907v1",
+    "en": "On 47,611 held-out prompt-injection examples, Jev ranks second in AUROC after an LLM judge, its native probabilities do not consistently beat post-hoc calibrated classifiers, and a 1% false-negative target forces over 91.8% escalation in every gate-reviewer system.",
+    "zh": "在 47,611 条留出的提示注入样本上，Jev 的 AUROC 仅次于 LLM 评审，其原生概率并不总优于事后校准的分类器分数；若把漏报率目标定为 1%，所有门控—复核系统都需升级处理超过 91.8% 的输入。"
+  },
+  {
+    "category": "Papers",
+    "title": "How Reliable Are System-One Decisions in Medicine? A Comparative Study of Jev, Jev-like Models, and LLMs",
+    "by": "Du et al. · 2026-10-13 · v1",
+    "date": "2026-10-13",
+    "first_submitted": "2026-10-13",
+    "url": "https://arxiv.org/abs/2610.18529v1",
+    "en": "Across 15 medical datasets (8,742 instances), Jev rivals leading models on text-driven tasks, is weaker on numerical ones and is the most stable under question-format changes; most models miss absent correct answers. A benchmark study, not clinical validation.",
+    "zh": "在 15 个医学数据集（8,742 个实例）上，Jev 在文本主导任务上可比肩领先模型、数值任务较弱，题目格式变化下最稳定；多数模型难以识别正确答案缺失。这是基准研究，不是临床验证。"
+  },
+  {
+    "category": "Papers",
+    "title": "Jev-ToM: Evaluating Theory of Mind in Typed Decision Models",
+    "by": "Chung et al. · 2026-10-13 · v1",
+    "date": "2026-10-13",
+    "first_submitted": "2026-10-13",
+    "url": "https://arxiv.org/abs/2610.18610v1",
+    "en": "On 11,117 English Theory of Mind questions from nine benchmarks, Jev reaches 73.2% source-balanced accuracy and ranks first or second in all six capability groups among twelve typed and generative models; confidence-based selection is benchmark-dependent, and supplied reasons repair or overturn answers depending on how they are attached.",
+    "zh": "在来自九个基准的 11,117 道英文心智理论题上，Jev 的来源均衡准确率为 73.2%，在十二个类型化与生成式模型中六类能力均列前二；基于置信度的选择效果因基准而异，附加理由则视其附加方式，可能纠错，也可能推翻正确答案。"
+  },
+  {
+    "category": "Papers",
     "title": "OmniMed-Jev: Calibrating LVLM Confidence for Trustworthy Medical Multimodal Decisions via System One",
     "by": "Tang & Chen · 2026-09-30 · v1",
     "date": "2026-09-30",

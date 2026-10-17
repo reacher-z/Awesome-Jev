@@ -6,18 +6,18 @@
 
 ## Current counts (as of 17 October 2026)
 
-The source-check badge in the README shows `checked_sources` from [source-counts.json](../data/source-counts.json). This is the number of distinct source documents in the three checked tiers. `metadata_only` records are not included. The table shows the accepted registry as of 17 October 2026 (latest retrieval 04:07 UTC):
+The source-check badge in the README shows `checked_sources` from [source-counts.json](../data/source-counts.json). This is the number of distinct source documents in the three checked tiers. `metadata_only` records are not included. The table shows the accepted registry as of 17 October 2026 (latest retrieval 12:15 UTC):
 
 | Verification tier | Distinct records |
 | --- | ---: |
 | `editorial_reviewed` | 4 |
 | `content_screened` | 2,392 |
-| `abstract_checked` | 1,837 |
-| **Checked sources (badge)** | **4,233** |
+| `abstract_checked` | 1,838 |
+| **Checked sources (badge)** | **4,234** |
 | `metadata_only` (not counted) | 47 |
-| Unique records | 4,280 |
+| Unique records | 4,281 |
 
-The ledgers hold 4,294 raw records. Deduplication by canonical URL, exact content hash and repeated paper title removes 14 of them. The tiers are defined in the initial snapshot table below. Scheduled source scans regenerate `source-counts.json` and the badge but not this page, so after a later accepted scan the JSON file holds the current figures.
+The ledgers hold 4,295 raw records. Deduplication by canonical URL, exact content hash and repeated paper title removes 14 of them. The tiers are defined in the initial snapshot table below. Scheduled source scans regenerate `source-counts.json` and the badge but not this page, so after a later accepted scan the JSON file holds the current figures.
 
 ## Initial snapshot (15 October 2026)
 
@@ -85,7 +85,7 @@ Exact hashes identify the retrieved bytes, not the truth of claims. Mutable page
 
 ### 当前数量（截至 2026 年 10 月 17 日）
 
-README 中的来源核查徽章显示 [source-counts.json](../data/source-counts.json) 的 `checked_sources`，即属于三个已检查层级的去重来源文档数，不含 `metadata_only` 记录。截至 2026 年 10 月 17 日（最近一次抓取为 04:07 UTC），已收录来源中有 4 个经编辑复核，2,392 个原始页面经自动正文筛查，1,837 个仅检查摘要，合计 **4,233 个已检查来源**，即徽章数字。另有 47 个仅元数据记录，不计入该数字。去重后共 4,280 条记录：台账中的 4,294 条原始记录按规范 URL、内容哈希与重复论文标题去重，去除了 14 条。定期来源扫描会更新 `source-counts.json` 和徽章，但不会修改本页；此后如有新的扫描被接受，应以 JSON 文件中的数字为准。
+README 中的来源核查徽章显示 [source-counts.json](../data/source-counts.json) 的 `checked_sources`，即属于三个已检查层级的去重来源文档数，不含 `metadata_only` 记录。截至 2026 年 10 月 17 日（最近一次抓取为 12:15 UTC），已收录来源中有 4 个经编辑复核，2,392 个原始页面经自动正文筛查，1,838 个仅检查摘要，合计 **4,234 个已检查来源**，即徽章数字。另有 47 个仅元数据记录，不计入该数字。去重后共 4,281 条记录：台账中的 4,295 条原始记录按规范 URL、内容哈希与重复论文标题去重，去除了 14 条。定期来源扫描会更新 `source-counts.json` 和徽章，但不会修改本页；此后如有新的扫描被接受，应以 JSON 文件中的数字为准。
 
 ### 初始快照（2026 年 10 月 15 日）
 
