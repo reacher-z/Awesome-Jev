@@ -39,8 +39,12 @@
   --red: #c81d25;
   --line: #d1d5db;
   --accent: #ff5a5f;
-  --sans: "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   --mono: "IBM Plex Mono", monospace;
+}
+/* Latin fallbacks come first so English punctuation never borrows full-width CJK glyphs; Chinese pages keep CJK fonts first. */
+:lang(zh) {
+  --sans: "Inter", "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 * {
   box-sizing: border-box;
