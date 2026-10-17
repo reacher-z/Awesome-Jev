@@ -41,6 +41,11 @@ if (discoveryLocalization.schema_version !== 1 || discoveryLocalization.language
 }
 const discoveryTranslations = discoveryLocalization.translations;
 const template = await readFile(resolve(root, 'templates/index.html'), 'utf8');
+// A missing interface string would silently render English on the Chinese pages.
+const interfaceKeys = new Set([...Object.keys(translations.en), ...Object.keys(translations.zh),
+  ...[...template.matchAll(/\bdata-i18n(?:-aria|-placeholder)?="([^"]+)"/g)].map(match => match[1])]);
+const untranslated = [...interfaceKeys].filter(key => ['en','zh'].some(language => !Object.hasOwn(translations[language], key)));
+if (untranslated.length) throw new Error(`Missing interface translations for ${untranslated.join(', ')}. Add every key to both languages in site/catalog.mjs.`);
 // Stable URLs for unchanged bytes; changed data cannot reuse an older browser cache entry.
 const assetURLs = Object.fromEntries(await Promise.all(
   ['app.js', 'catalog.mjs', 'resource-view.mjs', 'styles.css', 'model-directory.js'].map(async name => {
