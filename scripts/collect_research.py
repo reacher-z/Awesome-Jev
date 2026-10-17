@@ -234,13 +234,14 @@ class Collector:
         self.cache = cache
         self.cache.mkdir(mode=0o700, parents=True, exist_ok=True)
         # Cached responses are screened into the ledger offline, so refuse a
-        # directory that another account created or can write to.
+        # directory that another account created or can write to, including
+        # through a shared group.
         if hasattr(os, "getuid"):
             status = self.cache.stat()
             if status.st_uid != os.getuid():
                 raise PermissionError(f"Refusing cache directory {cache}: it is owned by another user.")
-            if status.st_mode & 0o002:
-                raise PermissionError(f"Refusing cache directory {cache}: it is writable by other users.")
+            if status.st_mode & 0o022:
+                raise PermissionError(f"Refusing cache directory {cache}: it is writable by other users or its group (chmod go-w).")
         self.workers = workers
         self.offline = offline
         self.gate = threading.Lock()

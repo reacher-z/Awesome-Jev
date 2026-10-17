@@ -107,6 +107,32 @@ class CacheTests(unittest.TestCase):
             collect.Collector(foreign, 1)
 
 
+@unittest.skipUnless(hasattr(os, "getuid"), "POSIX ownership and permission bits")
+class CachePermissionTests(unittest.TestCase):
+    """A shared group can modify cached responses as well as other users can (#209)."""
+
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory(prefix="awesome-jev-test-")
+        self.addCleanup(directory.cleanup)
+        self.root = Path(directory.name)
+
+    def cache(self, mode):
+        cache = self.root / oct(mode)
+        cache.mkdir()
+        cache.chmod(mode)
+        return cache
+
+    def test_group_or_other_writable_cache_dir_is_refused(self):
+        for mode in (0o775, 0o770, 0o730, 0o757, 0o777):
+            with self.subTest(mode=oct(mode)), self.assertRaisesRegex(PermissionError, "writable by other users or its group"):
+                collect.Collector(self.cache(mode), 1, offline=True)
+
+    def test_cache_dir_readable_but_not_writable_by_others_is_accepted(self):
+        for mode in (0o700, 0o750, 0o755):
+            with self.subTest(mode=oct(mode)):
+                collect.Collector(self.cache(mode), 1, offline=True)
+
+
 def run_main(*argv):
     """Return the SystemExit code; a string code is printed to stderr with exit status 1."""
     with patch.object(sys, "argv", ["collect_research.py", *argv]), \
@@ -194,7 +220,7 @@ class OfflineRescreenTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="awesome-jev-test-") as directory:
             root = Path(directory)
             cache, output = root / "cache", root / "research-sources.jsonl"
-            cache.mkdir()
+            cache.mkdir(mode=0o700)  # private whatever the umask, as the collector creates it
             output.write_text(LEDGER, encoding="utf-8")
             result = subprocess.run(
                 [sys.executable, "scripts/collect_research.py", "--offline", "--target", "0",
