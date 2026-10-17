@@ -211,6 +211,10 @@ html:not(.js) .corpus-disclosure {
   font-weight: 650;
   margin: 24px 0 18px;
 }
+/* A single long word in a page title (e.g. "GraphDecisionBench") may break rather than widen 320px screens. */
+.document-main > h1 {
+  overflow-wrap: break-word;
+}
 .document-deck,
 .document-main > p,
 .prose,
@@ -1100,6 +1104,26 @@ html:lang(zh) .resource-description {
 }
   .language-switch {
     padding-left: 20px;
+  }
+}
+/* Subpage masthead up to 900px: its seven links plus the language switch do not fit on one
+   row below about 860px, so the nav takes its own full-width row (as on phones) and the page
+   never scrolls sideways or pushes EN / 中文 off-screen. The four-link homepage masthead fits. */
+@media (max-width: 900px) {
+  .document-masthead {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .document-masthead .main-nav {
+    order: 3;
+    flex-basis: 100%;
+    margin: 0;
+    justify-content: space-between;
+    padding: 0 0 17px;
+  }
+  .document-masthead .language-switch {
+    margin-left: auto;
+    padding-left: 14px;
   }
 }
 @media (max-width: 760px) {
