@@ -261,6 +261,76 @@ def check_index(expected_raw_records: int) -> None:
         fail("source index", "invalid index or count-snapshot schema")
 
 
+def bib_fields(body: str) -> list[tuple[str, str]] | None:
+    """Split an entry body at top-level commas into (field, value) pairs; None if malformed."""
+    parts, current, depth, quoted = [], [], 0, False
+    for char in body:
+        depth += {"{": 1, "}": -1}.get(char, 0)
+        quoted = not quoted if char == '"' and depth == 0 else quoted
+        if char == "," and depth == 0 and not quoted:
+            parts.append("".join(current))
+            current = []
+        else:
+            current.append(char)
+    parts.append("".join(current))
+    fields = []
+    for part in parts:
+        name, separator, value = part.partition("=")
+        if not separator and part.strip():
+            return None
+        if separator:
+            fields.append((name.strip().casefold(), value.strip()))
+    return fields
+
+
+def check_bibtex(path: Path) -> None:
+    # The published bibliography must load in BibTeX/biber: one balanced entry per
+    # "@type{key," block, unique keys, and the fields every citation style needs.
+    relative = str(path.relative_to(ROOT))
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        return  # Already reported by the text check.
+    starts = [match.start() for match in re.finditer(r"^[ \t]*@", text, re.M)]
+    if not starts:
+        fail(relative, "no BibTeX entries")
+    keys: set[str] = set()
+    for start, end in zip(starts, starts[1:] + [len(text)]):
+        line = text.count("\n", 0, start) + 1
+        location = f"{relative}:{line}"
+        chunk = text[start:end]
+        if re.match(r"\s*@(?:comment|preamble|string)\b", chunk, re.I):
+            continue
+        head = re.match(r"\s*@(\w+)\s*\{\s*([^\s,{}]+)\s*,", chunk)
+        if not head:
+            fail(location, "malformed BibTeX entry header")
+            continue
+        key = head[2]
+        if key.casefold() in keys:
+            fail(location, f"duplicate BibTeX key {key}")
+        keys.add(key.casefold())
+        depth, close = 0, None
+        for position in range(chunk.index("{"), len(chunk)):
+            depth += {"{": 1, "}": -1}.get(chunk[position], 0)
+            if depth == 0:
+                close = position
+                break
+        trailing = chunk[close + 1:] if close is not None else ""
+        if close is None or any(line.strip() and not line.lstrip().startswith("%") for line in trailing.splitlines()):
+            fail(location, f"unbalanced braces in BibTeX entry {key}")
+            continue
+        fields = bib_fields(chunk[head.end():close])
+        if fields is None:
+            fail(location, f"malformed field in BibTeX entry {key}")
+            continue
+        values = {name: value.strip('{}" \t\n') for name, value in fields}
+        for name in ("title", "author", "year"):
+            if not values.get(name):
+                fail(location, f"BibTeX entry {key} is missing {name}")
+        if values.get("year") and not re.fullmatch(r"\d{4}", values["year"]):
+            fail(location, f"BibTeX entry {key} needs a four-digit year")
+
+
 def main() -> int:
     all_files = files()
     try:
@@ -301,6 +371,9 @@ def main() -> int:
                 if result.returncode:
                     fail(str(path.relative_to(ROOT)), "JavaScript syntax check failed")
     check_index(len(ledgers))
+    for path in all_files:
+        if path.suffix == ".bib" and not path.is_symlink():
+            check_bibtex(path)
     if errors:
         print("Validation failed:")
         for error in errors[:80]:
