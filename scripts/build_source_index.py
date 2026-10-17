@@ -45,6 +45,10 @@ def canonical(url: str) -> str:
     if host == "github.com":
         path = re.sub(r"/blob/[^/]+/(?:README(?:\.[a-zA-Z-]+)?(?:\.md|\.rst|\.txt)?)$", "", path, flags=re.I)
         path = path.removesuffix(".git")
+        # GitHub owner and repository names are case-insensitive, and the
+        # scanner stores them lowercased; later path segments keep their case.
+        repository = "/".join(path.split("/")[:3])
+        path = repository.lower() + path[len(repository):]
     # Query parameters can identify a paper (OpenReview id, CiteSeer doi)
     # or a model report. Strip tracking parameters, never resource identity.
     query = urlencode(sorted((key, value) for key, value in parse_qsl(p.query, keep_blank_values=True)

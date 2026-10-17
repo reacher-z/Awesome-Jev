@@ -105,5 +105,46 @@ class SourcePolicyTests(unittest.TestCase):
                 write_policy(Path(temporary), config(exclusions=[first], annotations=[{**evidence(), "note": "Conflicting annotation."}]))
 
 
+class GithubCasePolicyTests(unittest.TestCase):
+    """Curation written as GitHub displays a URL matches the scanner's lowercase identity."""
+    DISPLAYED = "https://github.com/FuturePPO/TypeSafe_Register"
+    SCANNED = "https://github.com/futureppo/typesafe_register"
+
+    def test_mixed_case_exclusion_blocks_lowercase_scanner_identity(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            policy = write_policy(root, config(exclusions=[{**evidence(self.DISPLAYED), "reason": "Outside collection scope."}]))
+            self.assertEqual(list(policy.exclusions), [self.SCANNED])
+            incoming = {**provider_row(), "url": self.SCANNED}
+            merged, changes = refresh.merge_records(refresh.Ledger([], []), [incoming], policy=policy)
+            self.assertEqual(merged.rows, [])
+            self.assertEqual(changes["curation_excluded"], [self.SCANNED])
+            ledger = root / "data/ecosystem-sources.jsonl"
+            ledger.write_text(json.dumps(incoming) + "\n")
+            with patch.object(validate, "ROOT", root), patch.object(validate, "errors", []):
+                validate.check_ledger(ledger, policy)
+                self.assertTrue(any("explicitly excluded" in item for item in validate.errors))
+            with patch.object(index, "ROOT", root), self.assertRaises(policy_module.PolicyError):
+                index.build()
+
+    def test_mixed_case_annotation_applies_and_case_aliases_conflict(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            write_policy(root, config(annotations=[{**evidence(self.DISPLAYED), "note": "Title checked.", "title": "TypeSafe Register"}]))
+            (root / "data/ecosystem-sources.jsonl").write_text(json.dumps({**provider_row(), "url": self.SCANNED}) + "\n")
+            with patch.object(index, "ROOT", root):
+                shown = index.build()["sources"][0]
+            self.assertEqual(shown["title"], "TypeSafe Register")
+            self.assertEqual(shown["url"], self.SCANNED)
+            with self.assertRaises(policy_module.PolicyError):
+                write_policy(root, config(exclusions=[{**evidence(self.DISPLAYED), "reason": "Out of scope."},
+                                                      {**evidence(self.SCANNED), "reason": "Same repository."}]))
+
+    def test_paths_below_the_repository_keep_their_case(self):
+        self.assertEqual(index.canonical("https://www.github.com/Owner/Repo/blob/Main/Docs/Guide.md"),
+                         "https://github.com/owner/repo/blob/Main/Docs/Guide.md")
+        self.assertEqual(index.canonical("https://github.com/Owner/Repo.git"), "https://github.com/owner/repo")
+
+
 if __name__ == "__main__":
     unittest.main()
