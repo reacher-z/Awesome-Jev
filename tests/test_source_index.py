@@ -84,6 +84,60 @@ class SourceIdentityTests(unittest.TestCase):
         self.assertEqual(sources[current]["content_sha256"], "b" * 64)
         self.assertEqual(sources[current]["verification_level"], "editorial_reviewed")
 
+    def test_renamed_hub_repositories_publish_their_current_name(self):
+        # #93: the ledger's retrieved_url showed these redirects; the Hub API
+        # confirmed each current name (data/hub-alias-review-2026-10-17.json).
+        hub = "https://huggingface.co/"
+        pairs = {
+            "llm-semantic-router/Decision-1.0-Kai": "vllm-sr/Decision-1.0-Kai-0.6B",
+            "llm-semantic-router/Decision-1.0-Kai-0.6B": "vllm-sr/Decision-1.0-Kai-0.6B",
+            "spaces/llm-semantic-router/decision-studio": "spaces/vllm-sr/decision-studio",
+            "MISA-core/linne-oak-1-0": "PNPM244/linne-oak-1-0",
+            "datasets/causalNLP/cladder": "datasets/causal-nlp/CLadder",
+            "datasets/skylenage/HLE-Verified": "datasets/skylenage-ai/HLE-Verified",
+        }
+        for legacy, current in pairs.items():
+            with self.subTest(legacy=legacy):
+                self.assertEqual(index.canonical(hub + legacy), hub + current)
+                self.assertEqual(index.link(hub + legacy), hub + current)
+        # A legacy and a current-name row with diverged content stay one source,
+        # published under the current name from the current-name row.
+        rows = [
+            {"url": hub + "spaces/llm-semantic-router/decision-studio", "title": "Legacy snapshot", "content_sha256": "a" * 64},
+            {"url": hub + "spaces/vllm-sr/decision-studio", "title": "Current snapshot", "content_sha256": "b" * 64},
+            {"url": hub + "llm-semantic-router/Decision-1.0-Kai", "title": "Kai", "content_sha256": "c" * 64},
+            {"url": hub + "llm-semantic-router/Decision-1.0-Kai-0.6B", "title": "Kai 0.6B", "content_sha256": "d" * 64},
+            # Similar names that were not renamed stay distinct.
+            {"url": hub + "llm-semantic-router/Decision-1.0-Kai-1.7B", "title": "Unrelated", "content_sha256": "e" * 64},
+            {"url": hub + "datasets/hotchpotch/s1mb-result", "title": "Unrelated dataset", "content_sha256": "f" * 64},
+        ]
+        with tempfile.TemporaryDirectory(prefix="awesome-jev-test-") as directory:
+            root = Path(directory)
+            (root / "data").mkdir()
+            (root / "data/ecosystem-sources.jsonl").write_text(
+                "".join(json.dumps({**row, "relation": "direct", "verification_level": "content_screened",
+                                    "retrieved_at": "2026-10-16T00:00:00+00:00",
+                                    "relevance": "Synthetic identity regression."}) + "\n"
+                        for row in rows), encoding="utf-8")
+            with patch.object(index, "ROOT", root):
+                payload = index.build()
+        sources = {row["url"]: row for row in payload["sources"]}
+        self.assertEqual(set(sources), {hub + "spaces/vllm-sr/decision-studio", hub + "vllm-sr/Decision-1.0-Kai-0.6B",
+                                        hub + "llm-semantic-router/Decision-1.0-Kai-1.7B", hub + "datasets/hotchpotch/s1mb-result"})
+        self.assertEqual(sources[hub + "spaces/vllm-sr/decision-studio"]["title"], "Current snapshot")
+        self.assertEqual(payload["counts"]["duplicate_records"], 2)
+
+    def test_every_hub_alias_has_recorded_redirect_evidence(self):
+        root = Path(index.__file__).resolve().parents[1] / "data"
+        evidence = {item["legacy_url"]: item["current_url"]
+                    for item in json.loads((root / "hub-alias-review-2026-10-17.json").read_text(encoding="utf-8"))["aliases"]}
+        model_card = json.loads((root / "model-card-review-2026-10-17.json").read_text(encoding="utf-8"))["alias_evidence"]
+        evidence[model_card["legacy_url"]] = model_card["canonical_url"]
+        tracker = json.loads((root / "scan-review-2026-10-17.json").read_text(encoding="utf-8"))["legacy_tracker_alias"]["evidence"]
+        evidence[tracker["requested_url"].replace("/api/", "/")] = tracker["resolved_url"].replace("/api/", "/")
+        self.assertEqual({"https://huggingface.co" + legacy: "https://huggingface.co" + current
+                          for legacy, current in index.HUB_ALIASES.items()}, evidence)
+
     def test_reviewed_chinese_descriptions_reach_the_corpus(self):
         translated = "Synthetic relevance with a reviewed translation."
         rows = [

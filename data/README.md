@@ -87,6 +87,7 @@ Each record is frozen evidence for one review or check: what was fetched, its ha
 | `model-card-review-2026-10-17.json` | Four model repositories | [Expansion review](../docs/reviews/expansion-2026-10-16.md#four-model-card-releases--17-october-2026-utc) |
 | `runtime-search-review-2026-10-17.json` | Browser and search runtime repositories | [Expansion review](../docs/reviews/expansion-2026-10-16.md#browser-and-search-runtimes--17-october-2026-utc) |
 | `scan-alias-merge-review-2026-10-17.json` | Repair of the scan's alias merge after a failed run | [Search discovery](../docs/search-discovery.md#source-scan-alias-repair) |
+| `hub-alias-review-2026-10-17.json` | Read-only Hub API check of 14 renamed Hugging Face repositories and their current names | [Search discovery](../docs/search-discovery.md#renamed-hub-repositories) |
 | `workflow-paper-selection-2026-10-17.json` | Workflow studies and a community survey | [Paper review](../docs/reviews/papers-2026-10-16.md#workflow-studies-and-community-survey--17-october-2026-utc) |
 | `evaluation-security-review-2026-10-17.json` | Benchmark, option-set, application-security, medical and Theory of Mind papers | [Paper review](../docs/reviews/papers-2026-10-16.md#benchmarks-option-sets-application-security-medicine-and-theory-of-mind--17-october-2026-utc) |
 | `agents-audio-bias-risk-review-2026-10-17.json` | Agent, audio, bias, privacy, risk-budget and Turkish model papers | [Paper review](../docs/reviews/papers-2026-10-16.md#agents-audio-bias-privacy-risk-budgets-and-a-turkish-model-paper--17-october-2026-utc) |

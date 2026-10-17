@@ -46,6 +46,43 @@ def identifying_query(query: str) -> str:
                             and key.lower() not in {"fbclid", "gclid", "msclkid"}))
 
 
+# Verified Hub redirects, legacy repository path -> current path: a renamed
+# repository stays one resource even after its README changes, and the index
+# links to its current name. Match a whole repository path, not a prefix of an
+# unrelated model name. Evidence is retained in the source review files
+# (data/scan-review-2026-10-17.json, data/model-card-review-2026-10-17.json and
+# data/hub-alias-review-2026-10-17.json).
+HUB_ALIASES = {
+    "/spaces/multimodalart/jev-reproductions-tracker": "/spaces/multimodalart/jev-decision-index",
+    "/lihe07/span-02": "/respanai/span-02",
+    "/llm-semantic-router/Decision-1.0-Eos-0.8B": "/vllm-sr/Decision-1.0-Eos-0.8B",
+    "/llm-semantic-router/Decision-1.0-Kai": "/vllm-sr/Decision-1.0-Kai-0.6B",
+    "/llm-semantic-router/Decision-1.0-Kai-0.6B": "/vllm-sr/Decision-1.0-Kai-0.6B",
+    "/llm-semantic-router/Decision-1.0-Lex-0.6B": "/vllm-sr/Decision-1.0-Lex-0.6B",
+    "/llm-semantic-router/Decision-1.0-Lux-9B": "/vllm-sr/Decision-1.0-Lux-9B",
+    "/llm-semantic-router/Decision-1.0-Nox-4B": "/vllm-sr/Decision-1.0-Nox-4B",
+    "/llm-semantic-router/Decision-1.0-Sol-2B": "/vllm-sr/Decision-1.0-Sol-2B",
+    "/spaces/llm-semantic-router/decision-studio": "/spaces/vllm-sr/decision-studio",
+    "/MISA-core/linne-fern-1-0": "/PNPM244/linne-fern-1-0",
+    "/MISA-core/linne-oak-1-0": "/PNPM244/linne-oak-1-0",
+    "/datasets/avbiswas/bev-decision-150K": "/datasets/avbiswas/bev-decision",
+    "/datasets/causalNLP/cladder": "/datasets/causal-nlp/CLadder",
+    "/datasets/hotchpotch/s1mb-dataset": "/datasets/hotchpotch/S1MB-english-v1",
+    "/datasets/skylenage/HLE-Verified": "/datasets/skylenage-ai/HLE-Verified",
+}
+
+
+def hub_alias(path: str) -> str | None:
+    """The legacy repository path that a Hub path starts with, if any."""
+    return next((legacy for legacy in HUB_ALIASES if path == legacy or path.startswith(legacy + "/")), None)
+
+
+def legacy_hub_name(url: str) -> bool:
+    """True for a URL stored under a renamed Hub repository's legacy name."""
+    p = urlsplit(url.strip())
+    return p.netloc.lower().removeprefix("www.") == "huggingface.co" and hub_alias(p.path.rstrip("/")) is not None
+
+
 def canonical(url: str) -> str:
     p = urlsplit(url.strip())
     host = p.netloc.lower().removeprefix("www.")
@@ -57,18 +94,8 @@ def canonical(url: str) -> str:
     if host == "huggingface.co" and path.startswith("/papers/"):
         host, path = "arxiv.org", "/abs/" + path.split("/")[-1]
         path = re.sub(r"v\d+$", "", path)
-    # Verified Hub redirects: a renamed repository stays one resource even
-    # after its README changes. Match a whole repository path, not a prefix of
-    # an unrelated model name. Evidence is retained in the source review files.
-    hub_aliases = {
-        "/spaces/multimodalart/jev-reproductions-tracker": "/spaces/multimodalart/jev-decision-index",
-        "/lihe07/span-02": "/respanai/span-02",
-    }
-    if host == "huggingface.co":
-        for legacy, current in hub_aliases.items():
-            if path == legacy or path.startswith(legacy + "/"):
-                path = current + path[len(legacy):]
-                break
+    if host == "huggingface.co" and (legacy := hub_alias(path)):
+        path = HUB_ALIASES[legacy] + path[len(legacy):]
     if host == "github.com":
         path = re.sub(r"/blob/[^/]+/(?:README(?:\.[a-zA-Z-]+)?(?:\.md|\.rst|\.txt)?)$", "", path, flags=re.I)
         path = path.removesuffix(".git")
@@ -138,9 +165,12 @@ def build() -> dict:
                     row = json.loads(line)
                     row["ledger"] = name
                     raw.append(row)
-    # Preserve the strongest verification record when multiple discovery paths converge.
+    # Preserve the strongest verification record when multiple discovery paths
+    # converge; among equals, prefer a row stored under a renamed Hub
+    # repository's current name over one stored under its legacy name.
     rank = {"editorial_reviewed": 0, "content_screened": 1, "abstract_checked": 2, "metadata_only": 3}
-    raw.sort(key=lambda r: (rank.get(r.get("verification_level"), 9), r.get("url", r.get("canonical_url", ""))))
+    raw.sort(key=lambda r: (rank.get(r.get("verification_level"), 9), legacy_hub_name(r.get("url", r.get("canonical_url", ""))),
+                            r.get("url", r.get("canonical_url", ""))))
     urls, hashes, titles = set(), set(), set()
     rows, duplicates = [], []
     for row in raw:
