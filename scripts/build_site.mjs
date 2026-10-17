@@ -13,6 +13,23 @@ const origin = 'https://awesomejev.github.io';
 const repo = 'https://github.com/reacher-z/Awesome-Jev';
 const contentDate = '2026-10-17'; // Update only when curated page content changes.
 const guide = JSON.parse(await readFile(resolve(root, 'data/search-guide.json'), 'utf8'));
+if (typeof guide.updated!=='string' || !/^\d{4}-\d{2}-\d{2}$/.test(guide.updated)) throw new Error('Invalid search guide date.');
+for (const language of ['en','zh']) {
+  const doc=guide[language];
+  if (!doc || ['title','description','intro'].some(key=>typeof doc[key]!=='string' || !doc[key].trim()) || !Array.isArray(doc.sections) || !doc.sections.length) throw new Error('Incomplete bilingual search guide.');
+  if (new Set(doc.sections.map(section=>section.id)).size!==doc.sections.length) throw new Error('Duplicate search guide section.');
+  for (const section of doc.sections) {
+    if (typeof section.id!=='string' || !/^[a-z0-9-]+$/.test(section.id) || typeof section.title!=='string' || !section.title.trim() || !Array.isArray(section.paragraphs) || !section.paragraphs.length) throw new Error('Invalid search guide section.');
+    for (const paragraph of section.paragraphs) {
+      if (typeof paragraph.text!=='string' || !paragraph.text.trim() || !Array.isArray(paragraph.sources)) throw new Error('Invalid search guide paragraph.');
+      for (const source of paragraph.sources) {
+        const url=URL.canParse(source.url) ? new URL(source.url) : null;
+        if (!url || url.protocol!=='https:' || url.username || url.password || typeof source.label!=='string' || !source.label.trim()) throw new Error('Invalid search guide citation.');
+      }
+    }
+  }
+}
+if (JSON.stringify(guide.en.sections.map(s=>s.id))!==JSON.stringify(guide.zh.sections.map(s=>s.id))) throw new Error('Search guide translations must preserve sections.');
 const topicData = JSON.parse(await readFile(resolve(root, 'data/research-topics.json'), 'utf8'));
 if (topicData.schema_version !== 1 || !Array.isArray(topicData.topics)) throw new Error('Invalid research topics.');
 const topics = topicData.topics;
