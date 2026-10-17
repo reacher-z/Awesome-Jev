@@ -4,7 +4,7 @@ from html.parser import HTMLParser
 import re
 import unittest
 
-from test_site_discovery import ROOT, ROUTES
+from test_site_discovery import ROOT, ROUTES, CrawlPage
 
 
 class HeadingOutline(HTMLParser):
@@ -39,14 +39,15 @@ class HeadingOrderTests(unittest.TestCase):
                 for previous, current in zip(outline.levels, outline.levels[1:]):
                     self.assertLessEqual(current, previous + 1, f"h{previous} is followed by h{current}")
 
-    def test_paper_directories_label_their_card_list_with_the_paper_count(self):
+    def test_paper_directories_label_their_table_with_the_paper_count(self):
         for route, label in (("/papers/", "Selected papers"), ("/zh/papers/", "精选论文")):
             with self.subTest(route=route):
-                outline = HeadingOutline((ROOT / "site" / route.strip("/") / "index.html").read_text(encoding="utf-8"))
-                cards = outline.levels.count(3)
-                self.assertGreater(cards, 0)
-                self.assertEqual(outline.levels, [1, 2] + [3] * cards)
-                self.assertEqual(outline.texts[1], f"{label} ({cards})")
+                source = (ROOT / "site" / route.strip("/") / "index.html").read_text(encoding="utf-8")
+                outline = HeadingOutline(source)
+                rows = len(CrawlPage(source).cards)
+                self.assertGreater(rows, 0)
+                self.assertEqual(outline.levels, [1, 2])
+                self.assertEqual(outline.texts[1], f"{label} ({rows})")
 
 
 if __name__ == "__main__":

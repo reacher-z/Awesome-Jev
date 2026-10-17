@@ -11,7 +11,8 @@ LISTS = ("index.html", "papers/index.html", "models/index.html", "discoveries/in
 
 
 class TitleLinks(HTMLParser):
-    """Title links of resource rows (h3.resource-title) and model-table rows (tr.model-row th)."""
+    """Title links of resource rows (h3.resource-title), model-table rows (tr.model-row th) and
+    paper-table rows (a.paper-title)."""
 
     def __init__(self, source):
         super().__init__(convert_charrefs=True)
@@ -25,7 +26,7 @@ class TitleLinks(HTMLParser):
         classes = attrs.get("class", "").split()
         if tag == "h3" and "resource-title" in classes or tag == "tr" and "model-row" in classes:
             self._title_parent = True
-        elif tag == "a" and self._title_parent:
+        elif tag == "a" and (self._title_parent or "paper-title" in classes):
             self._link = {"lang": attrs.get("lang"), "text": []}
 
     def handle_endtag(self, tag):

@@ -18,7 +18,10 @@ ALLOWED = re.compile(r"\bet al\.|\b(?:v\d[\w.]*|jev-\d[\w.]*)\b|\bagent\b")
 
 
 class Subtitles(HTMLParser):
-    """Collect the `by` text of each subtitle, without its category and provenance labels."""
+    """Collect the `by` text of each subtitle, without its category and provenance labels.
+
+    A /papers/ table row has no subtitle; its date cell and author span carry the same metadata.
+    """
 
     def __init__(self, source):
         super().__init__(convert_charrefs=True)
@@ -32,6 +35,12 @@ class Subtitles(HTMLParser):
         if "resource-subtitle" in classes:
             self._depth = 1
             self.subtitles.append([])
+        elif {"paper-date", "paper-authors"} & set(classes):
+            if "paper-date" in classes:
+                self.subtitles.append([])
+            else:
+                self.subtitles[-1].append(" · ")
+            self._depth = 1
         elif self._depth:
             self._depth += 1
             if self._skip or {"resource-category", "resource-provenance"} & set(classes):

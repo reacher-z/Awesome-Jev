@@ -114,6 +114,19 @@ export function renderResource(resource, language, translations) {
  return `<article class="resource-row"><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span> · ${escapeHTML(localizedMetadata(resource.by, language))} · ${renderEvidence(resource, t)}${renderArtifacts(resource, t)}</p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
 }
 
+// One row of the /papers/ table. The Artifacts cell reuses the homepage chips, followed by
+// the caveat the README gives beside those links (`artifact_note`).
+export function renderPaperRow(resource, language, translations, themes) {
+ const t=key=>translations[language][key] ?? translations.en[key] ?? key;
+ const zh=language==='zh', theme=themes.find(item=>item.id===resource.theme);
+ const version=resource.url.match(/v(\d+)$/)[1];
+ const authors=resource.by.split(' · ').slice(0,-2).join(' · ');
+ const note=resource.artifact_note?.[language];
+ const first=version==='1'?'':`<span class="paper-first"><span class="sr-only">${zh?'首次提交 ':'First submitted '}</span><time datetime="${resource.first_submitted}">${resource.first_submitted}</time> v1</span>`;
+ const artifacts=renderArtifacts(resource, t)+(note?`<span class="artifact-note">${escapeHTML(note)}</span>`:'');
+ return `<tr class="paper-row" data-theme="${theme.id}" data-code="${hasCode(resource)}"><td class="paper-date"><time datetime="${resource.date}">${resource.date}</time> v${version}${first}</td><th scope="row" class="paper-main"><a class="paper-title" href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a> <span class="paper-authors">${escapeHTML(authors)}</span></th><td class="paper-theme" title="${escapeHTML(theme[language])}">${escapeHTML(theme.short[language])}</td><td class="paper-artifacts${artifacts?'':' paper-artifacts-none'}">${artifacts||`<span aria-hidden="true">—</span><span class="sr-only">${zh?'未列出材料':'None listed'}</span>`}</td><td class="paper-finding"><div class="paper-finding-text">${escapeHTML(resource[language])}</div></td></tr>`;
+}
+
 export function renderModelRow(resource, language) {
  const zh=language==='zh';
  const license=zh ? ({'Not declared':'未声明','Apache-2.0 weights; MIT server':'权重 Apache-2.0；服务代码 MIT'})[resource.license] || resource.license : resource.license;

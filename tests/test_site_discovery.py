@@ -24,7 +24,7 @@ ROUTES = tuple(route for pair in PAIRS for route in pair)
 BUILD_INPUTS = (
     "scripts/build_site.mjs", "templates/index.html", "data/search-guide.json", "data/research-topics.json",
     "data/expansion-progress-2026-10-16.json", "data/discovery-translations.zh-CN.json", "references.bib",
-    "site/app.js", "site/model-directory.js", "site/catalog.mjs", "site/resource-view.mjs", "site/styles.css",
+    "site/app.js", "site/model-directory.js", "site/paper-directory.js", "site/catalog.mjs", "site/resource-view.mjs", "site/styles.css",
 )
 
 
@@ -104,17 +104,20 @@ class CrawlPage(HTMLParser):
             self._style = True
         elif tag == "h1":
             self._h1 = []
-        elif (tag == "article" and "resource-row" in classes) or (tag == "tr" and "model-row" in classes):
+        elif (tag == "article" and "resource-row" in classes) or (tag == "tr" and classes & {"model-row", "paper-row"}):
             self._model_row = tag == "tr"
-            self._card_title = self._model_row
+            self._card_title = "model-row" in classes
             self._card = {"url": "", "name": [], "text": [], "description": [], "hidden": "hidden" in attrs or attrs.get("aria-hidden") == "true",
                           "category": attrs.get("data-category", ""), "relation": attrs.get("data-relation", ""),
                           "verification_level": attrs.get("data-verification-level", "")}
         elif tag == "h3" and self._card is not None:
             self._card_title = True
+        elif tag == "a" and self._card is not None and "paper-title" in classes:
+            self._card_title = True
+            self._card["url"] = attrs.get("href", "")
         elif tag == "a" and self._card is not None and self._card_title:
             self._card["url"] = attrs.get("href", "")
-        elif self._card is not None and ((tag == "p" and "resource-description" in classes) or (tag == "td" and "model-scope" in classes)):
+        elif self._card is not None and ((tag == "p" and "resource-description" in classes) or (tag == "td" and classes & {"model-scope", "paper-finding"})):
             self._card_description = True
 
     def handle_endtag(self, tag):
@@ -380,6 +383,35 @@ class SiteDiscoveryTests(unittest.TestCase):
                 self.assertIn(prefix + "models/", self.pages[prefix].links)
                 self.assertIn(prefix + "models/", self.pages[prefix + "guide/"].links)
                 self.assertIn("/models.json", page.links)
+
+    def test_paper_directory_is_a_complete_static_table_in_both_languages(self):
+        exported = json.loads((ROOT / "site/papers.json").read_text())
+        papers, themes = exported["papers"], {theme["id"]: theme for theme in exported["themes"]}
+        for language, prefix in (("en", "/"), ("zh", "/zh/")):
+            with self.subTest(language=language):
+                route = prefix + "papers/"
+                page = self.pages[route]
+                self.assertEqual([card["url"] for card in page.cards], [paper["url"] for paper in papers])
+                self.assertEqual([card["description"] for card in page.cards], [words(paper[language]) for paper in papers])
+                for card, paper in zip(page.cards, papers):
+                    self.assertFalse(card["hidden"])
+                    self.assertIn(paper["date"], card["text"])
+                    self.assertIn(themes[paper["theme"]]["short"][language], card["text"])
+                    if "artifact_note" in paper:
+                        self.assertIn(words(paper["artifact_note"][language]), card["text"])
+                    for kind, urls in paper.get("artifacts", {}).items():
+                        for url in [] if kind == "unverified" else [urls] if isinstance(urls, str) else urls:
+                            self.assertIn(url, page.links)
+                # Filters and sorting are enhancements: without JavaScript their controls stay hidden.
+                source = (ROOT / "site" / route.strip("/") / "index.html").read_text(encoding="utf-8")
+                controls = re.findall(r"<[a-z]+[^>]*\bdata-paper-controls\b[^>]*>", source)
+                self.assertTrue(controls)
+                self.assertTrue(all(re.search(r"\bhidden\b", tag) for tag in controls))
+                # The papers-with-code checkbox counts what the homepage checkbox counts.
+                home = (ROOT / "site" / prefix.strip("/") / "index.html").read_text(encoding="utf-8")
+                count = re.compile(r'id="(?:paper-)?code-filter" />.*?<span class="filter-count" aria-hidden="true">(\d+)</span>')
+                self.assertEqual(count.search(source)[1], count.search(home)[1])
+                self.assertEqual(int(count.search(source)[1]), source.count('data-code="true"'))
 
     def test_new_source_directory_preserves_every_accepted_resource_and_evidence_label(self):
         report = json.loads((ROOT / "data/expansion-progress-2026-10-16.json").read_text())
