@@ -583,6 +583,22 @@ figcaption {
   background: var(--ink);
   color: var(--paper);
 }
+/* Forced colours (e.g. Windows High Contrast) replace the ink fill that marks the selected
+   filter. Frame every filter so it reads as a control, and mark the pressed one, keyed on
+   aria-pressed, with the system selection colours plus an underline that survives any palette. */
+@media (forced-colors: active) {
+  .filter-button {
+    border: 1px solid ButtonText;
+  }
+  .filter-button[aria-pressed="true"] {
+    forced-color-adjust: none;
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+    text-decoration: underline 2px;
+    text-underline-offset: 4px;
+  }
+}
 .search-field {
   display: flex;
   align-items: center;
