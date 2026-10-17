@@ -289,8 +289,8 @@ Background literature and comparison methods. These works do **not** establish J
 | Selective prediction | Geifman & El-Yaniv, *SelectiveNet*. ICML, 2019. | [Paper](https://proceedings.mlr.press/v97/geifman19a.html) |
 | LM self-assessment | Kadavath et al., *Language Models (Mostly) Know What They Know*. 2022. | [Paper](https://arxiv.org/abs/2207.05221) |
 | Constrained LM programs | Beurer-Kellner et al., *Prompting Is Programming: A Query Language for Large Language Models*. PLDI, 2023. | [Paper](https://www.sri.inf.ethz.ch/publications/beurerkellner2023prompting) |
-| Structured generation | Dong et al., *XGrammar*. 2024. | [Paper](https://arxiv.org/abs/2411.15100) · [Code](https://github.com/mlc-ai/xgrammar) |
-| Composable pipelines | Khattab et al., *DSPy*. 2023. | [Paper](https://arxiv.org/abs/2310.03714) |
+| Structured generation | Dong et al., *XGrammar*. MLSys, 2025. | [Paper](https://arxiv.org/abs/2411.15100) · [Code](https://github.com/mlc-ai/xgrammar) |
+| Composable pipelines | Khattab et al., *DSPy*. ICLR, 2024. | [Paper](https://arxiv.org/abs/2310.03714) |
 | Efficient execution | Zheng et al., *SGLang*. NeurIPS, 2024. | [Paper](https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f31ba1c9ac630f15dec8-Paper-Conference.pdf) · [Code](https://github.com/sgl-project/sglang) |
 
 The selected papers and community survey are included in [references.bib](references.bib) (87 entries). See the [latest paper-selection review](docs/reviews/papers-2026-10-16.md) for verification scope and limitations.

@@ -289,8 +289,8 @@ TypeSafe 的四个数据集提供工作流案例、模型生成的参考标签�
 | 选择性预测 | Geifman & El-Yaniv, *SelectiveNet*. ICML, 2019. | [论文](https://proceedings.mlr.press/v97/geifman19a.html) |
 | 语言模型自我评估 | Kadavath et al., *Language Models (Mostly) Know What They Know*. 2022. | [论文](https://arxiv.org/abs/2207.05221) |
 | 受约束的语言模型程序 | Beurer-Kellner et al., *Prompting Is Programming: A Query Language for Large Language Models*. PLDI, 2023. | [论文](https://www.sri.inf.ethz.ch/publications/beurerkellner2023prompting) |
-| 结构化生成 | Dong et al., *XGrammar*. 2024. | [论文](https://arxiv.org/abs/2411.15100) · [代码](https://github.com/mlc-ai/xgrammar) |
-| 可组合流水线 | Khattab et al., *DSPy*. 2023. | [论文](https://arxiv.org/abs/2310.03714) |
+| 结构化生成 | Dong et al., *XGrammar*. MLSys, 2025. | [论文](https://arxiv.org/abs/2411.15100) · [代码](https://github.com/mlc-ai/xgrammar) |
+| 可组合流水线 | Khattab et al., *DSPy*. ICLR, 2024. | [论文](https://arxiv.org/abs/2310.03714) |
 | 高效执行 | Zheng et al., *SGLang*. NeurIPS, 2024. | [论文](https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f31ba1c9ac630f15dec8-Paper-Conference.pdf) · [代码](https://github.com/sgl-project/sglang) |
 
 精选论文与社区综述共 87 条书目信息收录于 [references.bib](references.bib)。核查范围与局限见[本次论文精选记录](docs/reviews/papers-2026-10-16.md)。

@@ -72,7 +72,7 @@ confidence = (p_max − 1/n) / (1 − 1/n)
 
 **约束生成。** LMQL 和 XGrammar 展示了生成系统如何施加输出约束，因此有必要在实验中区分类型化 API 与生成答案的模型。[LMQL](https://www.sri.inf.ethz.ch/publications/beurerkellner2023prompting) · [XGrammar](https://arxiv.org/abs/2411.15100)
 
-**可编程推理流程。** DSPy 研究模型流水线的优化，SGLang 研究这类程序的高效执行。两者都提示我们：在把端到端收益归因于某个决策模型之前，应控制编排、缓存与服务条件。[DSPy](https://arxiv.org/abs/2310.03714) · [SGLang](https://arxiv.org/abs/2312.07104)
+**可编程推理流程。** DSPy 研究模型流水线的优化，SGLang 研究这类程序的高效执行。两者都提示我们：在把端到端收益归因于某个决策模型之前，应控制编排、缓存与服务条件。[DSPy](https://arxiv.org/abs/2310.03714) · [SGLang](https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f31ba1c9ac630f15dec8-Paper-Conference.pdf)
 
 ## 5. 建议的可复现评估协议
 

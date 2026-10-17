@@ -1631,7 +1631,7 @@ const resources = [
   {
     category: "Foundations",
     title: "XGrammar",
-    by: "Dong et al. · 2024",
+    by: "Dong et al. · MLSys 2025",
     url: "https://arxiv.org/abs/2411.15100",
     en: "Efficient grammar-constrained generation: a useful comparison point for typed outputs.",
     zh: "高效语法约束生成，为理解类型化输出提供比较背景。",
@@ -1639,7 +1639,7 @@ const resources = [
   {
     category: "Foundations",
     title: "DSPy",
-    by: "Khattab et al. · 2023",
+    by: "Khattab et al. · ICLR 2024",
     url: "https://arxiv.org/abs/2310.03714",
     en: "Declarative language-model programs and pipeline optimization.",
     zh: "声明式语言模型程序与流水线优化。",
@@ -1648,7 +1648,7 @@ const resources = [
     category: "Foundations",
     title: "SGLang",
     by: "Zheng et al. · NeurIPS 2024",
-    url: "https://arxiv.org/abs/2312.07104",
+    url: "https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f31ba1c9ac630f15dec8-Paper-Conference.pdf",
     en: "Efficient execution of structured language-model programs.",
     zh: "结构化语言模型程序的高效执行。",
   },

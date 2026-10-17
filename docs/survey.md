@@ -72,7 +72,7 @@ Three recent studies sharpen different parts of this distinction. These are inte
 
 **Constrained generation.** LMQL and XGrammar show how generative systems can impose output constraints. They motivate comparisons that distinguish a typed API from the model producing its answers. [LMQL](https://www.sri.inf.ethz.ch/publications/beurerkellner2023prompting) · [XGrammar](https://arxiv.org/abs/2411.15100)
 
-**Programmable inference.** DSPy studies optimization of model pipelines; SGLang studies their efficient execution. Both motivate controlling orchestration, caching, and serving conditions before attributing end-to-end improvements to one decision model. [DSPy](https://arxiv.org/abs/2310.03714) · [SGLang](https://arxiv.org/abs/2312.07104)
+**Programmable inference.** DSPy studies optimization of model pipelines; SGLang studies their efficient execution. Both motivate controlling orchestration, caching, and serving conditions before attributing end-to-end improvements to one decision model. [DSPy](https://arxiv.org/abs/2310.03714) · [SGLang](https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f31ba1c9ac630f15dec8-Paper-Conference.pdf)
 
 ## 5. A proposed reproducible evaluation
 
