@@ -5460,18 +5460,6 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Accelerating Pre-trained Language Models via Calibrated Cascade.",
-      "url": "https://arxiv.org/abs/2012.14682",
-      "category": "Research foundations",
-      "topic": "efficient_routing_cascades",
-      "description": "Comparison background for allocating prediction work across classifiers or models under accuracy and compute constraints.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "64617d7e8ea1559a4f319f7c2ea47b91ee43fcf9a0316b266f6591eec57da070",
-      "retrieved_at": "2026-10-16T10:03:05+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
       "title": "Accuracy-Rejection Curves (ARCs) for Comparing Classification Methods with a Reject Option",
       "url": "https://horizon.documentation.ird.fr/exl-doc/pleins_textes/divers17-10/010049968.pdf",
       "category": "Research foundations",
@@ -5736,7 +5724,7 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Auto-Rubric: Learning to Extract Generalizable Criteria for Reward Modeling",
+      "title": "Auto-Rubric: Learning From Implicit Weights to Explicit Rubrics for Reward Modeling",
       "url": "https://arxiv.org/abs/2510.17314",
       "category": "Research foundations",
       "topic": "judge_reliability",
@@ -6165,6 +6153,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "5a72f9563f25942e0c2618baecdc97e1c7a832e5c98ee848c71a3d3037ce6181",
       "retrieved_at": "2026-10-16T10:01:21+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "CascadeBERT: Accelerating Inference of Pre-trained Language Models via Calibrated Complete Models Cascade",
+      "url": "https://arxiv.org/abs/2012.14682",
+      "category": "Research foundations",
+      "topic": "efficient_routing_cascades",
+      "description": "Comparison background for allocating prediction work across classifiers or models under accuracy and compute constraints.",
+      "relation": "background",
+      "verification_level": "abstract_checked",
+      "content_sha256": "64617d7e8ea1559a4f319f7c2ea47b91ee43fcf9a0316b266f6591eec57da070",
+      "retrieved_at": "2026-10-16T10:03:05+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -6633,18 +6633,6 @@
       "verification_level": "abstract_checked",
       "content_sha256": "5fd50928d53ed36ede944d7ac7d272bdd5abaac3186531b542f86a2cdb094bf8",
       "retrieved_at": "2026-10-16T10:03:11+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
-      "title": "Decomposition Enhances Reasoning via Self-Evaluation Guided Decoding",
-      "url": "https://arxiv.org/abs/2305.00633",
-      "category": "Research foundations",
-      "topic": "judge_reliability",
-      "description": "Background for evaluating the reliability, bias, consistency, or uncertainty of model-based judgments.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "aa70416de34167ca7b60c8d8417ef8ee306513573a48889e38dbad8d6a02e8a5",
-      "retrieved_at": "2026-10-16T10:01:04+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -7536,7 +7524,7 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Learning an Efficient Multi-Turn Dialogue Evaluator from Multiple Judges",
+      "title": "Learning an Efficient Multi-Turn Dialogue Evaluator from Multiple LLM Judges",
       "url": "https://arxiv.org/abs/2508.00454",
       "category": "Research foundations",
       "topic": "judge_reliability",
@@ -8220,7 +8208,7 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Post-hoc Calibration of Neural Networks.",
+      "title": "Post-hoc Calibration of Neural Networks by g-Layers",
       "url": "https://arxiv.org/abs/2006.12807",
       "category": "Research foundations",
       "topic": "probability_calibration",
@@ -8757,6 +8745,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "694448391bee6de9814f38eee8bc70f6e0ed09628b3313e83452ef0ea99631f5",
       "retrieved_at": "2026-10-16T10:02:52+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Self-Evaluation Guided Beam Search for Reasoning",
+      "url": "https://arxiv.org/abs/2305.00633",
+      "category": "Research foundations",
+      "topic": "judge_reliability",
+      "description": "Background for evaluating the reliability, bias, consistency, or uncertainty of model-based judgments.",
+      "relation": "background",
+      "verification_level": "abstract_checked",
+      "content_sha256": "aa70416de34167ca7b60c8d8417ef8ee306513573a48889e38dbad8d6a02e8a5",
+      "retrieved_at": "2026-10-16T10:01:04+00:00",
       "ledger": "research-sources.jsonl"
     },
     {

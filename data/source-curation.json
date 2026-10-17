@@ -366,6 +366,41 @@
       "note": "Fixed-v1 abstract and metadata review only. The paper is a curated direct study; its ledger row was collected as a linked dependency of an index-listed artifact, and the collector labels every such row adjacent. Original provider fields and evidence grades are preserved.",
       "evidence_url": "https://arxiv.org/abs/2610.18773v1",
       "reviewed_at": "2026-10-17T08:44:12Z"
+    },
+    {
+      "url": "https://arxiv.org/abs/2012.14682",
+      "evidence_url": "https://arxiv.org/abs/2012.14682v2",
+      "reviewed_at": "2026-10-17T11:53:20Z",
+      "title": "CascadeBERT: Accelerating Inference of Pre-trained Language Models via Calibrated Complete Models Cascade",
+      "note": "Display title follows arXiv v2, the version the unversioned link opens; the provider title “Accelerating Pre-trained Language Models via Calibrated Cascade.” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
+    },
+    {
+      "url": "https://arxiv.org/abs/2510.17314",
+      "evidence_url": "https://arxiv.org/abs/2510.17314v2",
+      "reviewed_at": "2026-10-17T11:53:20Z",
+      "title": "Auto-Rubric: Learning From Implicit Weights to Explicit Rubrics for Reward Modeling",
+      "note": "Display title follows arXiv v2, the version the unversioned link opens; the provider title “Auto-Rubric: Learning to Extract Generalizable Criteria for Reward Modeling” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
+    },
+    {
+      "url": "https://arxiv.org/abs/2305.00633",
+      "evidence_url": "https://arxiv.org/abs/2305.00633v3",
+      "reviewed_at": "2026-10-17T11:53:20Z",
+      "title": "Self-Evaluation Guided Beam Search for Reasoning",
+      "note": "Display title follows arXiv v3, the version the unversioned link opens; the provider title “Decomposition Enhances Reasoning via Self-Evaluation Guided Decoding” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
+    },
+    {
+      "url": "https://arxiv.org/abs/2508.00454",
+      "evidence_url": "https://arxiv.org/abs/2508.00454v4",
+      "reviewed_at": "2026-10-17T11:53:20Z",
+      "title": "Learning an Efficient Multi-Turn Dialogue Evaluator from Multiple LLM Judges",
+      "note": "Display title follows arXiv v4, the version the unversioned link opens; the provider title “Learning an Efficient Multi-Turn Dialogue Evaluator from Multiple Judges” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
+    },
+    {
+      "url": "https://arxiv.org/abs/2006.12807",
+      "evidence_url": "https://arxiv.org/abs/2006.12807v2",
+      "reviewed_at": "2026-10-17T11:53:20Z",
+      "title": "Post-hoc Calibration of Neural Networks by g-Layers",
+      "note": "Display title follows arXiv v2, the version the unversioned link opens; the provider title “Post-hoc Calibration of Neural Networks.” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
     }
   ]
 }
