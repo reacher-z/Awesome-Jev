@@ -1,5 +1,5 @@
 import { resources, translations } from "./catalog.mjs";
-import { englishLang, renderResource } from "./resource-view.mjs";
+import { englishLang, renderResource, hasCode } from "./resource-view.mjs";
 
 document.documentElement.classList.add("js");
 let language = document.documentElement.lang.startsWith("zh") ? "zh" : "en";
@@ -52,9 +52,11 @@ function t(key) {
 }
 function renderResources() {
   const query = $("#resource-search").value.trim().toLocaleLowerCase();
+  const codeOnly = $("#code-filter").checked;
   const filtered = resources.filter(
     (resource) =>
       (activeFilter === "All" || resource.category === activeFilter) &&
+      (!codeOnly || hasCode(resource)) &&
       `${resource.title} ${resource.by} ${resource.en} ${resource.zh} ${resource.category}`
         .toLocaleLowerCase()
         .includes(query),
@@ -128,6 +130,7 @@ document.querySelectorAll("[data-filter-link]").forEach((link) =>
   }),
 );
 $("#resource-search").addEventListener("input", renderResources);
+$("#code-filter").addEventListener("change", renderResources);
 document
   .querySelectorAll("form[role=search]")
   .forEach((form) =>
@@ -135,6 +138,7 @@ document
   );
 $("#reset-filters").addEventListener("click", () => {
   $("#resource-search").value = "";
+  $("#code-filter").checked = false;
   selectFilter("All");
   $("#resource-search").focus();
 });

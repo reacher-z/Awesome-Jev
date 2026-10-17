@@ -34,6 +34,8 @@ Then run `node scripts/build_site.mjs` and commit the regenerated files under `s
 
 Credit a paper's authors the same way in both README paper tables and its catalog `by` field: name every author by surname when there are up to four (`Rao & Callison-Burch`, `Deng, Fan, Zhang & Xie`), and write the first author's surname followed by `et al.` when there are five or more.
 
+A paper's links in the README Artifacts column also go in its catalog `artifacts` field, grouped by kind: `code`, `data`, `model`, `demo` or `page`. A link to both code and data is listed under both kinds. Where the README says an artifact was not verified, record its kind as `unverified` instead of a link. The website shows these as link chips, and the tests require the README and catalog links to match.
+
 ## Evidence quality
 
 Keep schema validity, task quality, calibration, and system efficiency separate. Numerical comparisons need a workload, denominator, baseline configuration, and date. A leaderboard using private tests is not fully reproducible merely because its results are public.
@@ -104,6 +106,8 @@ Submit only public source material and original summaries. Keep API keys, `.env`
 随后运行 `node scripts/build_site.mjs`，并提交 `site/` 下重新生成的文件。中英文同步修改：每个条目都有两种语言的描述，修改其中一种语言的 PR 须同时更新另一种。规模更大的可检索来源语料来自定时扫描的 `data/` 台账，见[来源台账](data/README.md)。
 
 论文作者在两份 README 的论文表格与 catalog 的 `by` 字段中以同一方式署名：作者不超过四人时列出全部作者的姓（如 `Rao & Callison-Burch`、`Deng, Fan, Zhang & Xie`），五人及以上时写第一作者的姓加 `et al.`。
+
+论文在 README「材料」列中的链接也要按类型写入 catalog 的 `artifacts` 字段：`code`、`data`、`model`、`demo` 或 `page`。同时提供代码与数据的链接在两种类型下各列一次。README 注明某项材料未核验时，用 `unverified` 记录其类型，不写链接。网站据此显示链接标签，测试要求 README 与 catalog 的链接一致。
 
 ### 证据质量
 

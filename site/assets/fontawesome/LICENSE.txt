@@ -1,6 +1,6 @@
 Font Awesome Free 7.3.1
 Source: https://www.npmjs.com/package/@fortawesome/fontawesome-free/v/7.3.1
-Vendored subset: 11 SVG icons. No Font Awesome Pro assets are included.
+Vendored subset: 15 SVG icons. No Font Awesome Pro assets are included.
 
 Fonticons, Inc. (https://fontawesome.com)
 

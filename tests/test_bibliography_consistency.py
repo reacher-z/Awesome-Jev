@@ -2,8 +2,8 @@
 
 Paper metadata is maintained by hand in README.md, README.zh-CN.md, references.bib and
 site/catalog.mjs. These tests parse all four and require, for every arXiv ID, the same
-version, version date, first-submission date, title and author credit, and require the
-counts the READMEs state to equal the counted entries.
+version, version date, first-submission date, title, author credit and artifact links, and
+require the counts the READMEs state to equal the counted entries.
 """
 
 from pathlib import Path
@@ -217,6 +217,19 @@ class BibliographyConsistencyTests(unittest.TestCase):
                 row = self.readme["en"].get(paper)
                 if row:
                     self.assertEqual(row["authors"], credit, "README and catalog author credits")
+
+    def test_artifact_links_agree(self):
+        for paper, entry in self.catalog.items():
+            with self.subTest(paper=paper):
+                row = self.readme["en"].get(paper)
+                if not row:
+                    continue
+                artifacts = dict(entry.get("artifacts", {}))
+                unverified = artifacts.pop("unverified", None)
+                linked = {url for urls in artifacts.values() for url in ([urls] if isinstance(urls, str) else urls)}
+                self.assertEqual(linked, set(row["artifact_urls"]), "README Artifacts links and catalog artifacts")
+                self.assertEqual(unverified is not None, "not verified" in row["artifacts"],
+                                 "README and catalog mark the same unverified artifacts")
 
     def test_whats_new_lists_the_ten_newest_table_rows(self):
         for language, path in README.items():

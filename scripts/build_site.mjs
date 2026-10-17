@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
 import { resources, translations } from '../site/catalog.mjs';
-import { renderResource, renderModelRow, renderEvidenceLegend, evidenceOf, englishLang, escapeHTML as esc } from '../site/resource-view.mjs';
+import { renderResource, renderModelRow, renderEvidenceLegend, evidenceOf, englishLang, escapeHTML as esc, artifactKinds, hasCode } from '../site/resource-view.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const origin = 'https://awesomejev.github.io';
@@ -65,6 +65,12 @@ for (const model of models) {
 }
 const unmarked = resources.filter(row => !evidenceOf(row)).map(row => row.title);
 if (unmarked.length) throw new Error(`No evidence marker for the provenance of ${unmarked.join(', ')}.`);
+// Artifact chips accept known kinds only, each holding one or more https URLs.
+for (const {title, artifacts} of resources.filter(row => row.artifacts)) {
+  const {unverified, ...links} = artifacts;
+  const valid = Object.entries(links).every(([kind, urls]) => artifactKinds.includes(kind) && [urls].flat().length && [urls].flat().every(url => /^https:\/\/\S+$/.test(url)));
+  if (!valid || (unverified !== undefined && !artifactKinds.includes(unverified))) throw new Error(`Invalid artifact links for ${title}.`);
+}
 const categoryOrder = ['Papers','Models','Datasets','Projects','Tools','Evaluations','Guides and evaluations','Guides','Research foundations','Foundations'];
 const relationLabels = {direct:['Directly related','直接相关'],adjacent:['Related field','邻近领域'],background:['Research background','研究背景']};
 // Discovery rows name the same verification tiers as the homepage corpus legend.
@@ -137,6 +143,7 @@ function home(language) {
   values.MODELS_LABEL = language==='zh'?'模型目录':'Model directory';
   values.CONTENT_DATE = contentDate;
   values.EVIDENCE_LEGEND = renderEvidenceLegend(language,translations,`${repo}/blob/main/docs/source-audit.md#evidence-markers`);
+  values.CODE_COUNT = String(resources.filter(hasCode).length);
   values.COLLECTION_STATS = `<dl class="collection-stats">${[[resources.length,language==='zh'?'精选资源':'curated resources',route(language)+'#collection'],[papers.length,language==='zh'?'论文':'papers',route(language,'papers')],[models.length,language==='zh'?'模型':'models',route(language,'models')],[expansion.accepted_new_sources,language==='zh'?'扩展来源':'reviewed additions',route(language,'discoveries')]].map(([number,label,url])=>`<div><dt><a href="${url}">${label}</a></dt><dd>${number}</dd></div>`).join('')}</dl>`;
   values.APP_MODULE_URL = esc(assetURLs['app.js']);
   values.STYLESHEET_URL = esc(assetURLs['styles.css']);

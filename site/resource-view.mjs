@@ -91,9 +91,23 @@ function provenance(resource) {
 // readers switch voice (WCAG 3.1.2 Language of Parts).
 export const englishLang = (text, language) =>
   language === "zh" && !/[\u3400-\u9fff]/u.test(String(text ?? "")) ? ' lang="en"' : "";
+// Artifact links come from the README Artifacts column; each kind holds one URL or a list.
+export const artifactKinds = ["code", "data", "model", "demo", "page"];
+export const artifactLinks = resource => artifactKinds.flatMap(kind => [resource.artifacts?.[kind] ?? []].flat().map((url, index) => ({kind, url, index})));
+export const hasCode = resource => artifactLinks(resource).some(link => link.kind === "code");
+export function renderArtifacts(resource, t) {
+ const label = kind => t("artifact" + kind[0].toUpperCase() + kind.slice(1));
+ const chips = artifactLinks(resource).map(({kind, url, index}) => {
+  const text = label(kind) + (index ? ` ${index + 1}` : "");
+  return `<a class="artifact-chip" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHTML(t("artifactFor")(text, resource.title))}">${icon(kind)}${escapeHTML(text)}</a>`;
+ });
+ const unverified = resource.artifacts?.unverified;
+ if (unverified) chips.push(`<span class="artifact-chip artifact-unverified">${icon(unverified)}${escapeHTML(t("artifactUnverified")(label(unverified)))}</span>`);
+ return chips.length ? `<span class="resource-artifacts">${chips.join("")}</span>` : "";
+}
 export function renderResource(resource, language, translations) {
  const t=key=>translations[language][key] ?? translations.en[key] ?? key;
- return `<article class="resource-row"><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span> · ${escapeHTML(localizedMetadata(resource.by, language))} · ${renderEvidence(resource, t)}</p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
+ return `<article class="resource-row"><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span> · ${escapeHTML(localizedMetadata(resource.by, language))} · ${renderEvidence(resource, t)}${renderArtifacts(resource, t)}</p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
 }
 
 export function renderModelRow(resource, language) {

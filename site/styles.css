@@ -239,7 +239,7 @@ html:not(.js) .corpus-disclosure {
   font-size: 14px;
   color: var(--muted);
 }
-.document-main a:not(.resource-title a),
+.document-main a:not(.resource-title a, .artifact-chip),
 .document-footer a {
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -631,6 +631,36 @@ time {
     text-decoration: underline 2px;
     text-underline-offset: 4px;
   }
+}
+/* "Has code" narrows any category, so it is a checkbox beside the category buttons, not one of them. */
+.filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--muted);
+  cursor: pointer;
+}
+.filter-toggle:hover,
+.filter-toggle:has(:checked) {
+  color: var(--ink);
+}
+.filter-toggle:hover {
+  background: var(--tint);
+}
+.filter-toggle input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+.filter-toggle input:focus-visible {
+  outline-offset: 3px;
 }
 .search-field {
   display: flex;
@@ -1991,6 +2021,37 @@ html:lang(zh) .featured-copy h2 {
 .resource-category .icon {
   font-size: 12px;
 }
+/* Artifact chips sit on the metadata line: text label plus icon, framed at >= 3:1 against the
+   page; an artifact the README could not verify is plain muted text in a dashed frame. */
+.artifact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
+  padding: 0 6px;
+  border: 1px solid color-mix(in srgb, currentColor 55%, var(--paper));
+  color: var(--link);
+  line-height: 18px;
+  white-space: nowrap;
+  vertical-align: top;
+}
+.artifact-chip + .artifact-chip {
+  margin-left: 4px;
+}
+.artifact-chip .icon {
+  font-size: 11px;
+}
+a.artifact-chip:hover {
+  background: var(--tint);
+  color: var(--ink);
+}
+a.artifact-chip:focus-visible {
+  outline-offset: 2px;
+}
+.artifact-unverified {
+  border-style: dashed;
+  color: var(--muted);
+}
 .resource-arrow .icon {
   width: 12px;
   height: 12px;
@@ -2018,6 +2079,10 @@ html:lang(zh) .featured-copy h2 {
 }
   .filter-button .icon {
     font-size: 13px;
+  }
+  .filter-toggle {
+    margin-left: 0;
+    padding: 8px 9px;
   }
   .main-nav {
     gap: 12px;
