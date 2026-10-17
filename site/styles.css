@@ -56,8 +56,9 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 30px;
 }
-/* Dark scheme: same roles, contrast >= 4.5:1 for text and >= 3:1 for hairlines and focus rings. */
-@media (prefers-color-scheme: dark) {
+/* Dark scheme: same roles, contrast >= 4.5:1 for text and >= 3:1 for hairlines and focus rings.
+   Screen only: printed pages keep the light palette (paper is white and backgrounds are dropped). */
+@media screen and (prefers-color-scheme: dark) {
   :root {
     --paper: #111418;
     --wash: #191d22;
@@ -2236,3 +2237,43 @@ html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3 {
   margin: 0;
 }
 .discovery-category-list li + li { margin-top: 0; }
+
+/* Print: content only. The skip link is position: fixed, so Chrome repeats it over every printed
+   page; it, the navigation, the language switch and the interactive controls are hidden, the
+   screen gutters are dropped, and external source links print their address after the text. */
+@media print {
+  :root {
+    color-scheme: light;
+  }
+  .skip-link,
+  .main-nav,
+  .language-switch,
+  .collection-controls,
+  .corpus-disclosure,
+  .model-controls,
+  #copy-code,
+  .back-top {
+    display: none !important;
+  }
+  .page-shell,
+  .start-inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+  .resource-row {
+    break-inside: avoid;
+  }
+  .source-links a[href^="http"]::after,
+  .resource-title a[href^="http"]::after {
+    content: " " attr(href);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 400;
+    overflow-wrap: anywhere;
+  }
+}
