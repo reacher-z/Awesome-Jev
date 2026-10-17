@@ -134,6 +134,31 @@ class SourceIdentityTests(unittest.TestCase):
         self.assertNotIn("License", titles)
         self.assertEqual(payload["counts"]["unique_records"], 2)
 
+    def test_extracted_markup_and_page_chrome_are_not_display_titles(self):
+        badge = "[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)"
+        cases = {
+            "https://github.com/example/awesome-list": (f"Awesome Jev {badge}", "Awesome Jev"),
+            "https://github.com/example/truncated": (f"APA Awesome Jev {badge} [![Curated](https://img.shields.io/x.svg)](https://who", "APA Awesome Jev"),
+            "https://github.com/example/watersheep": ("![](assets/logo.svg) WaterSheep", "WaterSheep"),
+            "https://github.com/example/logo-only": ("![Example, a long logo description](assets/wordmark.svg)", "example/logo-only"),
+            "https://github.com/example/foreman": ('<img src="https://example.org/icon.png" alt="" width="32"> Foreman', "Foreman"),
+            "https://github.com/example/taste-lint": ("[Taste Lint](https://example.org/taste-lint)", "Taste Lint"),
+            "https://github.com/example/gorilla": ("Gorilla: Connected APIs [[Project Website](https://example.org/)]", "Gorilla: Connected APIs"),
+            "https://github.com/example/lanebreak": ("LaneBreak\\n\\nSupport ticket routing.\\n\\n```bash\\nnpm i\\n```\\n", "LaneBreak"),
+            "https://arxiv.org/abs/1701.06538": ("[1701.06538] Outrageously Large Neural Networks", "Outrageously Large Neural Networks"),
+            "https://aclanthology.org/2025.naacl-long.174": ("When2Call: When (not) to Call Tools - ACL Anthology", "When2Call: When (not) to Call Tools"),
+            "https://zenodo.org/records/7299879": ("BPoMP: Benchmark of Poetical Minimal Pairs | Zenodo", "BPoMP: Benchmark of Poetical Minimal Pairs"),
+            "https://dev.to/example/decider": ("decider: typed decisions - DEV Community Navigation menu Search Search Close", "decider: typed decisions"),
+            "https://huggingface.co/datasets/example/reviews": ("Dataset Card for Dataset Name", "example/reviews"),
+            # Angle brackets that are not HTML belong to the paper title.
+            "https://arxiv.org/abs/1906.00274": ('[1906.00274] "President Vows to Cut <Taxes> Hair"', '"President Vows to Cut <Taxes> Hair"'),
+            "https://example.org/entropy": ("Entropy After </Think> for early exiting", "Entropy After </Think> for early exiting"),
+        }
+        payload = build_fixture([(url, raw) for url, (raw, _) in cases.items()])
+        titles = {row["url"]: row["title"] for row in payload["sources"]}
+        self.assertEqual(titles, {url: expected for url, (_, expected) in cases.items()})
+        self.assertEqual(payload["counts"]["unique_records"], len(cases))
+
 
 class SourceIndexCheckTests(unittest.TestCase):
     """--check must cover every generated file, including the README badge."""

@@ -17,6 +17,25 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKED = {"content_screened", "editorial_reviewed", "abstract_checked"}
+# Only real HTML elements: paper titles such as "Entropy After </Think>" or
+# "Cut <Taxes> Hair" contain angle brackets that are part of the title.
+HTML_TAG = re.compile(r"</?(?:a|b|br|center|div|em|h[1-6]|i|img|p|picture|source|span|strong|sub|sup)\b[^>]*>", re.I)
+SITE_SUFFIX = re.compile(r"\s+[-|]\s+(?:ACL Anthology|Zenodo|DEV Community\b.*)$")
+
+
+def clean_title(title: str) -> str:
+    """Plain display text for an extracted heading; the ledger keeps the raw value."""
+    title = re.split(r"\\n|\n", title, maxsplit=1)[0]
+    title = re.sub(r"\[!\[[^\]]*\]\([^)]*\)\]\([^)]*\)", " ", title)  # linked badges
+    # Ledger titles are capped at 200 characters, which can cut a badge short.
+    title = re.sub(r"\[!\[.*$", " ", title)
+    title = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", title)  # images
+    title = re.sub(r"!\[.*$", " ", title)
+    title = re.sub(r"\[\[[^\]]*\]\([^)]*\)\]", " ", title)  # "[[Project Website](...)]"
+    title = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", title)  # unwrap links
+    title = HTML_TAG.sub(" ", title)
+    title = re.sub(r"^\s*\[\d{4}\.\d{4,5}(?:v\d+)?\]\s*", "", title)  # arXiv page prefix
+    return SITE_SUFFIX.sub("", re.sub(r"\s+", " ", title).strip())
 
 
 def canonical(url: str) -> str:
@@ -101,8 +120,8 @@ def build() -> dict:
         display, curation = policy.apply(row)
         level = row.get("verification_level", "metadata_only")
         content_hash = row.get("content_sha256", row.get("abstract_sha256", ""))
-        title = display.get("title", url)
-        if re.match(r"^(?:pip install|git clone|1\.\s*encoder|\{|Start the server)", title, re.I) or re.sub(r"[^a-z]", "", title.casefold()) in {"citation", "acknowledgments", "acknowledgements", "license", "usage", "installation", "readme", "introduction", "modelcard", "datasetcard", "datasplits", "quickstart", "macmlx"}:
+        title = clean_title(display.get("title", url))
+        if not title or re.match(r"^(?:pip install|git clone|1\.\s*encoder|\{|Start the server)", title, re.I) or re.sub(r"[^a-z]", "", title.casefold()) in {"citation", "acknowledgments", "acknowledgements", "license", "usage", "installation", "readme", "introduction", "modelcard", "datasetcard", "datasetcardfordatasetname", "datasplits", "quickstart", "macmlx"}:
             title = urlsplit(url).path.strip("/").removeprefix("datasets/").removeprefix("spaces/") or urlsplit(url).netloc
         title_key = re.sub(r"\W+", "", title.casefold())
         is_paper = display.get("relation") == "background" or "arxiv.org/abs/" in url
