@@ -655,6 +655,7 @@ class Scan:
         request_seed = {k: v for k, v in seed.items() if k != "fetch_url"}
         request_seed["url"] = target
         row, children = ecosystem.audit(request_seed)
+        ecosystem.classify_relation(row)
         row["url"] = key
         if key not in self.pinned_sources:
             return [row], children

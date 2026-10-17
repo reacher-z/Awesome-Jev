@@ -445,6 +445,50 @@ def index_documents(revision=REVISION):
     }
 
 
+class OneHopRelationTests(unittest.TestCase):
+    """A scan-added dependency that discusses Jev or TypeSafe AI is 'direct', as in a full collection."""
+    GENERIC = ("Direct scholarly, training-data, or implementation dependency linked by an index-listed artifact; "
+               "not a claim about TypeSafe internals.")
+
+    def seed(self, repository, depth=1):
+        return {"url": "https://github.com/" + repository, "title": repository.split("/")[1], "topic": "implementation-repository",
+                "relation": "adjacent", "relevance": self.GENERIC, "discovered_from": ["https://github.com/fixture/list"],
+                "discovery_depth": depth}
+
+    def scan_row(self, repository, sentence, depth=1):
+        readme = "https://raw.githubusercontent.com/" + repository + "/main/README.md"
+        fetcher = FakeFetcher({readme: (FILLER + " " + sentence).encode()})
+        # The scan routes the collector's fetches through its own fetcher, as scan_ecosystem() does.
+        with patch.object(ecosystem, "fetch", fetcher.fetch):
+            rows, _ = refresh.Scan(fetcher).audit_source(self.seed(repository, depth))
+        self.assertEqual(len(rows), 1)
+        return rows[0]
+
+    def test_scan_promotes_one_hop_rows_that_discuss_jev_or_typesafe(self):
+        for repository, sentence, topic in (
+                ("fixture/typesafe-client", "This client wraps the TypeSafe AI decision API for Go programs.", "TypeSafe AI"),
+                ("fixture/jev-harness", "This harness evaluates Jev checkpoints on routing questions.", "Jev")):
+            with self.subTest(repository=repository):
+                row = self.scan_row(repository, sentence)
+                self.assertEqual(row["verification_level"], "content_screened")
+                self.assertIn(topic, row["matched_topics"])
+                self.assertEqual(row["relation"], "direct")
+                self.assertEqual(row["relevance"], ecosystem.DIRECT_ONE_HOP_RELEVANCE)
+
+    def test_scan_keeps_other_rows_adjacent(self):
+        cases = (("fixture/decision-engine", "This library implements a typed decision engine for planners.", 1),
+                 ("fixture/jev-root", "This harness evaluates Jev checkpoints on routing questions.", 0))
+        for repository, sentence, depth in cases:
+            with self.subTest(repository=repository):
+                row = self.scan_row(repository, sentence, depth)
+                self.assertEqual((row["relation"], row["relevance"]), ("adjacent", self.GENERIC))
+
+    def test_collector_and_scan_share_one_rule(self):
+        row = self.scan_row("fixture/typesafe-client", "This client wraps the TypeSafe AI decision API for Go programs.")
+        collected = ecosystem.classify_relation(dict(row, relation="adjacent", relevance=self.GENERIC))
+        self.assertEqual((collected["relation"], collected["relevance"]), (row["relation"], row["relevance"]))
+
+
 class DiscoverIndexTests(unittest.TestCase):
     def test_index_files_seed_canonical_sources_with_first_origin_kept(self):
         scan = refresh.Scan(FakeFetcher(index_documents()))

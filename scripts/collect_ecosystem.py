@@ -175,6 +175,19 @@ def eligible(record: dict):
     return bool(set(record.get("matched_topics", [])) & {"Jev", "TypeSafe AI", "typed decisions"})
 
 
+DIRECT_ONE_HOP_RELEVANCE = ("An index-linked community resource whose retrieved content explicitly discusses Jev or TypeSafe AI; "
+                            "independent ecosystem evidence, not a vendor endorsement.")
+
+
+def classify_relation(record: dict):
+    """One rule for full collections and scans: a one-hop record whose retrieved
+    content names Jev or TypeSafe AI is a direct ecosystem resource."""
+    if record.get("discovery_depth", 0) > 0 and set(record.get("matched_topics", [])) & {"Jev", "TypeSafe AI"}:
+        record["relation"] = "direct"
+        record["relevance"] = DIRECT_ONE_HOP_RELEVANCE
+    return record
+
+
 def repo_target(url: str):
     p = urllib.parse.urlsplit(url)
     seg = p.path.strip("/").split("/")
@@ -345,10 +358,7 @@ def main():
                     record.update(seed)
                     record["title"] = cache[seed["url"]]["title"]
                     record["relevance_rescreened_at"] = NOW()
-                    if "Jev" in record.get("matched_topics", []) or "TypeSafe AI" in record.get("matched_topics", []):
-                        record["relation"] = "direct"
-                        record["relevance"] = "An index-linked community resource whose retrieved content explicitly discusses Jev or TypeSafe AI; independent ecosystem evidence, not a vendor endorsement."
-                    results[record["url"]] = record
+                    results[record["url"]] = classify_relation(record)
                 else:
                     remaining.append(seed)
             batch = remaining
@@ -363,10 +373,7 @@ def main():
                 except Exception as e:
                     record = dict(seed, retrieved_at=NOW(), verification_level="metadata_only", status="audit_error", evidence=str(e)[:200])
                     children = []
-                results[record["url"]] = record
-                if record.get("discovery_depth", 0) > 0 and set(record.get("matched_topics", [])) & {"Jev", "TypeSafe AI"}:
-                    record["relation"] = "direct"
-                    record["relevance"] = "An index-linked community resource whose retrieved content explicitly discusses Jev or TypeSafe AI; independent ecosystem evidence, not a vendor endorsement."
+                results[record["url"]] = classify_relation(record)
                 candidates.extend(children)
                 if i % 30 == 0:
                     save()
