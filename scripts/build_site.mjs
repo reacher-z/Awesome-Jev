@@ -141,6 +141,7 @@ function home(language) {
   html=localizeHTML(html,language)
     .replace(/(<meta\s+(?:name="description"|property="og:description"|name="twitter:description")\s+content=")[^"]*("\s*\/>)/g,(_,start,end)=>start+esc(description)+end)
     .replace(/(<meta\s+(?:property="og:title"|name="twitter:title")\s+content=")[^"]*("\s*\/>)/g,(_,start,end)=>start+esc(title)+end)
+    .replace(/(<meta\s+(?:property="og:image:alt"|name="twitter:image:alt")\s+content=")[^"]*("\s*\/>)/g,(_,start,end)=>start+esc(t(language,'socialImageAlt'))+end)
     .replace(/(<meta property="og:url" content=")[^"]+/,(_,start)=>start+origin+route(language))
     .replace(/(<meta property="og:locale" content=")[^"]+/,(_,start)=>start+(language==='zh'?'zh_CN':'en_US'))
     .replace(/(<meta property="og:locale:alternate" content=")[^"]+/,(_,start)=>start+(language==='zh'?'en_US':'zh_CN'))

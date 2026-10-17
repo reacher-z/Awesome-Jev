@@ -2,10 +2,13 @@ const translations = {
   en: {
     skip: "Skip to the collection",
     navLabel: "Main navigation",
+    homeLabel: "AwesomeJev home",
     navIndex: "Resources",
     navStart: "Get started",
     metaDescription:
       "Explore Jev and System One decision models through research papers, benchmarks, models and tools, with primary sources and English–Chinese guides.",
+    socialImageAlt:
+      "AwesomeJev — an independent field guide to typed decision models. Research, models, tools, and evidence.",
     heroEyebrow: "AN INDEPENDENT FIELD GUIDE",
     heroLine1: "Awesome Jev",
     heroLine2: "by design.",
@@ -137,10 +140,13 @@ const translations = {
   zh: {
     skip: "跳转至资源索引",
     navLabel: "主导航",
+    homeLabel: "AwesomeJev 首页",
     navIndex: "资源索引",
     navStart: "开始使用",
     metaDescription:
       "探索 Jev 与 System One 决策模型的论文、基准、模型和工具，提供原始来源、中英文研究指南与证据局限。",
+    socialImageAlt:
+      "AwesomeJev：类型化决策模型的独立研究指南，汇集研究、模型、工具与证据。",
     heroEyebrow: "一份独立的研究与实践指南",
     heroLine1: "Awesome Jev",
     heroLine2: "始于设计。",
