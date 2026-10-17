@@ -258,7 +258,7 @@ Primary source: https://arxiv.org/abs/2610.18497v1
 
 ## Same Attack, Different Judge: A First Controlled Adversarial Comparison of Jev, LLM Judges, and Purpose-Built Safety Classifiers
 
-Papers · Li et al. · 2026-10-13 · v1
+Papers · Li, Huang, Zhang & Liu · 2026-10-13 · v1
 
 A controlled adversarial comparison of Jev, LLM judges, and purpose-built safety classifiers.
 
@@ -354,7 +354,7 @@ Primary source: https://arxiv.org/abs/2609.27678v2
 
 ## Does System One Transfer? Calibrated Typed-Decision Models, Label Budgets, and Translation for Indonesian Regional Languages
 
-Papers · Fadli et al. · 2026-10-09 · v1
+Papers · Fadli, Rusdah, Utami & Amana · 2026-10-09 · v1
 
 Tests Jev and multilingual Laya on Indonesian regional-language tasks; stable expected calibration error can coexist with worse error ranking, while human translation, label budgets and cascade choices change comparisons.
 
@@ -378,7 +378,7 @@ Primary source: https://arxiv.org/abs/2610.11392v2
 
 ## JEV-as-a-Judge: Accept When Confident, Escalate When Unsure
 
-Papers · Li et al. · 2026-10-09 · v5
+Papers · Li, Miao, Krishnan & Padman · 2026-10-09 · v5
 
 Studies confidence-based escalation from Jev to a reasoning judge, including limits under distribution shift.
 
@@ -570,7 +570,7 @@ Primary source: https://arxiv.org/abs/2609.39111v1
 
 ## Evaluating and Benchmarking the System One Model Jev
 
-Papers · Deußer et al. · 2026-09-29 · v1
+Papers · Deußer, Sparrenberg & Sifa · 2026-09-29 · v1
 
 An early benchmark study of Jev. Read the task selection and evaluation setup alongside its reported results.
 
@@ -610,7 +610,7 @@ Primary source: https://arxiv.org/abs/2609.34862v1
 
 ## Beyond Calibration: Do a Typed-Decision Model's Probabilities Obey the Probability Axioms?
 
-Papers · Li et al. · 2026-09-27 · v1
+Papers · Li, He & Li · 2026-09-27 · v1
 
 Tests coherence between logically related probabilities, separately from accuracy and calibration.
 
@@ -658,7 +658,7 @@ Primary source: https://arxiv.org/abs/2609.29429v1
 
 ## From Text Decisions to Pixels: An Study of Jev-Style Visual Choice Model
 
-Papers · Zhou et al. · 2026-09-24 · v1
+Papers · Zhou, Yang & Zhao · 2026-09-24 · v1
 
 A Jev-style visual-choice study separating adaptation gains, candidate-readout validity, and calibration limits.
 
@@ -722,7 +722,7 @@ Primary source: https://arxiv.org/abs/2609.25845v1
 
 ## Jev-Mem: System-One-Controlled Agentic Memory for Efficient AI Agents
 
-Papers · Jiang et al. · 2026-09-21 · v1
+Papers · Jiang, Li & Li · 2026-09-21 · v1
 
 Studies Jev as a controller for agent memory. Reported outcomes concern the complete memory workflow.
 
@@ -730,7 +730,7 @@ Primary source: https://arxiv.org/abs/2609.23986v1
 
 ## this-that-model-1.0: A typed decision model that decides in 30 ms, for a millionth of a cent
 
-Papers · Cheng et al. · 2026-09-20 · v1
+Papers · Cheng, Dai & Sun · 2026-09-20 · v1
 
 An open typed-decision model using hidden-state readout. The abstract reports a small external comparison.
 

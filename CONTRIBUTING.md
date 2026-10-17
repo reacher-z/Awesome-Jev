@@ -32,6 +32,8 @@ A pull request that adds or edits a curated entry updates every place it appears
 
 Then run `node scripts/build_site.mjs` and commit the regenerated files under `site/`. English and Chinese text change together: every entry has both descriptions, and a pull request that edits one language updates the other. The larger searchable source corpus comes from the scheduled scan's ledgers in `data/`; see [Source ledgers](data/README.md).
 
+Credit a paper's authors the same way in both README paper tables and its catalog `by` field: name every author by surname when there are up to four (`Rao & Callison-Burch`, `Deng, Fan, Zhang & Xie`), and write the first author's surname followed by `et al.` when there are five or more.
+
 ## Evidence quality
 
 Keep schema validity, task quality, calibration, and system efficiency separate. Numerical comparisons need a workload, denominator, baseline configuration, and date. A leaderboard using private tests is not fully reproducible merely because its results are public.
@@ -100,6 +102,8 @@ Submit only public source material and original summaries. Keep API keys, `.env`
 - `references.bib`：论文的文献元数据。
 
 随后运行 `node scripts/build_site.mjs`，并提交 `site/` 下重新生成的文件。中英文同步修改：每个条目都有两种语言的描述，修改其中一种语言的 PR 须同时更新另一种。规模更大的可检索来源语料来自定时扫描的 `data/` 台账，见[来源台账](data/README.md)。
+
+论文作者在两份 README 的论文表格与 catalog 的 `by` 字段中以同一方式署名：作者不超过四人时列出全部作者的姓（如 `Rao & Callison-Burch`、`Deng, Fan, Zhang & Xie`），五人及以上时写第一作者的姓加 `et al.`。
 
 ### 证据质量
 

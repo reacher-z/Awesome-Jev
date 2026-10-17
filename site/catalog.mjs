@@ -496,7 +496,7 @@ const resources = [
   {
     "category": "Papers",
     "title": "Does System One Transfer? Calibrated Typed-Decision Models, Label Budgets, and Translation for Indonesian Regional Languages",
-    "by": "Fadli et al. · 2026-10-09 · v1",
+    "by": "Fadli, Rusdah, Utami & Amana · 2026-10-09 · v1",
     "date": "2026-10-09",
     "first_submitted": "2026-10-09",
     "url": "https://arxiv.org/abs/2610.14112v1",
@@ -1174,7 +1174,7 @@ const resources = [
     category: "Papers",
     title:
       "this-that-model-1.0: A typed decision model that decides in 30 ms, for a millionth of a cent",
-    by: "Cheng et al. · 2026-09-20 · v1",
+    by: "Cheng, Dai & Sun · 2026-09-20 · v1",
     date: "2026-09-20",
     first_submitted: "2026-09-20",
     url: "https://arxiv.org/abs/2609.23886v1",
@@ -1184,7 +1184,7 @@ const resources = [
   {
     category: "Papers",
     title: "Jev-Mem: System-One-Controlled Agentic Memory for Efficient AI Agents",
-    by: "Jiang et al. · 2026-09-21 · v1",
+    by: "Jiang, Li & Li · 2026-09-21 · v1",
     date: "2026-09-21",
     first_submitted: "2026-09-21",
     url: "https://arxiv.org/abs/2609.23986v1",
@@ -1195,7 +1195,7 @@ const resources = [
     category: "Papers",
     title:
       "From Text Decisions to Pixels: An Study of Jev-Style Visual Choice Model",
-    by: "Zhou et al. · 2026-09-24 · v1",
+    by: "Zhou, Yang & Zhao · 2026-09-24 · v1",
     date: "2026-09-24",
     first_submitted: "2026-09-24",
     url: "https://arxiv.org/abs/2609.29283v1",
@@ -1217,7 +1217,7 @@ const resources = [
     category: "Papers",
     title:
       "Beyond Calibration: Do a Typed-Decision Model's Probabilities Obey the Probability Axioms?",
-    by: "Li et al. · 2026-09-27 · v1",
+    by: "Li, He & Li · 2026-09-27 · v1",
     date: "2026-09-27",
     first_submitted: "2026-09-27",
     url: "https://arxiv.org/abs/2609.33209v1",
@@ -1367,7 +1367,7 @@ const resources = [
   {
     category: "Papers",
     title: "Evaluating and Benchmarking the System One Model Jev",
-    by: "Deußer et al. · 2026-09-29 · v1",
+    by: "Deußer, Sparrenberg & Sifa · 2026-09-29 · v1",
     date: "2026-09-29",
     first_submitted: "2026-09-29",
     url: "https://arxiv.org/abs/2609.37647v1",
@@ -1389,7 +1389,7 @@ const resources = [
     category: "Papers",
     title:
       "Same Attack, Different Judge: A First Controlled Adversarial Comparison of Jev, LLM Judges, and Purpose-Built Safety Classifiers",
-    by: "Li et al. · 2026-10-13 · v1",
+    by: "Li, Huang, Zhang & Liu · 2026-10-13 · v1",
     date: "2026-10-13",
     first_submitted: "2026-10-13",
     url: "https://arxiv.org/abs/2610.17820v1",
@@ -1410,7 +1410,7 @@ const resources = [
   {
     category: "Papers",
     title: "JEV-as-a-Judge: Accept When Confident, Escalate When Unsure",
-    by: "Li et al. · 2026-10-09 · v5",
+    by: "Li, Miao, Krishnan & Padman · 2026-10-09 · v5",
     date: "2026-10-09",
     first_submitted: "2026-09-22",
     url: "https://arxiv.org/abs/2609.26550v5",
