@@ -92,6 +92,9 @@ class Markup(HTMLParser):
 
 def anchors(path: Path) -> set[str]:
     text = path.read_text(encoding="utf-8")
+    if path.suffix == ".md":
+        # Fenced examples are not rendered, so their comments and tags define no anchors.
+        text = re.sub(r"```.*?```|~~~.*?~~~", "", text, flags=re.S)
     parser = Markup()
     parser.feed(text)
     result = parser.ids
