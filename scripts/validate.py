@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import ast
 import collections
+from datetime import datetime
 import html
 from html.parser import HTMLParser
 import ipaddress
@@ -34,6 +35,29 @@ SKIP = {".git", "node_modules", ".venv", "__pycache__", ".cache", "tmp", "artifa
 TEXT_SUFFIXES = {".md", ".py", ".js", ".mjs", ".json", ".jsonl", ".yml", ".yaml", ".html", ".css", ".svg", ".xml", ".bib", ".txt"}
 LEVELS = {"metadata_only", "abstract_checked", "content_screened", "editorial_reviewed"}
 CHECKED = LEVELS - {"metadata_only"}
+# Controlled ledger vocabularies, one spelling per concept. Extend them deliberately
+# when a reviewed source needs a new value; a typo would otherwise change a record's
+# website category or appear raw as a search tag.
+RELATIONS = {"direct", "adjacent", "background"}
+TOPICS = {
+    # Assigned by the scanners and collectors.
+    "benchmark-source", "community-evaluation-index", "decision-model-card", "direct-decision-research",
+    "ecosystem-news-artifact", "evaluation-harness", "implementation-repository", "research-paper",
+    "training-dataset", "vision-decision-artifact",
+    # Research background topics (scripts/collect_research.py).
+    "efficient_routing_cascades", "judge_reliability", "language_model_programming", "probability_calibration",
+    "proper_scoring_rules", "selective_prediction", "structured_constrained_decoding",
+    "uncertainty_distribution_shift",
+    # Reviewed manual additions.
+    "decision-evaluation-tool", "decision-model-evaluation", "decision-robustness-benchmark", "evaluation-interface",
+    "multilingual-evaluation-results", "multilingual-robustness-evaluation", "multimodal-robustness-benchmark",
+    "official-decision-guide", "option-order-evaluation", "paper-evaluation-dashboard", "paper-reproducibility-code",
+    "robustness-policy-harness", "survey-repository", "tool-argument-evaluation-data",
+}
+SOURCE_TYPES = {"anonymous_repository", "archive_landing_page", "github_repository", "hf_dataset", "hf_model",
+                "hf_repository", "hf_space", "research_project_page", "scholarly_work"}
+# audit_error is written by scripts/collect_ecosystem.py when a source audit raises.
+STATUSES = {"screened", "insufficient_content", "unavailable", "audit_error"}
 HASH = re.compile(r"^[0-9a-f]{64}$")
 HTML_ENTITY = re.compile(r"&(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-f]+);", re.I)
 LEAK_PATTERNS = {
@@ -284,6 +308,33 @@ def check_ledger_overlap(accepted: dict[Path, list[dict]], excluded: dict[Path, 
                 fail(str(path.relative_to(ROOT)), f"excluded record is also in an accepted ledger: {key}")
 
 
+def timestamp(value: str) -> bool:
+    try:
+        datetime.fromisoformat(value[:-1] + "+00:00" if value.endswith("Z") else value)
+        return True
+    except ValueError:
+        return False
+
+
+def check_vocabulary(path: Path) -> None:
+    for number, line in enumerate(path.read_text(encoding="utf-8").split("\n"), 1):
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError:
+            continue  # Blank, or reported by check_ledger().
+        if not isinstance(row, dict):
+            continue
+        location = f"{path.relative_to(ROOT)}:{number}"
+        for key, allowed in (("relation", RELATIONS), ("topic", TOPICS), ("source_type", SOURCE_TYPES), ("status", STATUSES)):
+            if key in row and (not isinstance(row[key], str) or row[key] not in allowed):
+                fail(location, f"unknown {key}")
+        if isinstance(row.get("retrieved_at"), str) and not timestamp(row["retrieved_at"]):
+            fail(location, "retrieved_at must be an ISO 8601 timestamp")
+        published = row.get("published_at")
+        if published is not None and not (isinstance(published, str) and (re.fullmatch(r"\d{4}", published) or timestamp(published))):
+            fail(location, "published_at must be a year or an ISO 8601 date or timestamp")
+
+
 def check_index(expected_raw_records: int) -> None:
     index_path = ROOT / "site/data/source-index.json"
     count_path = ROOT / "data/source-counts.json"
@@ -422,6 +473,7 @@ def main() -> int:
                 check_json(path, text)
         if path.suffix == ".jsonl" and path.parent == ROOT / "data":
             rows = check_ledger(path, policy)
+            check_vocabulary(path)
             if ".excluded." not in path.name:
                 ledgers.extend(rows)
                 accepted[path] = rows

@@ -1767,7 +1767,7 @@
       "title": "AudioJev checkpoint",
       "url": "https://huggingface.co/shlv/AudioJev",
       "category": "Models",
-      "topic": "model-card",
+      "topic": "decision-model-card",
       "description": "One released AudioJev training seed with a Qwen Research license; original-order scores disclose audio-source overlap and are distinct from the paper’s three-seed averages.",
       "relation": "direct",
       "verification_level": "content_screened",
