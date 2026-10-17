@@ -164,6 +164,16 @@ def build() -> dict:
         if is_paper:
             titles.add(title_key)
         date = display.get("first_submitted") or row.get("published_at", "")
+        year = str(date)[:4] if date else ""
+        arxiv = re.fullmatch(r"https://arxiv\.org/abs/(\d{2})\d{2}\.\d{4,5}", url)
+        if arxiv and not display.get("first_submitted"):
+            # arXiv assigns identifiers at announcement, so first submission can
+            # precede the identifier's year but never follow it. HF Papers dates
+            # can be later listings and year-only OpenAlex values venue years, so
+            # only a full provider date may move the year earlier.
+            year = "20" + arxiv[1]
+            if re.match(r"\d{4}-\d{2}-\d{2}", str(date)):
+                year = min(year, str(date)[:4])
         labels = {"editorial_reviewed": "Editorially reviewed", "content_screened": "Content screened", "abstract_checked": "Abstract screened", "metadata_only": "Metadata only"}
         entry = {
             "id": hashlib.sha256(url.encode()).hexdigest()[:12],
@@ -172,7 +182,7 @@ def build() -> dict:
             "category": category(display),
             "topic": display.get("topic", ""),
             "description": display.get("relevance", row.get("evidence", "")),
-            "year": str(date)[:4] if date else "",
+            "year": year,
             "status": labels.get(level, level),
             "relation": display.get("relation", "adjacent"),
             "verification_level": level,

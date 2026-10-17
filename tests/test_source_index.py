@@ -182,6 +182,41 @@ class SourceIdentityTests(unittest.TestCase):
         self.assertEqual(payload["counts"]["duplicate_records"], 3)
         self.assertEqual(payload["sources"][0]["url"], "https://arxiv.org/abs/1706.04599")
 
+    def test_arxiv_year_is_first_submission_not_provider_listing_date(self):
+        # arXiv assigns identifiers at announcement, so a submission can precede
+        # its identifier's year (2501.00274: submitted 2024-12-31) but never
+        # follow it. HF Papers listing dates and year-only venue years can.
+        rows = [
+            {"url": "https://arxiv.org/abs/2403.07965", "published_at": "2025-01-08T00:00:00.000Z"},
+            {"url": "https://arxiv.org/abs/2501.00274", "published_at": "2024-12-31T00:00:00.000Z"},
+            {"url": "https://arxiv.org/abs/2501.02508", "published_at": "2022"},
+            {"url": "https://arxiv.org/abs/1303.4160", "published_at": "2012"},
+            {"url": "https://arxiv.org/abs/2609.12345"},
+            {"url": "https://arxiv.org/abs/2601.54321", "published_at": "2026-03-02", "first_submitted": "2025-12-30"},
+            {"url": "https://example.org/report", "published_at": "2019-05-01"},
+        ]
+        with tempfile.TemporaryDirectory(prefix="awesome-jev-test-") as directory:
+            root = Path(directory)
+            (root / "data").mkdir()
+            (root / "data/ecosystem-sources.jsonl").write_text(
+                "".join(json.dumps({**row, "title": "Synthetic paper " + row["url"][-5:],
+                                    "relation": "background", "verification_level": "metadata_only",
+                                    "retrieved_at": "2026-10-17T00:00:00+00:00",
+                                    "relevance": "Synthetic year regression."}) + "\n"
+                        for row in rows), encoding="utf-8")
+            with patch.object(index, "ROOT", root):
+                payload = index.build()
+        years = {row["url"]: row["year"] for row in payload["sources"]}
+        self.assertEqual(years, {
+            "https://arxiv.org/abs/2403.07965": "2024",
+            "https://arxiv.org/abs/2501.00274": "2024",
+            "https://arxiv.org/abs/2501.02508": "2025",
+            "https://arxiv.org/abs/1303.4160": "2013",
+            "https://arxiv.org/abs/2609.12345": "2026",
+            "https://arxiv.org/abs/2601.54321": "2025",
+            "https://example.org/report": "2019",
+        })
+
     def test_generic_scraped_headings_have_distinguishable_titles(self):
         payload = build_fixture([
             ("https://huggingface.co/example/model-alpha", "License"),
