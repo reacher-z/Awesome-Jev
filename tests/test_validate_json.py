@@ -28,6 +28,14 @@ class JsonFileTests(unittest.TestCase):
     def test_valid_json_passes(self):
         self.assertEqual(self.check('{"counts": [1, 2], "note": "\\u4e2d"}\n'), [])
 
+    def test_nonstandard_constants_are_rejected(self):
+        for constant in ("NaN", "Infinity", "-Infinity"):
+            with self.subTest(constant=constant):
+                self.assertEqual(
+                    self.check(f'{{"value": {constant}}}'),
+                    [f"data/editorial-audit.json: invalid JSON constant {constant}"],
+                )
+
     def test_every_tracked_json_file_parses(self):
         with patch.object(validate, "errors", []):
             for path in validate.files():

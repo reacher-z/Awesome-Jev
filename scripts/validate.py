@@ -187,10 +187,17 @@ def check_text(path: Path, text: str) -> None:
 
 def check_json(path: Path, text: str) -> None:
     # Published data files must parse even when no script reads them.
+    relative = path.relative_to(ROOT).as_posix()
+
+    def reject_constant(value: str) -> None:
+        raise ValueError(value)
+
     try:
-        json.loads(text)
+        json.loads(text, parse_constant=reject_constant)
     except json.JSONDecodeError as exc:
-        fail(str(path.relative_to(ROOT)), f"invalid JSON at line {exc.lineno}, column {exc.colno}")
+        fail(relative, f"invalid JSON at line {exc.lineno}, column {exc.colno}")
+    except ValueError as exc:
+        fail(relative, f"invalid JSON constant {exc}")
 
 
 def check_ledger(path: Path, policy=None) -> list[dict]:
