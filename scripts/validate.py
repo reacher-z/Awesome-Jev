@@ -60,6 +60,7 @@ SOURCE_TYPES = {"anonymous_repository", "archive_landing_page", "github_reposito
 STATUSES = {"screened", "insufficient_content", "unavailable", "audit_error"}
 HASH = re.compile(r"^[0-9a-f]{64}$")
 HTML_ENTITY = re.compile(r"&(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-f]+);", re.I)
+RECORD_ID = re.compile(r"(?:arxiv|doi|openalex):\S+")
 LEAK_PATTERNS = {
     "personal filesystem path": re.compile(r"(?:/Users/[A-Za-z0-9_.-]+/|/home/[A-Za-z0-9_.-]+/|[A-Z]:\\Users\\[^\\\s]+\\)"),
     "GitHub credential": re.compile(r"(?:gh[pousr]_[A-Za-z0-9]{30,255}|github_pat_[A-Za-z0-9_]{40,255})"),
@@ -335,6 +336,39 @@ def check_vocabulary(path: Path) -> None:
             fail(location, "published_at must be a year or an ISO 8601 date or timestamp")
 
 
+def check_record_ids_and_authors(path: Path) -> None:
+    """Research records carry a unique id; primary arXiv imports list authors as "Given Surname"."""
+    require_id = path.name == "research-sources.jsonl"
+    seen: set[str] = set()
+    for number, line in enumerate(path.read_text(encoding="utf-8").split("\n"), 1):
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError:
+            continue  # Blank, or reported by check_ledger().
+        if not isinstance(row, dict):
+            continue
+        location = f"{path.relative_to(ROOT)}:{number}"
+        record_id = row.get("id")
+        if require_id:
+            if not isinstance(record_id, str) or not RECORD_ID.fullmatch(record_id):
+                fail(location, "research record requires an id such as arxiv:<id>, doi:<doi> or openalex:<id>")
+            elif record_id in seen:
+                fail(location, "duplicate research record id")
+            else:
+                seen.add(record_id)
+        if row.get("abstract_provider") != "arxiv_primary_abstract_page":
+            continue
+        url = row.get("canonical_url")
+        paper = re.fullmatch(r"https://arxiv\.org/abs/(\d{4}\.\d{4,5})", url) if isinstance(url, str) else None
+        if "id" in row and (not paper or record_id != "arxiv:" + paper[1]):
+            fail(location, "primary arXiv record id must be arxiv:<canonical arXiv id>")
+        authors = row.get("authors")
+        if not isinstance(authors, list) or not authors or not all(isinstance(name, str) and name.strip() for name in authors):
+            fail(location, "primary arXiv record requires a nonempty author list")
+        elif any("," in name for name in authors):
+            fail(location, 'primary arXiv authors must be "Given Surname", not "Surname, Given"')
+
+
 def check_index(expected_raw_records: int) -> None:
     index_path = ROOT / "site/data/source-index.json"
     count_path = ROOT / "data/source-counts.json"
@@ -474,6 +508,7 @@ def main() -> int:
         if path.suffix == ".jsonl" and path.parent == ROOT / "data":
             rows = check_ledger(path, policy)
             check_vocabulary(path)
+            check_record_ids_and_authors(path)
             if ".excluded." not in path.name:
                 ledgers.extend(rows)
                 accepted[path] = rows
