@@ -116,7 +116,7 @@ TypeSafe 的 Jev 接收状态与类型化问题，为应用代码返回决策和
 | 2026-10-10<br>v2 | [JevCascade: Readout Stability and Inference-Time Compute Allocation for Prefill-Only Decision Models](https://arxiv.org/abs/2610.07716v2)<br>Li & Chen | 研究候选集合干预与置信度级联；排序稳定性并不等同概率校准。 | [代码与数据](https://github.com/rlisml/jev-cascade) |
 | 2026-10-09<br>v5 | [JEV-as-a-Judge: Accept When Confident, Escalate When Unsure](https://arxiv.org/abs/2609.26550v5)<br>Li, Miao, Krishnan & Padman | 基于置信度从 Jev 升级到推理评判模型。 | [项目页](https://yubol-bobo.github.io/jev-as-a-judge/) |
 | 2026-09-28<br>v1 | [JEV as a Judge for Agent Trace Security: An Empirical Comparison with Generative LLM Judges](https://arxiv.org/abs/2609.34862v1)<br>Wang & Gao | 比较 Jev 与生成式评判模型对历史 agent 轨迹的风险分类；排名因数据集而异，成功调用耗时和有效判断成本需结合覆盖率解读。 | — |
-| 2026-09-25<br>v1 | [LAVOIR: Teaching a Single-Pass Decision Encoder When and What to Ask with Amortized Value of Information](https://arxiv.org/abs/2609.30706v1)<br>Yilmaz, Tasdemir & Gozay | 在给出决策概率的同时估计追问缺失信息的价值。 | [代码](https://github.com/moganai/lavoir) |
+| 2026-09-25<br>v1 | [LAVOIR: Teaching a Single-Pass Decision Encoder When and What to Ask with Amortized Value of Information](https://arxiv.org/abs/2609.30706v1)<br>Yilmaz, Tasdemir & Gozay | 在给出决策概率的同时估计追问缺失信息的价值。 | [代码](https://github.com/moganai/lavoir) · [检查点](https://huggingface.co/moganai/lavoir) |
 | 2026-09-22<br>v1 | [REFLEX with Jev for Efficient Selective Control in LLM Agents](https://arxiv.org/abs/2609.26532v1)<br>Wu & Lim | 以置信度控制 Jev 与 LLM 回退；收益取决于候选动作与基线路由。 | — |
 
 ### 鲁棒性与安全
