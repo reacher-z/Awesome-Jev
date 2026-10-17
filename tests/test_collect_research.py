@@ -3,6 +3,7 @@
 import contextlib
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -17,6 +18,90 @@ LEDGER = '{"id": "arxiv:2609.00001", "title": "Existing accepted record"}\n'
 ABSTRACT = ("We study confidence calibration of neural classifiers and report how predicted "
             "probabilities match observed accuracy across many benchmark tasks, comparing "
             "temperature scaling with other post hoc methods under a fixed evaluation protocol.")
+
+
+@unittest.skipUnless(hasattr(os, "getuid"), "POSIX ownership and permission bits")
+class CacheTests(unittest.TestCase):
+    class Response(io.BytesIO):
+        status = 200
+
+    BODY = json.dumps([{"paper": {"id": "2609.00004v1", "title": "Confidence calibration of neural classifiers",
+                                  "summary": ABSTRACT, "authors": [{"name": "A. Author"}],
+                                  "publishedAt": "2026-09-01"}}]).encode()
+
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory(prefix="awesome-jev-test-")
+        self.addCleanup(directory.cleanup)
+        self.root = Path(directory.name)
+        self.calls = 0
+
+    def urlopen(self, request, timeout=None):
+        self.calls += 1
+        return self.Response(self.BODY)
+
+    def offline_urlopen(self, request, timeout=None):
+        raise AssertionError("an offline run must not make network requests")
+
+    def test_online_fetch_refreshes_an_existing_cached_response(self):
+        cache = self.root / "cache"
+        with patch.object(collect.urllib.request, "urlopen", self.urlopen):
+            collect.Collector(cache, 1).fetch("probability_calibration", "calibration")
+            [cached] = cache.glob("*.json")
+            cached.write_text(json.dumps({"data": [], "retrieved_at": "2020-01-01T00:00:00+00:00"}))
+            collector = collect.Collector(cache, 1)
+            _, _, wrapper = collector.fetch("probability_calibration", "calibration")
+        self.assertEqual(self.calls, 2)
+        self.assertNotEqual(wrapper["retrieved_at"], "2020-01-01T00:00:00+00:00")
+        self.assertEqual(len(wrapper["data"]), 1)
+        self.assertEqual(json.loads(cached.read_text())["retrieved_at"], wrapper["retrieved_at"])
+        self.assertEqual(collector.cached_queries, 0)
+
+    def test_offline_fetch_reads_and_counts_the_cache(self):
+        cache = self.root / "cache"
+        with patch.object(collect.urllib.request, "urlopen", self.urlopen):
+            _, _, online = collect.Collector(cache, 1).fetch("probability_calibration", "calibration")
+        with patch.object(collect.urllib.request, "urlopen", self.offline_urlopen):
+            collector = collect.Collector(cache, 1, offline=True)
+            _, _, offline = collector.fetch("probability_calibration", "calibration")
+        self.assertEqual(offline["retrieved_at"], online["retrieved_at"])
+        self.assertEqual(collector.cached_queries, 1)
+
+    def test_audit_reports_queries_answered_from_the_cache(self):
+        def audit(*argv, urlopen):
+            out = io.StringIO()
+            with patch.object(sys, "argv", ["collect_research.py", *argv]), contextlib.redirect_stdout(out), \
+                    patch.dict(collect.QUERIES, {"probability_calibration": ["calibration"]}, clear=True), \
+                    patch.object(collect.urllib.request, "urlopen", urlopen):
+                collect.main()
+            return json.loads("{" + out.getvalue().split("\n{", 1)[1])
+
+        argv = ("--cache-dir", str(self.root / "cache"), "--output", str(self.root / "research-sources.jsonl"))
+        self.assertEqual(audit(*argv, urlopen=self.urlopen)["cached_queries"], 0)
+        self.assertEqual(audit("--offline", *argv, urlopen=self.offline_urlopen)["cached_queries"], 1)
+
+    def test_default_cache_dir_is_per_user(self):
+        with patch.dict(os.environ, {"XDG_CACHE_HOME": str(self.root / "xdg")}):
+            self.assertEqual(collect.default_cache_dir(), self.root / "xdg" / "awesome-jev" / "research-api")
+        with patch.dict(os.environ, {"HOME": str(self.root / "home")}):
+            os.environ.pop("XDG_CACHE_HOME", None)
+            self.assertEqual(collect.default_cache_dir(), self.root / "home" / ".cache" / "awesome-jev" / "research-api")
+
+    def test_new_cache_dir_is_private(self):
+        cache = self.root / "parent" / "cache"
+        collect.Collector(cache, 1)
+        self.assertEqual(cache.stat().st_mode & 0o777, 0o700)
+
+    def test_shared_or_foreign_cache_dir_is_refused(self):
+        shared = self.root / "shared"
+        shared.mkdir()
+        shared.chmod(0o777)
+        with self.assertRaisesRegex(PermissionError, "writable by other users"):
+            collect.Collector(shared, 1)
+        foreign = self.root / "foreign"
+        foreign.mkdir(mode=0o700)
+        with patch.object(os, "getuid", return_value=os.getuid() + 1), \
+                self.assertRaisesRegex(PermissionError, "owned by another user"):
+            collect.Collector(foreign, 1)
 
 
 def run_main(*argv):

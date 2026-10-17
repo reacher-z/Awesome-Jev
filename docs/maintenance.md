@@ -77,13 +77,13 @@ python3 -m unittest discover -s tests -v
 
 The ecosystem collector writes `data/ecosystem-sources.jsonl`, its summary, and a separate exclusion ledger. `--resume` reuses previously retrieved dependency records and rechecks their relevance; it is not a fresh network retrieval of every dependency. Use the normal command for a new retrieval snapshot.
 
-The research collector writes `data/research-sources.jsonl`. `--target 0` keeps all qualifying distinct results rather than imposing a numerical target. `--with-openalex` supplements Hugging Face discovery with older scholarly work. Raw API responses are cached in the operating system's temporary area, outside this repository. To repeat screening against the cache from an earlier online run on the same machine:
+The research collector writes `data/research-sources.jsonl`. `--target 0` keeps all qualifying distinct results rather than imposing a numerical target. `--with-openalex` supplements Hugging Face discovery with older scholarly work. Every online run fetches fresh API responses and stores the raw responses in a private per-user cache outside this repository, `~/.cache/awesome-jev/research-api` (or `$XDG_CACHE_HOME/awesome-jev/research-api` when that variable is set), created with mode `0700`. The collector refuses a cache directory that another account owns or that any user can write to. Online runs never read the cache. To repeat screening against the cache from an earlier online run on the same machine:
 
 ```sh
 python3 scripts/collect_research.py --offline --target 0 --with-openalex
 ```
 
-`--offline` makes no network requests, so it needs that warm cache; a fresh clone, another machine, or a cleared temporary directory has none. If any query has no cached response, or no record qualifies, the collector exits with an error and leaves `data/research-sources.jsonl` unchanged. A successful re-screen still replaces the ledger wholesale, as described above.
+`--offline` makes no network requests, so it needs that warm cache; a fresh clone, another machine, or a cleared cache directory has none. If any query has no cached response, or no record qualifies, the collector exits with an error and leaves `data/research-sources.jsonl` unchanged. A successful re-screen still replaces the ledger wholesale, as described above. Re-screened records keep the `retrieved_at` of the original response, and the audit output reports `cached_queries`, the number of queries answered from the cache.
 
 The index builder deduplicates the ledgers and regenerates `site/data/source-index.json`, `data/source-counts.json`, and `site/data/source-badge.json`. Do not edit their counts by hand. To check that the generated index is current without rewriting it:
 
@@ -169,7 +169,7 @@ Preserve the individual licenses of third-party resources. A repository license 
 
 ### 人工维护与发布
 
-维护顺序是：刷新公开来源清单 → 生成网站索引与计数 → 运行校验和回归测试 → 同步中英文精选内容 → 检查暂存区后发布。`--resume` 与 `--offline` 会复用已有材料，不能写成全部来源重新抓取。旧版全量收集脚本会整体替换默认台账，只保留它们能重新生成的记录；固定版本原始摘要（`arxiv_primary_abstract_page`）等仅由增量扫描写入的记录会被丢弃，需要保留既有证据时改用 `python3 scripts/refresh_sources.py`。`--offline` 不发网络请求，只能复用同一台机器上此前联网运行留下的缓存；任一查询缺少缓存或没有记录通过筛选时，脚本报错退出，不改动 `data/research-sources.jsonl`。
+维护顺序是：刷新公开来源清单 → 生成网站索引与计数 → 运行校验和回归测试 → 同步中英文精选内容 → 检查暂存区后发布。`--resume` 与 `--offline` 会复用已有材料，不能写成全部来源重新抓取。旧版全量收集脚本会整体替换默认台账，只保留它们能重新生成的记录；固定版本原始摘要（`arxiv_primary_abstract_page`）等仅由增量扫描写入的记录会被丢弃，需要保留既有证据时改用 `python3 scripts/refresh_sources.py`。联网运行总是重新抓取 API 响应，不读取缓存；原始响应存放在仓库外每个用户私有的缓存目录 `~/.cache/awesome-jev/research-api`（设置了 `XDG_CACHE_HOME` 时为 `$XDG_CACHE_HOME/awesome-jev/research-api`，权限 `0700`），目录属于其他账户或任何用户可写时脚本拒绝使用。`--offline` 不发网络请求，只能复用同一台机器上此前联网运行留下的缓存，重新筛选的记录保留原响应的 `retrieved_at`，审计输出的 `cached_queries` 给出来自缓存的查询数；任一查询缺少缓存或没有记录通过筛选时，脚本报错退出，不改动 `data/research-sources.jsonl`。
 
 [reacher-z/Awesome-Jev](https://github.com/reacher-z/Awesome-Jev) 是资源主仓库，也是 issue 和 PR 的统一入口；[组织仓库](https://github.com/AwesomeJev/AwesomeJev.github.io) 是网站部署镜像。维护者将验证通过的同一个 `main` 提交推送到 `origin` 与 `awesomejev`，并核对两边提交一致；当前没有自动镜像同步。
 

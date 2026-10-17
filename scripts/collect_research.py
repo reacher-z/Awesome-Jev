@@ -8,7 +8,8 @@ the paper was peer reviewed, or that its claims have been independently tested.
 Canonical arXiv links are identifiers, not claims of separate page retrieval.
 
 Only short evidence excerpts and abstract hashes enter the repository. Raw API
-responses are cached in the operating-system temporary directory, outside it.
+responses are cached in a private per-user directory outside it. Online runs
+always fetch fresh responses; only --offline reads the cache back.
 No account, token, email address, or private source is used.
 
 The output ledger is replaced wholesale. --offline re-screens only a complete
@@ -25,9 +26,9 @@ import concurrent.futures
 import datetime as dt
 import hashlib
 import json
+import os
 import re
 import sys
-import tempfile
 import threading
 import time
 import urllib.error
@@ -203,15 +204,29 @@ def screen(title: str, abstract: str) -> dict[str, list[str]]:
     return topics
 
 
+def default_cache_dir() -> Path:
+    """A per-user location, not a fixed path in the shared temporary directory."""
+    return Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "awesome-jev" / "research-api"
+
+
 class Collector:
     def __init__(self, cache: Path, workers: int, offline: bool = False):
         self.cache = cache
-        self.cache.mkdir(parents=True, exist_ok=True)
+        self.cache.mkdir(mode=0o700, parents=True, exist_ok=True)
+        # Cached responses are screened into the ledger offline, so refuse a
+        # directory that another account created or can write to.
+        if hasattr(os, "getuid"):
+            status = self.cache.stat()
+            if status.st_uid != os.getuid():
+                raise PermissionError(f"Refusing cache directory {cache}: it is owned by another user.")
+            if status.st_mode & 0o002:
+                raise PermissionError(f"Refusing cache directory {cache}: it is writable by other users.")
         self.workers = workers
         self.offline = offline
         self.gate = threading.Lock()
         self.next_request = 0.0
         self.failures: list[dict] = []
+        self.cached_queries = 0
 
     def fetch(self, topic: str, query: str, provider: str = PROVIDER) -> tuple[str, str, dict]:
         if provider == "openalex_api":
@@ -223,9 +238,13 @@ class Collector:
         else:
             url = API + "?" + urllib.parse.urlencode({"q": query, "limit": 120})
         cached = self.cache / (sha(url) + ".json")
-        if cached.exists():
-            return topic, query, json.loads(cached.read_text())
         if self.offline:
+            # Only an explicit offline re-screen reuses responses, which keep
+            # their original retrieved_at; online runs always fetch afresh.
+            if cached.exists():
+                with self.gate:
+                    self.cached_queries += 1
+                return topic, query, json.loads(cached.read_text())
             failure = {"query": query, "url": url, "retrieval_status": "not_in_cache"}
             with self.gate:
                 self.failures.append(failure)
@@ -409,11 +428,14 @@ def main() -> None:
     parser.add_argument("--offline", action="store_true", help="Re-screen a complete cache from an earlier online run without network calls")
     parser.add_argument("--with-openalex", action="store_true", help="Supplement arXiv-focused discovery with older published foundational work via OpenAlex")
     parser.add_argument("--output", type=Path, default=Path("data/research-sources.jsonl"))
-    parser.add_argument("--cache-dir", type=Path, default=Path(tempfile.gettempdir()) / "awesome-jev-research-api-cache")
+    parser.add_argument("--cache-dir", type=Path, default=default_cache_dir(), help="Private directory for raw API responses; written by online runs, read only by --offline")
     args = parser.parse_args()
     if args.target < 0 or not 1 <= args.workers <= 4:
         parser.error("target must be nonnegative; workers must be between 1 and 4")
-    collector = Collector(args.cache_dir, args.workers, args.offline)
+    try:
+        collector = Collector(args.cache_dir, args.workers, args.offline)
+    except PermissionError as exc:
+        parser.error(str(exc))
     results = collector.run(args.with_openalex)
     # The output replaces the ledger wholesale: never overwrite it with a
     # partial or empty re-screen while reporting success.
@@ -434,6 +456,7 @@ def main() -> None:
         "requested_target": args.target,
         "topic_counts": dict(Counter(r["topic"] for r in records)),
         "failed_queries": collector.failures,
+        "cached_queries": collector.cached_queries,
         "verification_note": "Abstracts retrieved and programmatically screened; no editorial or full-text review is implied.",
     })
     # This audit contains no full abstracts or machine-specific cache paths.
