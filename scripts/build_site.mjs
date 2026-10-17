@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Build ordinary HTML from the same curated data used by the browser.
 // No remote requests, clock-based dates, dependencies, or crawler-specific output.
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, readdir, rm, rmdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
@@ -239,6 +239,17 @@ for (const [name,content] of outputs) {
   const path=resolve(root,name);
   if(check){if(await readFile(path,'utf8').catch(()=>null)!==content){console.error(`Stale generated page: ${name}`);stale++;}}
   else {await mkdir(dirname(path),{recursive:true});await writeFile(path,content);}
+}
+// The build owns every index.html route under site/ (not assets or hand-maintained
+// files such as the Search Console verification page). A route it no longer
+// produces would stay deployed and indexable, so --check reports it and a build deletes it.
+const routeFiles=async dir=>(await Promise.all((await readdir(resolve(root,dir),{withFileTypes:true})).map(entry=>
+  entry.isDirectory()?(dir==='site'&&entry.name==='assets'?[]:routeFiles(`${dir}/${entry.name}`)):entry.name==='index.html'?[`${dir}/${entry.name}`]:[]))).flat();
+for (const name of (await routeFiles('site')).filter(name=>!outputs.has(name)).sort()) {
+  if(check){console.error(`Orphaned generated page: ${name}`);stale++;continue;}
+  await rm(resolve(root,name));
+  for (let dir=dirname(name);dir!=='site';dir=dirname(dir)) {if((await readdir(resolve(root,dir))).length)break;await rmdir(resolve(root,dir));}
+  console.log(`Removed orphaned generated page: ${name}`);
 }
 if(stale)process.exitCode=1;
 else console.log(`${check?'Checked':'Built'} ${outputs.size} static outputs; ${resources.length} curated resources, ${papers.length} papers, ${discoveries.length} new sources, ${[...outputs.keys()].filter(name=>name.endsWith('.html')).length} HTML pages.`);

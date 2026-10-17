@@ -13,7 +13,7 @@ node scripts/build_site.mjs
 node scripts/build_site.mjs --check
 ```
 
-The first command generates the public files. `--check` makes no changes and fails if a generated file is missing or differs from its source. The build uses local files only; it does not fetch sources or refresh verification dates.
+The first command generates the public files and deletes any `index.html` under `site/` (outside `site/assets/`) that no current route produces, such as the page of a removed or renamed topic. `--check` makes no changes and fails if a generated file is missing or differs from its source, or if such an orphaned route page is still present. The build uses local files only; it does not fetch sources or refresh verification dates.
 
 | Content | Source to edit |
 | --- | --- |
@@ -118,7 +118,7 @@ An unrestricted public `User-agent: *` rule already permits compliant search cra
 
 优先把精选资源、指南正文和引用直接写入静态 HTML，让 JavaScript 只增强搜索与筛选。英文和中文使用独立可访问的 URL、相符的 canonical 和互相指向的 `hreflang`；sitemap 只列本站规范页面，更新时间应对应内容实质变化。
 
-维护时修改 `site/catalog.mjs` 中的共享资源与翻译、`templates/index.html` 首页模板、`data/search-guide.json` 双语指南或根目录 `references.bib`，再执行 `node scripts/build_site.mjs`，并用 `node scripts/build_site.mjs --check` 检查一致性。不要直接编辑生成文件：`site/` 下所有语言、所有路由的 `index.html`（含模型目录、专题目录和各专题页）均由构建生成，sitemap、站点引用副本、论文与模型 JSON、`llms` 文件和发布的 `site/data/expansion-progress.json` 副本也是如此；`site/app.js` 只负责浏览器交互，不再保存另一份资源目录。
+维护时修改 `site/catalog.mjs` 中的共享资源与翻译、`templates/index.html` 首页模板、`data/search-guide.json` 双语指南或根目录 `references.bib`，再执行 `node scripts/build_site.mjs`，并用 `node scripts/build_site.mjs --check` 检查一致性。构建会删除当前路由不再生成的 `index.html`（例如已删除或改名的专题页，`site/assets/` 除外），`--check` 发现此类遗留页面时也会失败。不要直接编辑生成文件：`site/` 下所有语言、所有路由的 `index.html`（含模型目录、专题目录和各专题页）均由构建生成，sitemap、站点引用副本、论文与模型 JSON、`llms` 文件和发布的 `site/data/expansion-progress.json` 副本也是如此；`site/app.js` 只负责浏览器交互，不再保存另一份资源目录。
 
 这些措施改善可抓取性，不保证收录、排名或 AI 引用。Google 明确表示 `llms.txt` 不提升其排名；问答式正文也不意味着 FAQ 富结果。Search Console 的生成式 AI 控制默认包含，但子属性可能继承上级设置。截至 2026-10-16，Google 站点所有权已通过 HTML 文件验证，控制界面也已确认继承后的有效设置为 **Current control: Include**。保留公开验证文件，不在仓库记录账号姓名或邮箱。
 
