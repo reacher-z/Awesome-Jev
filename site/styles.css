@@ -2125,6 +2125,10 @@ html:lang(zh) .featured-copy h2 {
   font-size: 19px;
   line-height: 1;
 }
+/* Summaries without a hint: push the indicator to the right edge. */
+.verification-legend summary > span:only-child {
+  margin-left: auto;
+}
 .verification-legend[open] summary > span:last-child {
   transform: rotate(45deg);
 }
