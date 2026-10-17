@@ -116,6 +116,8 @@ When an update PR is still open, the publisher refuses to replace it with data t
 
 For a promoted resource, read the original source, pin the relevant version, state its purpose and a material limitation, and verify any license or access label. Synchronize its English and Chinese descriptions across `README.md`, `README.zh-CN.md`, and `site/catalog.mjs`. Add scholarly metadata to `references.bib`; update survey or audit prose only when the new evidence changes it. When adding a paper, refresh *What's new* in both READMEs so it keeps only the ten most recent studies by linked-version date.
 
+Anonymous review mirrors expire. **Before 2027-04-10**, recheck the anonymous.4open.science mirror `jev_ordinal_scale_bia`, the code artifact of the Ordinal-Scale Bias paper (arXiv 2609.38827). It is linked from both READMEs, both survey pages, `data/search-guide.json` and the [expansion directory](expansion-2026-10-16.md), and the service reports an `expirationDate` of 2027-04-10T10:02:50Z. Replace it with the de-anonymized repository if the authors have released one; otherwise remove or mark the expired link. A plain link check is not enough: the mirror URL redirects to a page that returns HTTP 401 without a session cookie. Read the status from `https://anonymous.4open.science/api/repo/jev_ordinal_scale_bia/options` instead.
+
 Review the site locally after interface changes:
 
 ```sh
@@ -172,6 +174,8 @@ Preserve the individual licenses of third-party resources. A repository license 
 维护顺序是：刷新公开来源清单 → 生成网站索引与计数 → 运行校验和回归测试 → 同步中英文精选内容 → 检查暂存区后发布。`--resume` 与 `--offline` 会复用已有材料，不能写成全部来源重新抓取。旧版全量收集脚本会整体替换默认台账，只保留它们能重新生成的记录；固定版本原始摘要（`arxiv_primary_abstract_page`）等仅由增量扫描写入的记录会被丢弃，需要保留既有证据时改用 `python3 scripts/refresh_sources.py`。联网运行总是重新抓取 API 响应，不读取缓存；原始响应存放在仓库外每个用户私有的缓存目录 `~/.cache/awesome-jev/research-api`（设置了 `XDG_CACHE_HOME` 时为 `$XDG_CACHE_HOME/awesome-jev/research-api`，权限 `0700`），目录属于其他账户或任何用户可写时脚本拒绝使用。`--offline` 不发网络请求，只能复用同一台机器上此前联网运行留下的缓存，重新筛选的记录保留原响应的 `retrieved_at`，审计输出的 `cached_queries` 给出来自缓存的查询数；任一查询缺少缓存或没有记录通过筛选时，脚本报错退出，不改动 `data/research-sources.jsonl`。
 
 新增论文时，同步更新两份 README 的“最近更新”，只保留按所链接版本日期排列的最新十项研究。
+
+匿名评审镜像会过期。**请在 2027-04-10 之前**复查有序量表偏差论文（arXiv 2609.38827）的代码材料，即 anonymous.4open.science 镜像 `jev_ordinal_scale_bia`。两份 README、两份综述页面、`data/search-guide.json` 与[扩展目录](expansion-2026-10-16.md)都链接了它，服务端报告的 `expirationDate` 为 2027-04-10T10:02:50Z。作者若已发布去匿名化仓库，改用该仓库；否则删除或标注失效链接。普通链接检查不够：镜像地址会跳转到一个未带会话 cookie 时返回 HTTP 401 的页面，应改为读取 `https://anonymous.4open.science/api/repo/jev_ordinal_scale_bia/options` 中的状态。
 
 [reacher-z/Awesome-Jev](https://github.com/reacher-z/Awesome-Jev) 是资源主仓库，也是 issue 和 PR 的统一入口；[组织仓库](https://github.com/AwesomeJev/AwesomeJev.github.io) 是网站部署镜像。维护者将验证通过的同一个 `main` 提交推送到 `origin` 与 `awesomejev`，并核对两边提交一致；当前没有自动镜像同步。
 
