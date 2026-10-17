@@ -1,5 +1,6 @@
 """Security and idempotence checks for the scan-to-PR publication boundary."""
 
+import http.client
 import json
 from pathlib import Path
 import tempfile
@@ -287,6 +288,97 @@ class PublicationTests(unittest.TestCase):
         prior[scan.LEDGERS[0]] += (json.dumps({"url": extra_url, "verification_level": "content_screened"}) + "\n").encode()
         policy = SourcePolicy({extra_url: {"reason": "Reviewed out-of-scope source"}}, {}, scan.source_index.canonical)
         scan.ensure_pending_continuity(prior, files(), policy)
+
+
+class StubResponse:
+    def __init__(self, body):
+        self.body = body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+    def read(self, limit):
+        if isinstance(self.body, BaseException):
+            raise self.body
+        return self.body
+
+
+class StubOpener:
+    """Replays connection outcomes; an exception is raised from open() or read()."""
+
+    def __init__(self, *outcomes):
+        self.outcomes, self.calls = list(outcomes), 0
+
+    def open(self, request, timeout):
+        self.calls += 1
+        outcome = self.outcomes.pop(0)
+        if isinstance(outcome, ConnectionError):
+            raise outcome
+        return StubResponse(outcome)
+
+
+class NullFieldAndConnectionErrorTests(unittest.TestCase):
+    """GitHub nulls and http.client errors must stop with a specific ScanError."""
+
+    def api_returning(self, endpoint, value, **options):
+        api = FakeGitHub(**options)
+        fallback = api.request
+
+        def request(method, path, data=None, optional=False):
+            if method == "GET" and path.startswith(endpoint):
+                api.calls.append((method, path, data))
+                return value
+            return fallback(method, path, data, optional)
+        api.request = request
+        return api
+
+    def test_unlinked_committer_is_reported_as_non_bot_branch_change(self):
+        api = self.api_returning("/commits/" + OLD_SHA, {"committer": None, "commit": {"message": scan.TITLE}}, previous=True)
+        with self.assertRaisesRegex(scan.ScanError, "non-bot changes"):
+            scan.publish(api, IDENTITY, files())
+        self.assertTrue(all(method == "GET" for method, _, _ in api.calls))
+
+    def test_open_pr_with_null_body_or_user_is_refused(self):
+        for pull in ({"number": 7, "user": {"login": scan.BOT}, "body": None},
+                     {"number": 7, "user": None, "body": scan.MARKER}):
+            with self.subTest(pull=pull):
+                api = self.api_returning("/pulls?", [pull])
+                with self.assertRaisesRegex(scan.ScanError, "non-bot or ambiguous"):
+                    scan.publish(api, IDENTITY, files())
+                self.assertTrue(all(method == "GET" for method, _, _ in api.calls))
+
+    def request(self, method, *outcomes):
+        api = scan.GitHub("fixture-token")
+        api.opener = StubOpener(*outcomes)
+        with patch.object(scan.time, "sleep"):
+            try:
+                return api.request(method, "/git/ref/heads/main"), api.opener.calls
+            except scan.ScanError as exc:
+                self.assertNotIn("fixture-token", str(exc))
+                return exc, api.opener.calls
+
+    def test_dropped_connection_on_a_read_is_retried(self):
+        result, calls = self.request("GET", http.client.RemoteDisconnected("closed"), b'{"object": {"sha": "fixture"}}')
+        self.assertEqual(result, {"object": {"sha": "fixture"}})
+        self.assertEqual(calls, 2)
+
+    def test_persistent_http_client_errors_end_in_a_connection_scan_error(self):
+        for failure in (http.client.RemoteDisconnected("closed"), ConnectionResetError("reset"),
+                        http.client.IncompleteRead(b"{")):
+            with self.subTest(failure=type(failure).__name__):
+                result, calls = self.request("GET", failure, failure, failure)
+                self.assertIsInstance(result, scan.ScanError)
+                self.assertIn("connection failed", str(result))
+                self.assertEqual(calls, 3)
+
+    def test_write_is_not_retried_after_a_dropped_connection(self):
+        result, calls = self.request("POST", http.client.RemoteDisconnected("closed"), b"{}")
+        self.assertIsInstance(result, scan.ScanError)
+        self.assertIn("connection failed", str(result))
+        self.assertEqual(calls, 1)
 
 
 if __name__ == "__main__":

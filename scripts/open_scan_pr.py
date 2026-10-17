@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import base64
 import hashlib
+import http.client
 import json
 import os
 from pathlib import Path
@@ -236,7 +237,9 @@ class GitHub:
                     time.sleep(2 ** (attempt + 1))
                     continue
                 raise ScanError(f"GitHub API {method} failed with HTTP {exc.code}; no response body or credential is logged.") from None
-            except (urllib.error.URLError, TimeoutError):
+            # urllib does not wrap errors raised while reading the status line or
+            # body (RemoteDisconnected, IncompleteRead), so catch them here too.
+            except (urllib.error.URLError, TimeoutError, http.client.HTTPException, ConnectionError):
                 if method == "GET" and attempt < 2:
                     time.sleep(2 ** (attempt + 1))
                     continue
@@ -388,12 +391,13 @@ def publish(api: GitHub, identity: dict, files: dict[str, bytes], policy=None) -
     previous_sha = branch_ref["object"]["sha"] if branch_ref else None
     query = urllib.parse.urlencode({"state": "open", "head": REPOSITORY.split("/")[0] + ":" + BRANCH, "base": BASE_BRANCH, "per_page": 10})
     opened = api.request("GET", "/pulls?" + query)
-    if len(opened) > 1 or (opened and (opened[0].get("user", {}).get("login") != BOT or MARKER not in opened[0].get("body", ""))):
+    if len(opened) > 1 or (opened and ((opened[0].get("user") or {}).get("login") != BOT or MARKER not in (opened[0].get("body") or ""))):
         raise ScanError("Refusing to overwrite a non-bot or ambiguous source-scan pull request.")
     unchanged = False
     if previous_sha:
         previous = api.request("GET", "/commits/" + previous_sha)
-        if previous.get("committer", {}).get("login") != BOT or not previous.get("commit", {}).get("message", "").startswith(TITLE):
+        # GitHub returns "committer": null when the email is not linked to an account.
+        if (previous.get("committer") or {}).get("login") != BOT or not previous.get("commit", {}).get("message", "").startswith(TITLE):
             raise ScanError("The dedicated automation branch has non-bot changes; maintainer inspection is required.")
         previous_files = remote_comparison_files(api, previous_sha)
         if opened:
