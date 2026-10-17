@@ -593,6 +593,53 @@ class PublicFetchTests(unittest.TestCase):
         self.assertTrue(refresh.direct_paper("Jev evaluation", "TypeSafe's typed decision model is evaluated for probability calibration."))
 
 
+class PinnedAddressFallbackTests(unittest.TestCase):
+    """Every validated DNS answer is dialled in order; none is resolved again."""
+    ANSWERS = [(10, 1, 6, "", ("2606:4700::1", 443, 0, 0)), (2, 1, 6, "", ("93.184.216.34", 443))]
+
+    def connection(self):
+        response = Mock(status=200)
+        response.getheaders.return_value = [("Content-Type", "text/plain")]
+        response.read.return_value = b"public fixture"
+        connection = Mock()
+        connection.getresponse.return_value = response
+        connection.request.side_effect = lambda *a, **k: connection._create_connection(("ignored.example", 443), 18)
+        return connection
+
+    def dial(self, reachable=()):
+        targets = []
+        def connect(address, timeout, source_address=None):
+            targets.append(address)
+            if address[0] not in reachable:
+                raise OSError("fixture unreachable")
+            return Mock()
+        return targets, connect
+
+    def test_unreachable_first_address_falls_back_to_next_validated_address(self):
+        targets, connect = self.dial(reachable={"93.184.216.34"})
+        with patch.object(refresh.socket, "getaddrinfo", return_value=self.ANSWERS), patch.object(refresh.http.client, "HTTPSConnection", return_value=self.connection()) as https, patch.object(refresh.socket, "create_connection", side_effect=connect):
+            status, _, body = refresh.PublicFetcher()._request("https://example.org/source")
+        self.assertEqual((status, body), (200, b"public fixture"))
+        self.assertEqual(https.call_args.args[:2], ("example.org", 443))
+        self.assertEqual(targets, [("2606:4700::1", 443), ("93.184.216.34", 443)])
+
+    def test_all_unreachable_addresses_are_tried_before_network_failure(self):
+        targets, connect = self.dial()
+        with patch.object(refresh.socket, "getaddrinfo", return_value=self.ANSWERS), patch.object(refresh.http.client, "HTTPSConnection", return_value=self.connection()), patch.object(refresh.socket, "create_connection", side_effect=connect):
+            with self.assertRaises(refresh.FetchError) as raised:
+                refresh.PublicFetcher(retries=0).fetch("https://example.org/source")
+        self.assertEqual(str(raised.exception), "network_failure")
+        self.assertEqual(targets, [("2606:4700::1", 443), ("93.184.216.34", 443)])
+
+    def test_fallback_never_dials_an_unvalidated_address(self):
+        targets, connect = self.dial()
+        with patch.object(refresh, "public_addresses", return_value=["2606:4700::1", "127.0.0.1"]), patch.object(refresh.http.client, "HTTPSConnection", return_value=self.connection()), patch.object(refresh.socket, "create_connection", side_effect=connect):
+            with self.assertRaises(refresh.FetchError) as raised:
+                refresh.PublicFetcher()._request("https://example.org/source")
+        self.assertEqual(str(raised.exception), "dns_non_public_address")
+        self.assertEqual(targets, [("2606:4700::1", 443)])
+
+
 class RefreshRunTests(unittest.TestCase):
     def test_new_direct_paper_satisfies_the_public_ledger_schema(self):
         scan = refresh.Scan(refresh.PublicFetcher())

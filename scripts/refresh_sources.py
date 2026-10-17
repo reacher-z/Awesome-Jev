@@ -174,7 +174,18 @@ class PublicFetcher:
         conn = connection_type(host, port, **kwargs)
         # HTTPSConnection still verifies the original hostname/SNI; only TCP is
         # pinned, preventing a second DNS resolution from reaching a private IP.
-        conn._create_connection = lambda _address, timeout, source_address=None: socket.create_connection((addresses[0], port), timeout, source_address)
+        def pinned_connection(_address, timeout, source_address=None):
+            # Like socket.create_connection, try each validated address in turn.
+            error = OSError("no_address")
+            for address in addresses:
+                if not ipaddress.ip_address(address).is_global:
+                    raise FetchError("dns_non_public_address")
+                try:
+                    return socket.create_connection((address, port), timeout, source_address)
+                except OSError as exc:
+                    error = exc
+            raise error
+        conn._create_connection = pinned_connection
         try:
             target = urllib.parse.urlunsplit(("", "", p.path or "/", p.query, ""))
             conn.request("GET", target, headers={"User-Agent": "AwesomeJev-Public-Refresh/1.0", "Accept": "application/json,text/plain,text/html", "Accept-Encoding": "identity"})
