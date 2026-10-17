@@ -290,8 +290,13 @@ function renderCorpus() {
       .toLocaleLowerCase()
       .includes(query),
   );
+  // The polite status changes with every "Show more sources" click, so paging is announced.
   $("#corpus-status").textContent = corpusSources.length
-    ? t("corpusResults")(filtered.length, corpusSources.length)
+    ? t("corpusResults")(
+        Math.min(corpusLimit, filtered.length),
+        filtered.length,
+        corpusSources.length,
+      )
     : t("corpusUnavailable");
   $("#corpus-list").innerHTML = filtered
     .slice(0, corpusLimit)
@@ -347,8 +352,11 @@ if ($("#corpus-search")) {
     renderCorpus();
   });
   $("#corpus-more").addEventListener("click", () => {
+    const shown = corpusLimit;
     corpusLimit += 24;
     renderCorpus();
+    // Continue from the first added source; the button may now be hidden.
+    $("#corpus-list").querySelectorAll(".corpus-row h3 a")[shown]?.focus();
   });
   const disclosure = $(".corpus-disclosure");
   disclosure?.addEventListener("toggle", () => {

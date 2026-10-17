@@ -139,8 +139,13 @@ const translations = {
     corpusEmpty: "No sources match this search.",
     corpusMore: "Show more sources",
     corpusCount: (n) => `${n.toLocaleString("en-US")} indexed sources`,
-    corpusResults: (n, total) =>
-      `${n.toLocaleString("en-US")} of ${total.toLocaleString("en-US")} sources`,
+    // `shown` is how many of the `n` matching rows are rendered; it grows with "Show more sources".
+    corpusResults: (shown, n, total) =>
+      !n
+        ? `0 of ${total.toLocaleString("en-US")} sources`
+        : n === total
+          ? `Showing ${shown.toLocaleString("en-US")} of ${total.toLocaleString("en-US")} ${n === 1 ? "source" : "sources"}`
+          : `Showing ${shown.toLocaleString("en-US")} of ${n.toLocaleString("en-US")} matching ${n === 1 ? "source" : "sources"} (${total.toLocaleString("en-US")} indexed)`,
   },
   zh: {
     skip: "跳转至资源索引",
@@ -274,8 +279,12 @@ const translations = {
     corpusEmpty: "没有匹配的来源。",
     corpusMore: "显示更多来源",
     corpusCount: (n) => `${n.toLocaleString("zh-CN")} 项索引来源`,
-    corpusResults: (n, total) =>
-      `${total.toLocaleString("zh-CN")} 项中匹配 ${n.toLocaleString("zh-CN")} 项`,
+    corpusResults: (shown, n, total) =>
+      !n
+        ? `${total.toLocaleString("zh-CN")} 项中匹配 0 项`
+        : n === total
+          ? `共 ${total.toLocaleString("zh-CN")} 项来源，已显示 ${shown.toLocaleString("zh-CN")} 项`
+          : `${total.toLocaleString("zh-CN")} 项中匹配 ${n.toLocaleString("zh-CN")} 项，已显示 ${shown.toLocaleString("zh-CN")} 项`,
   },
 };
 
