@@ -404,6 +404,66 @@ const resources = [
   },
   {
     "category": "Papers",
+    "title": "When Faster Decisions Do Not Make Better Agents: An Empirical Study of Jev in Agent Workflows",
+    "by": "Ling, Yu, Chen & Fang · 2026-10-09 · v1",
+    "date": "2026-10-09",
+    "first_submitted": "2026-10-09",
+    "url": "https://arxiv.org/abs/2610.13092v1",
+    "en": "Jev cut decision cost and latency for five agents in ALFWorld and AndroidWorld (4,500 runs), but two mobile agents lost more success, extra reasoning and interactions absorbed the savings, and cost per success rose for one agent.",
+    "zh": "Jev 让 ALFWorld 与 AndroidWorld 中五个 agent 的决策成本和时延下降（共 4,500 次运行），但两个移动端 agent 成功率降幅较大，辅助推理与额外交互抵消了节省，其中一个 agent 的单次成功成本反而上升。"
+  },
+  {
+    "category": "Papers",
+    "title": "Qwen-Audio-Jev: A Unified Interface for Audio Decisions",
+    "by": "Fang et al. · 2026-10-15 · v1",
+    "date": "2026-10-15",
+    "first_submitted": "2026-10-15",
+    "url": "https://arxiv.org/abs/2610.21614v1",
+    "en": "An independent Jev-style decision head on Qwen-Audio-3.1-ASR-Flash-Next gives Choice, Noul and Score readouts over audio, reporting 84.06% on MMSU, a 6.50% speaker-verification equal error rate and about 20× faster inference than its own base model.",
+    "zh": "在 Qwen-Audio-3.1-ASR-Flash-Next 上加入独立实现的 Jev 式决策头，对音频给出 Choice、Noul 与 Score 读出；报告 MMSU 准确率 84.06%、说话人验证等错误率 6.50%，推理速度约为其基础模型的 20 倍。"
+  },
+  {
+    "category": "Papers",
+    "title": "Are AI Decision Models Biased? A Case Study of Jev",
+    "by": "Imperatrice, Kameneva, Greenberg & Romano · 2026-10-14 · v1",
+    "date": "2026-10-14",
+    "first_submitted": "2026-10-14",
+    "url": "https://arxiv.org/abs/2610.19619v1",
+    "en": "In 41,500 responses Jev's selected answers look largely unbiased, but its judgments shift with irrelevant numbers and option order, and several bias manipulations move its probabilities even when the answer stays the same; on 30 adapted conjunction tasks it violates the conjunction rule in 54% of 15,000 responses.",
+    "zh": "在 41,500 次回答中，Jev 选出的答案大体未显示偏差，但其判断会受无关数字和选项顺序影响，部分认知偏差操纵即使不改变所选答案也会明显改变返回的概率；在 30 个改编的合取任务上，15,000 次回答中有 54% 违反合取规则。"
+  },
+  {
+    "category": "Papers",
+    "title": "Hidden Risks of Jev: An Empirical Study of Security, Privacy, and Dual Use",
+    "by": "Wang et al. · 2026-10-04 · v1",
+    "date": "2026-10-04",
+    "first_submitted": "2026-10-04",
+    "url": "https://arxiv.org/abs/2610.04985v1",
+    "en": "Tests the official Jev API and the local NanoJev for prompt injection, data-poisoning backdoors, membership, attribute and knowledge inference, and dual use in four detection tasks; the authors report Jev remains vulnerable to the examined threats.",
+    "zh": "以官方 Jev API 和本地模型 NanoJev 检验提示注入、数据投毒后门，成员、属性与内部知识推断，以及四项检测任务中的双重用途；作者报告 Jev 对所考察的威胁仍然脆弱。"
+  },
+  {
+    "category": "Papers",
+    "title": "Calibration and Risk-Budgeted Decisions with System One Models",
+    "by": "Messoudi & Mansar · 2026-10-14 · v1",
+    "date": "2026-10-14",
+    "first_submitted": "2026-10-14",
+    "url": "https://arxiv.org/abs/2610.19811v1",
+    "en": "Jev and other System One models make binary allow/block or retain/discard decisions without human deferral; across six moderation, safety and reranking datasets, naive threshold selection exceeds the target risk in about half the settings, against 7.8% for Learn Then Test.",
+    "zh": "Jev 等 System One 模型在无法转交人工时做二元放行／拦截或保留／丢弃决策；在六个审核、安全与重排序数据集上，朴素阈值选择约在一半设置中超出目标风险，Learn Then Test 仅为 7.8%。"
+  },
+  {
+    "category": "Papers",
+    "title": "ufakzeka-karar: An Open Turkish Typed-Decision Model with Order-Invariant Option Scoring",
+    "by": "Teke · 2026-10-05 · v1",
+    "date": "2026-10-05",
+    "first_submitted": "2026-10-05",
+    "url": "https://arxiv.org/abs/2610.06744v1",
+    "en": "An open 182M-parameter Turkish model scores each option blind to the others, so answers ignore option order, and adds a “not sure” signal; its 7th-of-16 HakemBench rank is not blind, since later runs trained after full-test results were read.",
+    "zh": "开源的 1.82 亿参数土耳其语模型对每个选项独立评分，答案不受选项顺序影响，并提供“不确定”信号；其在 HakemBench 16 行中排第 7 的结果并非盲测，因为后续训练是在读过完整测试结果后进行的。"
+  },
+  {
+    "category": "Papers",
     "title": "OmniMed-Jev: Calibrating LVLM Confidence for Trustworthy Medical Multimodal Decisions via System One",
     "by": "Tang & Chen · 2026-09-30 · v1",
     "date": "2026-09-30",

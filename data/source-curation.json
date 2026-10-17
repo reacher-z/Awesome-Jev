@@ -401,6 +401,14 @@
       "reviewed_at": "2026-10-17T11:53:20Z",
       "title": "Post-hoc Calibration of Neural Networks by g-Layers",
       "note": "Display title follows arXiv v2, the version the unversioned link opens; the provider title “Post-hoc Calibration of Neural Networks.” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.06744",
+      "first_submitted": "2026-10-05",
+      "relevance": "An open 182M-parameter Turkish model scores each option blind to the others, so answers ignore option order, and adds a “not sure” signal; its 7th-of-16 HakemBench rank is not blind, since later runs trained after full-test results were read.",
+      "note": "Fixed-v1 abstract and metadata review for a curated direct study (source issue #40). The fresh abstract hash matches this row's existing abstract_sha256, so no second ledger row was added; this annotation replaces the generic relevance note only. Original provider fields and evidence grades are preserved.",
+      "evidence_url": "https://arxiv.org/abs/2610.06744v1",
+      "reviewed_at": "2026-10-17T12:40:09Z"
     }
   ]
 }

@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-17T13:18:21+00:00",
+  "baseline_commit": "56e07de887a5f7766893a69881a0ee4d6f4e77e5",
+  "curated_additions": 6,
+  "ledger_additions": 5,
+  "source_issues": [
+    "https://github.com/reacher-z/Awesome-Jev/issues/40",
+    "https://github.com/reacher-z/Awesome-Jev/issues/47",
+    "https://github.com/reacher-z/Awesome-Jev/issues/48",
+    "https://github.com/reacher-z/Awesome-Jev/issues/49",
+    "https://github.com/reacher-z/Awesome-Jev/issues/50",
+    "https://github.com/reacher-z/Awesome-Jev/issues/51"
+  ],
+  "scope": "Fixed-version primary arXiv abstract pages and citation metadata, fetched at the recorded times; linked repositories only where noted. No full-paper reading (except where a check names it), model execution, data download or reproduction is claimed.",
+  "primary_checks": [
+    {
+      "url": "https://arxiv.org/abs/2610.13092",
+      "title": "When Faster Decisions Do Not Make Better Agents: An Empirical Study of Jev in Agent Workflows",
+      "authors": [
+        "Ling, Yuchen",
+        "Yu, Shengcheng",
+        "Chen, Zhenyu",
+        "Fang, Chunrong"
+      ],
+      "primary_class": "Artificial Intelligence (cs.AI)",
+      "first_submitted": "2026-10-09",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.13092v1",
+      "reviewed_version_date": "2026-10-09",
+      "retrieved_at": "2026-10-17T12:16:01.177419+00:00",
+      "abstract_page_sha256": "cdd7b8ff4f476dd6ded5f74cf0f9fbc57b554a2d342ca706f56bfe72cfb48d78",
+      "abstract_sha256": "fb5f0220266a43b74e7a5f547abbe78a54a2ef993fee5d27f67827cb9715f5dc",
+      "abstract_word_count": 207,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/47",
+      "limitations": "Fixed-v1 abstract only. Two environments and five agents; no code or execution traces are linked. No experiment was reproduced."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.21614",
+      "title": "Qwen-Audio-Jev: A Unified Interface for Audio Decisions",
+      "authors": [
+        "Fang, Ying",
+        "Gao, Zhifu",
+        "Gu, Qing",
+        "He, Jiajun",
+        "Jing, Kangqi",
+        "Li, Xiangang",
+        "Pu, Yu",
+        "Wang, Wupeng"
+      ],
+      "primary_class": "Sound (cs.SD)",
+      "first_submitted": "2026-10-15",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.21614v1",
+      "reviewed_version_date": "2026-10-15",
+      "retrieved_at": "2026-10-17T12:16:05.636032+00:00",
+      "abstract_page_sha256": "991a2ba05390fa0783b6e37be2cb462ca9bc5a2ff53be05e7948e6495cc8c39a",
+      "abstract_sha256": "74d338b41d123b7c87c7ca77ba064f5ebfda66f23e539059b29c5b5d370a3477",
+      "abstract_word_count": 189,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/48",
+      "limitations": "Fixed-v1 abstract only. Not TypeSafe weights. No weights, code or data are linked, and no Hugging Face model or dataset is tagged with the paper; the speedup is measured against the authors' own base model. No experiment was reproduced."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.19619",
+      "title": "Are AI Decision Models Biased? A Case Study of Jev",
+      "authors": [
+        "Imperatrice, Ilaria",
+        "Kameneva, Taisia",
+        "Greenberg, Adam Eric",
+        "Romano, Alessandro"
+      ],
+      "primary_class": "Artificial Intelligence (cs.AI)",
+      "first_submitted": "2026-10-14",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.19619v1",
+      "reviewed_version_date": "2026-10-14",
+      "retrieved_at": "2026-10-17T12:16:10.144036+00:00",
+      "abstract_page_sha256": "a44cf39f6e2555d4989f1d07d51adeb9b2dedc25fab5b8aadb181623fa1d767c",
+      "abstract_sha256": "35d8c2f8272641cdfc7a9ea7a91ba7450de710161a5c2eabf974b97281dc7f38",
+      "abstract_word_count": 235,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/49",
+      "limitations": "Fixed-v1 abstract only. The abstract does not state the Jev version or prompt formats, and no code or response data are linked. No experiment was reproduced."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.04985",
+      "title": "Hidden Risks of Jev: An Empirical Study of Security, Privacy, and Dual Use",
+      "authors": [
+        "Wang, Shang",
+        "Zhu, Tianqing",
+        "Chen, Huajie",
+        "Li, Jiayang",
+        "Yang, Meng",
+        "Liu, Bo"
+      ],
+      "primary_class": "Cryptography and Security (cs.CR)",
+      "first_submitted": "2026-10-04",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.04985v1",
+      "reviewed_version_date": "2026-10-04",
+      "retrieved_at": "2026-10-17T12:16:14.269468+00:00",
+      "abstract_page_sha256": "efc3b8b7a64bbf266ca271d589bbff3bdc175111b2698a255882d30be45c64f2",
+      "abstract_sha256": "5dc2955350437ef4a8fbde47bb4cf7c2e4173a76c61b0c6de6d2768f388cc0e4",
+      "abstract_word_count": 266,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/50",
+      "limitations": "Fixed-v1 abstract plus the linked repository's README and file list; nothing was executed. The repository holds only the NanoJev backdoor experiment and declares no license, so the code release is partial."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.19811",
+      "title": "Calibration and Risk-Budgeted Decisions with System One Models",
+      "authors": [
+        "Messoudi, Soundouss",
+        "Mansar, Youness"
+      ],
+      "primary_class": "Machine Learning (stat.ML)",
+      "first_submitted": "2026-10-14",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.19811v1",
+      "reviewed_version_date": "2026-10-14",
+      "retrieved_at": "2026-10-17T12:16:18.736007+00:00",
+      "abstract_page_sha256": "bb7322de622ef8670a6e5cf047c2e8e3865858836a9e2b91f2d54d71d578b1aa",
+      "abstract_sha256": "cd70bc180afe8f3b1612de37806b6bf2bb2d48bcefccc606c38821420711795d",
+      "abstract_word_count": 147,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/51",
+      "limitations": "Fixed-v1 abstract plus a keyword search of the fixed-v1 HTML full text: the abstract does not name Jev, but the full text lists it among the evaluated System One models. Binary decisions only; no code is linked. No experiment was reproduced."
+    }
+  ],
+  "annotated_existing_sources": [
+    {
+      "url": "https://arxiv.org/abs/2610.06744",
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/40",
+      "existing_ledger": "data/ecosystem-sources.jsonl (relation direct, content_screened, retrieved 2026-10-16T06:53:49+00:00)",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.06744v1",
+      "first_submitted": "2026-10-05",
+      "primary_class": "Computation and Language (cs.CL)",
+      "retrieved_at": "2026-10-17T12:16:22.806779+00:00",
+      "abstract_page_sha256": "960f505601be407fae6a7bef7b607ecaeccffe141cda0321266af090df14c9da",
+      "abstract_sha256": "ed961f5589c646c2fd9e1c21240155fefe5e833661f403a760492d71a5653baf",
+      "abstract_word_count": 327,
+      "finding": "The fresh fixed-v1 abstract hash equals the existing ledger row's abstract_sha256, so the paper is curated without a second ledger row; a display annotation in data/source-curation.json replaces the generic relevance note.",
+      "limitations": "Fixed-v1 abstract plus the author repository README. The released model is the last of three runs scored on HakemBench and its numbers are not blind; nothing was executed or downloaded."
+    }
+  ],
+  "full_text_keyword_checks": [
+    {
+      "url": "https://arxiv.org/html/2610.19811v1",
+      "retrieved_at": "2026-10-17T12:18:41+00:00",
+      "page_sha256": "c391dbf1dac6388435d99a154bc04fba4820e8c1384bfc715a3602f1861eeebf",
+      "scope": "Keyword search only. The methods section lists Jev with GPT-6-Luna, Span-01 and Solar-Decide as evaluated System One models, and the result tables include Jev rows. Not a full-paper review."
+    }
+  ],
+  "counting": "Canonical arXiv identities checked against README, catalog, bibliography and both ledgers before intake. Five papers were absent and get primary-abstract rows; arXiv 2610.06744 was already an ecosystem-ledger row and is annotated instead of duplicated. Companion repositories add no ledger records.",
+  "provenance": "Candidates came from public [Source] issues. Every summary was rewritten from the fetched primary page, not copied from the issue; issue claims that the page did not support were dropped.",
+  "companion_links": [
+    {
+      "url": "https://github.com/shihe98/Security_Privacy_Jev",
+      "scope": "Linked from the fixed-v1 comments field. README and file list read at commit 560cc7a1ccad6b4c48c7a405dc7a47b1f806ca99: only a NanoJev_Backdoor directory (SFT and RLCD backdoor fine-tuning on GPT-4o-synthesized cases) and a top-level README; no license file. Not executed; not added as a separate ledger source."
+    },
+    {
+      "url": "https://github.com/ufakai/ufakzeka-karar",
+      "scope": "Already curated and in the ecosystem ledger. README read at commit a5b9ff2464a39bdda02e13d22db2c09adce59100: links the paper, Apache-2.0 code and weights, and states that results were read before later training runs. Not executed."
+    }
+  ],
+  "expansion": "Not added to the 2026-10-16 reviewed-expansion intake; that audited count remains a maintainer release decision.",
+  "privacy": "Only public bibliographic metadata, concise summaries, source links and hashes are published. No abstracts, raw HTML, contacts, private paths or credentials are included."
+}
