@@ -107,12 +107,27 @@ def anchors(path: Path) -> set[str]:
     return result
 
 
+# Absolute links to this project's own website (served from site/) and repository
+# tree are checked like local links; every other external URL stays offline.
+OWN_LINKS = (
+    (re.compile(r"https://awesomejev\.github\.io(?=[/?#]|$)", re.I), "site"),
+    (re.compile(r"https://github\.com/reacher-z/Awesome-Jev/(?:blob|tree)/main(?=[/?#]|$)", re.I), ""),
+)
+
+
+def own_link(value: str) -> tuple[Path, str] | None:
+    for pattern, folder in OWN_LINKS:
+        if match := pattern.match(value):
+            return ROOT / folder, "/" + value[match.end():].lstrip("/")
+    return None
+
+
 def local_link(path: Path, value: str) -> None:
     value = html.unescape(value.strip().strip("<>"))
-    parsed = urlsplit(value)
+    base, link = own_link(value) or (ROOT / "site" if "site" in path.relative_to(ROOT).parts else ROOT, value)
+    parsed = urlsplit(link)
     if parsed.scheme or parsed.netloc or not value or value == "#" or value.startswith("{{"):
         return
-    base = ROOT / "site" if "site" in path.relative_to(ROOT).parts else ROOT
     target = ((base / parsed.path.lstrip("/")) if parsed.path.startswith("/") else (path.parent / unquote(parsed.path))).resolve() if parsed.path else path
     if not target.is_relative_to(ROOT):
         fail(str(path.relative_to(ROOT)), "local link escapes repository")
