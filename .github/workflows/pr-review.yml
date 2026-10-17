@@ -37,7 +37,7 @@ jobs:
             const notes = new Set();
             const affected = new Set();
             const body = String(pr.body || '').slice(0, 60000);
-            const sourceChange = files.some(f => /^(data\/|docs\/|README|references\.bib)/i.test(f.filename));
+            const sourceChange = files.some(f => /^(data\/|docs\/|README|references\.bib|site\/catalog\.mjs)/i.test(f.filename));
             const checklist = [
               ['canonical public sources', /- \[[xX]\].*canonical public sources/i],
               ['verification level', /- \[[xX]\].*verification level/i],
