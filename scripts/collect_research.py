@@ -24,6 +24,7 @@ import argparse
 import concurrent.futures
 import datetime as dt
 import hashlib
+import http.client
 import json
 import re
 import sys
@@ -230,7 +231,7 @@ class Collector:
             with self.gate:
                 self.failures.append(failure)
             return topic, query, {"data": [], **failure}
-        last_error = ""
+        last_error = error_code = ""
         for attempt in range(4):
             # Global pacing plus bounded concurrency; respect a Retry-After
             # response when the provider applies a more restrictive limit.
@@ -251,18 +252,29 @@ class Collector:
                         "data": json.loads(raw),
                         "provider": provider,
                     }
+                if not isinstance(wrapper["data"], dict if provider == "openalex_api" else list):
+                    raise ValueError("unexpected response structure")
                 if provider == "openalex_api":
                     wrapper["data"] = convert_openalex(wrapper["data"].get("results", []))
-                cached.write_text(json.dumps(wrapper, ensure_ascii=False))
-                return topic, query, wrapper
-            except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+            except ValueError as exc:
+                # A body that is not the expected JSON (for example an HTML
+                # maintenance page) is recorded, never cached, and not retried.
+                last_error, error_code = str(exc), type(exc).__name__
+                break
+            except (http.client.HTTPException, OSError) as exc:
+                # OSError covers URLError, HTTPError and timeouts; HTTPException
+                # covers dropped connections and truncated bodies.
                 last_error = str(exc)
+                error_code = "http_%d" % exc.code if isinstance(exc, urllib.error.HTTPError) else type(exc).__name__
                 if isinstance(exc, urllib.error.HTTPError) and exc.code not in (429, 500, 502, 503, 504):
                     break
-                retry_after = getattr(exc, "headers", {}).get("Retry-After", "")
+                retry_after = (getattr(exc, "headers", None) or {}).get("Retry-After", "")
                 delay = float(retry_after) if retry_after.isdigit() else 2 ** (attempt + 1)
                 time.sleep(min(delay, 30))
-        failure = {"query": query, "url": url, "retrieval_status": "failed", "error": last_error}
+            else:
+                cached.write_text(json.dumps(wrapper, ensure_ascii=False))
+                return topic, query, wrapper
+        failure = {"query": query, "url": url, "retrieval_status": "failed", "error_code": error_code, "error": last_error}
         with self.gate:
             self.failures.append(failure)
         return topic, query, {"data": [], **failure}

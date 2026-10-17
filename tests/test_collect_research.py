@@ -1,6 +1,7 @@
 """Legacy research-collector regressions: never replace the ledger with nothing, no network."""
 
 import contextlib
+import http.client
 import io
 import json
 from pathlib import Path
@@ -9,6 +10,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+import urllib.parse
 
 from scripts import collect_research as collect
 
@@ -28,6 +30,77 @@ def run_main(*argv):
         except SystemExit as exit_:
             return exit_.code
     return 0
+
+
+class FakeResponse(io.BytesIO):
+    status = 200
+
+
+def fake_urlopen(outcomes, calls):
+    """Answer each search query with its body, or raise its exception."""
+    def urlopen(request, timeout=None):
+        query = urllib.parse.parse_qs(urllib.parse.urlsplit(request.full_url).query)["q"][0]
+        calls.append(query)
+        outcome = outcomes[query]
+        if isinstance(outcome, list):
+            outcome = outcome.pop(0)
+        if isinstance(outcome, BaseException):
+            raise outcome
+        return FakeResponse(outcome)
+    return urlopen
+
+
+class ApiFailureTests(unittest.TestCase):
+    GOOD = json.dumps([{"paper": {"id": "2609.00003v1", "title": "Confidence calibration of neural classifiers",
+                                  "summary": ABSTRACT, "authors": [{"name": "A. Author"}],
+                                  "publishedAt": "2026-09-01"}}]).encode()
+
+    def collect_with(self, outcomes):
+        calls = []
+        queries = {"probability_calibration": list(outcomes)}
+        with tempfile.TemporaryDirectory(prefix="awesome-jev-test-") as directory, \
+                patch.dict(collect.QUERIES, queries, clear=True), patch.object(collect.time, "sleep"), \
+                patch.object(collect.urllib.request, "urlopen", fake_urlopen(outcomes, calls)), \
+                contextlib.redirect_stdout(io.StringIO()):
+            collector = collect.Collector(Path(directory), workers=2)
+            results = collector.run()
+            cached = len(list(Path(directory).glob("*.json")))
+        return {query: len(wrapper["data"]) for _, query, wrapper in results}, collector.failures, cached, calls
+
+    def test_html_body_is_recorded_without_aborting_or_caching(self):
+        candidates, failures, cached, calls = self.collect_with({"good": self.GOOD, "busy": b"<html>busy</html>"})
+        self.assertEqual(candidates, {"busy": 0, "good": 1})
+        self.assertEqual([(f["query"], f["retrieval_status"], f["error_code"]) for f in failures],
+                         [("busy", "failed", "JSONDecodeError")])
+        self.assertEqual(cached, 1)
+        self.assertEqual(calls.count("busy"), 1)
+
+    def test_unexpected_json_structure_is_a_failure(self):
+        candidates, failures, cached, _ = self.collect_with({"good": self.GOOD, "error": b'{"error": "busy"}'})
+        self.assertEqual(candidates, {"error": 0, "good": 1})
+        self.assertEqual([(f["query"], f["error_code"]) for f in failures], [("error", "ValueError")])
+        self.assertEqual(cached, 1)
+
+    def test_dropped_connections_are_retried_then_recorded(self):
+        dropped = [http.client.RemoteDisconnected("Remote end closed connection without response")] * 4
+        truncated = [http.client.IncompleteRead(b"[", 10), self.GOOD]
+        candidates, failures, cached, calls = self.collect_with({"dropped": dropped, "truncated": truncated})
+        self.assertEqual(candidates, {"dropped": 0, "truncated": 1})
+        self.assertEqual([(f["query"], f["error_code"]) for f in failures], [("dropped", "RemoteDisconnected")])
+        self.assertEqual((calls.count("dropped"), calls.count("truncated")), (4, 2))
+        self.assertEqual(cached, 1)
+
+    def test_main_writes_the_ledger_despite_one_bad_response(self):
+        outcomes = {"good": self.GOOD, "busy": b"<html>busy</html>"}
+        with tempfile.TemporaryDirectory(prefix="awesome-jev-test-") as directory, \
+                patch.dict(collect.QUERIES, {"probability_calibration": list(outcomes)}, clear=True), \
+                patch.object(collect.time, "sleep"), \
+                patch.object(collect.urllib.request, "urlopen", fake_urlopen(outcomes, [])):
+            root = Path(directory)
+            output = root / "research-sources.jsonl"
+            self.assertEqual(run_main("--cache-dir", str(root / "cache"), "--output", str(output)), 0)
+            records = [json.loads(line) for line in output.read_text(encoding="utf-8").splitlines()]
+            self.assertEqual([r["id"] for r in records], ["arxiv:2609.00003"])
 
 
 class OfflineRescreenTests(unittest.TestCase):
