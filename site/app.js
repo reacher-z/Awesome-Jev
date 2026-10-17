@@ -1,5 +1,5 @@
 import { resources, translations } from "./catalog.mjs";
-import { englishLang, renderResource, hasCode } from "./resource-view.mjs";
+import { englishLang, renderResource, renderFilterLabel, hasCode } from "./resource-view.mjs";
 
 document.documentElement.classList.add("js");
 let language = document.documentElement.lang.startsWith("zh") ? "zh" : "en";
@@ -10,20 +10,11 @@ let corpusLoadState = "idle";
 let corpusLoadPromise;
 let corpusRetrying = false;
 let corpusLimit = 24;
+let renderedState = [language, "All", "", false].join("|");
 let copyTimer;
 const $ = (selector) => document.querySelector(selector);
 const icon = (name) =>
   `<svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#${name}"></use></svg>`;
-const categoryIcons = {
-  All: "filter",
-  Models: "foundation",
-  Papers: "paper",
-  Tools: "code",
-  Datasets: "foundation",
-  Guides: "guide",
-  Evaluations: "evaluation",
-  Foundations: "foundation",
-};
 function renderCopyButton(key = "copyCode") {
   $("#copy-code").innerHTML =
     icon(key === "copied" ? "check" : "copy") +
@@ -64,6 +55,11 @@ function renderResources() {
       : !artifactCategories.has(activeFilter);
   if (codeFilter.disabled) codeFilter.checked = false;
   const codeOnly = codeFilter.checked;
+  // The generated page already lists every resource unfiltered. Rebuilding identical rows
+  // at start-up would only cost time and drop focus from a row link.
+  const state = [language, activeFilter, query, codeOnly].join("|");
+  if (state === renderedState) return;
+  renderedState = state;
   const filtered = resources.filter(
     (resource) =>
       (activeFilter === "All" || resource.category === activeFilter) &&
@@ -110,13 +106,11 @@ function setLanguage(next) {
       ),
     );
   document.querySelectorAll("[data-filter]").forEach((button) => {
-    button.innerHTML =
-      icon(categoryIcons[button.dataset.filter]) +
-      "<span>" +
-      escapeHTML(t("filter" + button.dataset.filter)) +
-      "</span><span class=\"filter-count\" aria-hidden=\"true\">" +
-      (button.dataset.filter === "All" ? resources.length : resources.filter(row => row.category === button.dataset.filter).length) +
-      "</span>";
+    button.innerHTML = renderFilterLabel(
+      button.dataset.filter,
+      t("filter" + button.dataset.filter),
+      button.dataset.filter === "All" ? resources.length : resources.filter(row => row.category === button.dataset.filter).length,
+    );
   });
   const repository =
     "https://github.com/reacher-z/Awesome-Jev/blob/main/";

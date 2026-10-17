@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
 import { weeklyPaperCounts, activitySVG, activityTable, activityText } from './paper_activity.mjs';
 import { resources, translations, paperThemes } from '../site/catalog.mjs';
-import { renderResource, renderModelRow, renderPaperRow, renderEvidenceLegend, evidenceOf, englishLang, escapeHTML as esc, artifactKinds, hasCode } from '../site/resource-view.mjs';
+import { renderResource, renderFilterLabel, renderModelRow, renderPaperRow, renderEvidenceLegend, evidenceOf, englishLang, escapeHTML as esc, artifactKinds, hasCode } from '../site/resource-view.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const origin = 'https://awesomejev.github.io';
@@ -196,7 +196,7 @@ function home(language) {
     .replace(/(data-language="(en|zh)")/g,(_,attr,code)=>`${attr} aria-current="${code===language?'page':'false'}"`)
     .replace(/href="\/guide\/" data-document="survey"/,`href="${route(language,'guide')}" data-document="survey"`);
   if(language==='zh')html=html.replace('href="https://github.com/reacher-z/Awesome-Jev/blob/main/README.md" data-document="readme"','href="https://github.com/reacher-z/Awesome-Jev/blob/main/README.zh-CN.md" data-document="readme"');
-  html=html.replace(/<button\b([^>]*data-filter="([^"]+)"[^>]*)>([\s\S]*?)<\/button>/g,(_,attrs,category,label)=>`<button${attrs}>${label}<span class="filter-count" aria-hidden="true">${category==='All'?resources.length:resources.filter(row=>row.category===category).length}</span></button>`);
+  html=html.replace(/<button\b([^>]*data-filter="([^"]+)"[^>]*)>[\s\S]*?<\/button>/g,(_,attrs,category)=>`<button${attrs}>${renderFilterLabel(category,t(language,'filter'+category),category==='All'?resources.length:resources.filter(row=>row.category===category).length)}</button>`);
   return html;
 }
 // indexable=false keeps the site chrome but drops canonical, alternates, social and
