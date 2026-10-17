@@ -1,6 +1,7 @@
 name: Suggest a source
 description: Add a public paper, model, tool, dataset, or evaluation.
 title: "[Source] "
+labels: ["source suggestion"]
 body:
   - type: input
     id: title
