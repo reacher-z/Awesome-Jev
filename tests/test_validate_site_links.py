@@ -77,5 +77,27 @@ class OwnSiteLinkTests(unittest.TestCase):
         self.assertEqual(self.errors(*links), [])
 
 
+class OwnSiteRouteNormalisationTests(unittest.TestCase):
+    """Site routes are looked up as served: escapes decoded, dot segments kept inside site/."""
+    setUp = OwnSiteLinkTests.setUp
+    errors = OwnSiteLinkTests.errors
+
+    def test_dot_segments_that_leave_the_site_are_reported(self):
+        links = (SITE + "/../docs/source-audit.md", SITE + "/papers/../../data/README.md", SITE + "/%2e%2e/LICENSE")
+        self.assertEqual(self.errors(*links), ["README.md: local link escapes site/"] * 3)
+        self.assertEqual(self.errors("/../docs/source-audit.md", source="site/index.html"),
+                         ["site/index.html: local link escapes site/"])
+
+    def test_dot_segments_inside_the_site_resolve(self):
+        self.assertEqual(self.errors(SITE + "/papers/../references.bib", SITE + "/papers/./#papers"), [])
+
+    def test_percent_encoded_routes_are_decoded(self):
+        (self.root / "site/papers/my file.html").write_text("<p>Spaced</p>\n")
+        self.assertEqual(self.errors(SITE + "/papers/my%20file.html", "/papers/my%20file.html", source="site/zh/index.html"), [])
+        self.assertEqual(self.errors(SITE + "/papers/my%20file.html", REPO + "/blob/main/site/papers/my%20file.html"), [])
+        self.assertEqual(self.errors(SITE + "/papers/my%20missing.html"),
+                         [f"README.md: missing local target: {SITE}/papers/my%20missing.html"])
+
+
 if __name__ == "__main__":
     unittest.main()

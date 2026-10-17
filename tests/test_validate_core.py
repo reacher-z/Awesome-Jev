@@ -151,9 +151,6 @@ class LocalLinkTests(RepoCase):
         self.assertEqual(self.link("docs/guide.md", "../../outside.md"),
                          ["docs/guide.md: local link escapes repository"])
 
-    # Bug: root-absolute paths are not percent-decoded (relative paths are), so the valid route
-    # /papers/my%20file.html is reported as a missing target. Remove this marker once fixed.
-    @unittest.expectedFailure
     def test_percent_encoded_root_absolute_route_resolves(self):
         self.write("site/papers/my file.html", "<p>Spaced</p>")
         self.assertEqual(self.link("site/index.html", "papers/my%20file.html"), [])

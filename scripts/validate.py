@@ -168,9 +168,14 @@ def local_link(path: Path, value: str) -> None:
     parsed = urlsplit(link)
     if parsed.scheme or parsed.netloc or not value or value == "#" or value.startswith("{{"):
         return
-    target = ((base / parsed.path.lstrip("/")) if parsed.path.startswith("/") else (path.parent / unquote(parsed.path))).resolve() if parsed.path else path
+    route = parsed.path.startswith("/")
+    target = ((base / unquote(parsed.path).lstrip("/")) if route else (path.parent / unquote(parsed.path))).resolve() if parsed.path else path
     if not target.is_relative_to(ROOT):
         fail(str(path.relative_to(ROOT)), "local link escapes repository")
+        return
+    # A route is served from its base folder: /../docs/x.md is not a file of the site.
+    if route and not target.is_relative_to(base):
+        fail(str(path.relative_to(ROOT)), "local link escapes site/")
         return
     if target.is_dir():
         target = next((target / n for n in ("index.html", "README.md") if (target / n).is_file()), target)
