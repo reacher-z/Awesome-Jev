@@ -104,8 +104,10 @@ function pageSchema(language, section, title, description, list, article) {
   }
   return {'@context':'https://schema.org','@graph':graph};
 }
+// One language cluster for both the page head and the sitemap, so the two never diverge.
+const alternateLinks = section => [{hreflang:'en',href:origin+route('en',section)},{hreflang:'zh-CN',href:origin+route('zh',section)},{hreflang:'x-default',href:origin+route('en',section)}];
 function alternates(section) {
-  return `<link rel="alternate" hreflang="en" href="${origin+route('en',section)}" />\n<link rel="alternate" hreflang="zh-CN" href="${origin+route('zh',section)}" />\n<link rel="alternate" hreflang="x-default" href="${origin+route('en',section)}" />`;
+  return alternateLinks(section).map(({hreflang,href})=>`<link rel="alternate" hreflang="${hreflang}" href="${href}" />`).join('\n');
 }
 function localizeHTML(html, language) {
   html = html.replace(/<([a-z][a-z0-9]*)\b([^>]*\bdata-i18n="([^"]+)"[^>]*)>[\s\S]*?<\/\1\s*>/g, (all,tag,attrs,key)=>typeof t(language,key)==='string'?`<${tag}${attrs}>${t(language,key)}</${tag}>`:all);
@@ -224,7 +226,7 @@ for (const language of ['en','zh']) {
 }
 const sections=['','guide','papers','models','discoveries','topics',...topics.map(topic=>'topics/'+topic.slug)];
 const sectionDate=section=>section==='guide'?guide.updated:section==='discoveries'?discoveryDate:section.startsWith('topics/')?topics.find(topic=>'topics/'+topic.slug===section).updated:contentDate;
-outputs.set('site/sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sections.flatMap(section=>['en','zh'].map(language=>`  <url><loc>${origin+route(language,section)}</loc><lastmod>${sectionDate(section)}</lastmod>${['en','zh'].map(other=>`<xhtml:link rel="alternate" hreflang="${other==='zh'?'zh-CN':'en'}" href="${origin+route(other,section)}" />`).join('')}</url>`)).join('\n')}\n</urlset>\n`);
+outputs.set('site/sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sections.flatMap(section=>['en','zh'].map(language=>`  <url><loc>${origin+route(language,section)}</loc><lastmod>${sectionDate(section)}</lastmod>${alternateLinks(section).map(({hreflang,href})=>`<xhtml:link rel="alternate" hreflang="${hreflang}" href="${href}" />`).join('')}</url>`)).join('\n')}\n</urlset>\n`);
 outputs.set('site/data/expansion-progress.json',JSON.stringify(expansion,null,2)+'\n');
 outputs.set('site/references.bib',await readFile(resolve(root,'references.bib'),'utf8'));
 outputs.set('site/papers.json',JSON.stringify({title:'Awesome Jev research papers',url:origin+'/papers/',updated:contentDate,scope:'Curated direct preprints; findings remain author-reported. No experimental reproduction implied.',papers},null,2)+'\n');
