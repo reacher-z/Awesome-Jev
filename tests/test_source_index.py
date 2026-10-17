@@ -1,6 +1,7 @@
 """Regressions for source identity, deduplication, and public-URL hygiene."""
 
 import contextlib
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -110,6 +111,27 @@ class SourceIdentityTests(unittest.TestCase):
         payload = build_fixture([(canonical, "Model report"), (tracked, "Tracked report")])
         self.assertEqual(payload["counts"]["unique_records"], 1)
         self.assertEqual(payload["sources"][0]["url"], canonical)
+
+    def test_published_link_keeps_the_scheme_and_host_that_resolve(self):
+        # repository.cam.ac.uk has no DNS record and pe.cemi.rssi.ru serves no
+        # https, so identity normalization must not rewrite the followed link.
+        sources = {
+            "https://www.repository.cam.ac.uk/handle/1810/397829": "https://www.repository.cam.ac.uk/handle/1810/397829",
+            "http://pe.cemi.rssi.ru/pe_2012_3_115-132.pdf": "http://pe.cemi.rssi.ru/pe_2012_3_115-132.pdf",
+            "http://www.example.org/report/?model=alpha&utm_source=fixture#results": "http://www.example.org/report?model=alpha",
+            "http://export.arxiv.org/abs/1706.04599v1": "https://arxiv.org/abs/1706.04599",
+            "http://www.github.com/Example/Project/blob/main/README.md": "https://github.com/example/project",
+        }
+        payload = build_fixture([(url, f"Link fixture {number}") for number, url in enumerate(sources)])
+        published = {index.canonical(row["url"]): row for row in payload["sources"]}
+        self.assertEqual({row["url"] for row in payload["sources"]}, set(sources.values()))
+        for raw in sources:
+            key = index.canonical(raw)
+            self.assertEqual(published[key]["id"], hashlib.sha256(key.encode()).hexdigest()[:12])
+        # Scheme or www. aliases of one resource still count once.
+        payload = build_fixture([("http://www.example.org/report", "Alias one"), ("https://example.org/report/", "Alias two")])
+        self.assertEqual(payload["counts"]["unique_records"], 1)
+        self.assertEqual(payload["counts"]["duplicate_records"], 1)
 
     def test_arxiv_formats_versions_and_hf_mirror_count_once(self):
         urls = [

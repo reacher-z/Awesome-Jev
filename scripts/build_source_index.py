@@ -76,6 +76,22 @@ def canonical(url: str) -> str:
     return urlunsplit(("https", host, path, query, ""))
 
 
+# canonical() forces https and drops "www." so that aliases share one identity.
+# Elsewhere a host may serve only one form (no https, or no bare domain), so
+# the published link keeps the ledger's scheme and host.
+CANONICAL_LINK_HOSTS = {"arxiv.org", "github.com", "huggingface.co"}
+
+
+def link(url: str) -> str:
+    """The URL readers follow: the canonical form with the ledger's scheme and host."""
+    key = canonical(url)
+    recorded, parts = urlsplit(url.strip()), urlsplit(key)
+    host = recorded.netloc.lower()
+    if parts.netloc in CANONICAL_LINK_HOSTS or host.removeprefix("www.") != parts.netloc:
+        return key
+    return urlunsplit((recorded.scheme.lower(), host, parts.path, parts.query, ""))
+
+
 def category(row: dict) -> str:
     if row.get("relation") == "background":
         return "Research foundations"
@@ -139,7 +155,7 @@ def build() -> dict:
         entry = {
             "id": hashlib.sha256(url.encode()).hexdigest()[:12],
             "title": title,
-            "url": url,
+            "url": link(row.get("url", row.get("canonical_url", ""))),
             "category": category(display),
             "topic": display.get("topic", ""),
             "description": display.get("relevance", row.get("evidence", "")),

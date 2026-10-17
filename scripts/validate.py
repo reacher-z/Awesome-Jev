@@ -300,7 +300,7 @@ def check_index(expected_raw_records: int) -> None:
         if any(not required.issubset(row) for row in rows):
             fail("source index", "missing website source fields")
         levels = collections.Counter(row["verification_level"] for row in rows)
-        if counts["unique_records"] != len(rows) or len({r["url"] for r in rows}) != len(rows):
+        if counts["unique_records"] != len(rows) or len({source_index.canonical(r["url"]) for r in rows}) != len(rows):
             fail("source index", "unique source count or URL deduplication mismatch")
         if counts["raw_records"] != counts["unique_records"] + counts["duplicate_records"]:
             fail("source index", "raw, unique, and duplicate counts do not reconcile")
