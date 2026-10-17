@@ -101,6 +101,8 @@ The current reviewed Space commit is `0ddf6758073eb77ae449a3541f57286d7f39d93f`.
 
 The 0.2/0.5/0.3 public/same-skills/new-domains weights and scoring-rule objects are unchanged. Private evaluations remain unavailable for complete independent reconstruction. This was a metadata, structure and changed-field review, not execution of the evaluator or validation of its model scores. Previous hashes and source metadata remain in the [refresh record](../data/scan-review-2026-10-17.json).
 
+**中文：** 本次复核的 Space 提交为 `0ddf6758073eb77ae449a3541f57286d7f39d93f`，其元数据和四份公开文档与扫描待审记录中的哈希一致。版本标签仍为 0.3.2；记分板有 173 条引擎记录，完整分数文件连同参照项共 174 条。参照项是 10 月 14 日的 Jev 1.14 实验室运行，而冻结的请求载荷仍写 Jev 1.13。方法说明中较早的 `generated_utc` 不作为复核时间。公开题、同技能题、新领域题 0.2/0.5/0.3 的权重和评分规则对象未变；私有评测仍无法完整独立重建。本次只复核元数据、结构和变化字段，没有运行评测程序，也没有验证其模型分数。先前的哈希和来源元数据保留在[刷新记录](../data/scan-review-2026-10-17.json)中。
+
 ## Evidence markers
 
 Each curated row on the website ends its metadata line with one marker: a small glyph, then two words. The first word says who published the source. The second says how far its claims were checked here. The glyph's fill repeats the first word, so the marker never relies on colour. A one-line legend under the homepage filters links to this section.

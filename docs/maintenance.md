@@ -147,6 +147,24 @@ Collect only public resources with public, unauthenticated requests. Keep privat
 
 Preserve the individual licenses of third-party resources. A repository license does not relicense linked papers, datasets or models. The bundled fonts carry SIL Open Font License notices; the icon subset is Font Awesome **Free**, with its included license. Keep those notices and source versions with the assets. Do not add Font Awesome Pro files or proprietary font packages to this public repository.
 
+## Reviewed resource expansion
+
+The [expansion directory](expansion-2026-10-16.md) and its [frozen baseline](../data/expansion-baseline-2026-10-16.json) distinguish new resources from previously known URLs and evidence. Only accepted URLs listed in the [reviewed intake](../data/expansion-intake-2026-10-16.json) may count toward the expansion target; ordinary scan discoveries do not automatically enter this audited count.
+
+For a reviewed expansion release, update the ledgers and accepted intake, then run:
+
+```sh
+python3 scripts/build_source_index.py
+python3 scripts/build_expansion_report.py
+node scripts/build_site.mjs
+python3 scripts/validate.py
+python3 -m unittest discover -s tests
+```
+
+The generated discoveries pages are snapshots of the reviewed intake, separate from the live searchable corpus. The recurring scanner retains its existing data-only PR boundary and does not silently rewrite the expansion report or directory. Continue to inspect proposed resources, verification scope, duplicates, and any licensed or experimental limitations before publication.
+
+The Chinese directory uses [discovery-translations.zh-CN.json](../data/discovery-translations.zh-CN.json) for its resource descriptions. Each translation is keyed by the exact reviewed English description, so a changed qualification cannot silently retain an older translation. Add or review the Chinese wording whenever an accepted description changes, preserving private-data, label-provenance, license and reproduction limits. The build stops if a current description lacks Chinese text. Original source titles and links remain unchanged; translating a summary does not add another source or upgrade its evidence tier.
+
 ## 中文说明
 
 ### 每日两次扫描
@@ -185,12 +203,11 @@ Preserve the individual licenses of third-party resources. A repository license 
 
 只使用公开来源，不提交密钥、私人对话、个人路径或原始缓存。保留第三方字体、图标、模型与数据的许可边界，不将商业受限资源描述为可任意使用的开源资源。
 
+### 资源扩展审阅
 
-## Reviewed resource expansion
+[扩展目录](expansion-2026-10-16.md)及其[冻结基线](../data/expansion-baseline-2026-10-16.json)区分新资源与此前已知的 URL 和证据。只有列入[审阅后接收清单](../data/expansion-intake-2026-10-16.json)的 URL 才能计入扩展目标；普通扫描发现不会自动进入这一审计计数。
 
-The [expansion directory](expansion-2026-10-16.md) and its [frozen baseline](../data/expansion-baseline-2026-10-16.json) distinguish new resources from previously known URLs and evidence. Only accepted URLs listed in the [reviewed intake](../data/expansion-intake-2026-10-16.json) may count toward the expansion target; ordinary scan discoveries do not automatically enter this audited count.
-
-For a reviewed expansion release, update the ledgers and accepted intake, then run:
+发布一次审阅后的资源扩展时，先更新台账和接收清单，再运行：
 
 ```sh
 python3 scripts/build_source_index.py
@@ -200,8 +217,6 @@ python3 scripts/validate.py
 python3 -m unittest discover -s tests
 ```
 
-The generated discoveries pages are snapshots of the reviewed intake, separate from the live searchable corpus. The recurring scanner retains its existing data-only PR boundary and does not silently rewrite the expansion report or directory. Continue to inspect proposed resources, verification scope, duplicates, and any licensed or experimental limitations before publication.
-
-The Chinese directory uses [discovery-translations.zh-CN.json](../data/discovery-translations.zh-CN.json) for its resource descriptions. Each translation is keyed by the exact reviewed English description, so a changed qualification cannot silently retain an older translation. Add or review the Chinese wording whenever an accepted description changes, preserving private-data, label-provenance, license and reproduction limits. The build stops if a current description lacks Chinese text. Original source titles and links remain unchanged; translating a summary does not add another source or upgrade its evidence tier.
+生成的新增来源页面是审阅接收清单的快照，与可搜索的完整来源库分开。定期扫描仍只提交数据 PR，不会静默改写扩展报告或目录。发布前继续检查拟新增资源的核查范围、重复情况以及许可或实验限制。
 
 中文资源简介保存在独立翻译文件中，以完整英文简介对应。新增或修改来源简介时同步校对译文，保留数据私有性、标签来源、许可和复现限制；缺少对应中文时，构建会停止。翻译不改变来源数量、原始标题、链接或证据等级。

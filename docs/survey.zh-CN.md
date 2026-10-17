@@ -12,7 +12,7 @@ TypeSafe 于 **2026 年 9 月 15 日**发布 Jev，并介绍了模型架构、�
 
 一次请求包含共享状态、问题及调用方定义的判定标准。**Choice** 返回选项与概率分布；**Score** 返回有序量表上的评估；**Noul** 返回“是”的概率。外围程序决定如何据此路由、复核或执行，使决策约定、候选答案和不确定性直接进入应用。[问题原语](https://docs.typesafe.ai/primitives)
 
-版本边界很重要。在本次快照中，`jev-latest` 指向稳定版 **1.13.0**；`jev-preview` 指向 **10 月 14 日**发布的 **1.14.0**。比较实验应固定版本并记录响应中的模型 ID。下文研究主要针对 1.13，不能据此确定 1.14 的表现。[模型文档](https://docs.typesafe.ai/models)
+版本边界很重要。在本次快照中，`jev-latest` 指向稳定版 **1.13.0**；`jev-preview` 指向 **10 月 14 日**发布的 **1.14.0**。比较实验应固定版本并记录响应中的模型 ID。下文研究主要针对 1.13，不能据此确定 1.14 的表现。[模型文档](https://docs.typesafe.ai/models) · 别名核查记录：[10 月 16 日](../data/model-reference-check-2026-10-16.json)、[10 月 17 日](../data/model-reference-check-2026-10-17.json)
 
 当前接口也已超出早期以文本为主的评估范围：图像功能需要显式启用实验选项，**Box** 定位需要 1.14。它们需要各自的评估证据。[图像](https://docs.typesafe.ai/images) · [Box](https://docs.typesafe.ai/primitives/box)
 

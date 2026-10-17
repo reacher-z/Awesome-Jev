@@ -12,7 +12,7 @@ TypeSafe introduced Jev on **15 September 2026**, describing a model architectur
 
 A request pairs shared state with questions and caller-defined criteria. **Choice** returns an option and its distribution; **Score** returns an assessment over ordered rubric levels; **Noul** returns a yes-probability. The surrounding program determines how those answers affect routing, review, or execution. This puts the decision contract, its alternatives, and uncertainty directly in the application. [Question primitives](https://docs.typesafe.ai/primitives)
 
-Version boundaries matter. On this snapshot, `jev-latest` resolves to stable **1.13.0**; `jev-preview` resolves to **1.14.0**, released **14 October**. Log the returned model ID and pin versions for comparisons. The studies below mainly concern 1.13; they cannot establish 1.14 performance. [Models](https://docs.typesafe.ai/models)
+Version boundaries matter. On this snapshot, `jev-latest` resolves to stable **1.13.0**; `jev-preview` resolves to **1.14.0**, released **14 October**. Log the returned model ID and pin versions for comparisons. The studies below mainly concern 1.13; they cannot establish 1.14 performance. [Models](https://docs.typesafe.ai/models) · Alias checks: [16 October](../data/model-reference-check-2026-10-16.json), [17 October](../data/model-reference-check-2026-10-17.json)
 
 The current interface is also broader than the original text-oriented evaluations: images require explicit experimental opt-in, and **Box** localization requires 1.14. These capabilities need their own evidence. [Images](https://docs.typesafe.ai/images) · [Box](https://docs.typesafe.ai/primitives/box)
 
