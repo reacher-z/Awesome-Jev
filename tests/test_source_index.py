@@ -1,5 +1,7 @@
 """Regressions for source identity, deduplication, and public-URL hygiene."""
 
+import contextlib
+import io
 import json
 from pathlib import Path
 import tempfile
@@ -131,6 +133,37 @@ class SourceIdentityTests(unittest.TestCase):
         self.assertEqual(len(titles), 2)
         self.assertNotIn("License", titles)
         self.assertEqual(payload["counts"]["unique_records"], 2)
+
+
+class SourceIndexCheckTests(unittest.TestCase):
+    """--check must cover every generated file, including the README badge."""
+
+    def run_main(self, root, *args):
+        with patch.object(index, "ROOT", root), patch("sys.argv", ["build_source_index.py", *args]), \
+                contextlib.redirect_stdout(io.StringIO()):
+            index.main()
+
+    def test_check_names_each_stale_output(self):
+        rows = [{"url": "https://example.org/report", "title": "Fixture report", "relation": "direct",
+                 "verification_level": "content_screened", "retrieved_at": "2026-10-16T00:00:00+00:00",
+                 "relevance": "Synthetic check regression."}]
+        for name in ("site/data/source-index.json", "data/source-counts.json", "site/data/source-badge.json"):
+            with self.subTest(name=name), tempfile.TemporaryDirectory(prefix="awesome-jev-test-") as directory:
+                root = Path(directory)
+                (root / "data").mkdir()
+                (root / "data/ecosystem-sources.jsonl").write_text(
+                    "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+                self.run_main(root)
+                self.run_main(root, "--check")
+                path = root / name
+                path.write_text(path.read_text(encoding="utf-8").replace("1", "9"), encoding="utf-8")
+                with self.assertRaises(SystemExit) as stale:
+                    self.run_main(root, "--check")
+                self.assertIn(name, str(stale.exception))
+                path.unlink()
+                with self.assertRaises(SystemExit) as missing:
+                    self.run_main(root, "--check")
+                self.assertIn(name, str(missing.exception))
 
 
 class PublicSourceUrlTests(unittest.TestCase):

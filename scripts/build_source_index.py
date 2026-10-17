@@ -138,22 +138,34 @@ def build() -> dict:
     return {"generated_at": generated, "counts": counts, "sources": rows, "duplicates": duplicates}
 
 
+def outputs(payload: dict) -> dict[str, str]:
+    """Render every file this script owns, keyed by repository-relative path."""
+    badge = {"schemaVersion": 1, "label": "source checks", "message": f"{payload['counts']['checked_sources']:,} sources", "color": "6B7280", "labelColor": "374151"}
+    return {
+        "site/data/source-index.json": json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n",
+        "data/source-counts.json": json.dumps({"generated_at": payload["generated_at"], "counts": payload["counts"]}, indent=2) + "\n",
+        "site/data/source-badge.json": json.dumps(badge) + "\n",
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--check", action="store_true", help="Fail if the committed website index is stale")
+    parser.add_argument("--check", action="store_true", help="Fail if any committed generated file is stale")
     args = parser.parse_args()
     payload = build()
-    destination = ROOT / "site" / "data" / "source-index.json"
-    output = json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n"
+    files = outputs(payload)
     if args.check:
-        if not destination.exists() or destination.read_text() != output:
-            raise SystemExit("Source index is stale: run python3 scripts/build_source_index.py")
+        # The README badge reads source-badge.json directly, so every output is
+        # compared, not only the index that validate.py reconciles.
+        stale = [name for name, text in files.items()
+                 if not (ROOT / name).exists() or (ROOT / name).read_text(encoding="utf-8") != text]
+        if stale:
+            raise SystemExit(f"Stale generated source files ({', '.join(stale)}): run python3 scripts/build_source_index.py")
     else:
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_text(output)
-        (ROOT / "data" / "source-counts.json").write_text(json.dumps({"generated_at": payload["generated_at"], "counts": payload["counts"]}, indent=2) + "\n")
-        badge = {"schemaVersion": 1, "label": "source checks", "message": f"{payload['counts']['checked_sources']:,} sources", "color": "6B7280", "labelColor": "374151"}
-        (destination.parent / "source-badge.json").write_text(json.dumps(badge) + "\n")
+        for name, text in files.items():
+            destination = ROOT / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(text, encoding="utf-8")
     print(json.dumps(payload["counts"], indent=2))
 
 
