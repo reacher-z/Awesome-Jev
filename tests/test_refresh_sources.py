@@ -905,8 +905,83 @@ class RetryBudgetTests(unittest.TestCase):
         self.assertEqual(len(self.requests), 2)
         self.assertEqual(refresh.safe_exception_code(refresh.FetchError("retry_budget_exhausted")), "retry_budget_exhausted")
 
+    def test_plain_backoff_holds_only_the_failing_request(self):
+        # Only a host that signalled rate limiting (429 or Retry-After) holds
+        # every worker; a 5xx without Retry-After delays just its own retry.
+        ok = (200, {"content-type": "text/plain"}, b"ok")
+        for status, b_sent, sleeps in ((503, 0.5, [1]), (429, 1, [1, 0.5])):
+            with self.subTest(status=status):
+                self.clock[0], self.sleeps[:], self.requests[:] = 1000.0, [], []
+                client = self.client({"https://example.org/a": [(status, {}, b""), ok], "https://example.org/b": [ok]})
+
+                def other_worker():  # 0.5 s into the first worker's backoff
+                    self.clock[0] += 0.5
+                    client.fetch("https://example.org/b")
+                self.during_first_wait = other_worker
+                self.assertEqual(client.fetch("https://example.org/a")[0], b"ok")
+                self.assertEqual(self.requests, [("https://example.org/a", 0), ("https://example.org/b", b_sent),
+                                                 ("https://example.org/a", 1)])
+                self.assertEqual(self.sleeps, sleeps)
+
+    def test_each_phase_has_its_own_share_of_the_deadline(self):
+        ok = (200, {"content-type": "text/plain"}, b"ok")
+        limited = (429, {"retry-after": "60"}, b"")
+        client = self.client({"https://example.org/a": [limited] * 3, "https://example.com/c": [ok]}, budget=100)
+        client.begin_phase("ecosystem", 70)
+        with self.assertRaisesRegex(refresh.FetchError, "^retry_budget_exhausted$"):
+            client.fetch("https://example.org/a")
+        # The second 60 s wait would end after the ecosystem share; research,
+        # which starts at 60 s, still has its full 30 s and more of the total.
+        client.begin_phase("research", 30)
+        self.assertEqual(client.deadline, 1000 + 100)
+        self.assertEqual(client.fetch("https://example.com/c")[0], b"ok")
+        self.assertEqual(client.exhausted_phases, ["ecosystem"])
+        # A phase that overran its share still leaves the next one its own.
+        self.clock[0] = 1000.0
+        late = self.client({}, budget=100)
+        late.begin_phase("ecosystem", 70)
+        self.clock[0] = 1000 + 95
+        late.begin_phase("research", 30)
+        self.assertEqual(late.deadline, 1000 + 95 + 30)
+
+    def test_slow_ecosystem_phase_does_not_fail_the_research_queries(self):
+        def scan_ecosystem(scan, *args):
+            # The ecosystem phase used the whole scan-wide budget.
+            self.clock[0] = 1000 + refresh.SCAN_TIME_BUDGET_SECONDS + 1
+            with self.assertRaisesRegex(refresh.FetchError, "^retry_budget_exhausted$"):
+                scan.fetcher._hold("example.org")
+            return [row()]
+
+        def scan_research(scan, *args):
+            phases.append(scan.fetcher.phase)
+            scan.fetcher._hold("huggingface.co")  # research APIs are still contacted
+            scan.successful_queries += 1
+            return [], []
+        phases = []
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "data").mkdir()
+            (root / "data/ecosystem-sources.jsonl").write_bytes("".join(ledger(row()).lines).encode())
+            (root / "data/research-sources.jsonl").write_text("")
+            (root / "data/source-counts.json").write_text(json.dumps({"counts": {"checked_sources": 1}}))
+            (root / "summary.md").write_text("")
+            catalog(root)
+            with patch.object(refresh, "ROOT", root), patch.object(refresh.Scan, "scan_ecosystem", scan_ecosystem), \
+                    patch.object(refresh.Scan, "scan_research", scan_research), patch.object(refresh.subprocess, "run"), \
+                    patch.dict(refresh.os.environ, {"GITHUB_STEP_SUMMARY": str(root / "summary.md")}, clear=True), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(refresh.main([]), 0)
+            report = json.loads((root / "data/scan-latest.json").read_text())
+            summary = (root / "summary.md").read_text()
+        self.assertEqual(phases, ["research"])
+        self.assertEqual((report["status"], report["retry_budget_exhausted"]), ("partial", True))
+        self.assertEqual(report["retry_budget_exhausted_phases"], ["ecosystem"])
+        self.assertEqual(report["phase_budget_seconds"], refresh.PHASE_TIME_BUDGET_SECONDS)
+        self.assertIn("exhausted in the ecosystem phase", summary)
+
     def test_default_budget_is_conservative_and_leaves_time_for_the_job(self):
         self.assertEqual(refresh.SCAN_TIME_BUDGET_SECONDS, 18 * 60)
+        self.assertEqual(set(refresh.PHASE_TIME_BUDGET_SECONDS), {"ecosystem", "research"})
         self.assertEqual(refresh.PublicFetcher().deadline, 1000 + refresh.SCAN_TIME_BUDGET_SECONDS)
         workflow = (refresh.ROOT / ".github/workflows/scan-sources.yml").read_text(encoding="utf-8")
         job_minutes = int(workflow.split("timeout-minutes:", 1)[1].split()[0])

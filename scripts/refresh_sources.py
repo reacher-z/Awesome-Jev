@@ -49,7 +49,11 @@ MAX_BODY = 6_000_000
 # Scan-wide deadline for issuing requests, including Retry-After and backoff
 # waits. It leaves the 25-minute scan job time to merge, rebuild and validate,
 # so a heavily rate-limited run ends partial instead of hitting the job timeout.
-SCAN_TIME_BUDGET_SECONDS = 18 * 60
+# Research queries run after the ecosystem phase, so each phase has its own
+# guaranteed share: a slow ecosystem phase cannot fail every research query.
+# Time that a phase leaves unused passes to the next one.
+PHASE_TIME_BUDGET_SECONDS = {"ecosystem": 14 * 60, "research": 4 * 60}
+SCAN_TIME_BUDGET_SECONDS = sum(PHASE_TIME_BUDGET_SECONDS.values())
 SAFE_FETCH_ERRORS = frozenset({
     "unsafe_url_syntax", "unsafe_url_scheme_or_credentials", "unsupported_port",
     "non_public_host", "credential_query_rejected", "non_public_ip",
@@ -168,18 +172,32 @@ class PublicFetcher:
         self.cached_bytes = 0
         self.lock = threading.Lock()
         self.requests = 0
-        # Workers share each host's not-before time, so a Retry-After or backoff
-        # delay holds every request to that host, and one scan-wide deadline.
+        # Workers share each host's not-before time, so a rate-limit delay holds
+        # every request to that host, and the current phase's deadline.
         self.not_before = {}
         self.budget = budget
-        self.deadline = time.monotonic() + budget
+        self.started = time.monotonic()
+        self.deadline = self.started + budget
+        self.allotted = 0
+        self.phase = None
+        self.exhausted_phases = []
         self.budget_exhausted = False
 
-    def _hold(self, host, ready=0.0, delay=0.0):
+    def begin_phase(self, name, seconds):
+        """Give a scan phase `seconds` from now, or more when earlier phases
+        finished inside their shares: the deadline is never before the end of
+        all shares allotted so far."""
+        with self.lock:
+            self.phase = name
+            self.allotted += seconds
+            self.deadline = max(time.monotonic() + seconds, self.started + self.allotted)
+
+    def _hold(self, host, ready=0.0, delay=0.0, host_wide=True):
         """Wait for the host's not-before time and any new `delay`, within the deadline.
 
         `ready` is the time this request has already waited until; the result
-        is the new one. A wait that would end at or after the deadline is not
+        is the new one. A `host_wide` delay also holds every other request to
+        the host. A wait that would end at or after the deadline is not
         started: no further request is sent and the scan reports a partial result.
         """
         with self.lock:
@@ -188,8 +206,10 @@ class PublicFetcher:
             until = max(shared, current + delay)
             if until >= self.deadline:
                 self.budget_exhausted = True
+                if self.phase and self.phase not in self.exhausted_phases:
+                    self.exhausted_phases.append(self.phase)
                 raise FetchError("retry_budget_exhausted")
-            if delay:
+            if delay and host_wide:
                 self.not_before[host] = until
         wait = max(delay, shared - current)
         if wait > 0:
@@ -266,7 +286,10 @@ class PublicFetcher:
                     if delay is not None and delay > research.MAX_RETRY_AFTER_SECONDS:
                         # Never send a request the server has asked us not to send.
                         raise FetchError("retry_after_exceeded")
-                    ready = self._hold(host, ready, min(2 ** attempt, 8) if delay is None else delay)
+                    # A 429 or a Retry-After is the host's rate-limit signal and holds
+                    # every worker; plain backoff after a 5xx delays only this request.
+                    ready = self._hold(host, ready, min(2 ** attempt, 8) if delay is None else delay,
+                                       host_wide=status == 429 or delay is not None)
                     continue
                 break
             if status in {301, 302, 303, 307, 308}:
@@ -926,7 +949,8 @@ def prune_promoted_exclusions(excluded: Ledger, accepted_rows) -> tuple[Ledger, 
 
 
 def publish_summary(report):
-    text = "\n".join(["## Public source scan", "", "Status: **" + report["status"] + "**.", f"Added: {report['added_count']}; updated: {report['changed_count']}; source changes awaiting review: {report['editorial_review_required_count']}.", f"Provider/document issues: {report['error_count']}. Earlier evidence was retained on failures.", f"Diagnostic examples stored: {report['error_examples_count']} of {report['error_count']}; error_code_counts covers all issues.", *([f"Retry budget exhausted: no requests were sent after {report['retry_budget_seconds'] // 60} minutes; unscanned sources keep their earlier evidence."] if report.get("retry_budget_exhausted") else []), "","Automated source screening is not scientific review or reproduction. No source instructions or downloaded code were executed.", ""])
+    phases = report.get("retry_budget_exhausted_phases") or ["scan"]
+    text = "\n".join(["## Public source scan", "", "Status: **" + report["status"] + "**.", f"Added: {report['added_count']}; updated: {report['changed_count']}; source changes awaiting review: {report['editorial_review_required_count']}.", f"Provider/document issues: {report['error_count']}. Earlier evidence was retained on failures.", f"Diagnostic examples stored: {report['error_examples_count']} of {report['error_count']}; error_code_counts covers all issues.", *([f"Retry budget exhausted in the {' and '.join(phases)} phase{'s' if len(phases) > 1 else ''}: no further requests were sent there once the time share ran out; unscanned sources keep their earlier evidence."] if report.get("retry_budget_exhausted") else []), "", "Automated source screening is not scientific review or reproduction. No source instructions or downloaded code were executed.", ""])
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:
             f.write(text)
@@ -958,7 +982,9 @@ def main(argv=None):
     scan = Scan(fetcher, args.workers, curated_seeds=curated_seeds, policy=policy, pinned_sources=pinned_sources,
                 known_keys={identity(row) for ledger in originals for row in ledger.rows})
     limit = min(args.max_new, 5) if args.smoke and args.max_new is not None else 5 if args.smoke else args.max_new
+    fetcher.begin_phase("ecosystem", PHASE_TIME_BUDGET_SECONDS["ecosystem"])
     ecosystem_rows = scan.scan_ecosystem(originals[0], limit, args.smoke)
+    fetcher.begin_phase("research", PHASE_TIME_BUDGET_SECONDS["research"])
     research_rows, direct = scan.scan_research(args.smoke)
     ecosystem_input, research_input = route_observations(originals, ecosystem_rows + direct, research_rows)
     merged_ecosystem, ec = merge_records(originals[0], ecosystem_input, limit, policy=policy)
@@ -984,7 +1010,7 @@ def main(argv=None):
         counts = json.loads((ROOT / "data/source-counts.json").read_text(encoding="utf-8"))["counts"]
     else:
         counts = json.loads((ROOT / "data/source-counts.json").read_text(encoding="utf-8"))["counts"]
-    report = {"schema_version": 1, "started_at": started_at, "completed_at": now(), "status": status, "changed": changed, "dry_run": args.smoke, "added_count": len(changes["added"]), "changed_count": len(changes["changed"]), "editorial_review_required_count": pending_count, "added_urls": changes["added"][:100], "changed_urls": changes["changed"][:100], "editorial_refresh_candidates": pending, "editorial_examples_truncated": pending_count > 100, **error_report(scan.errors), "counts": counts, "index_revision": scan.index_revision, "network_requests": fetcher.requests, "retry_budget_exhausted": fetcher.budget_exhausted, "retry_budget_seconds": fetcher.budget,"excluded_discoveries": scan.excluded, "preserved_after_failure": ec["preserved_after_failure"] + rc["preserved_after_failure"], "duplicate_candidates_skipped": ec["duplicates"] + rc["duplicates"], "privacy_rejected_records": ec["rejected"] + rc["rejected"], "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources."}
+    report = {"schema_version": 1, "started_at": started_at, "completed_at": now(), "status": status, "changed": changed, "dry_run": args.smoke, "added_count": len(changes["added"]), "changed_count": len(changes["changed"]), "editorial_review_required_count": pending_count, "added_urls": changes["added"][:100], "changed_urls": changes["changed"][:100], "editorial_refresh_candidates": pending, "editorial_examples_truncated": pending_count > 100, **error_report(scan.errors), "counts": counts, "index_revision": scan.index_revision, "network_requests": fetcher.requests, "retry_budget_exhausted": fetcher.budget_exhausted, "retry_budget_seconds": fetcher.budget, "retry_budget_exhausted_phases": fetcher.exhausted_phases, "phase_budget_seconds": PHASE_TIME_BUDGET_SECONDS, "excluded_discoveries": scan.excluded, "preserved_after_failure": ec["preserved_after_failure"] + rc["preserved_after_failure"], "duplicate_candidates_skipped": ec["duplicates"] + rc["duplicates"], "privacy_rejected_records": ec["rejected"] + rc["rejected"], "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources."}
     report["curation_excluded_count"] = len(set(ec["curation_excluded"] + rc["curation_excluded"]) | scan.curation_excluded)
     # Report every attempt, including failures. The publisher must gate on
     # report.changed, not this report's timestamp or a raw git-diff count.
