@@ -36,26 +36,6 @@ STATED_BIB = {"en": r"\[references\.bib\]\(references\.bib\) \((\d+) entries\)",
               "zh": r"共 (\d+) 条书目信息收录于 \[references\.bib\]\(references\.bib\)"}
 BIB_NOTE = re.compile(r"^Version (\d+), (\d{4}-\d{2}-\d{2})(?:; first posted (\d{4}-\d{2}-\d{2}))?; preprint$")
 
-# Known differences reported in open issues. A listed paper may keep exactly the recorded
-# difference or be fixed; any other difference fails. Delete entries once their fix lands.
-# #20: revised papers whose README rows omit the first-submission date.
-README_FIRST_SUBMITTED_MISSING = {
-    "2610.03935", "2610.06625", "2609.29769", "2610.07716",
-    "2609.26550", "2609.26758", "2609.33401", "2610.07730",
-}
-# #20: v1 notes in references.bib that repeat their only date as "first posted".
-BIB_V1_FIRST_POSTED = {"2609.27535", "2610.02293", "2610.02586", "2610.01293"}
-# #30: author credits that name every author in the READMEs but "et al." in the catalog.
-CATALOG_CREDIT_DIFFERENCES = {
-    "2609.37647": ("Deußer, Sparrenberg & Sifa", "Deußer et al."),
-    "2609.33209": ("Li, He & Li", "Li et al."),
-    "2609.26550": ("Li, Miao, Krishnan & Padman", "Li et al."),
-    "2610.17820": ("Li, Huang, Zhang & Liu", "Li et al."),
-    "2609.29283": ("Zhou, Yang & Zhao", "Zhou et al."),
-    "2609.23986": ("Jiang, Li & Li", "Jiang et al."),
-    "2609.23886": ("Cheng, Dai & Sun", "Cheng et al."),
-}
-
 
 def section(text, heading, level="## "):
     """Return the lines under `level + heading` up to the next heading of the same or higher level."""
@@ -213,13 +193,11 @@ class BibliographyConsistencyTests(unittest.TestCase):
                     row = papers.get(paper)
                     if not row:
                         continue
-                    if row["first"] is None and paper in README_FIRST_SUBMITTED_MISSING:
-                        continue
                     self.assertEqual(row["first"], entry["first_submitted"] if revised else None,
                                      f"{README[language].name}: a revised paper shows its first submission date, a v1 paper none")
                 bib = self.bib.get(paper)
                 note = BIB_NOTE.match(bib.get("note", "")) if bib else None
-                if note and not (not revised and paper in BIB_V1_FIRST_POSTED and note[3] == entry["date"]):
+                if note:
                     self.assertEqual(note[3], entry["first_submitted"] if revised else None,
                                      f"references.bib {bib['key']}: only revised notes give the first-posted date")
 
@@ -237,7 +215,7 @@ class BibliographyConsistencyTests(unittest.TestCase):
             with self.subTest(paper=paper):
                 credit = entry["by"].rsplit(" · ", 2)[0]
                 row = self.readme["en"].get(paper)
-                if row and (row["authors"], credit) != CATALOG_CREDIT_DIFFERENCES.get(paper):
+                if row:
                     self.assertEqual(row["authors"], credit, "README and catalog author credits")
 
     def test_whats_new_lists_the_ten_newest_table_rows(self):
