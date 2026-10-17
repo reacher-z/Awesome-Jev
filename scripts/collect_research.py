@@ -11,6 +11,10 @@ Only short evidence excerpts and abstract hashes enter the repository. Raw API
 responses are cached in the operating-system temporary directory, outside it.
 No account, token, email address, or private source is used.
 
+The output ledger is replaced wholesale. --offline re-screens only a complete
+cache from an earlier online run; it stops without writing if any query is
+uncached, and every run stops without writing if no record qualifies.
+
 Usage: python3 scripts/collect_research.py --target 0 --with-openalex
 """
 
@@ -22,6 +26,7 @@ import datetime as dt
 import hashlib
 import json
 import re
+import sys
 import tempfile
 import threading
 import time
@@ -396,7 +401,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--target", type=int, default=0, help="Maximum accepted records to emit; 0 retains every qualified distinct source")
     parser.add_argument("--workers", type=int, default=3)
-    parser.add_argument("--offline", action="store_true", help="Re-screen existing temporary cache without network calls")
+    parser.add_argument("--offline", action="store_true", help="Re-screen a complete cache from an earlier online run without network calls")
     parser.add_argument("--with-openalex", action="store_true", help="Supplement arXiv-focused discovery with older published foundational work via OpenAlex")
     parser.add_argument("--output", type=Path, default=Path("data/research-sources.jsonl"))
     parser.add_argument("--cache-dir", type=Path, default=Path(tempfile.gettempdir()) / "awesome-jev-research-api-cache")
@@ -405,8 +410,18 @@ def main() -> None:
         parser.error("target must be nonnegative; workers must be between 1 and 4")
     collector = Collector(args.cache_dir, args.workers, args.offline)
     results = collector.run(args.with_openalex)
+    # The output replaces the ledger wholesale: never overwrite it with a
+    # partial or empty re-screen while reporting success.
+    uncached = sum(f["retrieval_status"] == "not_in_cache" for f in collector.failures)
+    if uncached:
+        sys.exit(f"Offline re-screen stopped: {uncached} of {len(results)} queries have no cached response, "
+                 f"so {args.output} was not changed. --offline needs the cache from an earlier online run "
+                 "on this machine (see --cache-dir).")
     candidates, audit = build_records(results)
     records = select_balanced(candidates, args.target or len(candidates))
+    if not records:
+        sys.exit(f"Research collection stopped: no records qualified ({len(collector.failures)} failed queries), "
+                 f"so {args.output} was not changed.")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text("".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in records))
     audit.update({

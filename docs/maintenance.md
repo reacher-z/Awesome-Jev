@@ -65,7 +65,7 @@ The evidence tiers below still apply. An automatically discovered source is not 
 
 ## Refresh the evidence
 
-Run these commands from the repository root. These are the legacy full-refresh commands, separate from the scheduled incremental scan above. They make public network requests and replace the default output ledgers; inspect the resulting changes before committing.
+Run these commands from the repository root. These are the legacy full-refresh commands, separate from the scheduled incremental scan above. They make public network requests and replace the default output ledgers wholesale; inspect the resulting changes before committing. A rebuilt ledger holds only what these collectors regenerate, so records written only by the incremental scan, such as fixed-version primary abstracts (`abstract_provider: arxiv_primary_abstract_page`), are dropped. To refresh sources without discarding earlier evidence, run the scan's collector, `python3 scripts/refresh_sources.py`, instead.
 
 ```sh
 python3 scripts/collect_ecosystem.py --workers 12 --max-depth 1
@@ -77,11 +77,13 @@ python3 -m unittest discover -s tests -v
 
 The ecosystem collector writes `data/ecosystem-sources.jsonl`, its summary, and a separate exclusion ledger. `--resume` reuses previously retrieved dependency records and rechecks their relevance; it is not a fresh network retrieval of every dependency. Use the normal command for a new retrieval snapshot.
 
-The research collector writes `data/research-sources.jsonl`. `--target 0` keeps all qualifying distinct results rather than imposing a numerical target. `--with-openalex` supplements Hugging Face discovery with older scholarly work. Raw API responses are cached in the operating system's temporary area, outside this repository. To repeat screening against the existing cache:
+The research collector writes `data/research-sources.jsonl`. `--target 0` keeps all qualifying distinct results rather than imposing a numerical target. `--with-openalex` supplements Hugging Face discovery with older scholarly work. Raw API responses are cached in the operating system's temporary area, outside this repository. To repeat screening against the cache from an earlier online run on the same machine:
 
 ```sh
 python3 scripts/collect_research.py --offline --target 0 --with-openalex
 ```
+
+`--offline` makes no network requests, so it needs that warm cache; a fresh clone, another machine, or a cleared temporary directory has none. If any query has no cached response, or no record qualifies, the collector exits with an error and leaves `data/research-sources.jsonl` unchanged. A successful re-screen still replaces the ledger wholesale, as described above.
 
 The index builder deduplicates the ledgers and regenerates `site/data/source-index.json`, `data/source-counts.json`, and `site/data/source-badge.json`. Do not edit their counts by hand. To check that the generated index is current without rewriting it:
 
@@ -167,7 +169,7 @@ Preserve the individual licenses of third-party resources. A repository license 
 
 ### 人工维护与发布
 
-维护顺序是：刷新公开来源清单 → 生成网站索引与计数 → 运行校验和回归测试 → 同步中英文精选内容 → 检查暂存区后发布。`--resume` 与 `--offline` 会复用已有材料，不能写成全部来源重新抓取。
+维护顺序是：刷新公开来源清单 → 生成网站索引与计数 → 运行校验和回归测试 → 同步中英文精选内容 → 检查暂存区后发布。`--resume` 与 `--offline` 会复用已有材料，不能写成全部来源重新抓取。旧版全量收集脚本会整体替换默认台账，只保留它们能重新生成的记录；固定版本原始摘要（`arxiv_primary_abstract_page`）等仅由增量扫描写入的记录会被丢弃，需要保留既有证据时改用 `python3 scripts/refresh_sources.py`。`--offline` 不发网络请求，只能复用同一台机器上此前联网运行留下的缓存；任一查询缺少缓存或没有记录通过筛选时，脚本报错退出，不改动 `data/research-sources.jsonl`。
 
 [reacher-z/Awesome-Jev](https://github.com/reacher-z/Awesome-Jev) 是资源主仓库，也是 issue 和 PR 的统一入口；[组织仓库](https://github.com/AwesomeJev/AwesomeJev.github.io) 是网站部署镜像。维护者将验证通过的同一个 `main` 提交推送到 `origin` 与 `awesomejev`，并核对两边提交一致；当前没有自动镜像同步。
 
