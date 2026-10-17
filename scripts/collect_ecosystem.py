@@ -313,21 +313,20 @@ def main():
                 cache[key] = old
     results = {}
     # Source files are distinct datasets/documents, not per-model report URLs.
+    # Automated collection never grants editorial_reviewed (docs/maintenance.md),
+    # and evidence states only what this run parsed from the fetched bytes.
     for f, raw in files.items():
         url = SPACE_URL if f == "README.md" else SPACE_URL + "/blob/" + revision + "/" + f
         data = json.loads(raw) if f.endswith(".json") else None
-        evidence = "Inspected community tracker source; independent implementations are not TypeSafe weights."
+        evidence = "Current public index document parsed for linked artifacts and evaluation provenance."
         if f == "data/index.json":
             evidence = f"Structured scoreboard contains {len(data['models'])} entrant records and public panel size {data['suite']['panel']}; reference version is {data['suite']['jev_version']}."
         elif f == "data/methodology.json":
-            evidence = "Methodology records 37 public benchmarks, chance correction, private-test weighting and a 0.3.2 scoring correction; private tests are not publicly reproducible."
-        elif f == "data/v03.json":
-            evidence = "Full-score component data specifies public/same-skills/new-domains weights of 0.2/0.5/0.3 and scale-equating parameters."
-        elif f == "data/vision.json":
-            evidence = "Separate vision scoreboard specifies public/private weights of 0.5/0.5, benchmark composition and model-entry metadata."
+            count = len(data.get("benchmarks", []) + data.get("added_benchmarks", []))
+            evidence = f"Methodology lists {count} benchmark entries; parsed for upstream benchmark sources."
         elif f == "news.html":
-            evidence = "Static news corpus separates trained models, decoding approaches, prior art and explainers; source links extracted without executing JavaScript."
-        results[url] = {"url": url, "title": "Jev Decision Index — " + f, "topic": "community-evaluation-index", "relation": "direct", "verification_level": "editorial_reviewed" if f in {"README.md", "data/index.json", "data/methodology.json", "data/v03.json"} else "content_screened", "status": "screened", "retrieved_at": NOW(), "checked_via": "Public repository source inspection", "retrieved_url": root + f, "resolved_revision": revision, "content_sha256": hashlib.sha256(raw).hexdigest(), "content_bytes": len(raw), "evidence": evidence, "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.", "discovered_from": [SPACE_URL]}
+            evidence = f"Static news page; {len(links(raw.decode()))} links extracted without executing JavaScript."
+        results[url] = {"url": url, "title": "Jev Decision Index — " + f, "topic": "community-evaluation-index", "relation": "direct", "verification_level": "content_screened", "status": "screened", "retrieved_at": NOW(), "checked_via": "Automated retrieval and structural inspection of community index source; not editorial review.", "retrieved_url": root + f, "resolved_revision": revision, "content_sha256": hashlib.sha256(raw).hexdigest(), "content_bytes": len(raw), "evidence": evidence, "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.", "discovered_from": [SPACE_URL]}
     def save():
         kept = [(u, r) for u, r in sorted(results.items()) if eligible(r)]
         excluded = [dict(r, exclusion_reason="Explicit Jev, TypeSafe AI, or typed-decision content was not established for this one-hop implementation; excluded from checked-source totals.") for u, r in sorted(results.items()) if not eligible(r)]
@@ -379,7 +378,7 @@ def main():
         save()
     kept = [r for r in results.values() if eligible(r)]
     checked = [r for r in kept if r["verification_level"] != "metadata_only"]
-    summary = {"generated_at": NOW(), "index_revision": revision, "index_edition": index["suite"]["label"], "public_panel": index["suite"]["panel"], "records": len(kept), "verification_levels": dict(Counter(r["verification_level"] for r in kept)), "statuses": dict(Counter(r["status"] for r in kept)), "relations": dict(Counter(r["relation"] for r in kept)), "distinct_checked_content_hashes": len({r["content_sha256"] for r in checked}), "excluded_scope": len(results)-len(kept), "discovered_not_screened": len([u for u in seeds if u not in results]), "method": "One-hop public primary-artifact discovery. Full retrieved text screened automatically; editorial_reviewed is reserved for manually inspected index sources. Dependency implementation pages require explicit Jev/TypeSafe/typed-decision content. metadata_only and excluded-scope records are excluded from content-checked totals. No experiment reproduced."}
+    summary = {"generated_at": NOW(), "index_revision": revision, "index_edition": index["suite"]["label"], "public_panel": index["suite"]["panel"], "records": len(kept), "verification_levels": dict(Counter(r["verification_level"] for r in kept)), "statuses": dict(Counter(r["status"] for r in kept)), "relations": dict(Counter(r["relation"] for r in kept)), "distinct_checked_content_hashes": len({r["content_sha256"] for r in checked}), "excluded_scope": len(results)-len(kept), "discovered_not_screened": len([u for u in seeds if u not in results]), "method": "One-hop public primary-artifact discovery. Full retrieved text screened automatically; this collector never grants editorial_reviewed, which is reserved for documented manual review. Dependency implementation pages require explicit Jev/TypeSafe/typed-decision content. metadata_only and excluded-scope records are excluded from content-checked totals. No experiment reproduced."}
     # Report this run on stdout only. Scans and reviewed additions change the
     # ledger afterwards, so a committed copy would go stale; current counts are
     # generated and checked by build_source_index.py (data/source-counts.json).
