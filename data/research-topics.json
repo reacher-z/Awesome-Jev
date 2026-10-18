@@ -4,11 +4,11 @@
     {
       "slug": "option-label-bias",
       "published": "2026-10-17",
-      "updated": "2026-10-17",
+      "updated": "2026-10-18",
       "guide_section": "tool-arguments-and-option-channels",
       "en": {
         "title": "Option-label bias in Jev-style decision models",
-        "description": "How option names, definitions and prompt rendering affect typed decisions, with three distinct studies and a practical diagnostic.",
+        "description": "Separate option-label bias from order sensitivity using versioned research, conditional invariance claims and a practical diagnostic.",
         "answer": "A valid typed answer can follow an option’s familiar name instead of its assigned definition. The observed failure and its cause are separate questions: evidence from inspected open implementations should not be treated as an explanation of hosted Jev’s internals.",
         "scope": "Independent research note based on versioned abstracts and the collection’s scoped reviews. Findings are author-reported; no attack or model experiment was run here.",
         "sections": [
@@ -43,9 +43,28 @@
             ]
           },
           {
+            "id": "order-stability",
+            "title": "Does order stability fix label bias?",
+            "text": "Runoff scores options individually before comparing balanced finalist listings. Its order-invariance argument assumes deterministic responses and a unique canonical ranking; the paper explicitly leaves option-name bias outside its target. Verdict-MQ describes architectural order/grouping invariance when retained state tokens are identical after truncation. These are conditional claims about changing a request’s arrangement, not proof of semantic correctness, calibrated confidence or resistance to malicious option names.",
+            "sources": [
+              {
+                "label": "Runoff limitations and assumptions, v1",
+                "url": "https://arxiv.org/html/2610.18233v1#Sx1.p1"
+              },
+              {
+                "label": "Runoff invariance assumptions, v1",
+                "url": "https://arxiv.org/html/2610.18233v1#A5.SS0.SSS0.Px2.p1"
+              },
+              {
+                "label": "Verdict original abstract, v1",
+                "url": "https://arxiv.org/abs/2610.20778v1"
+              }
+            ]
+          },
+          {
             "id": "diagnostic",
             "title": "A diagnostic to use in your own evaluation",
-            "text": "Our suggested comparison fixes the state, task rule, model version and scoring rule. Prepare equivalent requests with informative labels, neutral identifiers and definition-only options where the interface permits them. Add a separate conflicting-label condition, with expected answers checked before querying. Compare answer changes, errors and confidence on errors; preserve the actual rendered inputs. Use a held-out set to test any proposed repair.",
+            "text": "Our suggested comparison fixes the state, task rule, model version and scoring rule. Prepare equivalent requests with informative labels, neutral identifiers and definition-only options where the interface permits them. Add a separate conflicting-label condition, with expected answers checked before querying. Compare answer changes, errors and confidence on errors; preserve the actual rendered inputs. Use a held-out set to test any proposed repair. Test option permutations and identical-request repeats separately from label changes. Match the retained input after truncation when testing an invariance claim.",
             "sources": []
           },
           {
@@ -63,7 +82,7 @@
       },
       "zh": {
         "title": "Jev 类决策模型的选项标签偏置",
-        "description": "区分选项名称、定义与提示渲染的影响，比较三篇独立研究，并给出可操作的诊断方法。",
+        "description": "区分选项标签偏置与顺序敏感性，结合固定版本研究、带条件的不变性主张和可操作的诊断。",
         "answer": "格式有效的类型化答案，仍可能遵循选项名称的常见含义，而非为它指定的定义。观察到的错误与错误成因是两个问题；开放实现中的证据不能直接解释托管 Jev 的内部机制。",
         "scope": "依据固定版本摘要和本项目已有专项核查整理的独立研究笔记。结论由作者报告，本项目未运行攻击或模型实验。",
         "sections": [
@@ -98,9 +117,28 @@
             ]
           },
           {
+            "id": "order-stability",
+            "title": "顺序稳定能修复标签偏置吗？",
+            "text": "Runoff 先逐个评分选项，再比较位置平衡的入围列表。其顺序不变性论证假设响应确定、规范排序唯一，论文明确不处理选项名称偏置。Verdict-MQ 则描述在截断后保留状态 token 一致时，架构对选项顺序和问题分组的不变性。这些主张都带有条件，涉及请求排列变化，不证明语义正确、置信度校准或对恶意选项名称的防御。",
+            "sources": [
+              {
+                "label": "Runoff 的限制与假设 v1",
+                "url": "https://arxiv.org/html/2610.18233v1#Sx1.p1"
+              },
+              {
+                "label": "Runoff 不变性假设 v1",
+                "url": "https://arxiv.org/html/2610.18233v1#A5.SS0.SSS0.Px2.p1"
+              },
+              {
+                "label": "Verdict 原始摘要 v1",
+                "url": "https://arxiv.org/abs/2610.20778v1"
+              }
+            ]
+          },
+          {
             "id": "diagnostic",
             "title": "怎样设计自己的诊断？",
-            "text": "我们建议固定状态、任务规则、模型版本和评分方式，准备有含义标签、中性编号，以及接口允许时只含定义的等价请求。另设标签与定义冲突的条件，在调用前核对预期答案。比较答案变化、错误及错误时的置信度，并保存实际渲染输入。任何修复都应在留出样本上重新测试。",
+            "text": "我们建议固定状态、任务规则、模型版本和评分方式，准备有含义标签、中性编号，以及接口允许时只含定义的等价请求。另设标签与定义冲突的条件，在调用前核对预期答案。比较答案变化、错误及错误时的置信度，并保存实际渲染输入。任何修复都应在留出样本上重新测试。把选项排列变化、相同请求重复测试和标签变化分开；检验不变性主张时，还需对齐截断后保留的输入。",
             "sources": []
           },
           {

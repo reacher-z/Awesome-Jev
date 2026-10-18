@@ -1,3 +1,5 @@
+import {bindDirectoryView} from './directory-view.mjs';
+
 const body = document.querySelector('.paper-table tbody');
 const rows = [...body.rows];
 const headers = document.querySelectorAll('.paper-table thead th');
@@ -18,7 +20,7 @@ function update() {
   const query = search.value.trim().toLocaleLowerCase();
   let visible = 0;
   for (const row of rows) {
-    const matches = (!theme || row.dataset.theme === theme) && (!code.checked || row.dataset.code === 'true') && row.textContent.toLocaleLowerCase().includes(query);
+    const matches = (!theme || row.dataset.theme === theme) && (!code.checked || row.dataset.code === 'true') && (row.dataset.search || row.textContent).toLocaleLowerCase().includes(query);
     row.hidden = !matches;
     if (matches) visible++;
   }
@@ -39,11 +41,12 @@ for (const button of themes) {
     theme = button.dataset.theme;
     for (const other of themes) press(other, other === button);
     update();
+    view.commit();
   });
 }
-code.addEventListener('change', update);
-search.addEventListener('input', update);
-sort.addEventListener('change', reorder);
+code.addEventListener('change', () => { update(); view.commit(); });
+search.addEventListener('input', () => { update(); view.commit(); });
+sort.addEventListener('change', () => { reorder(); view.commit(); });
 document.querySelector('#paper-reset').addEventListener('click', () => {
   search.value = '';
   sort.value = 'newest';
@@ -52,9 +55,29 @@ document.querySelector('#paper-reset').addEventListener('click', () => {
   for (const button of themes) press(button, button.dataset.theme === '');
   reorder();
   update();
+  view.commit();
   search.focus();
 });
 for (const controls of document.querySelectorAll('[data-paper-controls]')) controls.hidden = false;
-// A restored search, sort or checkbox (back navigation) applies at once.
-reorder();
-update();
+const view = bindDirectoryView({
+  schema:{
+    q:{default:''},
+    theme:{default:'', values:themes.map(button=>button.dataset.theme)},
+    code:{default:'', values:['','1']},
+    sort:{default:'newest', values:['newest','oldest','title']},
+  },
+  read:()=>({q:search.value, theme, code:code.checked?'1':'', sort:sort.value}),
+  apply:state=>{
+    search.value=state.q;
+    theme=state.theme;
+    code.checked=state.code==='1';
+    sort.value=state.sort;
+    for (const button of themes) press(button, button.dataset.theme===theme);
+    reorder();
+    update();
+  },
+  languageLinks:document.querySelectorAll('.language-switch a'),
+  copyButton:document.querySelector('#directory-copy-link'),
+  status:document.querySelector('#directory-share-status'),
+  messages:{copied:zh?'链接已复制':'Link copied', failed:zh?'无法复制，请复制浏览器地址栏中的链接。':'Copy unavailable. Copy the link from your browser’s address bar.'},
+});

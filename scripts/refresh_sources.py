@@ -32,12 +32,14 @@ try:
     from . import collect_ecosystem as ecosystem
     from . import collect_research as research
     from . import build_source_index as index
+    from . import arxiv_discovery as arxiv
     from .source_policy import credential_query, load_policy
     from .validate import LEAK_PATTERNS
 except ImportError:
     import collect_ecosystem as ecosystem
     import collect_research as research
     import build_source_index as index
+    import arxiv_discovery as arxiv
     from source_policy import credential_query, load_policy
     from validate import LEAK_PATTERNS
 
@@ -60,6 +62,7 @@ SAFE_FETCH_ERRORS = frozenset({
     "network_failure", "redirect_without_location", "unsupported_binary_document",
     "redirect_limit", "excluded_discovery_url", "retry_after_exceeded",
     "retry_budget_exhausted", "invalid_arxiv_abstract_page", "arxiv_version_mismatch",
+    "invalid_arxiv_api_feed", "arxiv_pagination_changed",
 })
 CURATED_PAPERS_ORIGIN = "https://awesomejev.github.io/papers.json"
 # json.dumps(ensure_ascii=False) leaves these unescaped, but str.splitlines()
@@ -170,6 +173,8 @@ class PublicFetcher:
         self.cache_bytes = cache_bytes
         self.cached_bytes = 0
         self.lock = threading.Lock()
+        self.arxiv_api_lock = threading.Lock()
+        self.arxiv_api_next = 0.0
         self.requests = 0
         # Workers share each host's not-before time, so a rate-limit delay holds
         # every request to that host, and the current phase's deadline.
@@ -216,6 +221,18 @@ class PublicFetcher:
         return until
 
     def _request(self, url):
+        if not arxiv.api_host(url):
+            return self._request_public(url)
+        # One connection at a time and three seconds after every API attempt,
+        # including redirects and retries. The gate shares the scan deadline.
+        with self.arxiv_api_lock:
+            self._hold(public_url(url).hostname, delay=max(0, self.arxiv_api_next - time.monotonic()))
+            try:
+                return self._request_public(url)
+            finally:
+                self.arxiv_api_next = time.monotonic() + 3.0
+
+    def _request_public(self, url):
         p = public_url(url)
         host = p.hostname.encode("idna").decode("ascii")
         port = p.port or (443 if p.scheme == "https" else 80)
@@ -484,7 +501,13 @@ def merge_records(old: Ledger, incoming, max_new=None, policy=None):
             continue
         if key in positions and pinned_primary_abstract(rows[positions[key]]):
             pinned_observations.setdefault(key, []).append(row)
-        if key not in candidates or LEVEL.get(row.get("verification_level"), 0) > LEVEL.get(candidates[key].get("verification_level"), 0):
+        # For a new identity, keep version-bound primary evidence ahead of a
+        # generic landing-page screen. Existing records retain their established
+        # grade/refresh policy; their evidence is never downgraded here.
+        def candidate_strength(value):
+            return (key not in positions and pinned_primary_abstract(value),
+                    LEVEL.get(value.get("verification_level"), 0))
+        if key not in candidates or candidate_strength(row) > candidate_strength(candidates[key]):
             candidates[key] = row
     for key, candidate in sorted(candidates.items()):
         new = dict(candidate)
@@ -601,6 +624,7 @@ class ArxivAbstractPage(HTMLParser):
         super().__init__()
         self.in_abstract = self.in_version = False
         self.parts, self.version, self.published_at = [], None, None
+        self.title, self.authors = None, []
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -610,6 +634,14 @@ class ArxivAbstractPage(HTMLParser):
             self.in_version = True
         if self.in_version and tag == "a":
             self.version = arxiv_version_url(attrs.get("href")) or self.version
+        if tag == "meta" and attrs.get("name") == "citation_title":
+            self.title = " ".join((attrs.get("content") or "").split())
+        if tag == "meta" and attrs.get("name") == "citation_author":
+            value = " ".join((attrs.get("content") or "").split())
+            if "," in value:
+                surname, given = value.split(",", 1)
+                value = given.strip() + " " + surname.strip()
+            self.authors.append(value)
         if tag == "meta" and attrs.get("name") == "citation_date":
             value = (attrs.get("content") or "").replace("/", "-")
             if re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
@@ -631,7 +663,7 @@ class Scan:
         self.fetcher, self.workers = fetcher, workers
         self.curated_seeds, self.policy = curated_seeds or {}, policy
         self.pinned_sources = pinned_sources or {}
-        self.known_keys = set(known_keys or ())
+        self.known_keys = set(known_keys or ()) | set(self.curated_seeds)
         self.curation_excluded = set()
         self.errors, self.excluded = [], 0
         self.lock = threading.Lock()
@@ -639,6 +671,8 @@ class Scan:
         self.api_gate = threading.Lock()
         self.next_api_request = 0.0
         self.successful_queries = 0
+        self.arxiv_discovery = {"pages": 0, "entries": 0, "direct_candidates": 0,
+            "known_skipped": 0, "verified_new": 0, "unavailable_new": 0, "query_complete": False}
 
     def error(self, url, code):
         try:
@@ -852,17 +886,97 @@ class Scan:
             self.error(url, "paper_query_failed:" + safe_exception_code(e))
             return topic, query, {"data": []}
 
+    def scan_arxiv(self, smoke=False):
+        """Discover independently of aggregators; verify new fixed-version pages."""
+        report, records, seen = self.arxiv_discovery, [], set()
+        start, size, expected_total = 0, 5 if smoke else arxiv.PAGE_SIZE, None
+        while True:
+            url = arxiv.query_url(start, size)
+            try:
+                raw, _, _ = self.fetcher.fetch(url)
+                papers, total = arxiv.parse_feed(raw, start, size)
+                if ((expected_total is not None and expected_total != total)
+                        or any(paper["url"] in seen for paper in papers)):
+                    raise FetchError("arxiv_pagination_changed")
+                expected_total = total
+                report["pages"] += 1
+                report["entries"] += len(papers)
+                report["total_results"] = total
+                with self.lock:
+                    self.successful_queries += 1
+            except (FetchError, ValueError) as error:
+                code = "invalid_arxiv_api_feed" if isinstance(error, ValueError) else safe_exception_code(error)
+                self.error(url, "arxiv_discovery_failed:" + code)
+                break
+            for paper in papers:
+                seen.add(paper["url"])
+                if not direct_paper(paper["title"], paper["abstract"]):
+                    continue
+                report["direct_candidates"] += 1
+                if not re.fullmatch(r"\d{4}\.\d{4,5}", paper["id"]):
+                    self.error(paper["url"], "arxiv_discovery_unsupported_legacy_id")
+                    continue
+                if self.policy and self.policy.exclusion(paper["url"]):
+                    self.curation_excluded.add(paper["url"])
+                    continue
+                if paper["url"] in self.known_keys:
+                    report["known_skipped"] += 1
+                    continue
+                row = {"id": "arxiv:" + paper["id"], "url": paper["url"], "canonical_url": paper["url"],
+                    "title": paper["title"], "authors": paper["authors"], "published_at": paper["published_at"],
+                    "source_type": "scholarly_work", "topic": "direct-decision-research", "relation": "direct",
+                    "retrieved_at": now(), "verification_level": "metadata_only", "status": "unavailable",
+                    "relevance": "Direct-decision candidate from the arXiv API; fixed-version abstract verification is pending.",
+                    "discovered_from": [url], "discovery_queries": [arxiv.QUERY],
+                    "editorial_reviewed": False, "full_text_reviewed": False}
+                try:
+                    page, final, _ = self.fetcher.fetch(paper["version_url"])
+                    parsed = ArxivAbstractPage()
+                    parsed.feed(page.decode("utf-8"))
+                    abstract = re.sub(r"^\s*Abstract:\s*", "", " ".join(" ".join(parsed.parts).split()))
+                    if (parsed.version != paper["version_url"] or arxiv_version_url(final) != paper["version_url"]
+                            or not parsed.title or len(parsed.title) > 500 or not parsed.authors
+                            or parsed.published_at != paper["published_at"]
+                            or any(not author or "," in author for author in parsed.authors)
+                            or len(abstract.split()) < 30 or not direct_paper(parsed.title, abstract)):
+                        raise FetchError("invalid_arxiv_abstract_page")
+                    row.update(title=parsed.title, authors=parsed.authors, verification_level="abstract_checked", status="screened",
+                        retrieval_status="success", http_status=200, retrieval_url=final,
+                        abstract_provider="arxiv_primary_abstract_page", abstract_sha256=research.sha(abstract),
+                        abstract_page_sha256=hashlib.sha256(page).hexdigest(), abstract_word_count=len(abstract.split()),
+                        reviewed_version_url=parsed.version, reviewed_version="v" + parsed.version.rsplit("v", 1)[1],
+                        canonical_page_separately_fetched=True,
+                        relevance="Original fixed-version abstract explicitly discusses Jev or typed decision models; findings remain author-reported.",
+                        screening_method="Automated arXiv API discovery followed by fixed-version primary abstract, identity and metadata checks. No full-paper review or reproduction.")
+                    report["verified_new"] += 1
+                except (FetchError, ValueError, UnicodeError) as error:
+                    report["unavailable_new"] += 1
+                    row["retrieval_status"] = "failed"
+                    row["fetch_errors"] = [safe_exception_code(error)]
+                    self.error(paper["version_url"], "arxiv_discovery_page_failed:" + safe_exception_code(error))
+                records.append(row)
+            start += len(papers)
+            if start >= total:
+                report["query_complete"] = True
+                break
+            if smoke:
+                report["smoke_limited"] = True
+                break
+        return records
+
     def scan_research(self, smoke=False):
         jobs = [("direct", q, research.PROVIDER) for q in DIRECT_QUERIES]
         background = [(t, q, research.PROVIDER) for t, queries in research.QUERIES.items() for q in queries]
         background += [(t, q, "openalex_api") for t, queries in research.OPENALEX_QUERIES.items() for q in queries]
         jobs += background[:2] if smoke else background
         with cf.ThreadPoolExecutor(max_workers=min(self.workers, 3)) as pool:
+            arxiv_future = pool.submit(self.scan_arxiv, smoke)
             results = list(pool.map(lambda args: self.query(*args), jobs))
+            primary_records = arxiv_future.result()
         records, _ = research.build_records(results)
         for row in records:
             row.pop("_rank", None)
-        direct = []
+        direct = list(primary_records)
         for _, query, wrapper in results:
             for item in wrapper.get("data", []):
                 paper = item.get("paper", item)
@@ -882,10 +996,14 @@ def as_list(value):
 
 def direct_paper(title, abstract):
     text = title + " " + abstract
-    explicit = bool(re.search(r"typesafe|typed[- ]decision|system[- ]one models?|\brlcd\b", text, re.I))
+    explicit = bool(re.search(r"typesafe|typed[- ]decision|system[- ]one models?", text, re.I))
+    # RLCD also means randomized least common denominator in random-matrix work.
+    # Its acronym alone, even beside "model" and "probability", is not a decision-model signal.
+    rlcd_decisions = (re.search(r"\brlcd\b", text, re.I) and re.search(r"calibrat", text, re.I)
+                      and re.search(r"decision|language models?|\bllms?\b", text, re.I))
     if re.search(r"japanese encephalitis|encephalitis virus", text, re.I) and not re.search(r"typesafe", text, re.I):
         return False
-    if explicit:
+    if explicit or rlcd_decisions:
         return bool(re.search(r"decision|probabilit|calibrat", text, re.I))
     return bool(re.search(r"\bjev\b", text, re.I) and re.search(r"\bllms?\b|language models?|artificial intelligence|neural (?:model|network)", text, re.I) and re.search(r"decision|probabilit|calibrat", text, re.I))
 
@@ -957,6 +1075,14 @@ def prune_promoted_exclusions(excluded: Ledger, accepted_rows) -> tuple[Ledger, 
 def publish_summary(report):
     phases = report.get("retry_budget_exhausted_phases") or ["scan"]
     text = "\n".join(["## Public source scan", "", "Status: **" + report["status"] + "**.", f"Added: {report['added_count']}; updated: {report['changed_count']}; source changes awaiting review: {report['editorial_review_required_count']}.", f"Provider/document issues: {report['error_count']}. Earlier evidence was retained on failures.", f"Diagnostic examples stored: {report['error_examples_count']} of {report['error_count']}; error_code_counts covers all issues.", *([f"Retry budget exhausted in the {' and '.join(phases)} phase{'s' if len(phases) > 1 else ''}: no further requests were sent there once the time share ran out; unscanned sources keep their earlier evidence."] if report.get("retry_budget_exhausted") else []), "", "Automated source screening is not scientific review or reproduction. No source instructions or downloaded code were executed.", ""])
+    primary = report.get("arxiv_discovery")
+    if isinstance(primary, dict):
+        text += (f"arXiv discovery: {primary['entries']} feed entries on {primary['pages']} pages; "
+                 f"{primary['direct_candidates']} direct candidates, {primary['known_skipped']} known identities skipped. "
+                 f"{primary['verified_new']} new candidates passed fixed-version abstract checks; "
+                 f"{primary['unavailable_new']} remain metadata-only. "
+                 f"Query pagination complete: {str(primary['query_complete']).lower()}. "
+                 "These are candidate observations, not accepted additions.\n")
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:
             f.write(text)
@@ -1017,6 +1143,7 @@ def main(argv=None):
     else:
         counts = json.loads((ROOT / "data/source-counts.json").read_text(encoding="utf-8"))["counts"]
     report = {"schema_version": 1, "started_at": started_at, "completed_at": now(), "status": status, "changed": changed, "dry_run": args.smoke, "added_count": len(changes["added"]), "changed_count": len(changes["changed"]), "editorial_review_required_count": pending_count, "added_urls": changes["added"][:100], "changed_urls": changes["changed"][:100], "editorial_refresh_candidates": pending, "editorial_examples_truncated": pending_count > 100, **error_report(scan.errors), "counts": counts, "index_revision": scan.index_revision, "network_requests": fetcher.requests, "retry_budget_exhausted": fetcher.budget_exhausted, "retry_budget_seconds": fetcher.budget, "retry_budget_exhausted_phases": fetcher.exhausted_phases, "phase_budget_seconds": PHASE_TIME_BUDGET_SECONDS, "excluded_discoveries": scan.excluded, "preserved_after_failure": ec["preserved_after_failure"] + rc["preserved_after_failure"], "duplicate_candidates_skipped": ec["duplicates"] + rc["duplicates"], "privacy_rejected_records": ec["rejected"] + rc["rejected"], "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources."}
+    report["arxiv_discovery"] = scan.arxiv_discovery
     report["curation_excluded_count"] = len(set(ec["curation_excluded"] + rc["curation_excluded"]) | scan.curation_excluded)
     # Report every attempt, including failures. The publisher must gate on
     # report.changed, not this report's timestamp or a raw git-diff count.

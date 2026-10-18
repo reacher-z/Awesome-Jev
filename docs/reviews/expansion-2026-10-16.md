@@ -194,3 +194,15 @@ Four whole implementation repositories bring the expansion to **785 sources** an
 Five background papers were removed, leaving the expansion at **780 sources**. Four arXiv papers had been withdrawn by their authors before the 16 October intake: each current version is a withdrawal notice, and two notices state that the results are invalid. Their OpenAlex-reconstructed abstracts did not show the withdrawal. The fifth paper's DOI resolves only to `subscholar.org`, which no longer exists in DNS. *Classification with a Reject Option using a Hinge Loss* stays listed and now links its JMLR page, because its ACM `10.5555/` DOI is not registered with doi.org. Each removed or replaced URL has an exact-URL exclusion with its evidence and observation time in [source curation](../../data/source-curation.json), so a later scan cannot re-add it. The research-paper intake batch now lists 340 accepted URLs. ChenstarMr/jev-chat-windows was public again when rechecked, so its record is unchanged.
 
 **中文：** 删除五篇背景论文后，扩展为780项。四篇arXiv论文在10月16日收录前已被作者撤回，当前版本均为撤稿说明，其中两篇指出结果无效；OpenAlex重建的摘要未反映撤回。另一篇的DOI只指向已无域名解析的`subscholar.org`。《Classification with a Reject Option using a Hinge Loss》保留，因其ACM `10.5555/` DOI未在doi.org注册，改为链接JMLR页面。每个删除或替换的URL都在来源策展文件中记录精确URL排除、证据与观察时间，防止后续扫描重新加入；论文收录批次现列340个URL。ChenstarMr/jev-chat-windows复查时已恢复公开，记录不变。
+
+## Workflow and training runtimes — 18 October 2026 UTC
+
+Four independently identified implementation repositories bring the reviewed expansion to **784 sources** and the main catalog to **160 curated resources**. Abide, jev-fabric, atoma and circuit now have parallel English/Chinese descriptions in the README, catalog and discovery directory. All README hashes match the scan and fixed commits. Documentation review preserves unchecked-hook behavior, process privileges, shared-learning boundaries and publisher evaluation scope; no code or inference was executed. [Evidence and counting scope](workflow-runtimes-2026-10-18.md).
+
+**中文：** 四个完整项目使扩展达到784项、精选达到160项，中英文 README、网站与扩展目录同步。说明文件均与扫描及固定提交一致，保留未检查放行、进程权限、共享学习和作者评测范围，不把文档核查写成实验复现。
+
+## Control and invariance papers — 18 October 2026 UTC
+
+Four new paper identities bring the reviewed expansion to **788 sources**. Three were found through targeted primary-source searches; Runoff was also a pending scan candidate. Fixed/current abstract comparisons match. Companion links and selected manuscript sections add no identities, and previous ledger rows are unchanged. [Review scope](control-papers-2026-10-18.md).
+
+**中文：** 四篇新论文使扩展达到788项；三篇来自定向检索，Runoff也在扫描待审队列中。固定版本与当前摘要一致，配套代码链接和定向段落不重复计数，旧台账不改写。

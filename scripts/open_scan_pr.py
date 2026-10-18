@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Transfer validated data between trusted scan jobs and maintain one bot PR.
 
-Only six fixed JSON/JSONL files can cross the job boundary. No downloaded code
+Only the fixed JSON/JSONL allowlist can cross the job boundary. No downloaded code
 is executed. The workflow token supports GitHub-only reads during reconciliation
 and the final publishing step; it is never logged, written to disk or passed to
 the local index builder.
@@ -207,7 +207,7 @@ def restore(directory: Path, identity: dict) -> None:
             raise ScanError("Refusing to restore data through a linked path.")
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
-    print("Restored the six allowlisted data files; trusted repository code is unchanged.")
+    print(f"Restored the {len(ALLOWED)} allowlisted data files; trusted repository code is unchanged.")
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -431,7 +431,7 @@ def reconcile_pending(api, directory, identity, policy=None):
     for name, data in files.items():
         (directory / name).write_bytes(data)
     (directory / "manifest.json").write_text(json.dumps(manifest, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
-    print(f"Retained {len(carried)} absent pending sources without changing their evidence. Revalidate all six data files before publication.")
+    print(f"Retained {len(carried)} absent pending sources without changing their evidence. Revalidate all {len(ALLOWED)} data files before publication.")
 
 
 def accepted_primary_snapshot(prior: dict, current: dict, accepted: dict) -> bool:

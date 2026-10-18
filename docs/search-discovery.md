@@ -2,9 +2,33 @@
 
 Guidance checked against official documentation on **2026-10-17**. These changes make content easier to discover and inspect; they do not guarantee crawling, indexing, rankings, or citations in an AI answer. Search visibility and account-level settings must be checked separately from a successful deployment.
 
-The generated sitemap currently contains **18 canonical HTML pages**, with English/Chinese pairs for the collection, guide, papers, models, discoveries, topic directory and three research notes. The [model directory](https://awesomejev.github.io/models/) and [topic directory](https://awesomejev.github.io/topics/) give focused entry points alongside the full collection. Submission receipts and historical route counts are recorded below.
+The generated sitemap currently contains **20 canonical HTML pages**, with English/Chinese pairs for the collection, guide, papers, models, tools, discoveries, topic directory and three research notes. The [model directory](https://awesomejev.github.io/models/) and [topic directory](https://awesomejev.github.io/topics/) give focused entry points alongside the full collection. Submission receipts and historical route counts are recorded below.
 
-The [18 October release integration](reviews/integration-2026-10-18.md) reconciles the canonical repository's merged research and interface changes with the website mirror. The current collection contains 156 curated entries and 78 direct papers; the source-ledger, expansion and historical release counts have different scopes. The site stays white with dark text even when the operating system prefers a dark scheme. The research-activity figure remains available in a disclosure above the paper table.
+The [18 October release integration](reviews/integration-2026-10-18.md) reconciles the canonical repository's merged research and interface changes with the website mirror. The current collection contains 164 curated entries and 82 direct papers; the source-ledger, expansion and historical release counts have different scopes. The site stays white with dark text even when the operating system prefers a dark scheme. The research-activity figure remains available in a disclosure above the paper table.
+
+## Shareable directory views
+
+The paper, model and tool directories preserve their filters in a `#view?…` fragment. Papers retain the query, theme, code-availability filter and sort order; models retain the query and declared-license filter; tools retain the query, purpose and publisher filter. **Copy view link** produces a bookmarkable link to the current view. Refreshing, returning with browser history and switching between the paired English/Chinese routes restore the state. Both languages search the same bilingual metadata so a translated description can still be found after a language switch.
+
+This is a client-side view of an existing directory, not a new indexable page. Canonical URLs, sitemap entries and the full static tables remain unchanged. The fragment is not an HTTP query, and changing filters requires no server request. Page navigation still loads static pages and scripts. The feature uses no local-storage persistence or analytics. Copied links omit unrelated query parameters. Clipboard failure has visible feedback, unsupported filter values fall back to defaults, and resetting removes the view fragment. Ordinary section anchors are preserved in language links when no filtered view is active.
+
+The shared module is resolved through a content-hashed import map on the six directory pages. Tests cover Unicode and reserved-character round trips, default and unknown values, language links, browser restoration, copy failure, history preservation and identical bilingual search text. Browser checks exercised compound paper filters, Chinese keywords across languages, model-license links, reset and a 390-pixel mobile viewport. The collection's source counts and evidence grades are unchanged.
+
+**中文：** 论文、模型和工具目录的筛选保存在网址片段中，可复制、收藏，并在刷新、历史导航和中英文切换后恢复。两种语言搜索相同的双语元数据；重置会移除筛选片段。完整静态表格、规范网址与sitemap不变，新增功能不使用本地存储或统计服务；筛选操作不发服务器请求，页面切换仍正常加载静态网页与脚本。复制的链接不会附带无关查询参数。版本化模块、状态转换和双语一致性均有测试，手机端已检查无横向溢出；本轮不改变来源计数或核查等级。
+
+**View-sharing release receipt, 2026-10-18 UTC:** `8746bf6` passed both repository checks and Pages deployment. The 433-test suite passed and all 34 live page, metadata and module targets matched the commit. Browser checks verified compound paper filters, cross-language Chinese search, refresh/history restoration, model-license links, clipboard feedback and mobile layout. One IndexNow POST notified only the four substantively changed paper/model directory pages and returned **HTTP 200**. The unchanged sitemap was not resubmitted, and no Google or Bing account action was performed. This receipt adds no indexing or AI-citation claim.
+
+**筛选分享发布回执（2026-10-18 UTC）：** `8746bf6` 双仓检查与部署成功，433项测试及34项线上文件核对通过。浏览器验证了组合筛选、跨语言中文搜索、刷新／历史恢复、模型许可链接、复制反馈和手机布局。仅对中英文论文、模型目录四页发送一次IndexNow通知，返回HTTP 200；sitemap未变，未重复提交，也未操作Google或Bing账号。此回执不代表新增收录或AI引用。
+
+## Developer tool directory
+
+The [English](https://awesomejev.github.io/tools/) and [Chinese](https://awesomejev.github.io/zh/tools/) directories organize the existing Tools selection by API integration, workflow control, inference runtimes and training/evaluation. Projects may have multiple purposes but appear once, with their existing descriptions and evidence markers. TypeSafe official and community filters refer to publisher provenance, not quality or performance. The complete table, its matching ItemList and [JSON export](../site/tools.json) are generated from the same catalog. These pages add no new research identities or stronger verification claims.
+
+The directory is linked from both READMEs, both homepages, the document navigation, sitemap and optional `llms.txt`. It provides a focused route for implementation searches while leaving claims about indexing and AI citation to observed external evidence.
+
+**Tool-directory release receipt, 2026-10-18 UTC:** `0e8564e` passed both repository checks and Pages deployment, with 434 tests and 38 live parity checks passing. One IndexNow POST for the new English/Chinese tool pages returned HTTP 200. Google accepted one submission of the updated 20-page sitemap, but the displayed record still showed the prior “Couldn't fetch” status and zero discovered pages. Fetch recovery and indexing remain unconfirmed. [Scope and receipts](reviews/tool-directory-2026-10-18.md).
+
+**工具目录发布回执（2026-10-18 UTC）：** 两个工具页面已上线，434项测试和38项线上文件核对通过；IndexNow对两页的一次通知返回HTTP 200。Google确认收到含20页的更新地图，但表格仍显示此前抓取失败、发现0页的记录，尚不能认定抓取恢复或新增收录。
 
 ## Authoring and building the public pages
 

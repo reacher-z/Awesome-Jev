@@ -12,7 +12,10 @@ from test_site_discovery import ROOT
 NAMES = {
     "ai-ecoverse", "convaiinnovations", "emretheus", "hotchpotch", "iapp-technology", "mukaddamzaid",
     "ncchinh", "sgaseretto", "shlv", "ufak AI", "Ariño de la Rubia", "Jeva authors",
+    "coldteadotai", "fabric-runtime", "atoma-run",
 }
+# SPDX identifiers retain their exact spelling, including the lowercase suffix.
+LICENSE_IDENTIFIERS = {"AGPL-3.0-only"}
 # "et al." in author lists, version tags, and the loanword "agent" used across the Chinese pages.
 ALLOWED = re.compile(r"\bet al\.|\b(?:v\d[\w.]*|jev-\d[\w.]*)\b|\bagent\b")
 
@@ -58,7 +61,7 @@ class Subtitles(HTMLParser):
 
 
 def english_words(subtitle):
-    parts = [part for part in subtitle.split(" · ") if part not in NAMES]
+    parts = [part for part in subtitle.split(" · ") if part not in NAMES | LICENSE_IDENTIFIERS]
     return sorted(set(re.findall(r"\b[a-z]+\b", ALLOWED.sub("", " · ".join(parts)))))
 
 
@@ -79,6 +82,8 @@ class ChineseSubtitleTests(unittest.TestCase):
         page = (ROOT / "site/zh/index.html").read_text(encoding="utf-8")
         for expected in ("ai-ecoverse · 浏览器移植版 · MIT", "SberAI · 独立运行时 · 代码 MIT",
                          "Jeva authors · 未声明许可", "Hugging Face · 社区", "ncchinh · 运行时 · Apache-2.0",
+                         "coldteadotai · 规则检查 · MIT", "fabric-runtime · 进程编排 · MIT",
+                         "atoma-run · agent 工作流 · AGPL-3.0-only",
                          "已知局限 · 2026 年 10 月 2 日审阅", "Chen et al. · 社区综述 v0.5"):
             self.assertTrue(expected in page, expected)
 

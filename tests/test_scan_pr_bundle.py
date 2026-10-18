@@ -202,7 +202,7 @@ class RestoreTests(BoundaryCase):
 
     def test_restore_writes_exactly_the_allowlisted_files(self):
         write_tree(self.root, {name: b"{}\n" for name in scan.ALLOWED})
-        self.assertIn("Restored the six allowlisted data files", self.restore())
+        self.assertIn(f"Restored the {len(scan.ALLOWED)} allowlisted data files", self.restore())
         self.assertEqual(self.repository_files(), sorted(scan.ALLOWED))
         self.assertEqual({name: (self.root / name).read_bytes() for name in scan.ALLOWED}, self.files)
 

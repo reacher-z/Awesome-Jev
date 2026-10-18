@@ -273,6 +273,8 @@ html:not(.js) .corpus-disclosure {
 .model-controls input { width:100%; }
 .model-controls input::placeholder { color:var(--muted); }
 .model-controls button { cursor:pointer; }
+.directory-share-status { display:block; margin:0 0 10px; color:var(--muted); font-size:13px; }
+.directory-share-status:empty { display:none; }
 .model-controls :is(input,select,button):focus-visible { outline:2px solid var(--link); outline-offset:3px; }
 .model-list-meta { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 16px; font-size:12px; color:var(--muted); }
 .model-list-meta p { margin:0 0 10px; }
@@ -290,7 +292,7 @@ html:not(.js) .corpus-disclosure {
   .collection-stats { gap:8px 18px; }
   .model-controls { flex-wrap:wrap; gap:12px; }
   .model-controls .model-search { flex-basis:100%; }
-  .model-controls label:not(.model-search) { flex:1; }
+  .model-controls label:not(.model-search) { flex:1; min-width:0; }
   .model-controls select { width:100%; }
   .model-table, .model-table tbody { display:block; }
   .model-table thead { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
@@ -2380,6 +2382,23 @@ a.artifact-chip:focus-visible {
   flex-wrap: wrap;
 }
 
+/* Bring the collection into view sooner on phones without shrinking its text. */
+@media (max-width: 760px) {
+  .hero.project-intro { padding: 18px 0 8px; }
+  html .hero.project-intro h1 { margin-bottom: 8px; }
+  .project-intro .hero-description { margin-bottom: 10px; line-height: 1.6; }
+  .project-intro .collection-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; margin: 8px 0 12px; }
+  .project-intro .collection-stats > div { justify-content: flex-end; }
+  .project-intro .intro-links { gap: 6px 16px; }
+  #collection { padding-top: 12px; }
+  #collection .section-heading { margin-bottom: 8px; }
+  #collection .section-intro { margin-top: 6px; }
+  #collection .collection-controls { padding: 10px 0; gap: 8px; }
+  #collection .search-field { margin-top: 0; }
+  #collection .compact-version { padding: 8px 0; }
+  #collection .index-meta { padding-top: 10px; gap: 6px; }
+}
+
 /* Numeric alignment belongs to counts; prose uses the same reading face. */
 #result-count, #corpus-count, .verification-legend dt > span:last-child {
   font-family: var(--mono);
@@ -2457,6 +2476,7 @@ html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3 {
   .corpus-disclosure,
   .model-controls,
   .paper-controls,
+  .directory-share-status,
   #copy-code,
   .back-top {
     display: none !important;
@@ -2482,4 +2502,19 @@ html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3 {
     font-weight: 400;
     overflow-wrap: anywhere;
   }
+}
+
+/* Tool comparisons preserve full scope notes and distinct project counts. */
+.tool-controls[hidden], .tool-row[hidden] { display: none; }
+.tool-directory .model-controls { margin: 10px 0 12px; }
+.tool-controls { margin-top: 18px; }
+.tool-controls .filter-button { display: inline-flex; gap: 6px; }
+.tool-meta { display: block; font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 4px; }
+.tool-purpose span { display: block; }
+.tool-table thead th:first-child { width: 30%; }
+.tool-table thead th:nth-child(2) { width: 19%; }
+@media (max-width: 760px) {
+  .tool-purpose::before { content: attr(data-label) ' · '; color: var(--muted); font-size: 12px; }
+  .tool-purpose span { display: inline; }
+  .tool-purpose span + span::before { content: ' / '; }
 }

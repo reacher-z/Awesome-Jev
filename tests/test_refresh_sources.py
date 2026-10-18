@@ -791,7 +791,7 @@ class RefreshRunTests(unittest.TestCase):
         scan = refresh.Scan(refresh.PublicFetcher())
         abstract = "TypeSafe Jev is a typed decision model. " + "This synthetic fixture discusses probability calibration and model evaluation. " * 5
         wrapper = {"data": [{"paper": {"id": "2609.12345", "title": "Jev calibration fixture", "summary": abstract, "authors": [{"name": "Fixture Author"}]}}], "retrieved_at": "2026-10-15T00:00:00Z", "retrieval_url": "https://huggingface.co/api/papers/search?q=Jev", "provider": "huggingface_papers_api", "http_status": 200}
-        with patch.object(scan, "query", side_effect=lambda topic, q, provider: (topic, q, wrapper)):
+        with patch.object(scan, "query", side_effect=lambda topic, q, provider: (topic, q, wrapper)), patch.object(scan, "scan_arxiv", return_value=[]):
             _, direct = scan.scan_research(smoke=True)
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "sources.jsonl"

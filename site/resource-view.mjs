@@ -29,6 +29,9 @@ function localizedMetadata(value, language) {
     "browser port": "浏览器移植版",
     "WebGPU port": "WebGPU 移植版",
     "training code": "训练代码",
+    "rule checks": "规则检查",
+    "process orchestration": "进程编排",
+    "agent workflows": "agent 工作流",
     "multimodal runtime": "多模态运行时",
     "independent runtime": "独立运行时",
     "runtime": "运行时",
@@ -124,12 +127,22 @@ export function renderPaperRow(resource, language, translations, themes) {
  const note=resource.artifact_note?.[language];
  const first=version==='1'?'':`<span class="paper-first"><span class="sr-only">${zh?'首次提交 ':'First submitted '}</span><time datetime="${resource.first_submitted}">${resource.first_submitted}</time> v1</span>`;
  const artifacts=renderArtifacts(resource, t)+(note?`<span class="artifact-note">${escapeHTML(note)}</span>`:'');
- return `<tr class="paper-row" data-theme="${theme.id}" data-code="${hasCode(resource)}"><td class="paper-date"><time datetime="${resource.date}">${resource.date}</time> v${version}${first}</td><th scope="row" class="paper-main"><a class="paper-title" href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a> <span class="paper-authors">${escapeHTML(authors)}</span></th><td class="paper-theme" title="${escapeHTML(theme[language])}">${escapeHTML(theme.short[language])}</td><td class="paper-artifacts${artifacts?'':' paper-artifacts-none'}">${artifacts||`<span aria-hidden="true">—</span><span class="sr-only">${zh?'未列出材料':'None listed'}</span>`}</td><td class="paper-finding"><div class="paper-finding-text">${escapeHTML(resource[language])}</div></td></tr>`;
+ const search=[resource.title,resource.by,resource.en,resource.zh,theme.en,theme.zh,resource.artifact_note?.en,resource.artifact_note?.zh].filter(Boolean).join(' ');
+ return `<tr class="paper-row" data-theme="${theme.id}" data-code="${hasCode(resource)}" data-search="${escapeHTML(search)}"><td class="paper-date"><time datetime="${resource.date}">${resource.date}</time> v${version}${first}</td><th scope="row" class="paper-main"><a class="paper-title" href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a> <span class="paper-authors">${escapeHTML(authors)}</span></th><td class="paper-theme" title="${escapeHTML(theme[language])}">${escapeHTML(theme.short[language])}</td><td class="paper-artifacts${artifacts?'':' paper-artifacts-none'}">${artifacts||`<span aria-hidden="true">—</span><span class="sr-only">${zh?'未列出材料':'None listed'}</span>`}</td><td class="paper-finding"><div class="paper-finding-text">${escapeHTML(resource[language])}</div></td></tr>`;
 }
 
 export function renderModelRow(resource, language) {
  const zh=language==='zh';
  const license=zh ? ({'Not declared':'未声明','Apache-2.0 weights; MIT server':'权重 Apache-2.0；服务代码 MIT'})[resource.license] || resource.license : resource.license;
  const group=resource.license==='CC BY-NC 4.0'?'noncommercial':resource.license==='Qwen Research'?'research':resource.license==='Not declared'?'undeclared':resource.license.startsWith('Apache-2.0')?'apache':'other';
- return `<tr class="model-row" data-license-group="${group}"><th scope="row"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)} ${icon('external')}</a><span class="model-publisher">${escapeHTML(resource.publisher)}</span></th><td class="model-license" data-label="${zh?'声明许可':'Declared license'}">${escapeHTML(license)}</td><td class="model-scope" data-label="${zh?'范围与证据':'Scope and evidence'}">${escapeHTML(resource[language])}</td></tr>`;
+ const licenseZh=({'Not declared':'未声明','Apache-2.0 weights; MIT server':'权重 Apache-2.0；服务代码 MIT'})[resource.license] || resource.license;
+ const search=[resource.title,resource.publisher,resource.by,resource.en,resource.zh,resource.license,licenseZh].join(' ');
+ return `<tr class="model-row" data-license-group="${group}" data-search="${escapeHTML(search)}"><th scope="row"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)} ${icon('external')}</a><span class="model-publisher">${escapeHTML(resource.publisher)}</span></th><td class="model-license" data-label="${zh?'声明许可':'Declared license'}">${escapeHTML(license)}</td><td class="model-scope" data-label="${zh?'范围与证据':'Scope and evidence'}">${escapeHTML(resource[language])}</td></tr>`;
+}
+
+export function renderToolRow(resource, language, translations, tasks) {
+ const t=key=>translations[language][key] ?? translations.en[key] ?? key;
+ const purpose=resource.tool_tasks.map(id=>tasks.find(task=>task.id===id));
+ const search=[resource.title,resource.by,resource.en,resource.zh,...purpose.flatMap(task=>[task.en,task.zh])].join(' ');
+ return `<tr class="tool-row" data-tasks="${resource.tool_tasks.join(' ')}" data-publisher="${resource.provenance==='official'?'official':'community'}" data-search="${escapeHTML(search)}"><th scope="row"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title,language)}>${escapeHTML(resource.title)} ${icon('external')}</a><span class="tool-meta">${escapeHTML(localizedMetadata(resource.by,language))} · ${renderEvidence(resource,t)}</span></th><td class="tool-purpose" data-label="${language==='zh'?'用途':'Purpose'}">${purpose.map(task=>`<span>${escapeHTML(task[language])}</span>`).join('')}</td><td class="tool-scope">${escapeHTML(resource[language])}</td></tr>`;
 }

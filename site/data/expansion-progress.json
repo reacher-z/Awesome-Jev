@@ -3,35 +3,35 @@
   "baseline_commit": "3519c15d7e00686a8dbf9b1e184c68726327ab1e",
   "baseline_source_index_sha256": "8bfdd20564f2cda54bb8264c3c802f315e3e9a11b153bd85dde4325f53c841d5",
   "target_new_sources": 301,
-  "accepted_new_sources": 780,
+  "accepted_new_sources": 788,
   "remaining_to_target": 0,
   "target_count_reached": true,
   "current_index_counts": {
     "editorial_reviewed": 4,
-    "content_screened": 2392,
-    "abstract_checked": 1843,
+    "content_screened": 2396,
+    "abstract_checked": 1847,
     "metadata_only": 47,
-    "raw_records": 4300,
-    "unique_records": 4286,
+    "raw_records": 4308,
+    "unique_records": 4294,
     "duplicate_records": 14,
-    "checked_sources": 4239
+    "checked_sources": 4247
   },
   "by_category": {
     "Datasets": 101,
     "Guides and evaluations": 38,
     "Models": 59,
-    "Papers": 31,
-    "Projects": 215,
+    "Papers": 35,
+    "Projects": 219,
     "Research foundations": 336
   },
   "by_relation": {
     "adjacent": 25,
     "background": 336,
-    "direct": 419
+    "direct": 427
   },
   "by_verification_level": {
-    "abstract_checked": 367,
-    "content_screened": 413
+    "abstract_checked": 371,
+    "content_screened": 417
   },
   "verification_note": "Evidence depth is labeled per source. Content screening and abstract checks do not establish full-paper review, peer review, endorsement, or experimental reproduction.",
   "additions": [
@@ -2472,6 +2472,18 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "Consider, Then Choose: Order-Invariant Decisions in System One Models",
+      "url": "https://arxiv.org/abs/2610.18233",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Runoff scores options individually, then balances finalist positions; order invariance assumes deterministic responses and a unique ranking, and does not resolve option-name bias or guarantee more accurate decisions.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "ffeb41a70208c2cef04fdc84afde97556ffe7aaf2e094d5e1ea49ffadc36dddb",
+      "retrieved_at": "2026-10-18T05:26:37.873284+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Decision Hijacking: Prompt Injection Attacks on Jev's Typed Probabilistic Decisions",
       "url": "https://arxiv.org/abs/2609.28613",
       "category": "Papers",
@@ -2541,6 +2553,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "25988c14a48518f0e90f24f2f9b907edc4a4a96ef2f51fef7735cf38e89a5209",
       "retrieved_at": "2026-10-16T11:52:08+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Jev-LiteMAS: Separating Decisions from Generation in Multi-Agent Workflows",
+      "url": "https://arxiv.org/abs/2610.21411",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Routes expert handoffs and screens artifacts before generative re-review; lower generative-token use depends on the workload, with fixed expert pools and savings that shrink as more artifacts need repair.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "097a055e166e2bee05e94fa0cd5e1d716b7e2432adb8f992d42286d519ae4313",
+      "retrieved_at": "2026-10-18T05:26:35.446868+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2652,6 +2676,18 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "Prune the Summary, Not the History: Source-Judged Compaction for Long-Horizon Agents",
+      "url": "https://arxiv.org/abs/2610.20927",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Uses Jev to prune summary entries lacking source support; reported gains concern success in all three runs on two benchmarks, while useful constraints can be discarded and sourced errors retained.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "9325f151ce56a69bbca9597e75cf7d2739bc3f0b874cf9a08a0d2021d057c11a",
+      "retrieved_at": "2026-10-18T05:26:38.093753+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "REFLEX with Jev for Efficient Selective Control in LLM Agents",
       "url": "https://arxiv.org/abs/2609.26532",
       "category": "Papers",
@@ -2760,6 +2796,18 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "Verdict: Encode Once, Decide Many",
+      "url": "https://arxiv.org/abs/2610.20778",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Encodes shared state once for multiple typed questions; invariance requires identical retained state tokens, while teacher-derived labels, adaptive testing and unstable BoolQ training constrain the reported gains.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "65263bfedd1bdb73b48d746c584396645bfb272631680ae79fb7e3b6957633de",
+      "retrieved_at": "2026-10-18T05:26:35.612764+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "VideoJev: System One Model for Video Understanding and Interaction",
       "url": "https://arxiv.org/abs/2610.18615",
       "category": "Papers",
@@ -2829,6 +2877,18 @@
       "verification_level": "content_screened",
       "content_sha256": "7fc3c9603b422b536aad9a3ee7f9cb9297e9aec5a877cbf461000658ab91f630",
       "retrieved_at": "2026-10-16T10:05:37+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "Abide",
+      "url": "https://github.com/coldteadotai/abide",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Jev checks edits and turns against compiled project rules and requests repairs; missing credentials or network let edits pass unchecked, and replay findings depend on the chosen rubric.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "51d411ac3f315720a7180775f0b9bff05254848306a64d2c1d5d55d5c15faa5b",
+      "retrieved_at": "2026-10-18T04:57:50.602240+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -2985,6 +3045,18 @@
       "verification_level": "content_screened",
       "content_sha256": "7e54fe0de89d6ad1f2a812738d6cc8b3357299cf40dfff5c450e099c97ed8e39",
       "retrieved_at": "2026-10-16T10:05:40+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "atoma",
+      "url": "https://github.com/atoma-run/atoma",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Multi-agent planning, execution and evidence review with Jev routing; shared agent/skill learning can expose document-derived material across organizations, and tenant isolation is not independently audited.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "6fa2a4f6abff93b62436e0294c0c8abbc74a4d2c7725ff619bdb7abba2708994",
+      "retrieved_at": "2026-10-18T04:57:50.657780+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -3201,6 +3273,18 @@
       "verification_level": "content_screened",
       "content_sha256": "bcfd719a0aca665cfd7632eb8e43c690a4454dc26c161ad733138b04219d7942",
       "retrieved_at": "2026-10-16T10:05:40+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "circuit",
+      "url": "https://github.com/barneyjm/circuit",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "LoRA and pointer-head training, evaluation and serving for text, image and audio decisions; publisher tests cover selected task sets and do not establish universal calibration or option-order invariance.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "939968f324fd85f6c7409e5eeb6354e84301ca44e8d44f9ee93be2afa4563c16",
+      "retrieved_at": "2026-10-18T04:57:50.629588+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -3909,6 +3993,18 @@
       "verification_level": "content_screened",
       "content_sha256": "b6941cbdf02a8922e12a58bfc853b1be2c8f2182148e28d7290c275961770f64",
       "retrieved_at": "2026-10-16T11:57:24.072123+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "jev-fabric",
+      "url": "https://github.com/fabric-runtime/jev-fabric",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Native process orchestration with bounded logs, deadlines and explicit typed decisions; commands run with caller privileges, exit status needs outcome checks, and selected policy proofs do not verify the whole runtime.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "bc6db4b22ffdcad210b49d20adf2a230e209b5e537c9df3ca50d82551a71d5ca",
+      "retrieved_at": "2026-10-18T04:57:50.629990+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {

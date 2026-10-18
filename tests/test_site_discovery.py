@@ -17,14 +17,14 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://awesomejev.github.io"
-PAIRS = (("/", "/zh/"), ("/guide/", "/zh/guide/"), ("/papers/", "/zh/papers/"), ("/models/", "/zh/models/"), ("/discoveries/", "/zh/discoveries/"))
+PAIRS = (("/", "/zh/"), ("/guide/", "/zh/guide/"), ("/papers/", "/zh/papers/"), ("/models/", "/zh/models/"), ("/tools/", "/zh/tools/"), ("/discoveries/", "/zh/discoveries/"))
 TOPIC_SLUGS = ("option-label-bias", "audiojev", "graph-decision-benchmarks")
 PAIRS += (("/topics/", "/zh/topics/"),) + tuple((f"/topics/{slug}/", f"/zh/topics/{slug}/") for slug in TOPIC_SLUGS)
 ROUTES = tuple(route for pair in PAIRS for route in pair)
 BUILD_INPUTS = (
     "scripts/build_site.mjs", "templates/index.html", "data/search-guide.json", "data/research-topics.json",
     "data/expansion-progress-2026-10-16.json", "data/discovery-translations.zh-CN.json", "references.bib",
-    "site/app.js", "site/model-directory.js", "site/paper-directory.js", "site/catalog.mjs", "site/resource-view.mjs", "site/styles.css",
+    "site/app.js", "site/directory-view.mjs", "site/model-directory.js", "site/paper-directory.js", "site/tool-directory.js", "site/catalog.mjs", "site/resource-view.mjs", "site/styles.css",
 )
 # The build also draws the papers-per-week chart and rewrites its region in both READMEs.
 BUILD_INPUTS += ("scripts/paper_activity.mjs", "README.md", "README.zh-CN.md")
@@ -106,9 +106,9 @@ class CrawlPage(HTMLParser):
             self._style = True
         elif tag == "h1":
             self._h1 = []
-        elif (tag == "article" and "resource-row" in classes) or (tag == "tr" and classes & {"model-row", "paper-row"}):
+        elif (tag == "article" and "resource-row" in classes) or (tag == "tr" and classes & {"model-row", "paper-row", "tool-row"}):
             self._model_row = tag == "tr"
-            self._card_title = "model-row" in classes
+            self._card_title = bool(classes & {"model-row", "tool-row"})
             self._card = {"url": "", "name": [], "text": [], "description": [], "hidden": "hidden" in attrs or attrs.get("aria-hidden") == "true",
                           "category": attrs.get("data-category", ""), "relation": attrs.get("data-relation", ""),
                           "verification_level": attrs.get("data-verification-level", "")}
@@ -119,7 +119,7 @@ class CrawlPage(HTMLParser):
             self._card["url"] = attrs.get("href", "")
         elif tag == "a" and self._card is not None and self._card_title:
             self._card["url"] = attrs.get("href", "")
-        elif self._card is not None and ((tag == "p" and "resource-description" in classes) or (tag == "td" and classes & {"model-scope", "paper-finding"})):
+        elif self._card is not None and ((tag == "p" and "resource-description" in classes) or (tag == "td" and classes & {"model-scope", "paper-finding", "tool-scope"})):
             self._card_description = True
 
     def handle_endtag(self, tag):
@@ -199,7 +199,7 @@ class SiteDiscoveryTests(unittest.TestCase):
             self.assertEqual(parse_qs(parsed.query), {"v": [expected]})
             return path
 
-        for route in ("/", "/zh/"):
+        for route in ("/", "/zh/", "/papers/", "/zh/papers/", "/models/", "/zh/models/", "/tools/", "/zh/tools/"):
             with self.subTest(route=route):
                 page = self.pages[route]
                 self.assertEqual(len(page.import_maps), 1)
@@ -208,7 +208,8 @@ class SiteDiscoveryTests(unittest.TestCase):
                 self.assertEqual(len(module_positions), 1)
                 self.assertLess(map_positions[0], module_positions[0], "Map must precede module resolution")
                 entry = urljoin(BASE + route, page.scripts[module_positions[0]]["src"])
-                self.assertEqual(urlsplit(entry).path, "/app.js")
+                expected_entry = "/paper-directory.js" if "/papers/" in route else "/model-directory.js" if "/models/" in route else "/tool-directory.js" if "/tools/" in route else "/app.js"
+                self.assertEqual(urlsplit(entry).path, expected_entry)
                 mappings = {urljoin(BASE + route, key): urljoin(BASE + route, value)
                             for key, value in page.import_maps[0]["imports"].items()}
                 queue, visited, mapped = [entry], set(), set()
@@ -337,7 +338,7 @@ class SiteDiscoveryTests(unittest.TestCase):
                 self.assertEqual(len(ids), len(set(ids)), "Generated HTML must not duplicate interaction IDs")
 
     def test_item_lists_match_visible_link_titles_order_and_counts(self):
-        for route in ("/", "/zh/", "/papers/", "/zh/papers/", "/models/", "/zh/models/", "/discoveries/", "/zh/discoveries/"):
+        for route in ("/", "/zh/", "/papers/", "/zh/papers/", "/models/", "/zh/models/", "/tools/", "/zh/tools/", "/discoveries/", "/zh/discoveries/"):
             with self.subTest(route=route):
                 page = self.pages[route]
                 if "models" in route:
@@ -385,6 +386,30 @@ class SiteDiscoveryTests(unittest.TestCase):
                 self.assertIn(prefix + "models/", self.pages[prefix].links)
                 self.assertIn(prefix + "models/", self.pages[prefix + "guide/"].links)
                 self.assertIn("/models.json", page.links)
+
+    def test_tool_directory_preserves_projects_purposes_and_bilingual_scope(self):
+        exported = json.loads((ROOT / "site/tools.json").read_text())
+        self.assertEqual(exported["url"], BASE + "/tools/")
+        tools = exported["tools"]
+        expected = json.loads(subprocess.check_output(["node", "--input-type=module", "-e",
+            'import {resources} from "./site/catalog.mjs"; console.log(JSON.stringify(resources.filter(row=>row.category==="Tools")));'], cwd=ROOT))
+        self.assertEqual({row["url"]: row for row in tools}, {row["url"]: row for row in expected})
+        self.assertEqual(len({row["url"] for row in tools}), len(tools))
+        purposes = {row["id"] for row in exported["purposes"]}
+        self.assertEqual(purposes, {"integration", "workflow", "runtime", "training"})
+        for tool in tools:
+            self.assertTrue(set(tool["tool_tasks"]) <= purposes)
+            self.assertTrue(tool["tool_tasks"])
+        for language, prefix in (("en", "/"), ("zh", "/zh/")):
+            page = self.pages[prefix + "tools/"]
+            self.assertEqual([row["url"] for row in page.cards], [row["url"] for row in tools])
+            self.assertEqual([row["description"] for row in page.cards], [words(row[language]) for row in tools])
+            self.assertTrue(all(not row["hidden"] for row in page.cards))
+            self.assertIn(prefix + "tools/", self.pages[prefix].links)
+            self.assertIn(prefix + "tools/", self.pages[prefix + "models/"].links)
+            self.assertIn("/tools.json", page.links)
+        # Multiple purposes do not duplicate projects in the table or structured data.
+        self.assertGreater(sum(len(row["tool_tasks"]) for row in tools), len(tools))
 
     def test_paper_directory_is_a_complete_static_table_in_both_languages(self):
         exported = json.loads((ROOT / "site/papers.json").read_text())

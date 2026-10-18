@@ -2,7 +2,7 @@
 
 Independent community project, not affiliated with TypeSafe AI.
 Canonical website: https://awesomejev.github.io/
-Curated snapshot: 2026-10-17. Findings are author-reported; no model experiments reproduced here.
+Curated snapshot: 2026-10-18. Findings are author-reported; no model experiments reproduced here.
 
 # Jev guide: typed decisions, probabilities, and evaluation
 
@@ -128,6 +128,14 @@ Studies fitted confidence thresholds for sharing agent control with decision mod
 
 Primary source: https://arxiv.org/abs/2610.21412v1
 
+## Jev-LiteMAS: Separating Decisions from Generation in Multi-Agent Workflows
+
+Papers · Wang, Zhou, Lou & Li · 2026-10-15 · v1
+
+Routes expert handoffs and screens artifacts before generative re-review; lower generative-token use depends on the workload, with fixed expert pools and savings that shrink as more artifacts need repair.
+
+Primary source: https://arxiv.org/abs/2610.21411v1
+
 ## System1-Arena: Which Decisions Can Be Left to System 1?
 
 Papers · Chen et al. · 2026-10-15 · v1
@@ -144,6 +152,14 @@ In ten prepared scientific cases, the authors separate semantic selections, comp
 
 Primary source: https://arxiv.org/abs/2609.24965v3
 
+## Prune the Summary, Not the History: Source-Judged Compaction for Long-Horizon Agents
+
+Papers · Min & Chen · 2026-10-14 · v1
+
+Uses Jev to prune summary entries lacking source support; reported gains concern success in all three runs on two benchmarks, while useful constraints can be discarded and sourced errors retained.
+
+Primary source: https://arxiv.org/abs/2610.20927v1
+
 ## From Detection to Decision: Calibration and Deferral for Prompt-Injection Detection
 
 Papers · Lan, Kaul, Pandurangan & Sanyal · 2026-10-14 · v1
@@ -151,6 +167,14 @@ Papers · Lan, Kaul, Pandurangan & Sanyal · 2026-10-14 · v1
 On 47,611 held-out prompt-injection examples, Jev ranks second in AUROC after an LLM judge, its native probabilities do not consistently beat post-hoc calibrated classifiers, and a 1% false-negative target forces over 91.8% escalation in every gate-reviewer system.
 
 Primary source: https://arxiv.org/abs/2610.20907v1
+
+## Verdict: Encode Once, Decide Many
+
+Papers · Chouhan & Perry · 2026-10-14 · v1
+
+Encodes shared state once for multiple typed questions; invariance requires identical retained state tokens, while teacher-derived labels, adaptive testing and unstable BoolQ training constrain the reported gains.
+
+Primary source: https://arxiv.org/abs/2610.20778v1
 
 ## Calibration and Risk-Budgeted Decisions with System One Models
 
@@ -255,6 +279,14 @@ Papers · Ma et al. · 2026-10-13 · v1
 Tool-argument judges including Jev reject some correct derived values without visible references; model-generated references are evaluated on three benchmarks.
 
 Primary source: https://arxiv.org/abs/2610.18497v1
+
+## Consider, Then Choose: Order-Invariant Decisions in System One Models
+
+Papers · Huang, Teng, Deng & An · 2026-10-13 · v1
+
+Runoff scores options individually, then balances finalist positions; order invariance assumes deterministic responses and a unique ranking, and does not resolve option-name bias or guarantee more accurate decisions.
+
+Primary source: https://arxiv.org/abs/2610.18233v1
 
 ## Same Attack, Different Judge: A First Controlled Adversarial Comparison of Jev, LLM Judges, and Purpose-Built Safety Classifiers
 
@@ -856,6 +888,38 @@ A multimodal model with a joint schema head, returning probabilities over allowe
 
 Primary source: https://huggingface.co/Cloudflare/clef
 
+## Abide
+
+Tools · coldteadotai · rule checks · MIT
+
+Jev checks edits and turns against compiled project rules and requests repairs; missing credentials or network let edits pass unchecked, and replay findings depend on the chosen rubric.
+
+Primary source: https://github.com/coldteadotai/abide
+
+## jev-fabric
+
+Tools · fabric-runtime · process orchestration · MIT
+
+Native process orchestration with bounded logs, deadlines and explicit typed decisions; commands run with caller privileges, exit status needs outcome checks, and selected policy proofs do not verify the whole runtime.
+
+Primary source: https://github.com/fabric-runtime/jev-fabric
+
+## atoma
+
+Tools · atoma-run · agent workflows · AGPL-3.0-only
+
+Multi-agent planning, execution and evidence review with Jev routing; shared agent/skill learning can expose document-derived material across organizations, and tenant isolation is not independently audited.
+
+Primary source: https://github.com/atoma-run/atoma
+
+## circuit
+
+Tools · Barneyjm · training code · Apache-2.0
+
+LoRA and pointer-head training, evaluation and serving for text, image and audio decisions; publisher tests cover selected task sets and do not establish universal calibration or option-order invariance.
+
+Primary source: https://github.com/Barneyjm/circuit
+
 ## cua-s1.js
 
 Tools · ai-ecoverse · browser port · MIT
@@ -1365,7 +1429,7 @@ Primary source: https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f
 ## Option-label bias in Jev-style decision models
 
 Canonical page: https://awesomejev.github.io/topics/option-label-bias/
-Updated: 2026-10-17
+Updated: 2026-10-18
 
 A valid typed answer can follow an option’s familiar name instead of its assigned definition. The observed failure and its cause are separate questions: evidence from inspected open implementations should not be treated as an explanation of hosted Jev’s internals.
 
@@ -1379,9 +1443,13 @@ Sun and colleagues test conflicts between option names and definitions. Azizi an
 
 The fixed-weight rendering intervention in Labels Override Definitions provides evidence about the tested interface implementation. That is a narrower claim than saying every constrained decision head has the same defect. Before comparing systems, identify whether the option key, label and definition all reach the model, and whether the adapter rewrites or drops any of them. [Rendering intervention: original abstract](https://arxiv.org/abs/2610.02586v1)
 
+### Does order stability fix label bias?
+
+Runoff scores options individually before comparing balanced finalist listings. Its order-invariance argument assumes deterministic responses and a unique canonical ranking; the paper explicitly leaves option-name bias outside its target. Verdict-MQ describes architectural order/grouping invariance when retained state tokens are identical after truncation. These are conditional claims about changing a request’s arrangement, not proof of semantic correctness, calibrated confidence or resistance to malicious option names. [Runoff limitations and assumptions, v1](https://arxiv.org/html/2610.18233v1#Sx1.p1) · [Runoff invariance assumptions, v1](https://arxiv.org/html/2610.18233v1#A5.SS0.SSS0.Px2.p1) · [Verdict original abstract, v1](https://arxiv.org/abs/2610.20778v1)
+
 ### A diagnostic to use in your own evaluation
 
-Our suggested comparison fixes the state, task rule, model version and scoring rule. Prepare equivalent requests with informative labels, neutral identifiers and definition-only options where the interface permits them. Add a separate conflicting-label condition, with expected answers checked before querying. Compare answer changes, errors and confidence on errors; preserve the actual rendered inputs. Use a held-out set to test any proposed repair.
+Our suggested comparison fixes the state, task rule, model version and scoring rule. Prepare equivalent requests with informative labels, neutral identifiers and definition-only options where the interface permits them. Add a separate conflicting-label condition, with expected answers checked before querying. Compare answer changes, errors and confidence on errors; preserve the actual rendered inputs. Use a held-out set to test any proposed repair. Test option permutations and identical-request repeats separately from label changes. Match the retained input after truncation when testing an invariance claim.
 
 ### What would remain unproven?
 

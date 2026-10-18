@@ -416,6 +416,13 @@
       "note": "README, LICENSE and top-level file list read at commit 73f8c9af9c62a0b3bbc9930834be25e3441acdff for source issue #54; notebooks were not executed. The LICENSE designates CC BY-NC-SA 4.0 for original content and keeps third-party and TypeSafe documentation rights with their owners. This annotation replaces the generic relevance note only; original provider fields and evidence grades are preserved.",
       "evidence_url": "https://github.com/datawhalechina/jev-cookbook",
       "reviewed_at": "2026-10-17T12:55:00Z"
+    },
+    {
+      "url": "https://github.com/coldteadotai/abide",
+      "title": "Abide",
+      "evidence_url": "https://raw.githubusercontent.com/coldteadotai/abide/21b7e74fa92cf96eb8bf525f5d1b612e6fcaa8dd/README.md",
+      "reviewed_at": "2026-10-18T05:04:14.682049+00:00",
+      "note": "Display-only project title from the pinned README heading. The automated parser selected a code-block heading; preserve source evidence and grade."
     }
   ]
 }

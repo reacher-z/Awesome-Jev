@@ -4,9 +4,9 @@
 
 A curated list of **Jev and typed decision model** papers, models, datasets, evaluation tools, and practical guides.
 
-**[Main repository](https://github.com/reacher-z/Awesome-Jev)** · [Website](https://awesomejev.github.io/) · [Papers](https://awesomejev.github.io/papers/) · [Research guide](https://awesomejev.github.io/guide/) · [New resources](https://awesomejev.github.io/discoveries/) · [Model directory](https://awesomejev.github.io/models/) · [Research topics](https://awesomejev.github.io/topics/) · [中文](README.zh-CN.md) · [Survey](docs/survey.md) · [BibTeX](references.bib) · [Contribute](CONTRIBUTING.md)
+**[Main repository](https://github.com/reacher-z/Awesome-Jev)** · [Website](https://awesomejev.github.io/) · [Papers](https://awesomejev.github.io/papers/) · [Research guide](https://awesomejev.github.io/guide/) · [New resources](https://awesomejev.github.io/discoveries/) · [Model directory](https://awesomejev.github.io/models/) · [Tool directory](https://awesomejev.github.io/tools/) · [Research topics](https://awesomejev.github.io/topics/) · [中文](README.zh-CN.md) · [Survey](docs/survey.md) · [BibTeX](references.bib) · [Contribute](CONTRIBUTING.md)
 
-Independent community project; not affiliated with TypeSafe AI. Last curated: **2026-10-17**. The website is published from [AwesomeJev.github.io](https://github.com/AwesomeJev/AwesomeJev.github.io).
+Independent community project; not affiliated with TypeSafe AI. Last curated: **2026-10-18**. The website is published from [AwesomeJev.github.io](https://github.com/AwesomeJev/AwesomeJev.github.io).
 
 The [new-resource directory](https://awesomejev.github.io/discoveries/) adds hundreds of projects, datasets, model cards, guides and research papers, with explicit screening levels and relationship labels. [Review the expansion and counting method](docs/expansion-2026-10-16.md); abstract checks are not full-paper reviews.
 
@@ -16,7 +16,7 @@ The [new-resource directory](https://awesomejev.github.io/discoveries/) adds hun
 | :--- | :--- | :--- |
 | Understand the research | [Papers](https://awesomejev.github.io/papers/) · [Survey](docs/survey.md) | Versioned studies, contributions and evidence limits. |
 | Compare models | [Model directory](https://awesomejev.github.io/models/) | Publisher, declared license and documented scope. |
-| Build an integration | [SDKs and tools](#sdks-and-integrations) · [Quick start](#quick-start) | Implementation entry points and a minimal API example. |
+| Build an integration | [Tool directory](https://awesomejev.github.io/tools/) · [Quick start](#quick-start) | Implementation entry points and a minimal API example. |
 | Investigate a question | [Research topics](https://awesomejev.github.io/topics/) · [Guide](https://awesomejev.github.io/guide/) | Source-backed explanations and evaluation protocols. |
 | Explore more sources | [New resources](https://awesomejev.github.io/discoveries/) | Broader projects, datasets and background research with screening labels. |
 
@@ -26,14 +26,14 @@ The ten most recent studies by linked-version date, newest first. [Papers](#pape
 
 - 2026-10-15 · v1 · [Qwen-Audio-Jev: A Unified Interface for Audio Decisions](https://arxiv.org/abs/2610.21614v1) — in [Architectures, memory, and multimodality](#architectures-memory-and-multimodality)
 - 2026-10-15 · v1 · [JevAgentHarness: Benchmarking, Deploying and Training Decision Models That Share Control with LLMs](https://arxiv.org/abs/2610.21412v1) — in [Judging and selective automation](#judging-and-selective-automation)
+- 2026-10-15 · v1 · [Jev-LiteMAS: Separating Decisions from Generation in Multi-Agent Workflows](https://arxiv.org/abs/2610.21411v1) — in [Judging and selective automation](#judging-and-selective-automation)
 - 2026-10-15 · v1 · [System1-Arena: Which Decisions Can Be Left to System 1?](https://arxiv.org/abs/2610.21244v1) — in [Evaluation and benchmarking](#evaluation-and-benchmarking)
 - 2026-10-15 · v3 · [Jev for Scientific Decisions: Evaluating Semantic Choices and Their Consequences](https://arxiv.org/abs/2609.24965v3) — in [Applications and domain studies](#applications-and-domain-studies)
+- 2026-10-14 · v1 · [Prune the Summary, Not the History: Source-Judged Compaction for Long-Horizon Agents](https://arxiv.org/abs/2610.20927v1) — in [Architectures, memory, and multimodality](#architectures-memory-and-multimodality)
 - 2026-10-14 · v1 · [From Detection to Decision: Calibration and Deferral for Prompt-Injection Detection](https://arxiv.org/abs/2610.20907v1) — in [Robustness and security](#robustness-and-security)
+- 2026-10-14 · v1 · [Verdict: Encode Once, Decide Many](https://arxiv.org/abs/2610.20778v1) — in [Architectures, memory, and multimodality](#architectures-memory-and-multimodality)
 - 2026-10-14 · v1 · [Calibration and Risk-Budgeted Decisions with System One Models](https://arxiv.org/abs/2610.19811v1) — in [Probability calibration and coherence](#probability-calibration-and-coherence)
 - 2026-10-14 · v1 · [Selective Reasoning for Typed Decision Models: When to Start, Read, and Stop](https://arxiv.org/abs/2610.19644v1) — in [Judging and selective automation](#judging-and-selective-automation)
-- 2026-10-14 · v1 · [Are AI Decision Models Biased? A Case Study of Jev](https://arxiv.org/abs/2610.19619v1) — in [Probability calibration and coherence](#probability-calibration-and-coherence)
-- 2026-10-14 · v1 · [Typed Decision Models on Tabular Data](https://arxiv.org/abs/2610.19536v1) — in [Evaluation and benchmarking](#evaluation-and-benchmarking)
-- 2026-10-14 · v2 · [More Choices, Fewer Decisions: Ordinal-Scale Bias in JEV-like Direct-Decision Models](https://arxiv.org/abs/2609.38827v2) — in [Probability calibration and coherence](#probability-calibration-and-coherence)
 
 ## Contents
 
@@ -74,17 +74,17 @@ On **2026-10-17**, `jev-latest` points to `jev-1.13.0` and `jev-preview` to `jev
 
 ## Papers
 
-All 78 direct studies below are **arXiv preprints**. Dates identify the linked, reviewed version, not necessarily the first submission. Results are author-reported; this project has not reproduced their experiments. Titles that contain speed or cost claims retain the authors' wording. A dash in the Artifacts column means none is linked. [Bibliography](references.bib) · [Evidence comparison](docs/survey.md)
+All 82 direct studies below are **arXiv preprints**. Dates identify the linked, reviewed version, not necessarily the first submission. Results are author-reported; this project has not reproduced their experiments. Titles that contain speed or cost claims retain the authors' wording. A dash in the Artifacts column means none is linked. [Bibliography](references.bib) · [Evidence comparison](docs/survey.md)
 
 <!-- papers-by-week: generated by scripts/build_site.mjs from site/catalog.mjs -->
 <p><picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/papers-by-week-dark.svg">
-  <img src="assets/papers-by-week.svg" width="400" alt="Stacked columns of the 78 selected papers by ISO week of first arXiv submission, coloured by theme: 2026-W38: 1; 2026-W39: 23; 2026-W40: 20; 2026-W41: 15; 2026-W42: 19 (2026-W42 through 2026-10-17).">
-</picture><br><sub>Papers per week of first arXiv submission, by theme. ISO weeks, dated by their Monday. Counts cover this collection, not the whole literature. The last week runs to the curation date, 2026-10-17.</sub></p>
+  <img src="assets/papers-by-week.svg" width="400" alt="Stacked columns of the 82 selected papers by ISO week of first arXiv submission, coloured by theme: 2026-W38: 1; 2026-W39: 23; 2026-W40: 20; 2026-W41: 15; 2026-W42: 23.">
+</picture><br><sub>Papers per week of first arXiv submission, by theme. ISO weeks, dated by their Monday. Counts cover this collection, not the whole literature.</sub></p>
 
 <details><summary>Show the numbers</summary>
 
-<table><thead><tr><th scope="col">Theme</th><th scope="col">W38</th><th scope="col">W39</th><th scope="col">W40</th><th scope="col">W41</th><th scope="col">W42</th><th scope="col">Total</th></tr></thead><tbody><tr><th scope="row">Evaluation</th><td>0</td><td>1</td><td>5</td><td>7</td><td>4</td><td>17</td></tr><tr><th scope="row">Calibration</th><td>0</td><td>1</td><td>4</td><td>0</td><td>3</td><td>8</td></tr><tr><th scope="row">Judging</th><td>0</td><td>4</td><td>1</td><td>2</td><td>3</td><td>10</td></tr><tr><th scope="row">Robustness</th><td>0</td><td>6</td><td>2</td><td>2</td><td>4</td><td>14</td></tr><tr><th scope="row">Architectures</th><td>1</td><td>3</td><td>7</td><td>3</td><td>4</td><td>18</td></tr><tr><th scope="row">Applications</th><td>0</td><td>8</td><td>1</td><td>1</td><td>1</td><td>11</td></tr><tr><th scope="row">Total</th><td>1</td><td>23</td><td>20</td><td>15</td><td>19</td><td>78</td></tr></tbody></table>
+<table><thead><tr><th scope="col">Theme</th><th scope="col">W38</th><th scope="col">W39</th><th scope="col">W40</th><th scope="col">W41</th><th scope="col">W42</th><th scope="col">Total</th></tr></thead><tbody><tr><th scope="row">Evaluation</th><td>0</td><td>1</td><td>5</td><td>7</td><td>4</td><td>17</td></tr><tr><th scope="row">Calibration</th><td>0</td><td>1</td><td>4</td><td>0</td><td>3</td><td>8</td></tr><tr><th scope="row">Judging</th><td>0</td><td>4</td><td>1</td><td>2</td><td>4</td><td>11</td></tr><tr><th scope="row">Robustness</th><td>0</td><td>6</td><td>2</td><td>2</td><td>5</td><td>15</td></tr><tr><th scope="row">Architectures</th><td>1</td><td>3</td><td>7</td><td>3</td><td>6</td><td>20</td></tr><tr><th scope="row">Applications</th><td>0</td><td>8</td><td>1</td><td>1</td><td>1</td><td>11</td></tr><tr><th scope="row">Total</th><td>1</td><td>23</td><td>20</td><td>15</td><td>23</td><td>82</td></tr></tbody></table>
 
 </details>
 <!-- /papers-by-week -->
@@ -129,6 +129,7 @@ All 78 direct studies below are **arXiv preprints**. Dates identify the linked, 
 | Date&nbsp;·&nbsp;version | Paper | Key finding | Artifacts |
 | :--- | :--- | :--- | :--- |
 | 2026-10-15<br>v1 | [JevAgentHarness: Benchmarking, Deploying and Training Decision Models That Share Control with LLMs](https://arxiv.org/abs/2610.21412v1)<br>Zhu et al. | Per-choice thresholds for sharing agent control between decision models and LLMs. | [Code](https://github.com/JevAgentHarness/JevAgentHarness) |
+| 2026-10-15<br>v1 | [Jev-LiteMAS: Separating Decisions from Generation in Multi-Agent Workflows](https://arxiv.org/abs/2610.21411v1)<br>Wang, Zhou, Lou & Li | Routes expert handoffs and screens artifacts before generative re-review; lower generative-token use depends on the workload, with fixed expert pools and savings that shrink as more artifacts need repair. | Code not verified |
 | 2026-10-14<br>v1 | [Selective Reasoning for Typed Decision Models: When to Start, Read, and Stop](https://arxiv.org/abs/2610.19644v1)<br>Zheng & Chen | Gates reasoning start, candidate-answer reading and generation stopping; evidence is limited to a frozen Qwen backbone and three task families. | [Code and saved measurements](https://github.com/binzheng-joey/selective-reasoning); README inspected, not executed. |
 | 2026-10-13<br>v3<br>first submitted 2026-09-24 | [Decision Models vs. LLMs as Rubric Judges: Cheaper, Faster, and Wrong in the Same Places](https://arxiv.org/abs/2609.29769v3)<br>Rao & Callison-Burch | Rubric judging, correlated errors, and limits to cascade gains. | — |
 | 2026-10-13<br>v1 | [Judges Follow the Reference: The Derivation Gap in Verifying Tool-Call Arguments](https://arxiv.org/abs/2610.18497v1)<br>Ma et al. | Tool-argument judges including Jev reject some correct derived values without visible references; model-generated references are evaluated on three benchmarks. | [Code](https://github.com/SarielMa/DeRef_release) · [Evaluation data](https://huggingface.co/datasets/lm2445/DeRef); model outputs are not included. |
@@ -146,6 +147,7 @@ All 78 direct studies below are **arXiv preprints**. Dates identify the linked, 
 | 2026-10-14<br>v1 | [From Detection to Decision: Calibration and Deferral for Prompt-Injection Detection](https://arxiv.org/abs/2610.20907v1)<br>Lan, Kaul, Pandurangan & Sanyal | On 47,611 held-out prompt-injection examples, Jev ranks second in AUROC after an LLM judge, its native probabilities do not consistently beat post-hoc calibrated classifiers, and a 1% false-negative target forces over 91.8% escalation in every gate-reviewer system. | — |
 | 2026-10-13<br>v1 | [DecisionRobust: Benchmarking Robustness for JEV Style Decision Models Across Text and Vision](https://arxiv.org/abs/2610.19118v1)<br>Lan et al. | Text and vision attacks with label-validity checks and held-out models. | [Code](https://github.com/Yifan-Lan/DecisionRobust) · [Benchmark](https://yifan-lan.github.io/DecisionRobust/) |
 | 2026-10-13<br>v1 | [Nudge the Judge: Uncovering Program Decision Hijacking in Real-World Jev Applications](https://arxiv.org/abs/2610.18612v1)<br>Luo et al. | JevProbe traces attacker-controlled context into the decisions that 228 popular Jev applications act on; in 2,273 curated cases (at most ten per app, flips selected first, so not an unbiased sample) 81.5% flip, 98.6% of flips with potential downstream security impact, and existing defenses offer limited protection. | [Code and JevProbeBench](https://github.com/xiaoxiaohg8d/JevProbe-); README inspected, not executed. |
+| 2026-10-13<br>v1 | [Consider, Then Choose: Order-Invariant Decisions in System One Models](https://arxiv.org/abs/2610.18233v1)<br>Huang, Teng, Deng & An | Runoff scores options individually, then balances finalist positions; order invariance assumes deterministic responses and a unique ranking, and does not resolve option-name bias or guarantee more accurate decisions. | Code not verified |
 | 2026-10-13<br>v1 | [Same Attack, Different Judge: A First Controlled Adversarial Comparison of Jev, LLM Judges, and Purpose-Built Safety Classifiers](https://arxiv.org/abs/2610.17820v1)<br>Li, Huang, Zhang & Liu | Controlled attacks against decision models and safety classifiers. | — |
 | 2026-10-08<br>v3<br>first submitted 2026-09-22 | [Type-Safe Is Not Error-Free: Typed Decision Models Follow the Option Name, Not the Definition Bound to It](https://arxiv.org/abs/2609.26758v3)<br>Sun, Xu, Shi & Yang | Tests whether option names override assigned definitions despite structurally valid outputs. | — |
 | 2026-10-08<br>v1 | [One Word Opens the Gate: The Option-Channel Attack on Typed Decision Models as Agent Guardrails](https://arxiv.org/abs/2610.12292v1)<br>Azizi, Baghaei Potraghloo & Pedram | Tests option-channel attacks on seven open-weight models; reversed decisions can remain confident. The reported experiments do not test hosted Jev. | [Code and cached analyses](https://github.com/ArminAzizi98/option-channel-attack) |
@@ -163,6 +165,8 @@ All 78 direct studies below are **arXiv preprints**. Dates identify the linked, 
 | Date&nbsp;·&nbsp;version | Paper | Key finding | Artifacts |
 | :--- | :--- | :--- | :--- |
 | 2026-10-15<br>v1 | [Qwen-Audio-Jev: A Unified Interface for Audio Decisions](https://arxiv.org/abs/2610.21614v1)<br>Fang et al. | An independent Jev-style decision head on Qwen-Audio-3.1-ASR-Flash-Next gives Choice, Noul and Score readouts over audio, reporting 84.06% on MMSU, a 6.50% speaker-verification equal error rate and about 20× faster inference than its own base model. | — |
+| 2026-10-14<br>v1 | [Prune the Summary, Not the History: Source-Judged Compaction for Long-Horizon Agents](https://arxiv.org/abs/2610.20927v1)<br>Min & Chen | Uses Jev to prune summary entries lacking source support; reported gains concern success in all three runs on two benchmarks, while useful constraints can be discarded and sourced errors retained. | [Code](https://github.com/GuanghuiMin/sjc) · Requires separate benchmark environments and model API access; not run here. |
+| 2026-10-14<br>v1 | [Verdict: Encode Once, Decide Many](https://arxiv.org/abs/2610.20778v1)<br>Chouhan & Perry | Encodes shared state once for multiple typed questions; invariance requires identical retained state tokens, while teacher-derived labels, adaptive testing and unstable BoolQ training constrain the reported gains. | [Code](https://github.com/LEC-AI/verdict) · Code and saved results; trained checkpoints are not included. |
 | 2026-10-13<br>v3<br>first submitted 2026-10-01 | [LLM-as-Jev: LLMs Are Already Jev-Style Decision Models -- When and How to Fine-Tune Them](https://arxiv.org/abs/2610.02076v3)<br>Li & Wagle | Compares frozen Qwen decision readouts with optional KL-anchored fine-tuning and budgeted reasoning; reported gains depend on backbone size and routing workload, not disclosure of hosted Jev internals. | — |
 | 2026-10-13<br>v1 | [Jeva: System One Models from First Principles](https://arxiv.org/abs/2610.18773v1)<br>Li & Wang | Null handling, option permutation, variable candidate sets, and caching. | [Architecture code](https://github.com/LiQiiiii/Jeva) · [Checkpoint](https://huggingface.co/LIQIIIII/Jeva-4B) |
 | 2026-10-13<br>v1 | [VideoJev: System One Model for Video Understanding and Interaction](https://arxiv.org/abs/2610.18615v1)<br>Zhu et al. | Structured video decisions with temporal spans and candidate scores; cached and joint inference reuse visual computation. | [Project](https://mcg-nju.github.io/VideoJev/) |
@@ -257,6 +261,10 @@ The four TypeSafe datasets contain workflow cases, model-generated references, a
 
 | Project | Maintainer | Purpose |
 | :--- | :--- | :--- |
+| [Abide](https://github.com/coldteadotai/abide) | coldteadotai | Jev checks edits and turns against compiled project rules and requests repairs; missing credentials or network let edits pass unchecked, and replay findings depend on the chosen rubric. |
+| [jev-fabric](https://github.com/fabric-runtime/jev-fabric) | fabric-runtime | Native process orchestration with bounded logs, deadlines and explicit typed decisions; commands run with caller privileges, exit status needs outcome checks, and selected policy proofs do not verify the whole runtime. |
+| [atoma](https://github.com/atoma-run/atoma) | atoma-run | Multi-agent planning, execution and evidence review with Jev routing; shared agent/skill learning can expose document-derived material across organizations, and tenant isolation is not independently audited. |
+| [circuit](https://github.com/Barneyjm/circuit) | Barneyjm | LoRA and pointer-head training, evaluation and serving for text, image and audio decisions; publisher tests cover selected task sets and do not establish universal calibration or option-order invariance. |
 | [cua-s1.js](https://github.com/ai-ecoverse/cua-s1.js) | ai-ecoverse | Browser ports of Cua form and next-action models; output-parity checks do not establish generalization, and the small form model can confidently skip unfamiliar fields. |
 | [jev-omni.js](https://github.com/ai-ecoverse/jev-omni.js) | ai-ecoverse | Work-in-progress WebGPU port for Jev-Omni text and image decisions; audio/video are unfinished, model downloads are large, and reported parity is limited to selected fixtures and hardware. |
 | [SearchJev training pipeline](https://github.com/EvoScientist/SearchJev) | EvoScientist | Search-agent decision training with soft-label and Brier losses, reliability weights and per-question-type temperature fitting; the documented pipeline and split controls were not reproduced. |
@@ -306,7 +314,7 @@ Background literature and comparison methods. These works do **not** establish J
 | Composable pipelines | Khattab et al., *DSPy*. ICLR, 2024. | [Paper](https://arxiv.org/abs/2310.03714) |
 | Efficient execution | Zheng et al., *SGLang*. NeurIPS, 2024. | [Paper](https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f31ba1c9ac630f15dec8-Paper-Conference.pdf) · [Code](https://github.com/sgl-project/sglang) |
 
-The selected papers and community survey are included in [references.bib](references.bib) (87 entries). See the [latest paper-selection review](docs/reviews/papers-2026-10-16.md) for verification scope and limitations.
+The selected papers and community survey are included in [references.bib](references.bib) (91 entries). See the [latest paper-selection review](docs/reviews/papers-2026-10-16.md) for verification scope and limitations.
 
 ## Quick start
 
