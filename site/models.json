@@ -1,0 +1,173 @@
+{
+  "title": "Awesome Jev decision model directory",
+  "url": "https://awesomejev.github.io/models/",
+  "updated": "2026-10-17",
+  "scope": "Independent publisher releases and model-card summaries. Declared licenses and reported capabilities are not independently reproduced results or a universal ranking.",
+  "models": [
+    {
+      "publisher": "mukaddamzaid",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "Amos 1 large",
+      "by": "mukaddamzaid · Apache-2.0",
+      "url": "https://huggingface.co/mukaddamzaid/amos-1-large",
+      "en": "English typed decisions with image inputs; distinguish zero-shot results from train-split prior fitting, and public-only Decision Index results from the full evaluation.",
+      "zh": "支持图像输入的英文类型化决策模型；应区分零样本结果与按训练切分拟合先验的结果，以及 Decision Index 公共部分与完整评测。",
+      "provenance": "modelcard"
+    },
+    {
+      "publisher": "PelaAI",
+      "license": "Apache-2.0 weights; MIT server",
+      "category": "Models",
+      "title": "KnowLine-35B-A3B-Gen1",
+      "by": "PelaAI · Apache-2.0 weights; MIT server",
+      "url": "https://huggingface.co/PelaAI/KnowLine-35B-A3B-Gen1",
+      "en": "English/Chinese MoE decision checkpoint; public-suite checkpoint selection, disclosed task/source overlap and self-run calibration ranges constrain comparisons with independent held-out evaluations.",
+      "zh": "英中文 MoE 决策检查点；公开评测选点、披露的任务／来源重叠与自行计算的校准区间，限制了它与独立留出评测的比较。",
+      "provenance": "modelcard"
+    },
+    {
+      "publisher": "LycheeAI",
+      "license": "CC BY-NC 4.0",
+      "category": "Models",
+      "title": "Lychee-27B",
+      "by": "LycheeAI · CC BY-NC 4.0",
+      "url": "https://huggingface.co/LycheeAI/Lychee-27B",
+      "en": "Noncommercial Qwen-derived typed-decision model with publisher-reported public-suite results; requests exceeding context or GPU-memory limits are documented as rejected rather than truncated.",
+      "zh": "按非商业许可发布的 Qwen 派生决策模型，公共评测结果由发布者报告；文档说明超出上下文或显存限制时拒绝请求，而非截断。",
+      "provenance": "modelcard"
+    },
+    {
+      "publisher": "Respan",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "Span-02",
+      "by": "Respan · Apache-2.0",
+      "url": "https://huggingface.co/respanai/span-02",
+      "en": "Multimodal decision model with a dedicated Blackwell Rust/CUDA runtime and optional reasoning; distinguish default serving from deterministic index settings and output-specific confidence semantics.",
+      "zh": "使用专用 Blackwell Rust/CUDA 运行库、可选择生成推理的多模态决策模型；需区分默认服务与确定性榜单配置，以及不同输出类型的置信度语义。",
+      "provenance": "modelcard"
+    },
+    {
+      "publisher": "shlv",
+      "license": "Qwen Research",
+      "category": "Models",
+      "title": "AudioJev checkpoint",
+      "by": "shlv · Qwen2.5-Omni-3B derivative · Qwen Research",
+      "url": "https://huggingface.co/shlv/AudioJev",
+      "en": "One released AudioJev training seed with a Qwen Research license; original-order scores disclose audio-source overlap and are distinct from the paper’s three-seed averages.",
+      "zh": "按 Qwen Research 许可发布的单训练种子 AudioJev 检查点；原始选项顺序得分披露了音频来源重叠，与论文三种子均值不同。",
+      "provenance": "modelcard"
+    },
+    {
+      "publisher": "ufak AI",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "ufakzeka-karar",
+      "by": "ufak AI · Apache-2.0",
+      "provenance": "modelcard",
+      "url": "https://huggingface.co/ufakai/ufakzeka-karar",
+      "en": "Turkish typed-decision checkpoint with shipped temperature scaling. Its card flags test-informed training and worsening support-task calibration; benchmark results are not blind.",
+      "zh": "土耳其语类型化决策检查点，附温度缩放参数；模型卡标注训练参考了测试结果，并报告客服任务的校准恶化，基准结果并非盲测。"
+    },
+    {
+      "publisher": "Jeva authors",
+      "license": "Not declared",
+      "category": "Models",
+      "title": "Jeva-4B",
+      "by": "Jeva authors · license not declared",
+      "provenance": "modelcard",
+      "url": "https://huggingface.co/LIQIIIII/Jeva-4B",
+      "en": "Author checkpoint with backbone, adapter and decision-head files. The inspected card declares no model license; weights have not been loaded or tested by this project.",
+      "zh": "作者发布的检查点包，含骨干、适配器和决策头文件；所查模型卡未声明模型许可，本项目未加载或测试权重。"
+    },
+    {
+      "publisher": "convaiinnovations",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "Laya",
+      "by": "convaiinnovations · Apache-2.0",
+      "provenance": "modelcard",
+      "url": "https://huggingface.co/convaiinnovations/laya",
+      "en": "An encoder-based decision family with English, multilingual, and workflow-specific checkpoints.",
+      "zh": "基于编码器的决策模型家族，包含英语、多语言与工作流专用检查点。"
+    },
+    {
+      "publisher": "Jared Palmer",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "Kev-4B",
+      "by": "Jared Palmer · Apache-2.0",
+      "provenance": "modelcard",
+      "url": "https://huggingface.co/jaredpalmer/kev-4b",
+      "en": "A Qwen3.5-4B-Base LoRA adapter and pointer head for decisions over documents and typed questions.",
+      "zh": "基于 Qwen3.5-4B-Base 的 LoRA 适配器与指针头，面向文档与类型化问题的决策。"
+    },
+    {
+      "publisher": "Bespoke Labs",
+      "license": "CC BY-NC 4.0",
+      "category": "Models",
+      "title": "Bespoke Nimble 9B v3",
+      "by": "Bespoke Labs · CC BY-NC 4.0",
+      "provenance": "modelcard",
+      "url": "https://huggingface.co/bespokelabs/Bespoke-Nimble-9B-v3",
+      "en": "A Qwen3.5-9B LoRA adapter returning candidate probabilities. Released under a noncommercial license.",
+      "zh": "返回候选项概率的 Qwen3.5-9B LoRA 适配器；采用非商业用途许可。"
+    },
+    {
+      "publisher": "InternLM",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "Intern-Decision-4B",
+      "by": "InternLM · Apache-2.0",
+      "provenance": "modelcard",
+      "url": "https://huggingface.co/internlm/Intern-Decision-4B",
+      "en": "A decision-tuned Qwen checkpoint with a structured inference wrapper and image support.",
+      "zh": "经过决策微调的 Qwen 检查点，提供结构化推理封装并支持图片输入。"
+    },
+    {
+      "publisher": "Perplexity",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "Perplexity Decider v1.1 27B",
+      "by": "Perplexity · Apache-2.0",
+      "provenance": "modelcard",
+      "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b",
+      "en": "A separate decision readout and saved calibration temperature. Follow the card’s attention-mode and access notes.",
+      "zh": "采用独立决策读出与已保存的校准温度；需注意模型卡中的注意力模式及访问说明。"
+    },
+    {
+      "publisher": "Fastino",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "GLiNER2.5-Decide",
+      "by": "Fastino · Apache-2.0",
+      "provenance": "modelcard",
+      "url": "https://huggingface.co/fastino/GLiNER2.5-Decide",
+      "en": "A 340M English classifier with runtime label sets and single-label or multi-label decisions.",
+      "zh": "340M 英语分类模型，支持调用时指定标签集合，以及单标签和多标签决策。"
+    },
+    {
+      "publisher": "vLLM Semantic Router",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "d3",
+      "by": "vLLM Semantic Router · Apache-2.0",
+      "provenance": "modelcard",
+      "url": "https://huggingface.co/vllm-sr/d3",
+      "en": "A text, image, and video decision model with Choice, Yes/No, and Score outputs.",
+      "zh": "支持文本、图片与视频的决策模型，提供 Choice、Yes/No 与 Score 输出。"
+    },
+    {
+      "publisher": "Cloudflare",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "Clef",
+      "by": "Cloudflare · Apache-2.0",
+      "provenance": "modelcard",
+      "url": "https://huggingface.co/Cloudflare/clef",
+      "en": "A multimodal model with a joint schema head, returning probabilities over allowed answers.",
+      "zh": "使用联合 schema 预测头的多模态模型，返回允许答案集合上的概率。"
+    }
+  ]
+}

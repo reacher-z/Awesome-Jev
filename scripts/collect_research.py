@@ -8,8 +8,13 @@ the paper was peer reviewed, or that its claims have been independently tested.
 Canonical arXiv links are identifiers, not claims of separate page retrieval.
 
 Only short evidence excerpts and abstract hashes enter the repository. Raw API
-responses are cached in the operating-system temporary directory, outside it.
+responses are cached in a private per-user directory outside it. Online runs
+always fetch fresh responses; only --offline reads the cache back.
 No account, token, email address, or private source is used.
+
+The output ledger is replaced wholesale. --offline re-screens only a complete
+cache from an earlier online run; it stops without writing if any query is
+uncached, and every run stops without writing if no record qualifies.
 
 Usage: python3 scripts/collect_research.py --target 0 --with-openalex
 """
@@ -19,16 +24,20 @@ from __future__ import annotations
 import argparse
 import concurrent.futures
 import datetime as dt
+import email.utils
 import hashlib
+import http.client
 import json
+import os
 import re
-import tempfile
+import sys
 import threading
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 from collections import Counter, defaultdict
+from html import unescape
 from pathlib import Path
 
 
@@ -36,6 +45,9 @@ PROVIDER = "huggingface_papers_api"
 API = "https://huggingface.co/api/papers/search"
 OPENALEX_API = "https://api.openalex.org/works"
 USER_AGENT = "Awesome-Jev-Research-Corpus/1.0 (public scholarly metadata collection)"
+# Longest Retry-After delay the fetchers wait for; a longer requested delay
+# ends the query at once instead of retrying before the server allows it.
+MAX_RETRY_AFTER_SECONDS = 60
 
 # Queries discover candidates. Separate rules determine inclusion, irrespective
 # of which search returned a paper. Queries are intentionally scoped to the
@@ -154,8 +166,23 @@ def now() -> str:
     return dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
 
 
+def retry_after_seconds(value, current=None):
+    """Seconds requested by Retry-After (delta-seconds or HTTP-date), or None if absent/invalid."""
+    value = (value or "").strip()
+    if re.fullmatch(r"[0-9]+", value):
+        return int(value) if len(value) <= 9 else float("inf")
+    try:
+        when = email.utils.parsedate_to_datetime(value)
+    except (TypeError, ValueError, IndexError):
+        return None
+    if when.tzinfo is None:  # RFC 9110 HTTP-dates are always GMT.
+        when = when.replace(tzinfo=dt.timezone.utc)
+    return max(0.0, (when - (current or dt.datetime.now(dt.timezone.utc))).total_seconds())
+
+
 def normalize_title(title: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", title.lower())
+    # Keep letters of every script, as build_source_index does.
+    return re.sub(r"\W+", "", title.casefold())
 
 
 def sha(text: str) -> str:
@@ -197,15 +224,30 @@ def screen(title: str, abstract: str) -> dict[str, list[str]]:
     return topics
 
 
+def default_cache_dir() -> Path:
+    """A per-user location, not a fixed path in the shared temporary directory."""
+    return Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "awesome-jev" / "research-api"
+
+
 class Collector:
     def __init__(self, cache: Path, workers: int, offline: bool = False):
         self.cache = cache
-        self.cache.mkdir(parents=True, exist_ok=True)
+        self.cache.mkdir(mode=0o700, parents=True, exist_ok=True)
+        # Cached responses are screened into the ledger offline, so refuse a
+        # directory that another account created or can write to, including
+        # through a shared group.
+        if hasattr(os, "getuid"):
+            status = self.cache.stat()
+            if status.st_uid != os.getuid():
+                raise PermissionError(f"Refusing cache directory {cache}: it is owned by another user.")
+            if status.st_mode & 0o022:
+                raise PermissionError(f"Refusing cache directory {cache}: it is writable by other users or its group (chmod go-w).")
         self.workers = workers
         self.offline = offline
         self.gate = threading.Lock()
         self.next_request = 0.0
         self.failures: list[dict] = []
+        self.cached_queries = 0
 
     def fetch(self, topic: str, query: str, provider: str = PROVIDER) -> tuple[str, str, dict]:
         if provider == "openalex_api":
@@ -217,14 +259,18 @@ class Collector:
         else:
             url = API + "?" + urllib.parse.urlencode({"q": query, "limit": 120})
         cached = self.cache / (sha(url) + ".json")
-        if cached.exists():
-            return topic, query, json.loads(cached.read_text())
         if self.offline:
+            # Only an explicit offline re-screen reuses responses, which keep
+            # their original retrieved_at; online runs always fetch afresh.
+            if cached.exists():
+                with self.gate:
+                    self.cached_queries += 1
+                return topic, query, json.loads(cached.read_text(encoding="utf-8"))
             failure = {"query": query, "url": url, "retrieval_status": "not_in_cache"}
             with self.gate:
                 self.failures.append(failure)
             return topic, query, {"data": [], **failure}
-        last_error = ""
+        last_error = error_code = ""
         for attempt in range(4):
             # Global pacing plus bounded concurrency; respect a Retry-After
             # response when the provider applies a more restrictive limit.
@@ -245,18 +291,33 @@ class Collector:
                         "data": json.loads(raw),
                         "provider": provider,
                     }
+                if not isinstance(wrapper["data"], dict if provider == "openalex_api" else list):
+                    raise ValueError("unexpected response structure")
                 if provider == "openalex_api":
                     wrapper["data"] = convert_openalex(wrapper["data"].get("results", []))
-                cached.write_text(json.dumps(wrapper, ensure_ascii=False))
-                return topic, query, wrapper
-            except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+            except ValueError as exc:
+                # A body that is not the expected JSON (for example an HTML
+                # maintenance page) is recorded, never cached, and not retried.
+                last_error, error_code = str(exc), type(exc).__name__
+                break
+            except (http.client.HTTPException, OSError) as exc:
+                # OSError covers URLError, HTTPError and timeouts; HTTPException
+                # covers dropped connections and truncated bodies.
                 last_error = str(exc)
+                error_code = "http_%d" % exc.code if isinstance(exc, urllib.error.HTTPError) else type(exc).__name__
                 if isinstance(exc, urllib.error.HTTPError) and exc.code not in (429, 500, 502, 503, 504):
                     break
-                retry_after = getattr(exc, "headers", {}).get("Retry-After", "")
-                delay = float(retry_after) if retry_after.isdigit() else 2 ** (attempt + 1)
-                time.sleep(min(delay, 30))
-        failure = {"query": query, "url": url, "retrieval_status": "failed", "error": last_error}
+                delay = retry_after_seconds((getattr(exc, "headers", None) or {}).get("Retry-After"))
+                if delay is not None and delay > MAX_RETRY_AFTER_SECONDS:
+                    last_error, error_code = "retry_after_exceeded", "retry_after_exceeded"
+                    break
+                if attempt == 3:
+                    break  # No wait after the final attempt.
+                time.sleep(min(2 ** (attempt + 1), 30) if delay is None else delay)
+            else:
+                cached.write_text(json.dumps(wrapper, ensure_ascii=False), encoding="utf-8", newline="\n")
+                return topic, query, wrapper
+        failure = {"query": query, "url": url, "retrieval_status": "failed", "error_code": error_code, "error": last_error}
         with self.gate:
             self.failures.append(failure)
         return topic, query, {"data": [], **failure}
@@ -284,11 +345,12 @@ def convert_openalex(works: list[dict]) -> list[dict]:
         abstract = " ".join(positions[p] for p in sorted(positions))
         primary = work.get("primary_location") or {}
         locations = work.get("locations") or []
-        urls = [loc.get("landing_page_url") or "" for loc in [primary] + locations]
+        # OpenAlex sometimes returns HTML-escaped URLs ("?&amp;verb=...").
+        urls = [unescape(loc.get("landing_page_url") or "") for loc in [primary] + locations]
         arxiv_ids = [m.group(1) for url in urls if (m := re.search(r"arxiv\.org/(?:abs|pdf)/(\d{4}\.\d{4,5}|[a-z.-]+/\d{7})", url, re.I))]
         arxiv_id = arxiv_ids[0] if arxiv_ids else None
-        doi = work.get("doi")
-        canonical = "https://arxiv.org/abs/" + arxiv_id if arxiv_id else doi or primary.get("landing_page_url") or work["id"]
+        doi = unescape(work["doi"]) if work.get("doi") else None
+        canonical = "https://arxiv.org/abs/" + arxiv_id if arxiv_id else doi or urls[0] or work["id"]
         record_id = "arxiv:" + arxiv_id if arxiv_id else ("doi:" + doi.removeprefix("https://doi.org/") if doi else "openalex:" + work["id"].rsplit("/", 1)[-1])
         output.append({"paper": {
             "id": arxiv_id or record_id,
@@ -326,7 +388,10 @@ def build_records(results: list[tuple[str, str, dict]]) -> tuple[list[dict], dic
             if not matched:
                 stats["topic_screen_rejected_appearances"] += 1
                 continue
+            # A short key (empty or uninformative title) carries no identity, as
+            # in build_source_index: such papers are deduplicated by ID only.
             title_key = normalize_title(title)
+            title_key = title_key if len(title_key) > 20 else None
             existing_id = title_ids.get(title_key, paper_id)
             if existing_id in records:
                 previous = records[existing_id]
@@ -369,7 +434,8 @@ def build_records(results: list[tuple[str, str, dict]]) -> tuple[list[dict], dic
                 "_rank": rank,
             }
             records[paper_id] = record
-            title_ids[title_key] = paper_id
+            if title_key:
+                title_ids[title_key] = paper_id
     stats["distinct_screened_candidates"] = len(records)
     return list(records.values()), {"counts": dict(stats), "direct_jev_discoveries": direct}
 
@@ -396,24 +462,38 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--target", type=int, default=0, help="Maximum accepted records to emit; 0 retains every qualified distinct source")
     parser.add_argument("--workers", type=int, default=3)
-    parser.add_argument("--offline", action="store_true", help="Re-screen existing temporary cache without network calls")
+    parser.add_argument("--offline", action="store_true", help="Re-screen a complete cache from an earlier online run without network calls")
     parser.add_argument("--with-openalex", action="store_true", help="Supplement arXiv-focused discovery with older published foundational work via OpenAlex")
     parser.add_argument("--output", type=Path, default=Path("data/research-sources.jsonl"))
-    parser.add_argument("--cache-dir", type=Path, default=Path(tempfile.gettempdir()) / "awesome-jev-research-api-cache")
+    parser.add_argument("--cache-dir", type=Path, default=default_cache_dir(), help="Private directory for raw API responses; written by online runs, read only by --offline")
     args = parser.parse_args()
     if args.target < 0 or not 1 <= args.workers <= 4:
         parser.error("target must be nonnegative; workers must be between 1 and 4")
-    collector = Collector(args.cache_dir, args.workers, args.offline)
+    try:
+        collector = Collector(args.cache_dir, args.workers, args.offline)
+    except PermissionError as exc:
+        parser.error(str(exc))
     results = collector.run(args.with_openalex)
+    # The output replaces the ledger wholesale: never overwrite it with a
+    # partial or empty re-screen while reporting success.
+    uncached = sum(f["retrieval_status"] == "not_in_cache" for f in collector.failures)
+    if uncached:
+        sys.exit(f"Offline re-screen stopped: {uncached} of {len(results)} queries have no cached response, "
+                 f"so {args.output} was not changed. --offline needs the cache from an earlier online run "
+                 "on this machine (see --cache-dir).")
     candidates, audit = build_records(results)
     records = select_balanced(candidates, args.target or len(candidates))
+    if not records:
+        sys.exit(f"Research collection stopped: no records qualified ({len(collector.failures)} failed queries), "
+                 f"so {args.output} was not changed.")
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text("".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in records))
+    args.output.write_text("".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in records), encoding="utf-8", newline="\n")
     audit.update({
         "emitted_records": len(records),
         "requested_target": args.target,
         "topic_counts": dict(Counter(r["topic"] for r in records)),
         "failed_queries": collector.failures,
+        "cached_queries": collector.cached_queries,
         "verification_note": "Abstracts retrieved and programmatically screened; no editorial or full-text review is implied.",
     })
     # This audit contains no full abstracts or machine-specific cache paths.

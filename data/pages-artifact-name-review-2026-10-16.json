@@ -49,5 +49,22 @@
     "Retention policy",
     "Site content"
   ],
-  "actions_taken": "Read official public action source/docs and produced a local proposal only. No shared workflow edit, deployment call, permission change or external source execution."
+  "actions_taken": "Read official public action source/docs and produced a local proposal only. No shared workflow edit, deployment call, permission change or external source execution.",
+  "runtime_verification": {
+    "commit": "55fec9286f445059f6daddfef4df418da0905e92",
+    "run_url": "https://github.com/AwesomeJev/AwesomeJev.github.io/actions/runs/38909381634",
+    "first_attempt": {
+      "run_attempt": 1,
+      "conclusion": "success",
+      "updated_at": "2026-10-16T13:38:44Z",
+      "artifact_name_observed_before_rerun": "github-pages-38909381634-1"
+    },
+    "same_run_rerun": {
+      "run_attempt": 2,
+      "conclusion": "success",
+      "updated_at": "2026-10-17T02:00:44Z",
+      "artifact_name_observed": "github-pages-38909381634-2"
+    },
+    "scope": "One deliberate same-run rerun verified the collision fix. Site files were unchanged; no additional IndexNow submission was made for this verification."
+  }
 }

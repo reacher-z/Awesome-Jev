@@ -1,29 +1,85 @@
 export const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"})[char]);
 const icon = name => `<svg class="icon" aria-hidden="true"><use href="/assets/fontawesome/icons.svg#${name}"></use></svg>`;
 const categoryIcons={Papers:"paper",Models:"foundation",Tools:"code",Datasets:"foundation",Evaluations:"evaluation",Guides:"guide",Foundations:"foundation"};
+// Descriptive parts of `by` ("Publisher · descriptor · license"), matched whole so a
+// short phrase such as "runtime" cannot rewrite part of a longer one. Names, venues,
+// dates, versions and license identifiers stay as written.
 function localizedMetadata(value, language) {
   if (language !== "zh") return value;
   const labels = {
     "Official cookbook": "官方实践教程",
+    "Official pattern": "官方设计模式",
     "API concepts": "API 概念",
     "Probability & routing": "概率与路由",
-    "Limitations · reviewed October 2, 2026":
-      "已知局限 · 2026 年 10 月 2 日审阅",
+    "Limitations": "已知局限",
+    "reviewed October 2, 2026": "2026 年 10 月 2 日审阅",
     "Interactive evaluation explorer": "交互式评测浏览器",
     "Workflow integration": "工作流集成",
     "four datasets": "四个数据集",
     "Coding agents": "编码 agent",
     "Cookbooks & demos": "教程与演示",
-    "Hugging Face · community": "Hugging Face · 社区",
-    "TypeSafe · September 15, 2026": "TypeSafe · 2026 年 9 月 15 日",
+    "community": "社区",
+    "September 15, 2026": "2026 年 9 月 15 日",
     "Author PDF": "作者提供的 PDF",
     "Training mixture": "训练混合数据",
     "Evaluation archive": "评测运行归档",
+    "Apache-2.0 weights; MIT server": "权重 Apache-2.0；服务代码 MIT",
+    "Qwen2.5-Omni-3B derivative": "Qwen2.5-Omni-3B 衍生模型",
+    "license not declared": "未声明许可",
+    "browser port": "浏览器移植版",
+    "WebGPU port": "WebGPU 移植版",
+    "training code": "训练代码",
+    "multimodal runtime": "多模态运行时",
+    "independent runtime": "独立运行时",
+    "runtime": "运行时",
+    "MIT code": "代码 MIT",
+    "Thai/English pipeline": "泰英双语流水线",
+    "policy and replay": "策略与回放",
+    "decision learning": "决策学习",
+    "experimental generator": "实验性生成器",
+    "browser comparison": "浏览器对比",
+    "RAG evaluation": "RAG 评测",
+    "partial public split": "部分公开切分",
+    "recorded-output analysis": "已记录输出分析",
+    "Community evaluation": "社区评测",
+    "100 queries": "100 个查询",
+    "single run": "单次运行",
+    "CC BY-NC 4.0 data": "数据 CC BY-NC 4.0",
+    "Methodology v1.0": "方法说明 v1.0",
+    "community survey v0.5": "社区综述 v0.5",
+    "author report": "作者报告",
+    "paper code": "论文配套代码",
+    "benchmark code": "评测代码",
+    "benchmark write-up": "评测文章",
   };
-  return Object.entries(labels).reduce(
-    (text, [source, translated]) => text.replace(source, translated),
-    value,
-  );
+  return value
+    .split(" · ")
+    .map((part) => (Object.hasOwn(labels, part) ? labels[part] : part))
+    .join(" · ");
+}
+// Evidence marker: who published a source, then how far its claims were checked here.
+// Finer provenance values collapse onto the shared vocabulary in site/catalog.mjs.
+const evidenceMarkers = {
+  official: ["official", "authorReported"],
+  preprint: ["preprint", "authorReported"],
+  background: ["background", "authorReported"],
+  modelcard: ["community", "authorReported"],
+  independent: ["community", "authorReported"],
+  reportedEvaluation: ["community", "authorReported"],
+  community: ["community", "screened"],
+};
+const capitalized = word => word[0].toUpperCase() + word.slice(1);
+const evidenceGlyph = source => `<span class="evidence-glyph" data-source="${source}" aria-hidden="true"></span>`;
+export const evidenceOf = resource => evidenceMarkers[provenance(resource)];
+function renderEvidence(resource, t) {
+  const [source, evidence] = evidenceOf(resource);
+  return `<span class="evidence-marker">${evidenceGlyph(source)}${escapeHTML(t("source" + capitalized(source)))} · ${escapeHTML(t("evidence" + capitalized(evidence)))}</span>`;
+}
+export function renderEvidenceLegend(language, translations, methodURL) {
+  const t = key => translations[language][key] ?? translations.en[key] ?? key;
+  const sources = ["official", "preprint", "community", "background"].map(source => `<span class="evidence-key">${evidenceGlyph(source)}${escapeHTML(t("source" + capitalized(source)))}</span>`);
+  const levels = ["authorReported", "screened", "reproduced"].map(level => `<span class="evidence-key"><strong>${escapeHTML(t("evidence" + capitalized(level)))}</strong>${escapeHTML(t("evidenceSeparator"))}${escapeHTML(t("evidence" + capitalized(level) + "Note"))}</span>`);
+  return `<span class="sr-only">${escapeHTML(t("evidenceLegendLabel") + t("evidenceSeparator"))}</span>${sources.join("")}${levels.join("")}<a href="${escapeHTML(methodURL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(t("evidenceMethod"))}${icon("external")}</a>`;
 }
 function provenance(resource) {
   return (
@@ -32,10 +88,48 @@ function provenance(resource) {
       ? "preprint"
       : resource.category === "Foundations"
         ? "background"
-        : "official")
+        : "community")
   );
+}
+// Chinese pages show most titles and some fallbacks in English; mark them so screen
+// readers switch voice (WCAG 3.1.2 Language of Parts).
+export const englishLang = (text, language) =>
+  language === "zh" && !/[\u3400-\u9fff]/u.test(String(text ?? "")) ? ' lang="en"' : "";
+// Artifact links come from the README Artifacts column; each kind holds one URL or a list.
+export const artifactKinds = ["code", "data", "model", "demo", "page"];
+export const artifactLinks = resource => artifactKinds.flatMap(kind => [resource.artifacts?.[kind] ?? []].flat().map((url, index) => ({kind, url, index})));
+export const hasCode = resource => artifactLinks(resource).some(link => link.kind === "code");
+export function renderArtifacts(resource, t) {
+ const label = kind => t("artifact" + kind[0].toUpperCase() + kind.slice(1));
+ const chips = artifactLinks(resource).map(({kind, url, index}) => {
+  const text = label(kind) + (index ? ` ${index + 1}` : "");
+  return `<a class="artifact-chip" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHTML(t("artifactFor")(text, resource.title))}">${icon(kind)}${escapeHTML(text)}</a>`;
+ });
+ const unverified = resource.artifacts?.unverified;
+ if (unverified) chips.push(`<span class="artifact-chip artifact-unverified">${icon(unverified)}${escapeHTML(t("artifactUnverified")(label(unverified)))}</span>`);
+ return chips.length ? `<span class="resource-artifacts">${chips.join("")}</span>` : "";
 }
 export function renderResource(resource, language, translations) {
  const t=key=>translations[language][key] ?? translations.en[key] ?? key;
- return `<article class="resource-row"><div class="resource-kind"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span><span class="resource-provenance">${escapeHTML(t(provenance(resource)))}</span></div><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle">${escapeHTML(localizedMetadata(resource.by, language))}</p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
+ return `<article class="resource-row"><div class="resource-heading"><h3 class="resource-title"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a></h3><p class="resource-subtitle"><span class="resource-category">${icon(categoryIcons[resource.category])}${escapeHTML(t("filter" + resource.category))}</span> · ${escapeHTML(localizedMetadata(resource.by, language))} · ${renderEvidence(resource, t)}${renderArtifacts(resource, t)}</p></div><p class="resource-description">${escapeHTML(resource[language])}</p><span class="resource-arrow" aria-hidden="true">${icon("external")}</span></article>`;
+}
+
+// One row of the /papers/ table. The Artifacts cell reuses the homepage chips, followed by
+// the caveat the README gives beside those links (`artifact_note`).
+export function renderPaperRow(resource, language, translations, themes) {
+ const t=key=>translations[language][key] ?? translations.en[key] ?? key;
+ const zh=language==='zh', theme=themes.find(item=>item.id===resource.theme);
+ const version=resource.url.match(/v(\d+)$/)[1];
+ const authors=resource.by.split(' · ').slice(0,-2).join(' · ');
+ const note=resource.artifact_note?.[language];
+ const first=version==='1'?'':`<span class="paper-first"><span class="sr-only">${zh?'首次提交 ':'First submitted '}</span><time datetime="${resource.first_submitted}">${resource.first_submitted}</time> v1</span>`;
+ const artifacts=renderArtifacts(resource, t)+(note?`<span class="artifact-note">${escapeHTML(note)}</span>`:'');
+ return `<tr class="paper-row" data-theme="${theme.id}" data-code="${hasCode(resource)}"><td class="paper-date"><time datetime="${resource.date}">${resource.date}</time> v${version}${first}</td><th scope="row" class="paper-main"><a class="paper-title" href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)}</a> <span class="paper-authors">${escapeHTML(authors)}</span></th><td class="paper-theme" title="${escapeHTML(theme[language])}">${escapeHTML(theme.short[language])}</td><td class="paper-artifacts${artifacts?'':' paper-artifacts-none'}">${artifacts||`<span aria-hidden="true">—</span><span class="sr-only">${zh?'未列出材料':'None listed'}</span>`}</td><td class="paper-finding"><div class="paper-finding-text">${escapeHTML(resource[language])}</div></td></tr>`;
+}
+
+export function renderModelRow(resource, language) {
+ const zh=language==='zh';
+ const license=zh ? ({'Not declared':'未声明','Apache-2.0 weights; MIT server':'权重 Apache-2.0；服务代码 MIT'})[resource.license] || resource.license : resource.license;
+ const group=resource.license==='CC BY-NC 4.0'?'noncommercial':resource.license==='Qwen Research'?'research':resource.license==='Not declared'?'undeclared':resource.license.startsWith('Apache-2.0')?'apache':'other';
+ return `<tr class="model-row" data-license-group="${group}"><th scope="row"><a href="${escapeHTML(resource.url)}" target="_blank" rel="noopener noreferrer"${englishLang(resource.title, language)}>${escapeHTML(resource.title)} ${icon('external')}</a><span class="model-publisher">${escapeHTML(resource.publisher)}</span></th><td class="model-license" data-label="${zh?'声明许可':'Declared license'}">${escapeHTML(license)}</td><td class="model-scope" data-label="${zh?'范围与证据':'Scope and evidence'}">${escapeHTML(resource[language])}</td></tr>`;
 }

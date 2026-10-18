@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-17T15:25:40.885829+00:00",
+  "issue": "https://github.com/reacher-z/Awesome-Jev/issues/93",
+  "scope": "Fourteen Hugging Face rows in data/ecosystem-sources.jsonl whose retrieved_url (the post-redirect address the scan fetched) names a different repository than their url. Each legacy repository id was checked once against the public Hub API to confirm that it now resolves to the current id. No content was re-screened, no ledger row was edited and no verification level changed.",
+  "method": "One sequential, unauthenticated GET per legacy id to https://huggingface.co/api/{models|datasets|spaces}/<id>, following the Hub redirect, 1.5 seconds apart. Only the status, resolved URL, reported id, revision sha and a SHA-256 of the metadata response were kept.",
+  "aliases": [
+    {
+      "legacy_url": "https://huggingface.co/llm-semantic-router/Decision-1.0-Eos-0.8B",
+      "current_url": "https://huggingface.co/vllm-sr/Decision-1.0-Eos-0.8B",
+      "ledger_retrieved_url": "https://huggingface.co/vllm-sr/Decision-1.0-Eos-0.8B/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/models/llm-semantic-router/Decision-1.0-Eos-0.8B",
+        "resolved_url": "https://huggingface.co/api/models/vllm-sr/Decision-1.0-Eos-0.8B",
+        "http_status": 200,
+        "id": "vllm-sr/Decision-1.0-Eos-0.8B",
+        "sha": "33e3c44f475b2e02a62ef1326e5168e74db3f411",
+        "metadata_sha256": "9a355ca81bd4dc2676dacc9126fb708fe2d8391cda078fccb86199a16294a19b",
+        "retrieved_at": "2026-10-17T15:22:21.439274+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/llm-semantic-router/Decision-1.0-Kai",
+      "current_url": "https://huggingface.co/vllm-sr/Decision-1.0-Kai-0.6B",
+      "ledger_retrieved_url": "https://huggingface.co/vllm-sr/Decision-1.0-Kai-0.6B/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/models/llm-semantic-router/Decision-1.0-Kai",
+        "resolved_url": "https://huggingface.co/api/models/vllm-sr/Decision-1.0-Kai-0.6B",
+        "http_status": 200,
+        "id": "vllm-sr/Decision-1.0-Kai-0.6B",
+        "sha": "ee45160abf994a9eca0e59495bd9b4bf08c1571a",
+        "metadata_sha256": "e5030c35ea361cc751b02a8e677893cc5d9b21edc204c9f7aa1e6721f38c32a7",
+        "retrieved_at": "2026-10-17T15:22:23.486751+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/llm-semantic-router/Decision-1.0-Kai-0.6B",
+      "current_url": "https://huggingface.co/vllm-sr/Decision-1.0-Kai-0.6B",
+      "ledger_retrieved_url": "https://huggingface.co/vllm-sr/Decision-1.0-Kai-0.6B/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/models/llm-semantic-router/Decision-1.0-Kai-0.6B",
+        "resolved_url": "https://huggingface.co/api/models/vllm-sr/Decision-1.0-Kai-0.6B",
+        "http_status": 200,
+        "id": "vllm-sr/Decision-1.0-Kai-0.6B",
+        "sha": "ee45160abf994a9eca0e59495bd9b4bf08c1571a",
+        "metadata_sha256": "e5030c35ea361cc751b02a8e677893cc5d9b21edc204c9f7aa1e6721f38c32a7",
+        "retrieved_at": "2026-10-17T15:22:25.415251+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/llm-semantic-router/Decision-1.0-Lex-0.6B",
+      "current_url": "https://huggingface.co/vllm-sr/Decision-1.0-Lex-0.6B",
+      "ledger_retrieved_url": "https://huggingface.co/vllm-sr/Decision-1.0-Lex-0.6B/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/models/llm-semantic-router/Decision-1.0-Lex-0.6B",
+        "resolved_url": "https://huggingface.co/api/models/vllm-sr/Decision-1.0-Lex-0.6B",
+        "http_status": 200,
+        "id": "vllm-sr/Decision-1.0-Lex-0.6B",
+        "sha": "2341898ae5f03db819829c7f003b004d3b09f359",
+        "metadata_sha256": "5989dc5c48f3bd368e3834284137292543c133c3223384cc89a1880e5220213f",
+        "retrieved_at": "2026-10-17T15:22:27.377625+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/llm-semantic-router/Decision-1.0-Lux-9B",
+      "current_url": "https://huggingface.co/vllm-sr/Decision-1.0-Lux-9B",
+      "ledger_retrieved_url": "https://huggingface.co/vllm-sr/Decision-1.0-Lux-9B/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/models/llm-semantic-router/Decision-1.0-Lux-9B",
+        "resolved_url": "https://huggingface.co/api/models/vllm-sr/Decision-1.0-Lux-9B",
+        "http_status": 200,
+        "id": "vllm-sr/Decision-1.0-Lux-9B",
+        "sha": "95bcd72d2ea1d30ac09eb433f71cb4a128ed8261",
+        "metadata_sha256": "c65b17a86e6c99069e0e122fab869075cf2fab64207c5813c386eff1834d9d99",
+        "retrieved_at": "2026-10-17T15:22:29.323600+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/llm-semantic-router/Decision-1.0-Nox-4B",
+      "current_url": "https://huggingface.co/vllm-sr/Decision-1.0-Nox-4B",
+      "ledger_retrieved_url": "https://huggingface.co/vllm-sr/Decision-1.0-Nox-4B/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/models/llm-semantic-router/Decision-1.0-Nox-4B",
+        "resolved_url": "https://huggingface.co/api/models/vllm-sr/Decision-1.0-Nox-4B",
+        "http_status": 200,
+        "id": "vllm-sr/Decision-1.0-Nox-4B",
+        "sha": "e3cb3248a36056f1857012166691d6aaa0b293e8",
+        "metadata_sha256": "78961fa3e9f25f8f8b610f80ed90a04f0c01073e75da68d08becf782426b6e6c",
+        "retrieved_at": "2026-10-17T15:22:31.270604+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/llm-semantic-router/Decision-1.0-Sol-2B",
+      "current_url": "https://huggingface.co/vllm-sr/Decision-1.0-Sol-2B",
+      "ledger_retrieved_url": "https://huggingface.co/vllm-sr/Decision-1.0-Sol-2B/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/models/llm-semantic-router/Decision-1.0-Sol-2B",
+        "resolved_url": "https://huggingface.co/api/models/vllm-sr/Decision-1.0-Sol-2B",
+        "http_status": 200,
+        "id": "vllm-sr/Decision-1.0-Sol-2B",
+        "sha": "a61f6344c189660e94c7f4ea947b46155decf2cb",
+        "metadata_sha256": "0260b9f958626d2c73a630d52dffe012964886fb1602d39dfd29d880c137acbf",
+        "retrieved_at": "2026-10-17T15:22:33.112066+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/spaces/llm-semantic-router/decision-studio",
+      "current_url": "https://huggingface.co/spaces/vllm-sr/decision-studio",
+      "ledger_retrieved_url": "https://huggingface.co/spaces/vllm-sr/decision-studio/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": true,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/spaces/llm-semantic-router/decision-studio",
+        "resolved_url": "https://huggingface.co/api/spaces/vllm-sr/decision-studio",
+        "http_status": 200,
+        "id": "vllm-sr/decision-studio",
+        "sha": "53d0a86905f1b8abd61f1d7fcba1d0eac568cbbb",
+        "metadata_sha256": "2b84972d7f2a81bb94e6eda6744c58ee8c2566a3dbc9c8a36450b4809d16dba2",
+        "retrieved_at": "2026-10-17T15:22:35.160096+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/MISA-core/linne-fern-1-0",
+      "current_url": "https://huggingface.co/PNPM244/linne-fern-1-0",
+      "ledger_retrieved_url": "https://huggingface.co/PNPM244/linne-fern-1-0/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/models/MISA-core/linne-fern-1-0",
+        "resolved_url": "https://huggingface.co/api/models/PNPM244/linne-fern-1-0",
+        "http_status": 200,
+        "id": "PNPM244/linne-fern-1-0",
+        "sha": "2d505d583d6234c0407947ee3d61c15db91e4f86",
+        "metadata_sha256": "a8d2488a7505e9983a170302c8df1989caf0f86223f4822fe5ea72210c30c162",
+        "retrieved_at": "2026-10-17T15:22:36.927622+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/MISA-core/linne-oak-1-0",
+      "current_url": "https://huggingface.co/PNPM244/linne-oak-1-0",
+      "ledger_retrieved_url": "https://huggingface.co/PNPM244/linne-oak-1-0/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/models/MISA-core/linne-oak-1-0",
+        "resolved_url": "https://huggingface.co/api/models/PNPM244/linne-oak-1-0",
+        "http_status": 200,
+        "id": "PNPM244/linne-oak-1-0",
+        "sha": "20da7bf3eb4d13b21ae0403e4be834ca19ec5cd0",
+        "metadata_sha256": "ddb070b03cf35b7982662076de37f4da38fa3c7dc02436109db79045790a3fc6",
+        "retrieved_at": "2026-10-17T15:22:38.693186+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/datasets/avbiswas/bev-decision-150K",
+      "current_url": "https://huggingface.co/datasets/avbiswas/bev-decision",
+      "ledger_retrieved_url": "https://huggingface.co/datasets/avbiswas/bev-decision/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/datasets/avbiswas/bev-decision-150K",
+        "resolved_url": "https://huggingface.co/api/datasets/avbiswas/bev-decision",
+        "http_status": 200,
+        "id": "avbiswas/bev-decision",
+        "sha": "11ed9b5b879e7f9524e7c89c1037d498c54206f0",
+        "metadata_sha256": "11cb1996c86b8c5875732b295110b858a221ea6b3659f1f0fcd83c260608332e",
+        "retrieved_at": "2026-10-17T15:22:40.689975+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/datasets/causalNLP/cladder",
+      "current_url": "https://huggingface.co/datasets/causal-nlp/CLadder",
+      "ledger_retrieved_url": "https://huggingface.co/datasets/causal-nlp/CLadder/raw/main/README.md",
+      "ledger_verification_level": "metadata_only",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/datasets/causalNLP/cladder",
+        "resolved_url": "https://huggingface.co/api/datasets/causal-nlp/CLadder",
+        "http_status": 200,
+        "id": "causal-nlp/CLadder",
+        "sha": "18d684e444ed07cc57ae0f3a91ee983a79b8119a",
+        "metadata_sha256": "1ce7507e4b54e3347a802f76e3e8c8f82b648113d874b90bd9ce12959cbd3924",
+        "retrieved_at": "2026-10-17T15:22:42.533094+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/datasets/hotchpotch/s1mb-dataset",
+      "current_url": "https://huggingface.co/datasets/hotchpotch/S1MB-english-v1",
+      "ledger_retrieved_url": "https://huggingface.co/datasets/hotchpotch/S1MB-english-v1/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/datasets/hotchpotch/s1mb-dataset",
+        "resolved_url": "https://huggingface.co/api/datasets/hotchpotch/S1MB-english-v1",
+        "http_status": 200,
+        "id": "hotchpotch/S1MB-english-v1",
+        "sha": "10bcb8c6916b98b966cc1f03aab1781a7c354b4c",
+        "metadata_sha256": "cc354e3aa248fc14af166eedb4d4202545fe9df056ec546a1e7bdc1c83df2ce5",
+        "retrieved_at": "2026-10-17T15:22:44.559597+00:00"
+      }
+    },
+    {
+      "legacy_url": "https://huggingface.co/datasets/skylenage/HLE-Verified",
+      "current_url": "https://huggingface.co/datasets/skylenage-ai/HLE-Verified",
+      "ledger_retrieved_url": "https://huggingface.co/datasets/skylenage-ai/HLE-Verified/raw/main/README.md",
+      "ledger_verification_level": "content_screened",
+      "current_url_also_in_ledger": false,
+      "public_hub_api": {
+        "requested_url": "https://huggingface.co/api/datasets/skylenage/HLE-Verified",
+        "resolved_url": "https://huggingface.co/api/datasets/skylenage-ai/HLE-Verified",
+        "http_status": 200,
+        "id": "skylenage-ai/HLE-Verified",
+        "sha": "0bc83643672d4f68a5f89998617a639d85e7318b",
+        "metadata_sha256": "53265f251c317e56afa321d14bc385f7f66a60a04babc7b42c736b6e710db549",
+        "retrieved_at": "2026-10-17T15:22:46.542458+00:00"
+      }
+    }
+  ],
+  "notes": [
+    "llm-semantic-router/Decision-1.0-Kai and llm-semantic-router/Decision-1.0-Kai-0.6B both resolve to vllm-sr/Decision-1.0-Kai-0.6B at the same revision; they are one model.",
+    "Only spaces/vllm-sr/decision-studio is also stored under its current name; the other current names are reached only through the legacy rows.",
+    "causalNLP/cladder remains metadata_only; the alias changes its published link, not its evidence tier."
+  ],
+  "index_effect": "scripts/build_source_index.py canonical() maps each legacy path to its current path (HUB_ALIASES), so the index publishes the current name and a legacy row cannot become a second source after either copy changes. Among equally graded duplicates the row stored under the current name is kept. Counts are unchanged: 4,286 unique records and 14 duplicates.",
+  "privacy": "No account, token or cookie was used. Only public repository ids, revision hashes and response hashes are stored."
+}

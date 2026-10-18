@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-17T03:54:37.369598+00:00",
+  "baseline_commit": "89628d44274416be430472116dc2422006129d12",
+  "accepted_new_sources": 4,
+  "curated_additions": 4,
+  "input_sha256": "7a1c47c8942b5cbf00bada37c107497ebc52379919d7ec1334cf8fc8ced5287b",
+  "scope": "Main-session fixed-version primary abstract and metadata review. No independent subagent review was available; no full-paper reading, model execution, data inspection or reproduction is claimed.",
+  "primary_checks": [
+    {
+      "url": "https://arxiv.org/abs/2610.00381",
+      "title": "OmniMed-Jev: Calibrating LVLM Confidence for Trustworthy Medical Multimodal Decisions via System One",
+      "authors": [
+        "Tang, Luyao",
+        "Chen, Cheng"
+      ],
+      "published_at": "2026-09-30",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.00381v1",
+      "retrieved_at": "2026-10-17T03:51:46.167475+00:00",
+      "abstract_page_sha256": "977a292cea521aa54ef5cd63ce27d40c12256db001dae39e111893008fd74d2e",
+      "abstract_sha256": "db3f31ecc4900f74780fdb27ff421fa894c8d277920a8eb2017a71b47411736f",
+      "abstract_word_count": 270,
+      "limitations": "Fixed-v1 abstract only. The counting task favors the generative baseline; interface and associated training differences are not isolated. No patient data, model weights, clinical evaluation or inference was used."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.02638",
+      "title": "Batched Speech Decisions Without Decoding: Single-Token Supervision Lets a Frozen LLM Hear Beyond the Transcript",
+      "authors": [
+        "Jin, Jie",
+        "Ma, Ziyin",
+        "Yin, Min",
+        "Chen, Jinyu",
+        "Song, Haigang",
+        "Pang, Zhikun",
+        "Zhang, Xiaowen"
+      ],
+      "published_at": "2026-10-02",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.02638v1",
+      "retrieved_at": "2026-10-17T03:51:46.180658+00:00",
+      "abstract_page_sha256": "71c1d2b32536823e2e8a81f6f1d3a3a656318abbf27b24558fef3ec6c4a8c605",
+      "abstract_sha256": "3cfed103d03dca367b01c9ef390fa5ab7faf7c32ed665e213a80598651eb7ad4",
+      "abstract_word_count": 154,
+      "limitations": "Fixed-v1 abstract and public paper-to-code link only. Connector configurations differ, reported timing uses an eight-GPU node, and a venue submission is not peer-review acceptance. No audio, model or benchmark code was executed."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.06425",
+      "title": "SoK: Semantic Decision Engines in Network Control Loops",
+      "authors": [
+        "Li, Delong",
+        "Li, Chen",
+        "Wang, Xu",
+        "Gong, Haochen",
+        "Lang, Rui",
+        "Yu, Guangsheng"
+      ],
+      "published_at": "2026-10-05",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.06425v1",
+      "retrieved_at": "2026-10-17T03:51:46.230173+00:00",
+      "abstract_page_sha256": "c1476c25820fcf4429089bd85a2f1178a09cdd8e576f231ac87f6b7d17edbab7",
+      "abstract_sha256": "187305f6cde7ecafbc3612bae9bd8d3dcc62e9bb7b0fa55a724e766ffae345a0",
+      "abstract_word_count": 166,
+      "limitations": "Fixed-v1 abstract only. The 139-family survey coding and matched-measurement judgments were not independently audited. Queueing examples use one event model and do not establish behavior of every network deployment."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.14112",
+      "title": "Does System One Transfer? Calibrated Typed-Decision Models, Label Budgets, and Translation for Indonesian Regional Languages",
+      "authors": [
+        "Fadli, Romi",
+        "Rusdah",
+        "Utami, Wahyu Ramadani Putri",
+        "Amana, Zulfa Malika"
+      ],
+      "published_at": "2026-10-09",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.14112v1",
+      "retrieved_at": "2026-10-17T03:51:46.354839+00:00",
+      "abstract_page_sha256": "e9940e265ac40dff7e22b0cf30240d510f8b2dbfbfc29c0a735eb573d272d1fa",
+      "abstract_sha256": "3e342feaa81c1a6fd83db29afc8d9781bffe681a200401203d1a816f63db41f6",
+      "abstract_word_count": 236,
+      "limitations": "Fixed-v1 abstract and paper-to-repository link inspected. Results concern NusaX/NusaTranslation sentiment and emotion tasks, human Indonesian translations and specified model/cost snapshots. Preregistration timing and prediction files were not independently audited; no machine-translation or universal threshold-transfer guarantee follows."
+    }
+  ],
+  "counting": "Canonical identities, normalized titles and abstract hashes checked against both current ledgers and the supplemented frozen baseline; four new papers, zero added companion counts.",
+  "provenance": "The scheduled scan proposal supplied candidates. Fresh primary arXiv evidence is retained with version protection; no old ledger record is rewritten and the whole scan PR remains unmerged.",
+  "companion_links": [
+    {
+      "url": "https://github.com/lytang63/omnimed-jev",
+      "scope": "Existing corpus project; paper link uses HTTP, normalized to its existing HTTPS identity. No additional project review or count."
+    },
+    {
+      "url": "https://github.com/adventists-ai/duplexjev",
+      "scope": "Existing corpus implementation linked by the original abstract and public paper metadata. Zero new-source count."
+    },
+    {
+      "url": "https://github.com/tnromy/evaluating-system-one-models-for-indonesian-regional-languages",
+      "scope": "Primary-paper link only; navigation does not certify preregistration or inspect the promised predictions. Not added to accepted ledgers."
+    }
+  ],
+  "privacy": "Only public bibliographic metadata, concise summaries, source links and hashes are published. No abstracts, raw HTML, contacts, private paths, credentials, patient records or voice recordings are included."
+}

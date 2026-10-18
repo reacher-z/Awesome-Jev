@@ -1,6 +1,6 @@
 # Jev and typed decision models
 
-**A compact research survey · Evidence snapshot: 16 October 2026**
+**A compact research survey · Evidence snapshot: 17 October 2026 (UTC)**
 
 [English](survey.md) · [简体中文](survey.zh-CN.md) · [Resource index](../README.md) · [BibTeX](../references.bib)
 
@@ -12,7 +12,7 @@ TypeSafe introduced Jev on **15 September 2026**, describing a model architectur
 
 A request pairs shared state with questions and caller-defined criteria. **Choice** returns an option and its distribution; **Score** returns an assessment over ordered rubric levels; **Noul** returns a yes-probability. The surrounding program determines how those answers affect routing, review, or execution. This puts the decision contract, its alternatives, and uncertainty directly in the application. [Question primitives](https://docs.typesafe.ai/primitives)
 
-Version boundaries matter. On this snapshot, `jev-latest` resolves to stable **1.13.0**; `jev-preview` resolves to **1.14.0**, released **14 October**. Log the returned model ID and pin versions for comparisons. The studies below mainly concern 1.13; they cannot establish 1.14 performance. [Models](https://docs.typesafe.ai/models)
+Version boundaries matter. On this snapshot, `jev-latest` resolves to stable **1.13.0**; `jev-preview` resolves to **1.14.0**, released **14 October**. Log the returned model ID and pin versions for comparisons. The studies below mainly concern 1.13; they cannot establish 1.14 performance. [Models](https://docs.typesafe.ai/models) · Alias checks: [16 October](../data/model-reference-check-2026-10-16.json), [17 October](../data/model-reference-check-2026-10-17.json)
 
 The current interface is also broader than the original text-oriented evaluations: images require explicit experimental opt-in, and **Box** localization requires 1.14. These capabilities need their own evidence. [Images](https://docs.typesafe.ai/images) · [Box](https://docs.typesafe.ai/primitives/box)
 
@@ -29,7 +29,7 @@ Different sources answer different questions:
 
 Official **WorkflowEvals** now has public [workflow code](https://github.com/typesafe-ai/WorkflowEvals) and a [dataset collection](https://huggingface.co/collections/typesafeAI/workflowevals). Its references use model consensus, so agreement with them measures agreement with that reference procedure. Human-label accuracy is a different claim. Public artifacts make inspection possible; availability alone does not certify a result. [Evaluation design](https://typesafe.ai/blog/introducing-system-one-models-and-jev)
 
-The community [**Jev Decision Index**](https://huggingface.co/spaces/multimodalart/jev-decision-index) is a central discovery resource for benchmarks and independent Jev-inspired implementations, not TypeSafe weights. Edition **0.3.2**, inspected at commit `5d09dd9`, combines public and unreleased private tests. Its full ranking therefore cannot be independently recomputed from public material alone. [Versioned methodology](https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/5d09dd9cf226338c68fad22284c4982e6680af7d/data/methodology.json)
+The community [**Jev Decision Index**](https://huggingface.co/spaces/multimodalart/jev-decision-index) is a central discovery resource for benchmarks and independent Jev-inspired implementations, not TypeSafe weights. Edition **0.3.2**, inspected at commit `0ddf675`, combines public and unreleased private tests. The current reference is a Jev 1.14 lab run dated 14 October; the frozen request files still name Jev 1.13. Its full ranking therefore cannot be independently recomputed from public material alone, and model-run provenance must be kept separate from archived request labels. [Versioned methodology](https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/methodology.json)
 
 The six selected works below are **arXiv preprints**. Dates distinguish first publication from the version reviewed. Findings are author-reported; the audit paper maps evidence rather than adding another empirical replication.
 
@@ -58,13 +58,21 @@ Here `n` is the number of options. It is not the selected option’s probability
 
 For a policy that abstains, **coverage** is the fraction of cases accepted; **selective risk** is the average loss on those cases. Plotting risk against coverage exposes the tradeoff hidden by one threshold. A fallback must also correct the first model’s mistakes: confidence ranking alone cannot guarantee a good cascade. The reject-option literature supplies the relevant framework. [SelectiveNet](https://proceedings.mlr.press/v97/geifman19a.html)
 
+Three recent studies sharpen different parts of this distinction. These are interpretations of the inspected abstracts, not reproduced experiments.
+
+| Study | Distinction to retain |
+| --- | --- |
+| [Labels Override Definitions, v1](https://arxiv.org/abs/2610.02586v1) | Changing prompt rendering with fixed weights probes an interface mechanism; label sensitivity alone does not identify a decision-head limitation. |
+| [GraphDecisionBench, v3](https://arxiv.org/abs/2610.06354v3) | Recognizing local edges, combining graph and text evidence, and constructing a high-quality solution require separate measurements. |
+| [AudioJev, v1](https://arxiv.org/abs/2610.01293v1) | Stability under option permutations is different from agreement between probabilities and observed correctness. |
+
 ## 4. Connections worth studying
 
 **Probabilistic prediction.** Proper scoring rules evaluate whole predictive distributions, providing a foundation for Brier score and log loss. Calibration work shows why a highly accurate network still needs probability evaluation; language-model self-evaluation adds a relevant comparator. None establishes Jev’s training objective. [Gneiting & Raftery](https://doi.org/10.1198/016214506000001437) · [Guo et al.](https://proceedings.mlr.press/v70/guo17a.html) · [Kadavath et al.](https://arxiv.org/abs/2207.05221)
 
 **Constrained generation.** LMQL and XGrammar show how generative systems can impose output constraints. They motivate comparisons that distinguish a typed API from the model producing its answers. [LMQL](https://www.sri.inf.ethz.ch/publications/beurerkellner2023prompting) · [XGrammar](https://arxiv.org/abs/2411.15100)
 
-**Programmable inference.** DSPy studies optimization of model pipelines; SGLang studies their efficient execution. Both motivate controlling orchestration, caching, and serving conditions before attributing end-to-end improvements to one decision model. [DSPy](https://arxiv.org/abs/2310.03714) · [SGLang](https://arxiv.org/abs/2312.07104)
+**Programmable inference.** DSPy studies optimization of model pipelines; SGLang studies their efficient execution. Both motivate controlling orchestration, caching, and serving conditions before attributing end-to-end improvements to one decision model. [DSPy](https://arxiv.org/abs/2310.03714) · [SGLang](https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f31ba1c9ac630f15dec8-Paper-Conference.pdf)
 
 ## 5. A proposed reproducible evaluation
 
@@ -115,9 +123,10 @@ For deployment budgeting, separately report total model charges across all attem
 
 ### Reproduction boundaries
 
-These operations cover different pipeline stages. The examples below describe documented availability in the inspected snapshots; we did not execute the procedures or exhaustively audit the artifacts.
+The four operations named in step 6 of the protocol above cover different pipeline stages. The examples below describe documented availability in the inspected snapshots; we did not execute the procedures or exhaustively audit the artifacts.
 
-- Map that target to required inputs and their versions/hashes. Distinguish files present from files merely documented, upstream restricted material, and missing artifacts. Use a body hash plus retrieval time where a provider revision is not an immutable commit.
+- Name the target: a specific table or figure regenerated from scored summaries, metrics recomputed from released per-example answers, fresh predictions, or a retrained checkpoint.
+- Map the target to required inputs and their versions/hashes. Distinguish files present from files merely documented, upstream restricted material, and missing artifacts. Use a body hash plus retrieval time where a provider revision is not an immutable commit.
 - List dependencies separately: analysis environment; source data and reconstruction rules; model/adapter versions or hosted-service access; compute and charges. Preserve failed hash checks and missing inputs instead of silently replacing them with current data.
 - Report the actual outcome: documented only, inputs inspected, command executed, or outputs matched. For executed work, retain commands, environment, output hashes and deviations; partial table regeneration is not a reproduced inference or training run.
 
@@ -127,4 +136,4 @@ These operations cover different pipeline stages. The examples below describe do
 | [Ordinal-scale artifact](https://anonymous.4open.science/api/repo/jev_ordinal_scale_bia/file/README.md?v=3ed72968) | The described analysis route recomputes metrics from released per-example answers, not new model calls. | Source text, weights and post-trained checkpoints are omitted. Missing historical revisions can prevent reconstruction of inputs matching the recorded hashes; hosted results may change. The provider file revision is opaque, not a verified immutable commit. |
 | [Radiology report judging, v1](https://arxiv.org/html/2609.27607v1#Sx1.p1) | The fixed-v1 availability statement says analysis scripts and aggregates are being prepared for release. | Third-party dataset links and question details do not supply those missing author outputs. The inspected version does not establish an available analysis-replay route. |
 
-The most useful next evidence would isolate model, interface, and workflow effects while tracking deployment shift. That requires matched comparisons and inspectable records, especially for new modalities and releases. The collection’s 64 research bibliography entries are maintained in [references.bib](../references.bib).
+The most useful next evidence would isolate model, interface, and workflow effects while tracking deployment shift. That requires matched comparisons and inspectable records, especially for new modalities and releases. The collection’s 87 research bibliography entries are maintained in [references.bib](../references.bib).

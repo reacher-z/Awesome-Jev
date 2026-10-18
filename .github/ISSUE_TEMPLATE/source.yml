@@ -1,6 +1,7 @@
 name: Suggest a source
 description: Add a public paper, model, tool, dataset, or evaluation.
 title: "[Source] "
+labels: ["source suggestion"]
 body:
   - type: input
     id: title
@@ -19,6 +20,21 @@ body:
     id: date
     attributes:
       label: Publication date and version
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Resource type
+      description: The website category that fits best.
+      options:
+        - Paper
+        - Model
+        - Tool
+        - Dataset
+        - Guide
+        - Evaluation
+        - Foundation
     validations:
       required: true
   - type: dropdown

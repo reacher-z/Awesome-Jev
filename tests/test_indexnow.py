@@ -1,5 +1,6 @@
 """IndexNow submission boundaries; all HTTP calls are fixtures."""
 import contextlib
+import http.client
 import io
 import json
 from pathlib import Path
@@ -89,6 +90,55 @@ class IndexNowTests(unittest.TestCase):
                     self.assertIn('does not mean', indexnow.status_message(status))
                 else:
                     self.assertIn('No automatic retry', indexnow.status_message(status))
+
+
+class ConnectionFailureTests(unittest.TestCase):
+    """A dropped connection must map to the safe messages and exit 1, not a traceback."""
+
+    def submit(self, side_effect):
+        opener = Mock()
+        opener.open.side_effect = side_effect
+        stderr = io.StringIO()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'site').mkdir()
+            sitemap(root / 'site/sitemap.xml')
+            (root / 'site/indexnow-key.txt').write_text(KEY + '\n', encoding='utf-8')
+            with patch.object(indexnow, 'ROOT', root), patch.object(indexnow.urllib.request, 'build_opener', return_value=opener), \
+                    contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(stderr):
+                code = indexnow.main(['--submit', '--url', PAGES[0]])
+        return code, stderr.getvalue(), [c.args[0].get_method() for c in opener.open.call_args_list]
+
+    def failures(self):
+        return [http.client.RemoteDisconnected('Remote end closed connection without response'),
+                ConnectionResetError('Connection reset by peer')]
+
+    def test_dropped_live_verification_sends_no_submission(self):
+        for failure in self.failures():
+            with self.subTest(failure=type(failure).__name__):
+                code, stderr, methods = self.submit(failure)
+                self.assertEqual(code, 1)
+                self.assertEqual(stderr.strip(), 'Live verification failed; no submission was sent.')
+                self.assertEqual(methods, ['GET'])
+
+    def test_truncated_live_page_sends_no_submission(self):
+        truncated = Mock(status=200)
+        truncated.__enter__ = Mock(return_value=truncated)
+        truncated.__exit__ = Mock(return_value=False)
+        truncated.read.side_effect = http.client.IncompleteRead(b'fixture')
+        code, stderr, methods = self.submit([Response(KEY.encode()), truncated])
+        self.assertEqual(code, 1)
+        self.assertEqual(stderr.strip(), 'Live verification failed; no submission was sent.')
+        self.assertEqual(methods, ['GET', 'GET'])
+
+    def test_dropped_single_post_is_unconfirmed_and_not_retried(self):
+        page = ('<html><head><link rel="canonical" href="' + PAGES[0] + '"></head></html>').encode()
+        for failure in self.failures():
+            with self.subTest(failure=type(failure).__name__):
+                code, stderr, methods = self.submit([Response(KEY.encode()), Response(page), failure])
+                self.assertEqual(code, 1)
+                self.assertIn('receipt is unconfirmed. No automatic retry was attempted.', stderr)
+                self.assertEqual(methods, ['GET', 'GET', 'POST'])
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 import { resources, translations } from "./catalog.mjs";
-import { renderResource } from "./resource-view.mjs";
+import { englishLang, renderResource, hasCode } from "./resource-view.mjs";
 
 document.documentElement.classList.add("js");
 let language = document.documentElement.lang.startsWith("zh") ? "zh" : "en";
@@ -50,11 +50,24 @@ const safeURL = (value) => {
 function t(key) {
   return translations[language][key] ?? translations.en[key] ?? key;
 }
+// "Papers with code" narrows only categories whose entries carry an `artifacts` record.
+// Elsewhere it is cleared and disabled, so it cannot empty a list of tools or models.
+const artifactCategories = new Set(
+  resources.filter((resource) => resource.artifacts).map((resource) => resource.category),
+);
 function renderResources() {
   const query = $("#resource-search").value.trim().toLocaleLowerCase();
+  const codeFilter = $("#code-filter");
+  codeFilter.disabled =
+    activeFilter === "All"
+      ? artifactCategories.size === 0
+      : !artifactCategories.has(activeFilter);
+  if (codeFilter.disabled) codeFilter.checked = false;
+  const codeOnly = codeFilter.checked;
   const filtered = resources.filter(
     (resource) =>
       (activeFilter === "All" || resource.category === activeFilter) &&
+      (!codeOnly || hasCode(resource)) &&
       `${resource.title} ${resource.by} ${resource.en} ${resource.zh} ${resource.category}`
         .toLocaleLowerCase()
         .includes(query),
@@ -78,28 +91,7 @@ function selectFilter(filter) {
 }
 function setLanguage(next) {
   language = next;
-  document.documentElement.lang = language === "zh" ? "zh" : "en";
-  document.title =
-    language === "zh"
-      ? "Awesome Jev — 论文、模型与工具"
-      : "Awesome Jev — Papers, models and tools";
-  for (const selector of [
-    'meta[name="description"]',
-    'meta[property="og:description"]',
-    'meta[name="twitter:description"]',
-  ]) {
-    document.querySelector(selector).content = t("metaDescription");
-  }
-  for (const selector of [
-    'meta[property="og:title"]',
-    'meta[name="twitter:title"]',
-  ]) {
-    document.querySelector(selector).content = document.title;
-  }
-  document.querySelector('meta[property="og:locale"]').content =
-    language === "zh" ? "zh_CN" : "en_US";
-  document.querySelector('meta[property="og:locale:alternate"]').content =
-    language === "zh" ? "en_US" : "zh_CN";
+  // The generated HTML owns <html lang>, the title and social metadata for each URL.
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     element.innerHTML = t(element.dataset.i18n);
   });
@@ -122,6 +114,8 @@ function setLanguage(next) {
       icon(categoryIcons[button.dataset.filter]) +
       "<span>" +
       escapeHTML(t("filter" + button.dataset.filter)) +
+      "</span><span class=\"filter-count\" aria-hidden=\"true\">" +
+      (button.dataset.filter === "All" ? resources.length : resources.filter(row => row.category === button.dataset.filter).length) +
       "</span>";
   });
   const repository =
@@ -147,6 +141,7 @@ document.querySelectorAll("[data-filter-link]").forEach((link) =>
   }),
 );
 $("#resource-search").addEventListener("input", renderResources);
+$("#code-filter").addEventListener("change", renderResources);
 document
   .querySelectorAll("form[role=search]")
   .forEach((form) =>
@@ -154,6 +149,7 @@ document
   );
 $("#reset-filters").addEventListener("click", () => {
   $("#resource-search").value = "";
+  $("#code-filter").checked = false;
   selectFilter("All");
   $("#resource-search").focus();
 });
@@ -300,8 +296,11 @@ function renderCorpus() {
   $("#corpus-list").innerHTML = filtered
     .slice(0, corpusLimit)
     .map(
-      (source) =>
-        `<article class="corpus-row"><div><h3><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)}</a></h3><p>${escapeHTML(language === "zh" && source.zh ? source.zh : source.description)}</p>${curationDisclosure(source)}</div><div class="corpus-entry-meta" data-verification="${escapeHTML(source.verification)}">${escapeHTML(corpusMetadata(source))}<span aria-hidden="true">${icon("external")}</span></div></article>`,
+      (source) => {
+        const description =
+          language === "zh" && source.zh ? source.zh : source.description;
+        return `<article class="corpus-row"><div><h3><a href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer"${englishLang(source.title, language)}>${escapeHTML(source.title)}</a></h3><p${englishLang(description, language)}>${escapeHTML(description)}</p>${curationDisclosure(source)}</div><div class="corpus-entry-meta" data-verification="${escapeHTML(source.verification)}">${escapeHTML(corpusMetadata(source))}<span aria-hidden="true">${icon("external")}</span></div></article>`;
+      },
     )
     .join("");
   if (corpusSources.length && !filtered.length)

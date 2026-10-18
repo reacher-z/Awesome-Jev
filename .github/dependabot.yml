@@ -1,0 +1,21 @@
+version: 2
+updates:
+  # Workflows pin actions to full commit SHAs; Dependabot proposes the new SHA
+  # and its version comment. Each update still needs maintainer review.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: America/Los_Angeles
+    labels:
+      - "area: ci"
+    groups:
+      # Minor and patch releases arrive together; each major release gets its
+      # own PR because majors can change runtime or behaviour.
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch

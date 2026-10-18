@@ -1,6 +1,6 @@
 # Jev 与类型化决策模型
 
-**研究综述 · 证据快照：2026 年 10 月 16 日**
+**研究综述 · 证据快照：2026 年 10 月 17 日（UTC）**
 
 [English](survey.md) · [简体中文](survey.zh-CN.md) · [资源索引](../README.zh-CN.md) · [BibTeX](../references.bib)
 
@@ -12,7 +12,7 @@ TypeSafe 于 **2026 年 9 月 15 日**发布 Jev，并介绍了模型架构、�
 
 一次请求包含共享状态、问题及调用方定义的判定标准。**Choice** 返回选项与概率分布；**Score** 返回有序量表上的评估；**Noul** 返回“是”的概率。外围程序决定如何据此路由、复核或执行，使决策约定、候选答案和不确定性直接进入应用。[问题原语](https://docs.typesafe.ai/primitives)
 
-版本边界很重要。在本次快照中，`jev-latest` 指向稳定版 **1.13.0**；`jev-preview` 指向 **10 月 14 日**发布的 **1.14.0**。比较实验应固定版本并记录响应中的模型 ID。下文研究主要针对 1.13，不能据此确定 1.14 的表现。[模型文档](https://docs.typesafe.ai/models)
+版本边界很重要。在本次快照中，`jev-latest` 指向稳定版 **1.13.0**；`jev-preview` 指向 **10 月 14 日**发布的 **1.14.0**。比较实验应固定版本并记录响应中的模型 ID。下文研究主要针对 1.13，不能据此确定 1.14 的表现。[模型文档](https://docs.typesafe.ai/models) · 别名核查记录：[10 月 16 日](../data/model-reference-check-2026-10-16.json)、[10 月 17 日](../data/model-reference-check-2026-10-17.json)
 
 当前接口也已超出早期以文本为主的评估范围：图像功能需要显式启用实验选项，**Box** 定位需要 1.14。它们需要各自的评估证据。[图像](https://docs.typesafe.ai/images) · [Box](https://docs.typesafe.ai/primitives/box)
 
@@ -29,7 +29,7 @@ TypeSafe 于 **2026 年 9 月 15 日**发布 Jev，并介绍了模型架构、�
 
 官方 **WorkflowEvals** 目前已公开[工作流代码](https://github.com/typesafe-ai/WorkflowEvals)和[数据集合](https://huggingface.co/collections/typesafeAI/workflowevals)。其参考答案采用模型共识，因此与参考答案一致，衡量的是对该参考程序的符合程度；人工标签上的准确率是另一个命题。公开产物使检查成为可能，但“可以取得”本身并不验证实验结论。[评估设计](https://typesafe.ai/blog/introducing-system-one-models-and-jev)
 
-社区维护的 [**Jev Decision Index**](https://huggingface.co/spaces/multimodalart/jev-decision-index) 是发现基准与受 Jev 启发的独立实现的重要入口，这些实现并非 TypeSafe 权重。本次检查固定于提交 `5d09dd9` 的 **0.3.2** 版；它将公开测试与未发布的私有测试合并，因此仅凭公开材料无法独立重算完整排名。[固定版本的方法说明](https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/5d09dd9cf226338c68fad22284c4982e6680af7d/data/methodology.json)
+社区维护的 [**Jev Decision Index**](https://huggingface.co/spaces/multimodalart/jev-decision-index) 是发现基准与受 Jev 启发的独立实现的重要入口，这些实现并非 TypeSafe 权重。本次检查固定于提交 `0ddf675` 的 **0.3.2** 版；它将公开测试与未发布的私有测试合并，因此仅凭公开材料无法独立重算完整排名。当前参考是10月14日的 Jev 1.14 实验运行，冻结请求文件仍标为 Jev 1.13；实际运行版本应与归档请求名称分开记录。[固定版本的方法说明](https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/methodology.json)
 
 下面六篇均按 **arXiv 预印本**收录。日期区分首次发布与所读版本；发现均由论文作者报告。证据审计论文用于梳理文献，不计作额外一次实证复现。
 
@@ -58,13 +58,21 @@ confidence = (p_max − 1/n) / (1 − 1/n)
 
 对于允许拒答的策略，**覆盖率**是被自动接受的样本比例；**选择性风险**是这些样本上的平均损失。风险–覆盖率曲线揭示了单个阈值掩盖的取舍。后备模型还必须能够纠正第一阶段的错误：仅有置信度排序，不能保证级联有效。带拒绝选项的预测研究提供了相应分析框架。[SelectiveNet](https://proceedings.mlr.press/v97/geifman19a.html)
 
+三篇近期研究分别细化了上述区别。以下是基于已查摘要的解释，不是本项目复现实验的结果。
+
+| 研究 | 需要保留的区别 |
+| --- | --- |
+| [Labels Override Definitions，v1](https://arxiv.org/abs/2610.02586v1) | 固定权重后改变提示渲染可探查接口机制；只观察到标签敏感性，不能据此确定是决策头的限制。 |
+| [GraphDecisionBench，v3](https://arxiv.org/abs/2610.06354v3) | 局部边识别、图文证据结合与高质量解的构造，需要分别测量。 |
+| [AudioJev，v1](https://arxiv.org/abs/2610.01293v1) | 选项重排后的稳定性，与概率是否符合实际正确率，是不同性质。 |
+
 ## 4. 值得连接的研究脉络
 
 **概率预测。** 严格适当评分规则用于评估整个预测分布，为 Brier score 与对数损失提供基础。校准研究解释了为什么准确率高的网络仍需评估概率；语言模型的自我评估研究则提供相关比较对象。它们都不能证明 Jev 的训练目标。[Gneiting 与 Raftery](https://doi.org/10.1198/016214506000001437) · [Guo 等](https://proceedings.mlr.press/v70/guo17a.html) · [Kadavath 等](https://arxiv.org/abs/2207.05221)
 
 **约束生成。** LMQL 和 XGrammar 展示了生成系统如何施加输出约束，因此有必要在实验中区分类型化 API 与生成答案的模型。[LMQL](https://www.sri.inf.ethz.ch/publications/beurerkellner2023prompting) · [XGrammar](https://arxiv.org/abs/2411.15100)
 
-**可编程推理流程。** DSPy 研究模型流水线的优化，SGLang 研究这类程序的高效执行。两者都提示我们：在把端到端收益归因于某个决策模型之前，应控制编排、缓存与服务条件。[DSPy](https://arxiv.org/abs/2310.03714) · [SGLang](https://arxiv.org/abs/2312.07104)
+**可编程推理流程。** DSPy 研究模型流水线的优化，SGLang 研究这类程序的高效执行。两者都提示我们：在把端到端收益归因于某个决策模型之前，应控制编排、缓存与服务条件。[DSPy](https://arxiv.org/abs/2310.03714) · [SGLang](https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f31ba1c9ac630f15dec8-Paper-Conference.pdf)
 
 ## 5. 建议的可复现评估协议
 
@@ -115,9 +123,10 @@ confidence = (p_max − 1/n) / (1 − 1/n)
 
 ### 复现边界
 
-这些操作覆盖流程中的不同环节。下列例子说明所查快照文档中的材料可用性；本项目未执行这些流程，也未完整审计所有资产。
+上文流程第 6 步列出的四种操作覆盖流程中的不同环节。下列例子说明所查快照文档中的材料可用性；本项目未执行这些流程，也未完整审计所有资产。
 
-- 将目标对应到所需输入及其版本/哈希，区分实际存在、仅在文档中描述、上游受限与缺失的材料。若服务的修订标识不是不可变提交，以正文哈希与抓取时间标识所见快照。
+- 明确复现目标：由已评分汇总重建的具体表格或图、由已发布逐样本答案重算的指标、重新生成的预测，或重新训练的检查点。
+- 将该目标对应到所需输入及其版本/哈希，区分实际存在、仅在文档中描述、上游受限与缺失的材料。若服务的修订标识不是不可变提交，以正文哈希与抓取时间标识所见快照。
 - 分列依赖：分析环境、源数据与重建规则、模型/适配器版本或托管服务访问、计算资源及费用。保留哈希不匹配和输入缺失记录，不静默换用当前数据。
 - 报告实际达到的状态：仅有文档、检查过输入、执行过命令，或输出已匹配。执行后记录命令、环境、输出哈希和偏差；只重建部分表图不等于复现推理或训练。
 
@@ -127,4 +136,4 @@ confidence = (p_max − 1/n) / (1 − 1/n)
 | [有序量表资产](https://anonymous.4open.science/api/repo/jev_ordinal_scale_bia/file/README.md?v=3ed72968) | 文档中的分析流程从已发布逐样本答案重算指标，并不产生新的模型调用。 | 未分发源文本、权重和后训练检查点；历史版本缺失可能导致无法重建与记录哈希一致的输入，托管结果也可能变化。服务文件修订标识不透明，不能当作已验证的不可变提交。 |
 | [放射学报告评判，v1](https://arxiv.org/html/2609.27607v1#Sx1.p1) | 固定 v1 的可用性声明说，分析脚本与汇总结果仍在准备发布。 | 第三方数据链接和题目细节不能替代缺失的作者输出；所查版本不能证明已有可运行的分析重算路径。 |
 
-下一步更有价值的证据，应能分离模型、接口与工作流各自的影响，同时追踪部署分布变化。这需要匹配的比较实验和可检查记录，尤其是针对新模态与新版本。资源库的 64 条研究书目维护于 [references.bib](../references.bib)。
+下一步更有价值的证据，应能分离模型、接口与工作流各自的影响，同时追踪部署分布变化。这需要匹配的比较实验和可检查记录，尤其是针对新模态与新版本。资源库的 87 条研究书目维护于 [references.bib](../references.bib)。

@@ -17,13 +17,17 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://awesomejev.github.io"
-ROUTES = ("/", "/zh/", "/guide/", "/zh/guide/", "/papers/", "/zh/papers/", "/discoveries/", "/zh/discoveries/")
-PAIRS = (("/", "/zh/"), ("/guide/", "/zh/guide/"), ("/papers/", "/zh/papers/"), ("/discoveries/", "/zh/discoveries/"))
+PAIRS = (("/", "/zh/"), ("/guide/", "/zh/guide/"), ("/papers/", "/zh/papers/"), ("/models/", "/zh/models/"), ("/discoveries/", "/zh/discoveries/"))
+TOPIC_SLUGS = ("option-label-bias", "audiojev", "graph-decision-benchmarks")
+PAIRS += (("/topics/", "/zh/topics/"),) + tuple((f"/topics/{slug}/", f"/zh/topics/{slug}/") for slug in TOPIC_SLUGS)
+ROUTES = tuple(route for pair in PAIRS for route in pair)
 BUILD_INPUTS = (
-    "scripts/build_site.mjs", "templates/index.html", "data/search-guide.json",
+    "scripts/build_site.mjs", "templates/index.html", "data/search-guide.json", "data/research-topics.json",
     "data/expansion-progress-2026-10-16.json", "data/discovery-translations.zh-CN.json", "references.bib",
-    "site/app.js", "site/catalog.mjs", "site/resource-view.mjs", "site/styles.css",
+    "site/app.js", "site/model-directory.js", "site/paper-directory.js", "site/catalog.mjs", "site/resource-view.mjs", "site/styles.css",
 )
+# The build also draws the papers-per-week chart and rewrites its region in both READMEs.
+BUILD_INPUTS += ("scripts/paper_activity.mjs", "README.md", "README.zh-CN.md")
 
 
 def words(value):
@@ -69,6 +73,7 @@ class CrawlPage(HTMLParser):
         self._card = None
         self._card_title = False
         self._card_description = False
+        self._model_row = False
         self._style = False
         self.feed(source)
 
@@ -101,15 +106,20 @@ class CrawlPage(HTMLParser):
             self._style = True
         elif tag == "h1":
             self._h1 = []
-        elif tag == "article" and "resource-row" in classes:
+        elif (tag == "article" and "resource-row" in classes) or (tag == "tr" and classes & {"model-row", "paper-row"}):
+            self._model_row = tag == "tr"
+            self._card_title = "model-row" in classes
             self._card = {"url": "", "name": [], "text": [], "description": [], "hidden": "hidden" in attrs or attrs.get("aria-hidden") == "true",
                           "category": attrs.get("data-category", ""), "relation": attrs.get("data-relation", ""),
                           "verification_level": attrs.get("data-verification-level", "")}
         elif tag == "h3" and self._card is not None:
             self._card_title = True
+        elif tag == "a" and self._card is not None and "paper-title" in classes:
+            self._card_title = True
+            self._card["url"] = attrs.get("href", "")
         elif tag == "a" and self._card is not None and self._card_title:
             self._card["url"] = attrs.get("href", "")
-        elif tag == "p" and self._card is not None and "resource-description" in classes:
+        elif self._card is not None and ((tag == "p" and "resource-description" in classes) or (tag == "td" and classes & {"model-scope", "paper-finding"})):
             self._card_description = True
 
     def handle_endtag(self, tag):
@@ -126,16 +136,17 @@ class CrawlPage(HTMLParser):
         elif tag == "h1" and self._h1 is not None:
             self.headings.append(words("".join(self._h1)))
             self._h1 = None
-        elif tag == "h3":
+        elif tag == "h3" or (tag == "a" and self._model_row):
             self._card_title = False
-        elif tag == "p":
+        elif tag in {"p", "td"}:
             self._card_description = False
-        elif tag == "article" and self._card is not None:
+        elif (tag == "article" or (tag == "tr" and self._model_row)) and self._card is not None:
             self._card["name"] = words("".join(self._card["name"]))
             self._card["text"] = words(" ".join(self._card["text"]))
             self._card["description"] = words("".join(self._card["description"]))
             self.cards.append(self._card)
             self._card = None
+            self._model_row = False
 
     def handle_data(self, value):
         if self._script is not None:
@@ -291,9 +302,31 @@ class SiteDiscoveryTests(unittest.TestCase):
         self.assertEqual(len(set(observed)), len(ROUTES))
 
     def test_chinese_routes_contain_translated_body_text_before_scripts_run(self):
-        for route in ("/zh/", "/zh/guide/", "/zh/papers/", "/zh/discoveries/"):
+        for route in (route for route in ROUTES if route.startswith("/zh/")):
             with self.subTest(route=route):
                 self.assertGreater(len(re.findall(r"[\u4e00-\u9fff]", "".join(self.pages[route].body_text))), 30)
+
+    def test_language_and_titles_come_only_from_generated_html(self):
+        for route in ROUTES:
+            with self.subTest(route=route):
+                self.assertEqual(self.pages[route].language, "zh-CN" if route.startswith("/zh/") else "en")
+        app = (ROOT / "site/app.js").read_text(encoding="utf-8")
+        for write in (r"documentElement\.lang\s*=[^=]", r"document\.title\s*=[^=]", r"\.content\s*=[^=]"):
+            self.assertIsNone(re.search(write, app), "site/app.js must not rewrite the generated language, title or meta tags")
+        styles = (ROOT / "site/styles.css").read_text(encoding="utf-8")
+        self.assertIsNone(re.search(r'\[lang="?zh"?\]', styles), 'Chinese rules must also match lang="zh-CN"; use :lang(zh)')
+
+    def test_result_count_live_region_uses_speakable_text(self):
+        statuses = json.loads(subprocess.check_output(
+            [shutil.which("node"), "--input-type=module", "-e",
+             "import {translations as t} from './site/catalog.mjs'; process.stdout.write(JSON.stringify(['en', 'zh'].map(l => [t[l].resourceCount(5, 134), t[l].resourceCount(0, 134)])));"],
+            cwd=ROOT, text=True))
+        for language, (some, none) in zip(("en", "zh"), statuses):
+            with self.subTest(language=language):
+                self.assertIn("5", some)
+                self.assertIn("134", some)
+                self.assertNotRegex(some + none, r"\b0\d|/|[A-Z]{2,}", "Screen readers announce this text as written")
+                self.assertNotRegex(none, r"\d", "An empty result needs words, not a zero count")
 
     def test_homepage_translation_preserves_interactive_controls(self):
         required = {"resource-search", "resource-list", "result-count", "corpus-search", "corpus-list", "start", "copy-code", "copy-status"}
@@ -304,10 +337,12 @@ class SiteDiscoveryTests(unittest.TestCase):
                 self.assertEqual(len(ids), len(set(ids)), "Generated HTML must not duplicate interaction IDs")
 
     def test_item_lists_match_visible_link_titles_order_and_counts(self):
-        for route in ("/", "/zh/", "/papers/", "/zh/papers/", "/discoveries/", "/zh/discoveries/"):
+        for route in ("/", "/zh/", "/papers/", "/zh/papers/", "/models/", "/zh/models/", "/discoveries/", "/zh/discoveries/"):
             with self.subTest(route=route):
                 page = self.pages[route]
-                if "discoveries" not in route:
+                if "models" in route:
+                    self.assertGreater(len(page.cards), 0)
+                elif "discoveries" not in route:
                     self.assertGreaterEqual(len(page.cards), 20)
                 item_lists = [item for block in page.structured for item in objects(block) if has_type(item, "ItemList")]
                 self.assertEqual(len(item_lists), 1)
@@ -321,6 +356,65 @@ class SiteDiscoveryTests(unittest.TestCase):
                     self.assertEqual(item["url"], card["url"])
                     self.assertEqual(words(item["name"]), card["name"])
 
+    def test_model_directory_preserves_the_collection_and_export_in_both_languages(self):
+        exported = json.loads((ROOT / "site/models.json").read_text())
+        self.assertEqual(exported["url"], BASE + "/models/")
+        self.assertTrue(exported["scope"])
+        models = exported["models"]
+        expected = json.loads(subprocess.check_output(
+            [shutil.which("node"), "--input-type=module", "-e",
+             "import {resources} from './site/catalog.mjs'; process.stdout.write(JSON.stringify(resources.filter(row => row.category === 'Models')));"],
+            cwd=ROOT, text=True))
+        self.assertEqual(models, expected)
+        model_urls = {row["url"] for row in expected}
+        self.assertTrue(all(row["category"] == "Models" for row in models))
+        for language, prefix in (("en", "/"), ("zh", "/zh/")):
+            with self.subTest(language=language):
+                page = self.pages[prefix + "models/"]
+                home_models = [card for card in self.pages[prefix].cards if card["url"] in model_urls]
+                for compact, home in zip(page.cards, home_models):
+                    self.assertEqual({key:compact[key] for key in ("name", "url", "description")},
+                                     {key:home[key] for key in ("name", "url", "description")})
+                self.assertEqual([card["url"] for card in page.cards], [row["url"] for row in models])
+                self.assertEqual([card["description"] for card in page.cards], [words(row[language]) for row in models])
+                for card, model in zip(page.cards, models):
+                    self.assertIn(model["publisher"], card["text"])
+                    if model["license"] not in {"Not declared", "Apache-2.0 weights; MIT server"}:
+                        self.assertIn(model["license"], card["text"])
+                self.assertTrue(all(not card["hidden"] for card in page.cards))
+                self.assertIn(prefix + "models/", self.pages[prefix].links)
+                self.assertIn(prefix + "models/", self.pages[prefix + "guide/"].links)
+                self.assertIn("/models.json", page.links)
+
+    def test_paper_directory_is_a_complete_static_table_in_both_languages(self):
+        exported = json.loads((ROOT / "site/papers.json").read_text())
+        papers, themes = exported["papers"], {theme["id"]: theme for theme in exported["themes"]}
+        for language, prefix in (("en", "/"), ("zh", "/zh/")):
+            with self.subTest(language=language):
+                route = prefix + "papers/"
+                page = self.pages[route]
+                self.assertEqual([card["url"] for card in page.cards], [paper["url"] for paper in papers])
+                self.assertEqual([card["description"] for card in page.cards], [words(paper[language]) for paper in papers])
+                for card, paper in zip(page.cards, papers):
+                    self.assertFalse(card["hidden"])
+                    self.assertIn(paper["date"], card["text"])
+                    self.assertIn(themes[paper["theme"]]["short"][language], card["text"])
+                    if "artifact_note" in paper:
+                        self.assertIn(words(paper["artifact_note"][language]), card["text"])
+                    for kind, urls in paper.get("artifacts", {}).items():
+                        for url in [] if kind == "unverified" else [urls] if isinstance(urls, str) else urls:
+                            self.assertIn(url, page.links)
+                # Filters and sorting are enhancements: without JavaScript their controls stay hidden.
+                source = (ROOT / "site" / route.strip("/") / "index.html").read_text(encoding="utf-8")
+                controls = re.findall(r"<[a-z]+[^>]*\bdata-paper-controls\b[^>]*>", source)
+                self.assertTrue(controls)
+                self.assertTrue(all(re.search(r"\bhidden\b", tag) for tag in controls))
+                # The papers-with-code checkbox counts what the homepage checkbox counts.
+                home = (ROOT / "site" / prefix.strip("/") / "index.html").read_text(encoding="utf-8")
+                count = re.compile(r'id="(?:paper-)?code-filter" />.*?<span class="filter-count" aria-hidden="true">(\d+)</span>')
+                self.assertEqual(count.search(source)[1], count.search(home)[1])
+                self.assertEqual(int(count.search(source)[1]), source.count('data-code="true"'))
+
     def test_new_source_directory_preserves_every_accepted_resource_and_evidence_label(self):
         report = json.loads((ROOT / "data/expansion-progress-2026-10-16.json").read_text())
         translations = json.loads((ROOT / "data/discovery-translations.zh-CN.json").read_text())["translations"]
@@ -330,7 +424,7 @@ class SiteDiscoveryTests(unittest.TestCase):
             "en": {"direct": "Directly related", "adjacent": "Related field", "background": "Research background",
                    "editorial_reviewed": "Editorially reviewed", "content_screened": "Content screened", "abstract_checked": "Abstract checked"},
             "zh": {"direct": "直接相关", "adjacent": "邻近领域", "background": "研究背景",
-                   "editorial_reviewed": "编辑复核", "content_screened": "正文筛查", "abstract_checked": "摘要检查"},
+                   "editorial_reviewed": "编辑审阅", "content_screened": "内容筛查", "abstract_checked": "摘要核查"},
         }
         for route, language in (("/discoveries/", "en"), ("/zh/discoveries/", "zh")):
             with self.subTest(route=route):
@@ -389,7 +483,7 @@ class SiteDiscoveryTests(unittest.TestCase):
         self.assertEqual(published, original)
 
     def test_guide_article_headline_matches_visible_page_heading(self):
-        for route in ("/guide/", "/zh/guide/"):
+        for route in ("/guide/", "/zh/guide/") + tuple(route for route in ROUTES if any(f"/topics/{slug}/" in route for slug in TOPIC_SLUGS)):
             with self.subTest(route=route):
                 page = self.pages[route]
                 articles = [item for block in page.structured for item in objects(block) if has_type(item, "Article")]
@@ -399,6 +493,41 @@ class SiteDiscoveryTests(unittest.TestCase):
                 self.assertTrue(citations, "The research guide must expose its source citations")
                 self.assertTrue(set(citations).issubset(page.links), "Structured citations must also be visible page links")
                 self.assertTrue(all(urlsplit(url).scheme in {"http", "https"} and urlsplit(url).netloc for url in citations))
+
+    def test_topic_answers_and_evidence_are_visible_without_javascript(self):
+        topics = json.loads((ROOT / "data/research-topics.json").read_text())["topics"]
+        self.assertEqual({topic["slug"] for topic in topics}, set(TOPIC_SLUGS))
+        for topic in topics:
+            for language, prefix in (("en", "/"), ("zh", "/zh/")):
+                route = prefix + "topics/" + topic["slug"] + "/"
+                with self.subTest(route=route):
+                    page = self.pages[route]
+                    visible = words(" ".join(page.body_text))
+                    self.assertIn(words(topic[language]["answer"]), visible)
+                    self.assertIn(words(topic[language]["scope"]), visible)
+                    for section in topic[language]["sections"]:
+                        self.assertIn(words(section["text"]), visible)
+                        self.assertIn(section["id"], page.ids)
+                    article = next(item for block in page.structured for item in objects(block) if has_type(item, "Article"))
+                    self.assertEqual(article["datePublished"], topic["published"])
+                    self.assertEqual(article["dateModified"], topic["updated"])
+                    self.assertIn(BASE + prefix + "topics/", [item.get("item") for block in page.structured for item in objects(block) if has_type(item, "ListItem")])
+
+    def test_every_topic_is_reachable_through_ordinary_internal_links(self):
+        for prefix in ("/", "/zh/"):
+            index = prefix + "topics/"
+            self.assertIn(index, self.pages[prefix].links)
+            for slug in TOPIC_SLUGS:
+                route = index + slug + "/"
+                for source in (index, prefix + "papers/", prefix + "guide/"):
+                    self.assertIn(route, self.pages[source].links)
+                self.assertIn(index, self.pages[route].links)
+            structured = [item for block in self.pages[index].structured for item in objects(block) if has_type(item, "ItemList")]
+            self.assertEqual(len(structured), 1)
+            self.assertEqual(structured[0]["numberOfItems"], len(TOPIC_SLUGS))
+            for item in structured[0]["itemListElement"]:
+                self.assertIn(urlsplit(item["url"]).path, self.pages[index].links)
+                self.assertIn(words(item["name"]), words(" ".join(self.pages[index].body_text)))
 
     def test_search_and_answer_engine_crawlers_are_not_blocked(self):
         robots_text = (ROOT / "site/robots.txt").read_text()

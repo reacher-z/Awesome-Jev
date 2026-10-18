@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-17T04:09:31.259136+00:00",
+  "baseline_commit": "4a78a604784ecdbcc9f8eae2b616a39ed7509bf8",
+  "accepted_new_sources": 4,
+  "curated_additions": 4,
+  "input_sha256": "d37c679bb31c4ad0f96a0591733f22d784d363c7ba809522c3a3645dcff12ab9",
+  "records": [
+    {
+      "url": "https://github.com/ai-ecoverse/cua-s1.js",
+      "title": "cua-s1.js",
+      "retrieved_url": "https://raw.githubusercontent.com/ai-ecoverse/cua-s1.js/main/README.md",
+      "retrieved_at": "2026-10-17T04:07:28.423670+00:00",
+      "content_sha256": "bbad7fd9054851c54a79c6d411c270849dd65bd4f07d7b4ffc329e04fbacb5dc",
+      "content_bytes": 15966,
+      "verification_level": "content_screened",
+      "limitations": "Synthetic-form parity and GUI-360 port checks are distinct from generalization. GUI-360 appears in the upstream training mix and the held-out episodes are not published. The small form checkpoint has a limited field vocabulary; no form, model, graph or action was run here."
+    },
+    {
+      "url": "https://github.com/ai-ecoverse/jev-omni.js",
+      "title": "jev-omni.js",
+      "retrieved_url": "https://raw.githubusercontent.com/ai-ecoverse/jev-omni.js/main/README.md",
+      "retrieved_at": "2026-10-17T04:07:28.368669+00:00",
+      "content_sha256": "2aa7153695c5c34f5f368c9ea120dce597cda13e78f4e223ceb97be38d04cb7b",
+      "content_bytes": 3767,
+      "verification_level": "content_screened",
+      "limitations": "The README reports text and image reference-parity tests on one M4 Max system, not broad accuracy or hardware validation. Accepted option counts exceed the documented quality-evaluation range; memory imposes a prompt cap. The demo was not opened because it downloads weights."
+    },
+    {
+      "url": "https://github.com/evoscientist/searchjev",
+      "title": "SearchJev training pipeline",
+      "retrieved_url": "https://raw.githubusercontent.com/evoscientist/searchjev/main/README.md",
+      "retrieved_at": "2026-10-17T04:07:28.383657+00:00",
+      "content_sha256": "454ac47d54dafc724c65b62872144fbf32ff5b7853a6f8fec4d8742727743ad8",
+      "content_bytes": 7433,
+      "verification_level": "content_screened",
+      "limitations": "README pipeline, recipe and license inspected; no paper PDF, datasets, prediction logs, W&B reports or training code was downloaded or executed. Omitting the auxiliary validation-only dataset changes calibration inputs. Upstream dataset licenses remain separate from code."
+    },
+    {
+      "url": "https://github.com/somarkai/mjev",
+      "title": "mJev",
+      "retrieved_url": "https://raw.githubusercontent.com/somarkai/mjev/main/README.md",
+      "retrieved_at": "2026-10-17T04:07:28.366260+00:00",
+      "content_sha256": "838879b94848ab7681d2ed79725f337bb71e270d9f4530a6280503caf2f83e12",
+      "content_bytes": 11798,
+      "verification_level": "content_screened",
+      "limitations": "Modality coverage depends on the selected backbone and route; the released 4B checkpoint is distinct from the generic Omni path. The described accuracy gain is four answers in a 195-question subset, while cache results use one project-created video. One-question caching may be slower; code license does not relicense weights or third-party media."
+    }
+  ],
+  "scope": "Main-session README overview and selected scope/limit/license sections. No additional subagent review was available. Only documentation was fetched, with no model weights, executable source files, raw examples, datasets, prediction archives, demo applications or external experiment dashboards downloaded or executed.",
+  "counting": "One whole code repository per project. Existing upstream models, size bundles, demo URLs, the embedded SearchJev PDF and file-level assets do not add counts. All source hashes match the scheduled scan; the remaining proposal stays open.",
+  "privacy": "No raw source text, sample contact information, credentials, private filesystem paths or customer data is published."
+}

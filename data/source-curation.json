@@ -18,6 +18,42 @@
       "reason": "An applied precipitation-forecasting framework. Its uncertainty assessment is not a contribution about typed decisions or language-model systems.",
       "evidence_url": "https://arxiv.org/abs/2512.09059v1",
       "reviewed_at": "2026-10-16T06:36:48Z"
+    },
+    {
+      "url": "https://doi.org/10.5555/1390681.1442792",
+      "reason": "Unregistered DOI: the doi.org handle API returns responseCode 100 (handle not found) and the resolver returns 404, observed 2026-10-17. The paper itself (Bartlett and Wegkamp, JMLR 9, 2008) remains listed through its JMLR landing page; this exclusion stops a later OpenAlex scan from re-adding the broken DOI link.",
+      "evidence_url": "https://doi.org/api/handles/10.5555/1390681.1442792",
+      "reviewed_at": "2026-10-17T08:42:42Z"
+    },
+    {
+      "url": "https://doi.org/10.64748/8gkysx36",
+      "reason": "Unavailable source: the DOI's only registered target is on subscholar.org, which returned NXDOMAIN from the system resolver and Google Public DNS on 2026-10-17, so the link fails for every reader. OpenAlex lists no other location; a 2025 Wayback Machine copy of the landing page exists but is not a maintained source.",
+      "evidence_url": "https://doi.org/api/handles/10.64748/8gkysx36?type=URL",
+      "reviewed_at": "2026-10-17T08:42:42Z"
+    },
+    {
+      "url": "https://arxiv.org/abs/2604.18170",
+      "reason": "Withdrawn by the author: the current version (v2, 24 May 2026) is a withdrawal notice “following internal review regarding authorship and contribution agreements”. The unversioned link opens the notice, not the paper; the OpenAlex abstract did not reflect the withdrawal. Observed 2026-10-17.",
+      "evidence_url": "https://arxiv.org/abs/2604.18170v2",
+      "reviewed_at": "2026-10-17T08:42:42Z"
+    },
+    {
+      "url": "https://arxiv.org/abs/2508.08204",
+      "reason": "Withdrawn by the authors: the current version (v2, 28 May 2026) is a withdrawal notice reporting a critical normalized-entropy error that “may have substantially inflated nearly all results”. The OpenAlex abstract did not reflect the withdrawal. Observed 2026-10-17.",
+      "evidence_url": "https://arxiv.org/abs/2508.08204v2",
+      "reviewed_at": "2026-10-17T08:42:42Z"
+    },
+    {
+      "url": "https://arxiv.org/abs/2106.09385",
+      "reason": "Withdrawn by the authors: the current version (v3, 4 May 2022) is a withdrawal notice stating that an error in the proof assumption for equation 8 “invalidates the results”. The OpenAlex abstract did not reflect the withdrawal. Observed 2026-10-17.",
+      "evidence_url": "https://arxiv.org/abs/2106.09385v3",
+      "reviewed_at": "2026-10-17T08:42:42Z"
+    },
+    {
+      "url": "https://arxiv.org/abs/1902.06881",
+      "reason": "Withdrawn by the author: v2 (6 February 2020) and the current v3 (1 September 2022) are withdrawal notices citing mistakes in the paper. The OpenAlex abstract did not reflect the withdrawal. Observed 2026-10-17.",
+      "evidence_url": "https://arxiv.org/abs/1902.06881v3",
+      "reviewed_at": "2026-10-17T08:42:42Z"
     }
   ],
   "annotations": [
@@ -121,10 +157,12 @@
       "url": "https://arxiv.org/abs/2610.01293",
       "topic": "direct-decision-research",
       "relation": "direct",
-      "relevance": "A direct typed-audio-decision study mapping waveforms, questions, and supplied alternatives to candidate probabilities, with option-order calibration.",
-      "note": "AudioJev is an independent decision-model architecture. This relation describes topical relevance and does not establish TypeSafe Jev internals or independently validate the reported experiments.",
+      "relevance": "Learns audio-conditioned candidate probabilities with aligned option-permutation training; order stability and empirical correctness calibration remain different properties.",
+      "note": "Fixed-v1 abstract and released model card inspected. The paper summarizes three training seeds; the model card reports one released seed in original option order and discloses audio-source overlap. No model or audio was downloaded. Original provider fields and evidence grades are preserved.",
       "evidence_url": "https://arxiv.org/abs/2610.01293v1",
-      "reviewed_at": "2026-10-16T06:36:48Z"
+      "reviewed_at": "2026-10-17T03:38:33.813019+00:00",
+      "title": "AudioJev: Direct Audio Decisions with Order-Calibrated Probabilities",
+      "first_submitted": "2026-10-01"
     },
     {
       "url": "https://github.com/jevagentharness/jevagentharness",
@@ -288,6 +326,96 @@
       "evidence_url": "https://arxiv.org/abs/2609.08183v2",
       "reviewed_at": "2026-10-16T13:18:34.037338+00:00",
       "note": "Display-only title, first-submission date and scope review from the fixed primary abstract. Retain the original source record, body hash, retrieval time and content-screened grade; no full-paper review or experimental reproduction."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.02586",
+      "title": "Labels Override Definitions in Jev-Style Typed Decision Models",
+      "first_submitted": "2026-10-01",
+      "topic": "direct-decision-research",
+      "relation": "direct",
+      "relevance": "Studies option-label bias in open-weight decision models; prompt-rendering changes with fixed weights implicate the label/definition interface, without testing hosted Jev.",
+      "note": "Fixed-v1 abstract review only. The reported intervention concerns inspected open implementations; it is not a causal audit of hosted Jev or proof that all option-channel attacks are removed. Original provider fields and evidence grades are preserved.",
+      "evidence_url": "https://arxiv.org/abs/2610.02586v1",
+      "reviewed_at": "2026-10-17T03:38:33.813019+00:00"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.06354",
+      "title": "GraphDecisionBench: Benchmarking System One Models on Graph Tasks",
+      "first_submitted": "2026-10-05",
+      "topic": "direct-decision-research",
+      "relation": "direct",
+      "relevance": "Compares graph decisions across fourteen model-interface configurations; local adjacency, graph-text evidence use and sequential solution quality are separate capabilities.",
+      "note": "Fixed-v3 abstract review plus the public repository overview. Fourteen configurations are not fourteen independent model families. The repository exposes aggregate tables but says per-query and per-trajectory outputs are omitted. Original provider fields and evidence grades are preserved.",
+      "evidence_url": "https://arxiv.org/abs/2610.06354v3",
+      "reviewed_at": "2026-10-17T03:38:33.813019+00:00"
+    },
+    {
+      "url": "https://github.com/somarkai/mjev",
+      "title": "mJev",
+      "note": "The README HTML h1 names mJev. A code-example Markdown heading is not the project title. This display annotation preserves future provider snapshots without validating model behavior.",
+      "evidence_url": "https://github.com/somarkai/mjev",
+      "reviewed_at": "2026-10-17T04:09:31.259136+00:00"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.18773",
+      "title": "Jeva: System One Models from First Principles",
+      "first_submitted": "2026-10-13",
+      "topic": "direct-decision-research",
+      "relation": "direct",
+      "relevance": "A decision-model architecture exploring null handling, option permutations, scaling, and caching. Its design is Jeva’s, not Jev’s disclosed internals.",
+      "note": "Fixed-v1 abstract and metadata review only. The paper is a curated direct study; its ledger row was collected as a linked dependency of an index-listed artifact, and the collector labels every such row adjacent. Original provider fields and evidence grades are preserved.",
+      "evidence_url": "https://arxiv.org/abs/2610.18773v1",
+      "reviewed_at": "2026-10-17T08:44:12Z"
+    },
+    {
+      "url": "https://arxiv.org/abs/2012.14682",
+      "evidence_url": "https://arxiv.org/abs/2012.14682v2",
+      "reviewed_at": "2026-10-17T11:53:20Z",
+      "title": "CascadeBERT: Accelerating Inference of Pre-trained Language Models via Calibrated Complete Models Cascade",
+      "note": "Display title follows arXiv v2, the version the unversioned link opens; the provider title “Accelerating Pre-trained Language Models via Calibrated Cascade.” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
+    },
+    {
+      "url": "https://arxiv.org/abs/2510.17314",
+      "evidence_url": "https://arxiv.org/abs/2510.17314v2",
+      "reviewed_at": "2026-10-17T11:53:20Z",
+      "title": "Auto-Rubric: Learning From Implicit Weights to Explicit Rubrics for Reward Modeling",
+      "note": "Display title follows arXiv v2, the version the unversioned link opens; the provider title “Auto-Rubric: Learning to Extract Generalizable Criteria for Reward Modeling” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
+    },
+    {
+      "url": "https://arxiv.org/abs/2305.00633",
+      "evidence_url": "https://arxiv.org/abs/2305.00633v3",
+      "reviewed_at": "2026-10-17T11:53:20Z",
+      "title": "Self-Evaluation Guided Beam Search for Reasoning",
+      "note": "Display title follows arXiv v3, the version the unversioned link opens; the provider title “Decomposition Enhances Reasoning via Self-Evaluation Guided Decoding” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
+    },
+    {
+      "url": "https://arxiv.org/abs/2508.00454",
+      "evidence_url": "https://arxiv.org/abs/2508.00454v4",
+      "reviewed_at": "2026-10-17T11:53:20Z",
+      "title": "Learning an Efficient Multi-Turn Dialogue Evaluator from Multiple LLM Judges",
+      "note": "Display title follows arXiv v4, the version the unversioned link opens; the provider title “Learning an Efficient Multi-Turn Dialogue Evaluator from Multiple Judges” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
+    },
+    {
+      "url": "https://arxiv.org/abs/2006.12807",
+      "evidence_url": "https://arxiv.org/abs/2006.12807v2",
+      "reviewed_at": "2026-10-17T11:53:20Z",
+      "title": "Post-hoc Calibration of Neural Networks by g-Layers",
+      "note": "Display title follows arXiv v2, the version the unversioned link opens; the provider title “Post-hoc Calibration of Neural Networks.” is the superseded v1 title. The retained provider title and provider-abstract evidence are unchanged; this correction does not imply full-paper review."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.06744",
+      "first_submitted": "2026-10-05",
+      "relevance": "An open 182M-parameter Turkish model scores each option blind to the others, so answers ignore option order, and adds a “not sure” signal; its 7th-of-16 HakemBench rank is not blind, since later runs trained after full-test results were read.",
+      "note": "Fixed-v1 abstract and metadata review for a curated direct study (source issue #40). The fresh abstract hash matches this row's existing abstract_sha256, so no second ledger row was added; this annotation replaces the generic relevance note only. Original provider fields and evidence grades are preserved.",
+      "evidence_url": "https://arxiv.org/abs/2610.06744v1",
+      "reviewed_at": "2026-10-17T12:40:09Z"
+    },
+    {
+      "url": "https://github.com/datawhalechina/jev-cookbook",
+      "relevance": "Community Chinese course of eleven notebook chapters, from the three primitives and design patterns to 18 walkthroughs of official cookbook recipes, a smart-home experiment, a 231-question evaluation, agent integration and RLCD fine-tuning of the open Laya model; offline examples need no API key. Noncommercial license; documentation translations are unofficial.",
+      "note": "README, LICENSE and top-level file list read at commit 73f8c9af9c62a0b3bbc9930834be25e3441acdff for source issue #54; notebooks were not executed. The LICENSE designates CC BY-NC-SA 4.0 for original content and keeps third-party and TypeSafe documentation rights with their owners. This annotation replaces the generic relevance note only; original provider fields and evidence grades are preserved.",
+      "evidence_url": "https://github.com/datawhalechina/jev-cookbook",
+      "reviewed_at": "2026-10-17T12:55:00Z"
     }
   ]
 }

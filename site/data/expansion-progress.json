@@ -3,35 +3,35 @@
   "baseline_commit": "3519c15d7e00686a8dbf9b1e184c68726327ab1e",
   "baseline_source_index_sha256": "8bfdd20564f2cda54bb8264c3c802f315e3e9a11b153bd85dde4325f53c841d5",
   "target_new_sources": 301,
-  "accepted_new_sources": 754,
+  "accepted_new_sources": 780,
   "remaining_to_target": 0,
   "target_count_reached": true,
   "current_index_counts": {
     "editorial_reviewed": 4,
-    "content_screened": 2365,
-    "abstract_checked": 1833,
+    "content_screened": 2392,
+    "abstract_checked": 1843,
     "metadata_only": 47,
-    "raw_records": 4263,
-    "unique_records": 4249,
+    "raw_records": 4300,
+    "unique_records": 4286,
     "duplicate_records": 14,
-    "checked_sources": 4202
+    "checked_sources": 4239
   },
   "by_category": {
     "Datasets": 101,
     "Guides and evaluations": 38,
-    "Models": 54,
-    "Papers": 27,
-    "Projects": 193,
-    "Research foundations": 341
+    "Models": 59,
+    "Papers": 31,
+    "Projects": 215,
+    "Research foundations": 336
   },
   "by_relation": {
     "adjacent": 25,
-    "background": 341,
-    "direct": 388
+    "background": 336,
+    "direct": 419
   },
   "by_verification_level": {
-    "abstract_checked": 368,
-    "content_screened": 386
+    "abstract_checked": 367,
+    "content_screened": 413
   },
   "verification_note": "Evidence depth is labeled per source. Content screening and abstract checks do not establish full-paper review, peer review, endorsement, or experimental reproduction.",
   "additions": [
@@ -1681,7 +1681,7 @@
     },
     {
       "title": "TypeSafe Jev: 5x Faster, 25x Cheaper, 98.5% Correct | Entagl",
-      "url": "https://entagl.com/blog/typesafe-jev-benchmark-ai-decision-models",
+      "url": "https://www.entagl.com/blog/typesafe-jev-benchmark-ai-decision-models",
       "category": "Guides and evaluations",
       "topic": "decision-model-evaluation",
       "description": "Author-run Jev comparison on labeled decisions and customer-workflow replays; workload-specific reported findings, not reproduced here.",
@@ -1740,6 +1740,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "Amos 1 large",
+      "url": "https://huggingface.co/mukaddamzaid/amos-1-large",
+      "category": "Models",
+      "topic": "decision-model-card",
+      "description": "English typed decisions with image inputs; distinguish zero-shot results from train-split prior fitting, and public-only Decision Index results from the full evaluation.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "9c30ade20b9587638146429eac6be9df592d56dc5dce61729488ce4b41272046",
+      "retrieved_at": "2026-10-17T03:59:58.303113+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "Archai JEV Nesso 4B Ita (System One Decision Engine)",
       "url": "https://huggingface.co/nickprock/archai-jev-nesso-4b-ita",
       "category": "Models",
@@ -1749,6 +1761,18 @@
       "verification_level": "content_screened",
       "content_sha256": "428b7bb08a0c39417ab29922bb7703c9742d79ff831ae0d996f3c87d51209258",
       "retrieved_at": "2026-10-16T10:05:29+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "AudioJev checkpoint",
+      "url": "https://huggingface.co/shlv/AudioJev",
+      "category": "Models",
+      "topic": "decision-model-card",
+      "description": "One released AudioJev training seed with a Qwen Research license; original-order scores disclose audio-source overlap and are distinct from the paper’s three-seed averages.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "69e2a1cd0eccf1620f036779e0ef87e33e028b8c6f3a2b484e281425483a444a",
+      "retrieved_at": "2026-10-17T03:35:59.068352+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -1956,6 +1980,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "KnowLine-35B-A3B-Gen1",
+      "url": "https://huggingface.co/PelaAI/KnowLine-35B-A3B-Gen1",
+      "category": "Models",
+      "topic": "decision-model-card",
+      "description": "English/Chinese MoE decision checkpoint; public-suite checkpoint selection, disclosed task/source overlap and self-run calibration ranges constrain comparisons with independent held-out evaluations.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "c8d14ef006a35abcd4bd473984a03b14f63e2e2cfbc2531f195e752ec3938080",
+      "retrieved_at": "2026-10-17T03:59:58.304780+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "Laya typed-decisions, fine-tuned on browser decisions",
       "url": "https://huggingface.co/AIMultiple/laya-typed-decisions-browser-ft",
       "category": "Models",
@@ -2013,6 +2049,18 @@
       "verification_level": "content_screened",
       "content_sha256": "188f6854f477fddf9c83a15063610cbddf802648b33faf709c541d93ce9eb8df",
       "retrieved_at": "2026-10-16T10:05:24+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "Lychee-27B",
+      "url": "https://huggingface.co/LycheeAI/Lychee-27B",
+      "category": "Models",
+      "topic": "decision-model-card",
+      "description": "Noncommercial Qwen-derived typed-decision model with publisher-reported public-suite results; requests exceeding context or GPU-memory limits are documented as rejected rather than truncated.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "37d30f76f8995ab1b788fa0bdbe7ba5afe752a16280fe0f67519db640d56b720",
+      "retrieved_at": "2026-10-17T03:59:58.319873+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -2220,6 +2268,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "Span-02",
+      "url": "https://huggingface.co/respanai/span-02",
+      "category": "Models",
+      "topic": "decision-model-card",
+      "description": "Multimodal decision model with a dedicated Blackwell Rust/CUDA runtime and optional reasoning; distinguish default serving from deterministic index settings and output-specific confidence semantics.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "1ce09eb7d55793207d6229ff245201082da6fe31cff317e0d25a50418f9c10e0",
+      "retrieved_at": "2026-10-17T03:59:58.322022+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "StartLux-Decision-v1.1-27B-Instant",
       "url": "https://huggingface.co/startlux-models/StartLux-Decision-v1.1-27B-Instant",
       "category": "Models",
@@ -2352,6 +2412,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "Batched Speech Decisions Without Decoding: Single-Token Supervision Lets a Frozen LLM Hear Beyond the Transcript",
+      "url": "https://arxiv.org/abs/2610.02638",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "DuplexJev connects ASR hidden states to a frozen LLM for batched answer-token readout; connector-specific speech tasks and eight-GPU timing do not establish single-device or live-agent latency.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "3cfed103d03dca367b01c9ef390fa5ab7faf7c32ed665e213a80598651eb7ad4",
+      "retrieved_at": "2026-10-17T03:51:46.180658+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Beyond Answer Confidence: A Controlled Audit of Self-Knowledge in a Black-Box Decision Model",
       "url": "https://arxiv.org/abs/2610.01006",
       "category": "Papers",
@@ -2409,6 +2481,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "898b72728a465d950ea191589cd6c4aebd1858bc658315ccf6cb7255a62a0d40",
       "retrieved_at": "2026-10-16T11:40:20+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Does System One Transfer? Calibrated Typed-Decision Models, Label Budgets, and Translation for Indonesian Regional Languages",
+      "url": "https://arxiv.org/abs/2610.14112",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Tests Jev and multilingual Laya on Indonesian regional-language tasks; stable expected calibration error can coexist with worse error ranking, while human translation, label budgets and cascade choices change comparisons.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "3e342feaa81c1a6fd83db29afc8d9781bffe681a200401203d1a816f63db41f6",
+      "retrieved_at": "2026-10-17T03:51:46.354839+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2544,6 +2628,18 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "OmniMed-Jev: Calibrating LVLM Confidence for Trustworthy Medical Multimodal Decisions via System One",
+      "url": "https://arxiv.org/abs/2610.00381",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Medical candidate-conditioned decisions are compared with a matched generative baseline; calibration gains do not isolate interface effects from training differences or establish clinical readiness.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "db3f31ecc4900f74780fdb27ff421fa894c8d277920a8eb2017a71b47411736f",
+      "retrieved_at": "2026-10-17T03:51:46.167475+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "One Word Opens the Gate: The Option-Channel Attack on Typed Decision Models as Agent Guardrails",
       "url": "https://arxiv.org/abs/2610.12292",
       "category": "Papers",
@@ -2601,6 +2697,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "fc2f52f0f0bd8395c70abfe3511f2fe9c16e98c0108bd378199458aff6165968",
       "retrieved_at": "2026-10-16T10:59:19+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "SoK: Semantic Decision Engines in Network Control Loops",
+      "url": "https://arxiv.org/abs/2610.06425",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Surveys semantic engines in network control loops; separates valid decisions, action feasibility, service checks and deadline attainment, with bounded event-model tests rather than production validation.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "187305f6cde7ecafbc3612bae9bd8d3dcc62e9bb7b0fa55a724e766ffae345a0",
+      "retrieved_at": "2026-10-17T03:51:46.230173+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2697,6 +2805,18 @@
       "verification_level": "content_screened",
       "content_sha256": "42899dfec38cf84e171a31a025927345ab1f3f75a3f25c6ee4e42e67751da253",
       "retrieved_at": "2026-10-16T10:05:40+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "A Survey on Jev: Prior Research, Adaptation Costs, and Evidence of System One Models",
+      "url": "https://github.com/evan-py-chen/jev-survey",
+      "category": "Projects",
+      "topic": "survey-repository",
+      "description": "Community survey manuscript on typed-decision prior work, adaptation costs and evidence limits; source and PDF represent one document package, not an independent empirical replication.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "7d9a2a9a91d550fe2d79bdb5593ea6b877518b3d7fe315341d40f15ca47f3b12",
+      "retrieved_at": "2026-10-17T02:10:27.077663+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -2952,6 +3072,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "Browser decision-vision benchmark",
+      "url": "https://github.com/ai-ecoverse/decision-vision-bench",
+      "category": "Projects",
+      "topic": "evaluation-harness",
+      "description": "Mixed visual/text comparison of browser decision models using native formats; ambiguous GUI labels, shared hardware and different browsers limit broad ranking and latency claims.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "1aa192e05161dc9a1fefeffb7d37ebe101d3c2b24dfc6d1e6a7f0d20b7d55f06",
+      "retrieved_at": "2026-10-17T02:51:57.594365+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "cadence-trading/crypto-trading-lab",
       "url": "https://github.com/cadence-trading/crypto-trading-lab",
       "category": "Projects",
@@ -3072,6 +3204,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "CITY-Jev",
+      "url": "https://github.com/jiaqisjtu/canitrustu-jev",
+      "category": "Projects",
+      "topic": "evaluation-harness",
+      "description": "Preliminary perturbation evaluation of adapted candidate-selection tasks; correct-or-abstain scores, versioned cohorts and incomplete human review must remain distinct from end-to-end agent success.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "1efd91840bbeae8e74d9bf20c08a582745fadf54242953173641cb054878cc82",
+      "retrieved_at": "2026-10-17T02:51:57.629031+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "CMaintz/classifier-bench",
       "url": "https://github.com/cmaintz/classifier-bench",
       "category": "Projects",
@@ -3117,6 +3261,18 @@
       "verification_level": "content_screened",
       "content_sha256": "b49f69a723661bac72dab9e9d2321ea8cb5baaf5a2cad05a725498b70da1f3ab",
       "retrieved_at": "2026-10-16T10:37:59+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "cua-s1.js",
+      "url": "https://github.com/ai-ecoverse/cua-s1.js",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Browser ports of Cua form and next-action models; output-parity checks do not establish generalization, and the small form model can confidently skip unfamiliar fields.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "bbad7fd9054851c54a79c6d411c270849dd65bd4f07d7b4ffc329e04fbacb5dc",
+      "retrieved_at": "2026-10-17T04:07:28.423670+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -3177,6 +3333,18 @@
       "verification_level": "content_screened",
       "content_sha256": "aa3c6c9d38a68c6bea9e56686cbdc24901fd1836ba987977082e190f22dc63c5",
       "retrieved_at": "2026-10-16T10:37:09+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "Decision models as guardrails",
+      "url": "https://github.com/raxitlabs/decision-models-as-guardrails",
+      "category": "Projects",
+      "topic": "evaluation-harness",
+      "description": "Common policy benchmark compares decision models and managed guardrails with fixed scoring; an unpublished test slice prevents exact full-board reproduction from the public clone.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "6c37a5d507f086b0262825bedb82adc18ae2875806a8afbd818693b79e98b43d",
+      "retrieved_at": "2026-10-17T02:51:57.828974+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -3312,6 +3480,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "English Jev RAG Benchmark",
+      "url": "https://github.com/emretheus/jev-rag-benchmark",
+      "category": "Projects",
+      "topic": "evaluation-harness",
+      "description": "English RAG study separates frozen-pool reranking from frozen-context answer generation; gating analyses are exploratory, and free-tier gateway pacing is not isolated model latency.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "019324a11d262886d160b3321566a152d31da5bb0edcdf6f097579f6d1398908",
+      "retrieved_at": "2026-10-17T02:51:57.556475+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "exoticknight/dsh-system1",
       "url": "https://github.com/exoticknight/dsh-system1",
       "category": "Projects",
@@ -3381,6 +3561,18 @@
       "verification_level": "content_screened",
       "content_sha256": "7fc934720066c07f18316349f0ff1360a7fcc0cb66c0909233c3e94e2a3f14d1",
       "retrieved_at": "2026-10-16T10:05:39+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "FRIDA-Decisions",
+      "url": "https://github.com/ai-forever/frida-decisions",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Packed Russian–English encoder runtime for typed questions and ranking; state truncation, Russian instruction suffixes and margin-versus-probability semantics remain explicit.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "f736f879cfe610b16e835a5520cbac226d8ae82c9cfbf9284d75839527eba6b5",
+      "retrieved_at": "2026-10-17T02:51:57.389251+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -3576,6 +3768,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "Interaction-trained decision-model experiments",
+      "url": "https://github.com/rodlaf/decision-model-rl",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "OpenJev policy-training experiments in Overcooked and RWARE document seed-specific checkpoint selection, sequential retention and alternating-task training; current recipes do not reproduce the full historical learning curve.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "0ce4d3e37ea917c1906d0c1b79726aed2ab980505f3968d836b494fc69424d56",
+      "retrieved_at": "2026-10-17T02:51:57.807168+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "IoTone/jevracket",
       "url": "https://github.com/iotone/jevracket",
       "category": "Projects",
@@ -3672,6 +3876,30 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "Jev RAG Chinese Benchmark",
+      "url": "https://github.com/vicfei/jev-rag-zh-benchmark",
+      "category": "Projects",
+      "topic": "evaluation-harness",
+      "description": "Chinese reranking benchmark using fixed candidate pools and a pinned proxy-served Jev version; its 100-query single-run results and concurrent latency are workload-specific.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "540c89325155a04dd79f546e102e7d650183b064bc0148aa78557ed0f722927d",
+      "retrieved_at": "2026-10-17T02:10:27.062513+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "Jev-AR routing implementation",
+      "url": "https://github.com/atmaneayoubdev/jev-ar",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Arabic intent-routing implementation built on Laya; synthetic training lacks native-speaker validation and confidence calibrated on built-in routes may not transfer to custom lists.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "6b70c9e185e319324edf131c6ca66dc87600ff85d31285cddd74c477161ae8e3",
+      "retrieved_at": "2026-10-17T02:51:57.365863+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "Jev-Benchmark — contract inference records and analysis",
       "url": "https://github.com/zf-utokyo/jev-benchmark",
       "category": "Projects",
@@ -3681,6 +3909,30 @@
       "verification_level": "content_screened",
       "content_sha256": "b6941cbdf02a8922e12a58bfc853b1be2c8f2182148e28d7290c275961770f64",
       "retrieved_at": "2026-10-16T11:57:24.072123+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "jev-measured",
+      "url": "https://github.com/wallerchen/jev-measured",
+      "category": "Projects",
+      "topic": "evaluation-harness",
+      "description": "API measurement notebook and runner documenting response shapes, routes and corrected baselines; small fixtures and network-dependent timings do not establish a general model ranking.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "b107d15738d83af27b413bef5d9558b6df1a8906de1b8d0f86ce93e236e5d8ae",
+      "retrieved_at": "2026-10-17T02:51:57.598582+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "jev-omni.js",
+      "url": "https://github.com/ai-ecoverse/jev-omni.js",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Work-in-progress WebGPU port for Jev-Omni text and image decisions; audio/video are unfinished, model downloads are large, and reported parity is limited to selected fixtures and hardware.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "2aa7153695c5c34f5f368c9ea120dce597cda13e78f4e223ceb97be38d04cb7b",
+      "retrieved_at": "2026-10-17T04:07:28.368669+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -3729,6 +3981,18 @@
       "verification_level": "content_screened",
       "content_sha256": "9dd2b331797756acd01229ca3aaed939a91518912410f49e6bdb7cb288548469",
       "retrieved_at": "2026-10-16T12:54:12.571910+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "JevLang",
+      "url": "https://github.com/timmikeladze/jevlang",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "TypeScript/Python policy layer separates typed model answers from routing and action dispatch, with documented journals and replay; a trace does not establish truthful inputs or calibrated thresholds.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "6829b1e070a62610ae1103151cabb301fa918d03fd921b59bfb3d18ecf064a35",
+      "retrieved_at": "2026-10-17T02:51:57.699069+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -4080,6 +4344,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "mJev",
+      "url": "https://github.com/somarkai/mjev",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Shared-context candidate scoring with HF/vLLM routes; normalized option probabilities are not calibrated confidence, and the reported cache speedup trades higher memory in one controlled video setup.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "838879b94848ab7681d2ed79725f337bb71e270d9f4530a6280503caf2f83e12",
+      "retrieved_at": "2026-10-17T04:07:28.366260+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "MohibShaikh/jev-skillbench",
       "url": "https://github.com/mohibshaikh/jev-skillbench",
       "category": "Projects",
@@ -4248,6 +4524,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "OpenThai-SystemOne",
+      "url": "https://github.com/iapp-technology/openthai-systemone",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Thai/English text decision-model training and serving pipeline with a slot readout; the documented recipe does not establish independently validated calibration or interface equivalence.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "241cd0a2d6e11e999e2baf0c7b88d559f6a5831fa04d6c3e0b28b2b2d35f4491",
+      "retrieved_at": "2026-10-17T02:51:57.379469+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "Ordinal-scale utilization — anonymous review artifact",
       "url": "https://anonymous.4open.science/r/jev_ordinal_scale_bia",
       "category": "Projects",
@@ -4344,6 +4632,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "protoc-gen-jev",
+      "url": "https://github.com/bufbuild/protoc-gen-jev",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Protobuf clients for Jev in Go, TypeScript and Python; the generator is experimental and its release should match the runtimes.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "db0092911e57f73c8be89d3ae1e46a917ac042fc2bb3ecf8a03ee761c0b52765",
+      "retrieved_at": "2026-10-17T02:10:26.852478+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "pyck-ai/jev-cli",
       "url": "https://github.com/pyck-ai/jev-cli",
       "category": "Projects",
@@ -4353,6 +4653,18 @@
       "verification_level": "content_screened",
       "content_sha256": "bd2017d019d6f7ccb205de2013425adf42b3e7b0179b72bd19cec9c813351ca8",
       "retrieved_at": "2026-10-16T10:05:38+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "Quyet runtime",
+      "url": "https://github.com/ncchinh/quyet",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Runtime for Quyet decision models with checkpoint-dependent English/Vietnamese coverage; it documents ten-option limits and state truncation, without evaluated adversarial robustness.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "dce73db902f3696cd78da718fb674baf4fe34e54ab3ff04b7431b3cd9d2baf31",
+      "retrieved_at": "2026-10-17T02:51:57.383605+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -4509,6 +4821,18 @@
       "verification_level": "content_screened",
       "content_sha256": "f49ebc1a2e578dc64dd986b18e53c0ec0f07cabe2e9c9cddcbfcfb2443a35c86",
       "retrieved_at": "2026-10-16T10:05:38+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "SearchJev training pipeline",
+      "url": "https://github.com/evoscientist/searchjev",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Search-agent decision training with soft-label and Brier losses, reliability weights and per-question-type temperature fitting; the documented pipeline and split controls were not reproduced.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "454ac47d54dafc724c65b62872144fbf32ff5b7853a6f8fec4d8742727743ad8",
+      "retrieved_at": "2026-10-17T04:07:28.383657+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -4692,6 +5016,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "sysone decision-learning library",
+      "url": "https://github.com/sgaseretto/sysonelib",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Training, calibration and interpretation tools for several text, image and protein backends; documented compatibility checks and small experiments do not validate every backend or workload.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "d4e6e42b7e5affa2ec73e965cab4f66facf87e80d52eaf60d604c74ddade5ec4",
+      "retrieved_at": "2026-10-17T02:51:57.748436+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "System One Security Evaluation",
       "url": "https://github.com/yxsec/system-one-security-eval",
       "category": "Projects",
@@ -4848,6 +5184,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "Typed decisions, not chat — a shadow decision layer for a live CRM",
+      "url": "https://github.com/alonsuare/typed-decisions-shadow-layer",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "Shadow-mode typed routing demo with Jev and local structured-JSON backends; fixtures are synthetic and the small traffic comparison is author-reported.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "cc00091b71a1fd80b9e953790a5fb226478499aa354518b1bcac14fe67de8302",
+      "retrieved_at": "2026-10-17T02:10:26.872032+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
       "title": "unbraind/pm-jev",
       "url": "https://github.com/unbraind/pm-jev",
       "category": "Projects",
@@ -4893,6 +5241,18 @@
       "verification_level": "content_screened",
       "content_sha256": "25d66790bc28cf10f3bf2af532771cfbf9e16d4aecd8f693a9cc46ff4c96983a",
       "retrieved_at": "2026-10-16T12:21:32.279565+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "Weiche: a small local decision model for LLM auto-routing",
+      "url": "https://github.com/fstandhartinger/weiche",
+      "category": "Projects",
+      "topic": "implementation-repository",
+      "description": "ModernBERT routing research with trait and model-tier success heads, training and ONNX export tools; results concern specified data, hardware and model tiers.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "7ff94acea2e4d4455509faf2da991e52a278cb37abfed6595cfa02df57949f0a",
+      "retrieved_at": "2026-10-17T02:10:26.879218+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -4965,6 +5325,18 @@
       "verification_level": "content_screened",
       "content_sha256": "58535c3cd6e1e6f2c5445ecb2f33f54be6bc620830d6be753bcfda65dc2150e3",
       "retrieved_at": "2026-10-16T10:37:11+00:00",
+      "ledger": "ecosystem-sources.jsonl"
+    },
+    {
+      "title": "Zero-shot classifiers, retrieved examples and trained models on a 113-class complaint taxonomy",
+      "url": "https://github.com/earino/zero-shot-complaint-benchmark",
+      "category": "Projects",
+      "topic": "evaluation-harness",
+      "description": "Code and recorded-output analysis for a 113-class complaint benchmark comparing zero-shot, retrieval and trained classifiers; replayed analysis is separate from fresh model runs.",
+      "relation": "direct",
+      "verification_level": "content_screened",
+      "content_sha256": "ab9804113452716972339750448b3f2f83f8f140cad89720aeb74d35792878a0",
+      "retrieved_at": "2026-10-17T02:10:27.038347+00:00",
       "ledger": "ecosystem-sources.jsonl"
     },
     {
@@ -5085,18 +5457,6 @@
       "verification_level": "abstract_checked",
       "content_sha256": "adc8a33414846bd890e4ddd4960f2254395ae03a48dab88baf45ba7cb560bd24",
       "retrieved_at": "2026-10-16T10:02:52+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
-      "title": "Accelerating Pre-trained Language Models via Calibrated Cascade.",
-      "url": "https://arxiv.org/abs/2012.14682",
-      "category": "Research foundations",
-      "topic": "efficient_routing_cascades",
-      "description": "Comparison background for allocating prediction work across classifiers or models under accuracy and compute constraints.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "64617d7e8ea1559a4f319f7c2ea47b91ee43fcf9a0316b266f6591eec57da070",
-      "retrieved_at": "2026-10-16T10:03:05+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -5364,7 +5724,7 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Auto-Rubric: Learning to Extract Generalizable Criteria for Reward Modeling",
+      "title": "Auto-Rubric: Learning From Implicit Weights to Explicit Rubrics for Reward Modeling",
       "url": "https://arxiv.org/abs/2510.17314",
       "category": "Research foundations",
       "topic": "judge_reliability",
@@ -5796,6 +6156,18 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "CascadeBERT: Accelerating Inference of Pre-trained Language Models via Calibrated Complete Models Cascade",
+      "url": "https://arxiv.org/abs/2012.14682",
+      "category": "Research foundations",
+      "topic": "efficient_routing_cascades",
+      "description": "Comparison background for allocating prediction work across classifiers or models under accuracy and compute constraints.",
+      "relation": "background",
+      "verification_level": "abstract_checked",
+      "content_sha256": "64617d7e8ea1559a4f319f7c2ea47b91ee43fcf9a0316b266f6591eec57da070",
+      "retrieved_at": "2026-10-16T10:03:05+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Cascaded Language Models for Cost-Effective Human–AI Decision-Making",
       "url": "https://arxiv.org/abs/2506.11887",
       "category": "Research foundations",
@@ -5881,7 +6253,7 @@
     },
     {
       "title": "Classification with a Reject Option using a Hinge Loss",
-      "url": "https://doi.org/10.5555/1390681.1442792",
+      "url": "https://jmlr.org/papers/v9/bartlett08a.html",
       "category": "Research foundations",
       "topic": "selective_prediction",
       "description": "Background for confidence thresholds, abstention, deferral, and the risk versus coverage trade-off.",
@@ -6108,18 +6480,6 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Contrastive Cross-Lingual Calibration for Large Language Models",
-      "url": "https://doi.org/10.64748/8gkysx36",
-      "category": "Research foundations",
-      "topic": "probability_calibration",
-      "description": "Background for checking whether reported decision probabilities agree with observed outcomes.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "16182cabe7a384cf80616b2d246eb60547cc780bb25a191f3e050d058ba207ed",
-      "retrieved_at": "2026-10-16T10:02:36+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
       "title": "Controlled Abstention Neural Networks for Identifying Skillful Predictions for Classification Problems",
       "url": "https://arxiv.org/abs/2104.08281",
       "category": "Research foundations",
@@ -6129,18 +6489,6 @@
       "verification_level": "abstract_checked",
       "content_sha256": "1e459334921035a9d12d1bb81e4b6842dda947d5bf2ecc8b463870916bc63585",
       "retrieved_at": "2026-10-16T10:02:44+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
-      "title": "Copy-as-Decode: Grammar-Constrained Parallel Prefill for LLM Editing",
-      "url": "https://arxiv.org/abs/2604.18170",
-      "category": "Research foundations",
-      "topic": "structured_constrained_decoding",
-      "description": "Comparison background for schema-constrained outputs and the distinction between structural validity and semantic correctness.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "63d935d7e7a056295c57418120ec622040f843d0c15b35942b257da430fe585b",
-      "retrieved_at": "2026-10-16T10:03:11+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -6285,18 +6633,6 @@
       "verification_level": "abstract_checked",
       "content_sha256": "5fd50928d53ed36ede944d7ac7d272bdd5abaac3186531b542f86a2cdb094bf8",
       "retrieved_at": "2026-10-16T10:03:11+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
-      "title": "Decomposition Enhances Reasoning via Self-Evaluation Guided Decoding",
-      "url": "https://arxiv.org/abs/2305.00633",
-      "category": "Research foundations",
-      "topic": "judge_reliability",
-      "description": "Background for evaluating the reliability, bias, consistency, or uncertainty of model-based judgments.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "aa70416de34167ca7b60c8d8417ef8ee306513573a48889e38dbad8d6a02e8a5",
-      "retrieved_at": "2026-10-16T10:01:04+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -6996,18 +7332,6 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Human-Alignment and Calibration of Inference-Time Uncertainty in Large Language Models",
-      "url": "https://arxiv.org/abs/2508.08204",
-      "category": "Research foundations",
-      "topic": "probability_calibration",
-      "description": "Background for checking whether reported decision probabilities agree with observed outcomes.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "caf025923569250c73ac49f52c6bc6bb8529ef907d5baed31245bce7f08a018c",
-      "retrieved_at": "2026-10-16T10:02:36+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
       "title": "Human-Alignment, Calibration, and Activation Patterns in Large Language Model Uncertainty",
       "url": "https://arxiv.org/abs/2605.30675",
       "category": "Research foundations",
@@ -7200,7 +7524,7 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Learning an Efficient Multi-Turn Dialogue Evaluator from Multiple Judges",
+      "title": "Learning an Efficient Multi-Turn Dialogue Evaluator from Multiple LLM Judges",
       "url": "https://arxiv.org/abs/2508.00454",
       "category": "Research foundations",
       "topic": "judge_reliability",
@@ -7728,18 +8052,6 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "On the Dark Side of Calibration for Modern Neural Networks.",
-      "url": "https://arxiv.org/abs/2106.09385",
-      "category": "Research foundations",
-      "topic": "probability_calibration",
-      "description": "Background for checking whether reported decision probabilities agree with observed outcomes.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "95b9cb45cbf4540ab0e2e5a20956f3dbe346f78d6032ba73c5998f77e520c236",
-      "retrieved_at": "2026-10-16T10:02:38+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
       "title": "On the Global and Local Calibration of Graph Neural Networks",
       "url": "https://vbn.aau.dk/da/publications/4eed889a-812e-4e3b-a276-23f7e5918232",
       "category": "Research foundations",
@@ -7896,7 +8208,7 @@
       "ledger": "research-sources.jsonl"
     },
     {
-      "title": "Post-hoc Calibration of Neural Networks.",
+      "title": "Post-hoc Calibration of Neural Networks by g-Layers",
       "url": "https://arxiv.org/abs/2006.12807",
       "category": "Research foundations",
       "topic": "probability_calibration",
@@ -8025,18 +8337,6 @@
       "verification_level": "abstract_checked",
       "content_sha256": "6e2725af221a74515f8e6601e305090eafbfddffc484f11a6d2befa5ca565bf9",
       "retrieved_at": "2026-10-16T10:02:37+00:00",
-      "ledger": "research-sources.jsonl"
-    },
-    {
-      "title": "Proper-Composite Loss Functions in Arbitrary Dimensions",
-      "url": "https://arxiv.org/abs/1902.06881",
-      "category": "Research foundations",
-      "topic": "proper_scoring_rules",
-      "description": "Background for evaluating probability distributions and incentives for truthful probability reporting.",
-      "relation": "background",
-      "verification_level": "abstract_checked",
-      "content_sha256": "b0575f916f3b49e1e44cf2f938a01401289f9f1a01d17488c43d2eb73c4a596e",
-      "retrieved_at": "2026-10-16T10:02:39+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -8445,6 +8745,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "694448391bee6de9814f38eee8bc70f6e0ed09628b3313e83452ef0ea99631f5",
       "retrieved_at": "2026-10-16T10:02:52+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Self-Evaluation Guided Beam Search for Reasoning",
+      "url": "https://arxiv.org/abs/2305.00633",
+      "category": "Research foundations",
+      "topic": "judge_reliability",
+      "description": "Background for evaluating the reliability, bias, consistency, or uncertainty of model-based judgments.",
+      "relation": "background",
+      "verification_level": "abstract_checked",
+      "content_sha256": "aa70416de34167ca7b60c8d8417ef8ee306513573a48889e38dbad8d6a02e8a5",
+      "retrieved_at": "2026-10-16T10:01:04+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -9084,5 +9396,50 @@
       "ledger": "research-sources.jsonl"
     }
   ],
-  "excluded_from_target": []
+  "excluded_from_target": [
+    {
+      "url": "https://arxiv.org/abs/2610.04985",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.11392",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.13092",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.16655",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.18529",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.18610",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.18612",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.19619",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.19811",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.20907",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.21614",
+      "reason": "not_in_reviewed_intake"
+    }
+  ]
 }

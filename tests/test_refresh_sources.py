@@ -166,6 +166,41 @@ class DiagnosticTests(unittest.TestCase):
 
 
 class IncrementalEvidenceTests(unittest.TestCase):
+    def test_same_ledger_alias_cannot_bypass_stronger_editorial_record(self):
+        current = "https://huggingface.co/spaces/multimodalart/jev-decision-index"
+        legacy = "https://huggingface.co/spaces/multimodalart/jev-reproductions-tracker"
+        reviewed = row(current, body="reviewed", level="editorial_reviewed", status="screened")
+        shadow = row(legacy, body="historical", status="screened")
+        for order in ((reviewed, shadow), (shadow, reviewed)):
+            with self.subTest(first=order[0]["url"]):
+                old = ledger(*order)
+                result, changes = refresh.merge_records(old, [row(current, body="new", status="screened")])
+                self.assertEqual(result.lines, old.lines)
+                self.assertEqual(changes["changed"], [])
+                self.assertEqual(changes["added"], [])
+                self.assertEqual(len(changes["editorial_review_required"]), 1)
+                self.assertEqual(changes["editorial_review_required"][0]["old_content_sha256"], reviewed["content_sha256"])
+
+    def test_same_ledger_alias_refresh_preserves_unique_historical_urls(self):
+        current = "https://huggingface.co/respanai/span-02"
+        legacy = "https://huggingface.co/lihe07/span-02"
+        current_row = row(current, body="current", status="screened")
+        legacy_row = row(legacy, body="legacy", status="screened")
+        for order in ((current_row, legacy_row), (legacy_row, current_row)):
+            with self.subTest(first=order[0]["url"]):
+                old = ledger(*order)
+                observation = row(legacy, body="changed", status="screened", canonical_url=current)
+                result, changes = refresh.merge_records(old, [observation])
+                urls = [r.get("canonical_url", r["url"]) for r in result.rows]
+                self.assertEqual(len(set(urls)), 2)
+                self.assertEqual(set(urls), {current, legacy})
+                position = next(i for i, r in enumerate(old.rows) if r["url"] == legacy)
+                self.assertEqual(result.lines[position], old.lines[position])
+                updated = next(r for r in result.rows if r["url"] == current)
+                self.assertEqual(updated["content_sha256"], observation["content_sha256"])
+                self.assertEqual(changes["changed"], [current])
+                self.assertEqual(changes["added"], [])
+
     def test_cross_ledger_primary_page_cannot_be_added_or_promoted_again(self):
         prior = primary_abstract()
         originals = (ledger(), ledger(prior))
@@ -305,6 +340,52 @@ class IncrementalEvidenceTests(unittest.TestCase):
         self.assertEqual(result.rows, old.rows)
         self.assertFalse(changes["added"] or changes["changed"])
 
+    def test_refetched_content_drops_fields_of_the_earlier_observation(self):
+        # #103: a relevance rescreen of earlier bytes does not cover new content,
+        # and a later successful fetch supersedes an earlier failure's errors.
+        rescreened = row(status="screened", relevance_rescreened_at="2026-10-15T01:00:00Z")
+        failed = row(level="metadata_only", status="unavailable", fetch_errors=["network_failure"])
+        failed.pop("content_sha256")
+        fresh = row(body="changed bytes", status="screened", retrieved_at="2026-10-16T04:00:00Z")
+        for prior, dropped in ((rescreened, "relevance_rescreened_at"), (failed, "fetch_errors")):
+            with self.subTest(dropped=dropped):
+                result, changes = refresh.merge_records(ledger(prior), [fresh])
+                self.assertEqual(changes["changed"], [prior["url"]])
+                self.assertNotIn(dropped, result.rows[0])
+                self.assertEqual(result.rows[0], {k: v for k, v in {**prior, **fresh}.items() if k != dropped})
+                with tempfile.TemporaryDirectory() as tmp:
+                    path = Path(tmp) / "sources.jsonl"
+                    path.write_text("".join(result.lines), encoding="utf-8")
+                    with patch.object(validate, "ROOT", Path(tmp)), patch.object(validate, "errors", []) as errors:
+                        validate.check_ledger(path)
+                        self.assertEqual(errors, [])
+        # A rescreen of the bytes the row still holds is kept.
+        same = row(status="screened", relevance_rescreened_at="2026-10-16T05:00:00Z")
+        result, _ = refresh.merge_records(ledger(same), [row(status="screened", retrieved_at="2026-10-16T06:00:00Z")])
+        self.assertEqual(result.rows, [same])
+
+    def test_validator_rejects_a_stale_rescreen_and_errors_on_a_screened_row(self):
+        cases = {
+            "relevance_rescreened_at predates retrieved_at": row(status="screened", retrieved_at="2026-10-16T04:04:00+00:00",
+                                                                 relevance_rescreened_at="2026-10-16T01:23:38+00:00"),
+            "relevance_rescreened_at must be an ISO timestamp": row(status="screened", relevance_rescreened_at="yesterday"),
+            "must not keep fetch_errors": row(status="screened", fetch_errors=["network_failure"]),
+        }
+        valid = [row(status="screened", relevance_rescreened_at="2026-10-15T00:00:00Z"),
+                 row(status="screened", relevance_rescreened_at="2026-10-16T00:00:00+00:00"),
+                 row(level="metadata_only", status="unavailable", fetch_errors=["network_failure"])]
+        for message, record in [*cases.items(), *((None, record) for record in valid)]:
+            with self.subTest(message=message, record=record), tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / "sources.jsonl"
+                path.write_text(json.dumps(record) + "\n", encoding="utf-8")
+                with patch.object(validate, "ROOT", Path(tmp)), patch.object(validate, "errors", []) as errors:
+                    validate.check_ledger(path)
+                    if message is None:
+                        self.assertEqual(errors, [])
+                    else:
+                        self.assertEqual(len(errors), 1)
+                        self.assertIn(message, errors[0])
+
     def test_partial_failure_keeps_prior_success_and_accepts_new_source(self):
         old = ledger(row())
         failed = row(level="metadata_only", status="unavailable")
@@ -389,6 +470,53 @@ class IncrementalEvidenceTests(unittest.TestCase):
         self.assertEqual(len(pending), 100)
         _, changed, _ = refresh.pending_reviews({"editorial_refresh_candidates": pending}, changes["editorial_review_required"], old)
         self.assertFalse(changed)
+
+
+class JsonlLineSeparatorTests(unittest.TestCase):
+    """U+2028, U+2029 and U+0085 in fetched text must never split a ledger record."""
+    TITLE = "Jev Router\u2028typed decisions\u2029v2\u0085notes"
+
+    def test_scraped_unicode_line_breaks_round_trip_as_one_ledger_record(self):
+        url = "https://github.com/fixture/router"
+        body = ("# " + self.TITLE + "\n\n## Usage\u2028examples\n\n"
+                + "Jev typed decision models need calibrated probability readouts for routing. " * 6).encode()
+        seed = {"url": url, "title": "router", "topic": "implementation-repository", "relation": "adjacent",
+                "relevance": "Synthetic regression fixture.", "discovered_from": ["https://example.org/index"], "discovery_depth": 0}
+        with patch.object(refresh.ecosystem, "fetch", return_value=(body, "https://raw.githubusercontent.com/fixture/router/main/README.md", "text/plain")):
+            record, _ = refresh.ecosystem.audit(seed)
+        self.assertEqual(record["title"], self.TITLE)
+        merged, changes = refresh.merge_records(ledger(), [record])
+        self.assertEqual(changes["added"], [url])
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "sources.jsonl"
+            refresh.write_if_changed(path, "".join(merged.lines))
+            raw = path.read_bytes()
+            self.assertEqual(len(raw.decode("utf-8").splitlines()), 1)
+            loaded = refresh.Ledger.read(path)
+        self.assertEqual(loaded.rows[0]["title"], self.TITLE)
+        self.assertEqual(loaded.rows[0]["section_headings"][:2], [self.TITLE, "Usage\u2028examples"])
+        self.assertEqual(loaded.lines, merged.lines)
+
+    def test_every_ledger_reader_splits_records_only_at_newline(self):
+        from scripts import open_scan_pr
+        rows = [row("https://example.org/a", title=self.TITLE, status="screened"),
+                row("https://example.org/b", body="other", status="screened")]
+        # The unescaped form an earlier writer produced: four splitlines() pieces.
+        text = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows)
+        self.assertGreater(len(text.splitlines()), len(rows))
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "data").mkdir()
+            path = root / "data/ecosystem-sources.jsonl"
+            path.write_text(text, encoding="utf-8")
+            self.assertEqual([r["title"] for r in refresh.Ledger.read(path).rows], [self.TITLE, "Fixture source"])
+            with patch.object(refresh.index, "ROOT", root):
+                self.assertEqual(refresh.index.build()["counts"]["raw_records"], 2)
+            with patch.object(validate, "ROOT", root), patch.object(validate, "errors", []) as errors:
+                self.assertEqual(len(validate.check_ledger(path)), 2)
+                self.assertEqual(errors, [])
+            self.assertEqual(open_scan_pr.read_data(path), text.encode("utf-8"))
+            open_scan_pr.meaningful_fingerprint({name: text.encode("utf-8") for name in open_scan_pr.LEDGERS})
 
 
 class PinnedArxivObservationTests(unittest.TestCase):
@@ -499,6 +627,59 @@ class PinnedArxivObservationTests(unittest.TestCase):
         self.assertFalse(changes["added"] or changes["changed"])
 
 
+class MalformedPinnedPageTests(unittest.TestCase):
+    """Malformed fetched HTML is one document error, never an aborted scan."""
+    PROSE = b"Typed decision models require careful probability calibration and reliable evaluation. " * 8
+
+    def scan(self, pinned_page):
+        prior = primary_abstract()
+        other = "https://example.org/other-source"
+        seeds = {
+            prior["url"]: {"url": prior["url"], "title": prior["title"], "topic": "research-paper", "relation": "direct",
+                           "relevance": "Fixture paper.", "discovery_depth": 0, "fetch_url": prior["reviewed_version_url"],
+                           "discovered_from": [refresh.CURATED_PAPERS_ORIGIN]},
+            other: {"url": other, "title": "Other source", "topic": "research-paper", "relation": "adjacent",
+                    "relevance": "Fixture source.", "discovery_depth": 0, "discovered_from": [refresh.CURATED_PAPERS_ORIGIN]},
+        }
+        fetcher = Mock()
+        fetcher.fetch.side_effect = lambda target: ((pinned_page if "arxiv.org" in target else b"<html><p>" + self.PROSE + b"</p></html>"),
+                                                    target, "text/html")
+        scan = refresh.Scan(fetcher, curated_seeds=seeds, pinned_sources={prior["url"]: prior})
+        with patch.object(scan, "discover_index", return_value=([], {})), contextlib.redirect_stdout(io.StringIO()):
+            records = scan.scan_ecosystem(ledger())
+        return scan, records, other
+
+    def test_valueless_attributes_do_not_break_the_abstract_parser(self):
+        parser = refresh.ArxivAbstractPage()
+        parser.feed('<td class>x</td><blockquote class>y</blockquote><meta name="citation_date" content>')
+        self.assertEqual((parser.parts, parser.version, parser.published_at), ([], None, None))
+        parser = refresh.ArxivAbstractPage()
+        parser.feed("<td class><a>v9</a></td><blockquote class>noise</blockquote>" + arxiv_page().decode())
+        self.assertEqual(parser.version, "https://arxiv.org/abs/2609.10000v2")
+        self.assertEqual(parser.published_at, "2026-09-01")
+        self.assertIn("Typed decisions require", " ".join(parser.parts))
+
+    def test_malformed_pinned_page_is_a_document_error_and_scan_continues(self):
+        scan, records, other = self.scan(b"<html><blockquote class>" + self.PROSE + b"</blockquote></html>")
+        self.assertEqual([r["url"] for r in records], [other])
+        self.assertEqual({e["code"] for e in scan.errors}, {"pinned_paper_observation_failed:invalid_arxiv_abstract_page"})
+
+    def test_other_attribute_errors_stay_contained_to_one_document(self):
+        with patch.object(refresh.ArxivAbstractPage, "handle_starttag", side_effect=AttributeError("fixture")):
+            scan, records, other = self.scan(arxiv_page())
+        self.assertEqual([r["url"] for r in records], [other])
+        self.assertEqual({e["code"] for e in scan.errors}, {"pinned_paper_observation_failed:AttributeError"})
+        original = refresh.ecosystem.audit
+        def audit(seed):
+            if seed["url"] == other:
+                raise AttributeError("fixture")
+            return original(seed)
+        with patch.object(refresh.ecosystem, "audit", side_effect=audit):
+            scan, records, _ = self.scan(arxiv_page())
+        self.assertEqual({r["observed_version_url"] for r in records}, {"https://arxiv.org/abs/2609.10000v2"})
+        self.assertEqual(scan.errors, [{"url": other, "code": "document_failed:AttributeError"}])
+
+
 class PublicFetchTests(unittest.TestCase):
     def test_discovery_excludes_inference_api_and_normalizes_acl_pdf(self):
         with self.assertRaises(refresh.FetchError):
@@ -558,6 +739,53 @@ class PublicFetchTests(unittest.TestCase):
         self.assertTrue(refresh.direct_paper("Jev evaluation", "TypeSafe's typed decision model is evaluated for probability calibration."))
 
 
+class PinnedAddressFallbackTests(unittest.TestCase):
+    """Every validated DNS answer is dialled in order; none is resolved again."""
+    ANSWERS = [(10, 1, 6, "", ("2606:4700::1", 443, 0, 0)), (2, 1, 6, "", ("93.184.216.34", 443))]
+
+    def connection(self):
+        response = Mock(status=200)
+        response.getheaders.return_value = [("Content-Type", "text/plain")]
+        response.read.return_value = b"public fixture"
+        connection = Mock()
+        connection.getresponse.return_value = response
+        connection.request.side_effect = lambda *a, **k: connection._create_connection(("ignored.example", 443), 18)
+        return connection
+
+    def dial(self, reachable=()):
+        targets = []
+        def connect(address, timeout, source_address=None):
+            targets.append(address)
+            if address[0] not in reachable:
+                raise OSError("fixture unreachable")
+            return Mock()
+        return targets, connect
+
+    def test_unreachable_first_address_falls_back_to_next_validated_address(self):
+        targets, connect = self.dial(reachable={"93.184.216.34"})
+        with patch.object(refresh.socket, "getaddrinfo", return_value=self.ANSWERS), patch.object(refresh.http.client, "HTTPSConnection", return_value=self.connection()) as https, patch.object(refresh.socket, "create_connection", side_effect=connect):
+            status, _, body = refresh.PublicFetcher()._request("https://example.org/source")
+        self.assertEqual((status, body), (200, b"public fixture"))
+        self.assertEqual(https.call_args.args[:2], ("example.org", 443))
+        self.assertEqual(targets, [("2606:4700::1", 443), ("93.184.216.34", 443)])
+
+    def test_all_unreachable_addresses_are_tried_before_network_failure(self):
+        targets, connect = self.dial()
+        with patch.object(refresh.socket, "getaddrinfo", return_value=self.ANSWERS), patch.object(refresh.http.client, "HTTPSConnection", return_value=self.connection()), patch.object(refresh.socket, "create_connection", side_effect=connect):
+            with self.assertRaises(refresh.FetchError) as raised:
+                refresh.PublicFetcher(retries=0).fetch("https://example.org/source")
+        self.assertEqual(str(raised.exception), "network_failure")
+        self.assertEqual(targets, [("2606:4700::1", 443), ("93.184.216.34", 443)])
+
+    def test_fallback_never_dials_an_unvalidated_address(self):
+        targets, connect = self.dial()
+        with patch.object(refresh, "public_addresses", return_value=["2606:4700::1", "127.0.0.1"]), patch.object(refresh.http.client, "HTTPSConnection", return_value=self.connection()), patch.object(refresh.socket, "create_connection", side_effect=connect):
+            with self.assertRaises(refresh.FetchError) as raised:
+                refresh.PublicFetcher()._request("https://example.org/source")
+        self.assertEqual(str(raised.exception), "dns_non_public_address")
+        self.assertEqual(targets, [("2606:4700::1", 443)])
+
+
 class RefreshRunTests(unittest.TestCase):
     def test_new_direct_paper_satisfies_the_public_ledger_schema(self):
         scan = refresh.Scan(refresh.PublicFetcher())
@@ -600,6 +828,238 @@ class RefreshRunTests(unittest.TestCase):
             build.assert_not_called()
             self.assertFalse((root / "data/scan-latest.json").exists())
             self.assertFalse((root / "data/ecosystem-sources.jsonl").exists())
+
+
+class RetryAfterTests(unittest.TestCase):
+    """Fetchers wait for the server's Retry-After, in seconds or as an HTTP-date, within a budget."""
+
+    def fetch(self, *replies):
+        client = refresh.PublicFetcher(retries=2)
+        sleeps = []
+        replies = list(replies) + [replies[-1]] * 3
+        with patch.object(client, "_request", side_effect=replies) as request, patch.object(refresh.time, "sleep", side_effect=sleeps.append):
+            try:
+                result = client.fetch("https://example.org/source")[0]
+            except refresh.FetchError as error:
+                result = str(error)
+        return result, sleeps, request.call_count
+
+    def http_date(self, seconds):
+        import email.utils
+        from datetime import timedelta
+        return email.utils.format_datetime(refresh.datetime.now(refresh.timezone.utc) + timedelta(seconds=seconds), usegmt=True)
+
+    def test_retry_after_value_is_parsed_as_seconds_or_http_date(self):
+        current = refresh.datetime(2026, 10, 16, 9, 9, tzinfo=refresh.timezone.utc)
+        cases = {"60": 60, " 7 ": 7, "0": 0, "Fri, 16 Oct 2026 09:10:00 GMT": 60, "Friday, 16-Oct-26 09:10:00 GMT": 60,
+                 "Thu, 15 Oct 2026 09:10:00 GMT": 0, "9" * 20: float("inf"), "": None, "-1": None, "1.5": None, "soon": None}
+        for value, expected in cases.items():
+            with self.subTest(value=value):
+                self.assertEqual(refresh.research.retry_after_seconds(value, current), expected)
+        self.assertIsNone(refresh.research.retry_after_seconds(None, current))
+
+    def test_requested_delay_within_budget_is_honoured(self):
+        limited = (429, {"retry-after": "60"}, b"")
+        self.assertEqual(self.fetch(limited), ("http_429", [60, 60], 3))
+        self.assertEqual(self.fetch(limited, (200, {"content-type": "text/plain"}, b"ok")), (b"ok", [60], 2))
+        result, sleeps, requests = self.fetch((503, {"retry-after": self.http_date(30)}, b""))
+        self.assertEqual((result, requests), ("http_503", 3))
+        self.assertEqual(len(sleeps), 2)
+        self.assertTrue(all(28 <= delay <= 30 for delay in sleeps), sleeps)
+        # Without a usable header the bounded exponential backoff is unchanged.
+        self.assertEqual(self.fetch((429, {"retry-after": "soon"}, b"")), ("http_429", [1, 2], 3))
+
+    def test_delay_beyond_budget_stops_without_another_request(self):
+        for value in ("120", self.http_date(3600)):
+            with self.subTest(value=value):
+                self.assertEqual(self.fetch((429, {"retry-after": value}, b"")), ("retry_after_exceeded", [], 1))
+        self.assertEqual(refresh.safe_exception_code(refresh.FetchError("retry_after_exceeded")), "retry_after_exceeded")
+
+    def test_research_collector_uses_the_same_retry_after_rules(self):
+        import urllib.error
+        collect = refresh.research
+        for value, expected_sleeps, expected_calls, expected_error in (
+                ("45", [45, 45, 45], 4, "HTTP Error 429: Too Many Requests"),
+                ("120", [], 1, "retry_after_exceeded")):
+            with self.subTest(value=value), tempfile.TemporaryDirectory() as tmp:
+                collector = collect.Collector(Path(tmp) / "cache", workers=1)
+                error = urllib.error.HTTPError(collect.API, 429, "Too Many Requests", {"Retry-After": value}, None)
+                sleeps = []
+                # Advance the pacing clock so only Retry-After waits are recorded.
+                with patch.object(collect.urllib.request, "urlopen", side_effect=error) as urlopen, patch.object(collect.time, "sleep", side_effect=sleeps.append), patch.object(collect.time, "monotonic", side_effect=range(0, 1000, 10)):
+                    _, _, result = collector.fetch("direct", "Jev")
+                self.assertEqual(sleeps, expected_sleeps)
+                self.assertEqual(urlopen.call_count, expected_calls)
+                self.assertEqual((result["retrieval_status"], result["error"]), ("failed", expected_error))
+
+
+class RetryBudgetTests(unittest.TestCase):
+    """Retry-After waits share a per-host not-before time and a scan-wide deadline (#204)."""
+
+    def setUp(self):
+        self.clock, self.sleeps, self.requests = [1000.0], [], []
+        patcher = patch.multiple(refresh.time, monotonic=lambda: self.clock[0], sleep=self.sleep)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        self.during_first_wait = lambda: None
+
+    def sleep(self, seconds):
+        start = self.clock[0]
+        self.sleeps.append(seconds)
+        if len(self.sleeps) == 1:
+            self.during_first_wait()
+        self.clock[0] = max(self.clock[0], start + seconds)
+
+    def client(self, replies, **options):
+        client = refresh.PublicFetcher(**options)
+
+        def request(url):
+            self.requests.append((url, self.clock[0] - 1000))
+            return replies[url].pop(0)
+        client._request = request
+        return client
+
+    def test_other_workers_wait_for_a_host_that_asked_for_a_delay(self):
+        ok = (200, {"content-type": "text/plain"}, b"ok")
+        client = self.client({"https://example.org/a": [(429, {"retry-after": "30"}, b""), ok],
+                              "https://example.org/b": [ok], "https://example.com/c": [ok]})
+
+        def other_workers():  # 5 s into the first worker's wait
+            self.clock[0] += 5
+            client.fetch("https://example.com/c")
+            client.fetch("https://example.org/b")
+        self.during_first_wait = other_workers
+        self.assertEqual(client.fetch("https://example.org/a")[0], b"ok")
+        self.assertEqual(self.requests, [("https://example.org/a", 0), ("https://example.com/c", 5),
+                                         ("https://example.org/b", 30), ("https://example.org/a", 30)])
+        self.assertEqual(self.sleeps, [30, 25])
+        self.assertFalse(client.budget_exhausted)
+
+    def test_scan_deadline_stops_waits_and_new_requests(self):
+        limited = (429, {"retry-after": "60"}, b"")
+        client = self.client({"https://example.org/a": [limited] * 3, "https://example.org/b": [],
+                              "https://example.com/c": []}, budget=100)
+        with self.assertRaisesRegex(refresh.FetchError, "^retry_budget_exhausted$"):
+            client.fetch("https://example.org/a")
+        # The second 60 s wait would end after the deadline: no sleep, no third request.
+        self.assertEqual((self.sleeps, len(self.requests)), ([60], 2))
+        self.assertTrue(client.budget_exhausted)
+        self.clock[0] = 1000 + 100
+        for url in ("https://example.org/b", "https://example.com/c"):
+            with self.subTest(url=url), self.assertRaisesRegex(refresh.FetchError, "^retry_budget_exhausted$"):
+                client.fetch(url)
+        self.assertEqual(len(self.requests), 2)
+        self.assertEqual(refresh.safe_exception_code(refresh.FetchError("retry_budget_exhausted")), "retry_budget_exhausted")
+
+    def test_plain_backoff_holds_only_the_failing_request(self):
+        # Only a host that signalled rate limiting (429 or Retry-After) holds
+        # every worker; a 5xx without Retry-After delays just its own retry.
+        ok = (200, {"content-type": "text/plain"}, b"ok")
+        for status, b_sent, sleeps in ((503, 0.5, [1]), (429, 1, [1, 0.5])):
+            with self.subTest(status=status):
+                self.clock[0], self.sleeps[:], self.requests[:] = 1000.0, [], []
+                client = self.client({"https://example.org/a": [(status, {}, b""), ok], "https://example.org/b": [ok]})
+
+                def other_worker():  # 0.5 s into the first worker's backoff
+                    self.clock[0] += 0.5
+                    client.fetch("https://example.org/b")
+                self.during_first_wait = other_worker
+                self.assertEqual(client.fetch("https://example.org/a")[0], b"ok")
+                self.assertEqual(self.requests, [("https://example.org/a", 0), ("https://example.org/b", b_sent),
+                                                 ("https://example.org/a", 1)])
+                self.assertEqual(self.sleeps, sleeps)
+
+    def test_each_phase_has_its_own_share_of_the_deadline(self):
+        ok = (200, {"content-type": "text/plain"}, b"ok")
+        limited = (429, {"retry-after": "60"}, b"")
+        client = self.client({"https://example.org/a": [limited] * 3, "https://example.com/c": [ok]}, budget=100)
+        client.begin_phase("ecosystem", 70)
+        with self.assertRaisesRegex(refresh.FetchError, "^retry_budget_exhausted$"):
+            client.fetch("https://example.org/a")
+        # The second 60 s wait would end after the ecosystem share; research,
+        # which starts at 60 s, still has its full 30 s and more of the total.
+        client.begin_phase("research", 30)
+        self.assertEqual(client.deadline, 1000 + 100)
+        self.assertEqual(client.fetch("https://example.com/c")[0], b"ok")
+        self.assertEqual(client.exhausted_phases, ["ecosystem"])
+        # A phase that overran its share still leaves the next one its own.
+        self.clock[0] = 1000.0
+        late = self.client({}, budget=100)
+        late.begin_phase("ecosystem", 70)
+        self.clock[0] = 1000 + 95
+        late.begin_phase("research", 30)
+        self.assertEqual(late.deadline, 1000 + 95 + 30)
+
+    def test_slow_ecosystem_phase_does_not_fail_the_research_queries(self):
+        def scan_ecosystem(scan, *args):
+            # The ecosystem phase used the whole scan-wide budget.
+            self.clock[0] = 1000 + refresh.SCAN_TIME_BUDGET_SECONDS + 1
+            with self.assertRaisesRegex(refresh.FetchError, "^retry_budget_exhausted$"):
+                scan.fetcher._hold("example.org")
+            return [row()]
+
+        def scan_research(scan, *args):
+            phases.append(scan.fetcher.phase)
+            scan.fetcher._hold("huggingface.co")  # research APIs are still contacted
+            scan.successful_queries += 1
+            return [], []
+        phases = []
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "data").mkdir()
+            (root / "data/ecosystem-sources.jsonl").write_bytes("".join(ledger(row()).lines).encode())
+            (root / "data/research-sources.jsonl").write_text("")
+            (root / "data/source-counts.json").write_text(json.dumps({"counts": {"checked_sources": 1}}))
+            (root / "summary.md").write_text("")
+            catalog(root)
+            with patch.object(refresh, "ROOT", root), patch.object(refresh.Scan, "scan_ecosystem", scan_ecosystem), \
+                    patch.object(refresh.Scan, "scan_research", scan_research), patch.object(refresh.subprocess, "run"), \
+                    patch.dict(refresh.os.environ, {"GITHUB_STEP_SUMMARY": str(root / "summary.md")}, clear=True), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(refresh.main([]), 0)
+            report = json.loads((root / "data/scan-latest.json").read_text())
+            summary = (root / "summary.md").read_text()
+        self.assertEqual(phases, ["research"])
+        self.assertEqual((report["status"], report["retry_budget_exhausted"]), ("partial", True))
+        self.assertEqual(report["retry_budget_exhausted_phases"], ["ecosystem"])
+        self.assertEqual(report["phase_budget_seconds"], refresh.PHASE_TIME_BUDGET_SECONDS)
+        self.assertIn("exhausted in the ecosystem phase", summary)
+
+    def test_default_budget_is_conservative_and_leaves_time_for_the_job(self):
+        self.assertEqual(refresh.SCAN_TIME_BUDGET_SECONDS, 18 * 60)
+        self.assertEqual(set(refresh.PHASE_TIME_BUDGET_SECONDS), {"ecosystem", "research"})
+        self.assertEqual(refresh.PublicFetcher().deadline, 1000 + refresh.SCAN_TIME_BUDGET_SECONDS)
+        workflow = (refresh.ROOT / ".github/workflows/scan-sources.yml").read_text(encoding="utf-8")
+        job_minutes = int(workflow.split("timeout-minutes:", 1)[1].split()[0])
+        self.assertLessEqual(refresh.SCAN_TIME_BUDGET_SECONDS, (job_minutes - 5) * 60)
+
+    def test_scan_report_records_an_exhausted_budget(self):
+        summary = {}
+        for exhausted in (False, True):
+            def scan_ecosystem(scan, *args):
+                scan.fetcher.budget_exhausted = exhausted
+                return [row()]
+            with tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                (root / "data").mkdir()
+                (root / "data/ecosystem-sources.jsonl").write_bytes("".join(ledger(row()).lines).encode())
+                (root / "data/research-sources.jsonl").write_text("")
+                (root / "data/source-counts.json").write_text(json.dumps({"counts": {"checked_sources": 1}}))
+                (root / "summary.md").write_text("")
+                catalog(root)
+                with patch.object(refresh, "ROOT", root), patch.object(refresh.Scan, "scan_ecosystem", scan_ecosystem), \
+                        patch.object(refresh.Scan, "scan_research", return_value=([], [])), patch.object(refresh.subprocess, "run"), \
+                        patch.dict(refresh.os.environ, {"GITHUB_STEP_SUMMARY": str(root / "summary.md")}, clear=True), \
+                        contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(refresh.main([]), 0)
+                report = json.loads((root / "data/scan-latest.json").read_text())
+                summary[exhausted] = (root / "summary.md").read_text()
+            with self.subTest(exhausted=exhausted):
+                self.assertIs(report["retry_budget_exhausted"], exhausted)
+                self.assertEqual(report["retry_budget_seconds"], refresh.SCAN_TIME_BUDGET_SECONDS)
+                self.assertEqual(report["status"], "partial" if exhausted else "success")
+        self.assertIn("retry budget", summary[True].lower())
+        self.assertNotIn("retry budget", summary[False].lower())
 
 
 if __name__ == "__main__":

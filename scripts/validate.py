@@ -10,30 +10,57 @@ from __future__ import annotations
 
 import ast
 import collections
+from datetime import datetime, timezone
 import html
 from html.parser import HTMLParser
 import ipaddress
 import json
+import os
 from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
-from urllib.parse import parse_qsl, unquote, urlsplit
+from urllib.parse import unquote, urlsplit
 
 try:
     from . import build_source_index as source_index
-    from .source_policy import load_policy, PolicyError
+    from .source_policy import credential_query, load_policy, PolicyError
 except ImportError:
     import build_source_index as source_index
-    from source_policy import load_policy, PolicyError
+    from source_policy import credential_query, load_policy, PolicyError
 
 ROOT = Path(__file__).resolve().parents[1]
 SKIP = {".git", "node_modules", ".venv", "__pycache__", ".cache", "tmp", "artifacts"}
 TEXT_SUFFIXES = {".md", ".py", ".js", ".mjs", ".json", ".jsonl", ".yml", ".yaml", ".html", ".css", ".svg", ".xml", ".bib", ".txt"}
 LEVELS = {"metadata_only", "abstract_checked", "content_screened", "editorial_reviewed"}
 CHECKED = LEVELS - {"metadata_only"}
+# Controlled ledger vocabularies, one spelling per concept. Extend them deliberately
+# when a reviewed source needs a new value; a typo would otherwise change a record's
+# website category or appear raw as a search tag.
+RELATIONS = {"direct", "adjacent", "background"}
+TOPICS = {
+    # Assigned by the scanners and collectors.
+    "benchmark-source", "community-evaluation-index", "decision-model-card", "direct-decision-research",
+    "ecosystem-news-artifact", "evaluation-harness", "implementation-repository", "research-paper",
+    "training-dataset", "vision-decision-artifact",
+    # Research background topics (scripts/collect_research.py).
+    "efficient_routing_cascades", "judge_reliability", "language_model_programming", "probability_calibration",
+    "proper_scoring_rules", "selective_prediction", "structured_constrained_decoding",
+    "uncertainty_distribution_shift",
+    # Reviewed manual additions.
+    "decision-evaluation-tool", "decision-model-evaluation", "decision-robustness-benchmark", "evaluation-interface",
+    "multilingual-evaluation-results", "multilingual-robustness-evaluation", "multimodal-robustness-benchmark",
+    "official-decision-guide", "option-order-evaluation", "paper-evaluation-dashboard", "paper-reproducibility-code",
+    "robustness-policy-harness", "survey-repository", "tool-argument-evaluation-data",
+}
+SOURCE_TYPES = {"anonymous_repository", "archive_landing_page", "github_repository", "hf_dataset", "hf_model",
+                "hf_repository", "hf_space", "research_project_page", "scholarly_work"}
+# audit_error is written by scripts/collect_ecosystem.py when a source audit raises.
+STATUSES = {"screened", "insufficient_content", "unavailable", "audit_error"}
 HASH = re.compile(r"^[0-9a-f]{64}$")
+HTML_ENTITY = re.compile(r"&(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-f]+);", re.I)
+RECORD_ID = re.compile(r"(?:arxiv|doi|openalex):\S+")
 LEAK_PATTERNS = {
     "personal filesystem path": re.compile(r"(?:/Users/[A-Za-z0-9_.-]+/|/home/[A-Za-z0-9_.-]+/|[A-Z]:\\Users\\[^\\\s]+\\)"),
     "GitHub credential": re.compile(r"(?:gh[pousr]_[A-Za-z0-9]{30,255}|github_pat_[A-Za-z0-9_]{40,255})"),
@@ -56,6 +83,17 @@ def files() -> list[Path]:
     return sorted(p for p in ROOT.rglob("*") if p.is_file() and not any(part in SKIP for part in p.relative_to(ROOT).parts))
 
 
+def check_symlinks() -> None:
+    # files() keeps only regular files, so a symlinked directory, which the Pages
+    # artifact dereferences, or a dangling link would escape the rule and leak scan.
+    for directory, names, filenames in os.walk(ROOT):
+        names[:] = sorted(name for name in names if name not in SKIP)
+        for name in names + sorted(filenames):
+            path = Path(directory, name)
+            if path.is_symlink() and not path.is_file():
+                fail(str(path.relative_to(ROOT)), "symlinks are not supported in the published artifact")
+
+
 def public_url(value: object) -> bool:
     if not isinstance(value, str):
         return False
@@ -71,7 +109,7 @@ def public_url(value: object) -> bool:
         except ValueError:
             if "." not in p.hostname:
                 return False
-        return not any(k.casefold() in {"api_key", "apikey", "access_token", "token", "signature"} for k, _ in parse_qsl(p.query))
+        return not credential_query(p.query)
     except ValueError:
         return False
 
@@ -92,6 +130,9 @@ class Markup(HTMLParser):
 
 def anchors(path: Path) -> set[str]:
     text = path.read_text(encoding="utf-8")
+    if path.suffix == ".md":
+        # Fenced examples are not rendered, so their comments and tags define no anchors.
+        text = re.sub(r"```.*?```|~~~.*?~~~", "", text, flags=re.S)
     parser = Markup()
     parser.feed(text)
     result = parser.ids
@@ -107,15 +148,40 @@ def anchors(path: Path) -> set[str]:
     return result
 
 
+# Absolute links to this project's own website (served from site/) and repository
+# tree are checked like local links; every other external URL stays offline.
+OWN_LINKS = (
+    (re.compile(r"https://awesomejev\.github\.io(?=[/?#]|$)", re.I), "site"),
+    (re.compile(r"https://github\.com/reacher-z/Awesome-Jev/(?:blob|tree)/main(?=[/?#]|$)", re.I), ""),
+)
+
+
+def own_link(value: str) -> tuple[Path, str] | None:
+    for pattern, folder in OWN_LINKS:
+        if match := pattern.match(value):
+            return ROOT / folder, "/" + value[match.end():].lstrip("/")
+    return None
+
+
 def local_link(path: Path, value: str) -> None:
     value = html.unescape(value.strip().strip("<>"))
-    parsed = urlsplit(value)
+    base, link = own_link(value) or (ROOT / "site" if "site" in path.relative_to(ROOT).parts else ROOT, value)
+    parsed = urlsplit(link)
     if parsed.scheme or parsed.netloc or not value or value == "#" or value.startswith("{{"):
         return
-    base = ROOT / "site" if "site" in path.relative_to(ROOT).parts else ROOT
-    target = ((base / parsed.path.lstrip("/")) if parsed.path.startswith("/") else (path.parent / unquote(parsed.path))).resolve() if parsed.path else path
-    if not target.is_relative_to(ROOT):
+    route = parsed.path.startswith("/")
+    target = (((base / unquote(parsed.path).lstrip("/")) if route else (path.parent / unquote(parsed.path))) if parsed.path else path).resolve()
+    # Compare physical paths on both sides (for example macOS /var -> /private/var).
+    # Publication's separate symlink check still rejects links inside the artifact.
+    if not target.is_relative_to(ROOT.resolve()):
         fail(str(path.relative_to(ROOT)), "local link escapes repository")
+        return
+    # A route is served from its base folder: /../docs/x.md is not a file of the site.
+    # site/ is also the web root for relative links in its pages: ../docs/x.md
+    # from site/index.html 404s once published.
+    served = base if route else ROOT / "site" if path.is_relative_to(ROOT / "site") else None
+    if served and not target.is_relative_to(served.resolve()):
+        fail(str(path.relative_to(ROOT)), "local link escapes site/")
         return
     if target.is_dir():
         target = next((target / n for n in ("index.html", "README.md") if (target / n).is_file()), target)
@@ -154,10 +220,18 @@ def check_text(path: Path, text: str) -> None:
             fail(relative, f"Python syntax error at line {exc.lineno}")
 
 
+def check_json(path: Path, text: str) -> None:
+    # Published data files must parse even when no script reads them.
+    try:
+        json.loads(text)
+    except json.JSONDecodeError as exc:
+        fail(str(path.relative_to(ROOT)), f"invalid JSON at line {exc.lineno}, column {exc.colno}")
+
+
 def check_ledger(path: Path, policy=None) -> list[dict]:
     result: list[dict] = []
     urls: set[str] = set()
-    for number, line in enumerate(path.read_text().splitlines(), 1):
+    for number, line in enumerate(path.read_text(encoding="utf-8").split("\n"), 1):
         if not line.strip():
             continue
         location = f"{path.relative_to(ROOT)}:{number}"
@@ -187,6 +261,9 @@ def check_ledger(path: Path, policy=None) -> list[dict]:
         for key in ("retrieval_url", "retrieved_url"):
             if row.get(key) and not public_url(row[key]):
                 fail(location, f"invalid public {key}")
+        for key in ("url", "canonical_url", "retrieval_url", "retrieved_url"):
+            if isinstance(row.get(key), str) and HTML_ENTITY.search(row[key]):
+                fail(location, f"{key} contains an HTML entity; store the unescaped URL")
         for key in ("abstract_sha256", "content_sha256"):
             if row.get(key) and (not isinstance(row[key], str) or not HASH.fullmatch(row[key])):
                 fail(location, f"invalid {key}")
@@ -218,9 +295,102 @@ def check_ledger(path: Path, policy=None) -> list[dict]:
                 fail(location, "content screening requires retrieved content hash and screened status")
         if row.get("verification_level") == "metadata_only" and row.get("status") == "screened":
             fail(location, "metadata-only record must not claim content-screened status")
+        # Timestamps and errors describe the evidence the row holds now.
+        rescreened, retrieved = row.get("relevance_rescreened_at"), row.get("retrieved_at")
+        if rescreened is not None and (not isinstance(rescreened, str) or not timestamp(rescreened)):
+            fail(location, "relevance_rescreened_at must be an ISO timestamp")
+        elif rescreened is not None and isinstance(retrieved, str) and timestamp(retrieved) and instant(rescreened) < instant(retrieved):
+            fail(location, "relevance_rescreened_at predates retrieved_at, so the rescreen did not cover the stored content")
+        if row.get("status") == "screened" and row.get("fetch_errors"):
+            fail(location, "screened record must not keep fetch_errors from an earlier failed attempt")
         if any(key in row for key in ("abstract", "full_text", "raw_html", "raw_response")):
             fail(location, "bulk source text must stay outside the public ledger")
     return result
+
+
+def ledger_key(row: dict) -> str | None:
+    url = row.get("canonical_url", row.get("url"))
+    if not isinstance(url, str) or not public_url(url):
+        return None
+    key = source_index.canonical(url)
+    # GitHub owner/repository names are case-insensitive, as in the scanner's identity.
+    return key.lower() if urlsplit(key).hostname == "github.com" else key
+
+
+def check_ledger_overlap(accepted: dict[Path, list[dict]], excluded: dict[Path, list[dict]]) -> None:
+    """A source is either accepted or excluded by the screen, never both."""
+    accepted_keys = {key for rows in accepted.values() for key in map(ledger_key, rows) if key}
+    for path, rows in excluded.items():
+        for row in rows:
+            key = ledger_key(row)
+            if key in accepted_keys:
+                fail(str(path.relative_to(ROOT)), f"excluded record is also in an accepted ledger: {key}")
+
+
+def instant(value: str) -> datetime:
+    """An ISO timestamp as an aware datetime; one without an offset is read as UTC."""
+    moment = datetime.fromisoformat(value[:-1] + "+00:00" if value.endswith("Z") else value)
+    return moment if moment.tzinfo else moment.replace(tzinfo=timezone.utc)
+
+
+def timestamp(value: str) -> bool:
+    try:
+        instant(value)
+        return True
+    except ValueError:
+        return False
+
+
+def check_vocabulary(path: Path) -> None:
+    for number, line in enumerate(path.read_text(encoding="utf-8").split("\n"), 1):
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError:
+            continue  # Blank, or reported by check_ledger().
+        if not isinstance(row, dict):
+            continue
+        location = f"{path.relative_to(ROOT)}:{number}"
+        for key, allowed in (("relation", RELATIONS), ("topic", TOPICS), ("source_type", SOURCE_TYPES), ("status", STATUSES)):
+            if key in row and (not isinstance(row[key], str) or row[key] not in allowed):
+                fail(location, f"unknown {key}")
+        if isinstance(row.get("retrieved_at"), str) and not timestamp(row["retrieved_at"]):
+            fail(location, "retrieved_at must be an ISO 8601 timestamp")
+        published = row.get("published_at")
+        if published is not None and not (isinstance(published, str) and (re.fullmatch(r"\d{4}", published) or timestamp(published))):
+            fail(location, "published_at must be a year or an ISO 8601 date or timestamp")
+
+
+def check_record_ids_and_authors(path: Path) -> None:
+    """Research records carry a unique id; primary arXiv imports list authors as "Given Surname"."""
+    require_id = path.name == "research-sources.jsonl"
+    seen: set[str] = set()
+    for number, line in enumerate(path.read_text(encoding="utf-8").split("\n"), 1):
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError:
+            continue  # Blank, or reported by check_ledger().
+        if not isinstance(row, dict):
+            continue
+        location = f"{path.relative_to(ROOT)}:{number}"
+        record_id = row.get("id")
+        if require_id:
+            if not isinstance(record_id, str) or not RECORD_ID.fullmatch(record_id):
+                fail(location, "research record requires an id such as arxiv:<id>, doi:<doi> or openalex:<id>")
+            elif record_id in seen:
+                fail(location, "duplicate research record id")
+            else:
+                seen.add(record_id)
+        if row.get("abstract_provider") != "arxiv_primary_abstract_page":
+            continue
+        url = row.get("canonical_url")
+        paper = re.fullmatch(r"https://arxiv\.org/abs/(\d{4}\.\d{4,5})", url) if isinstance(url, str) else None
+        if "id" in row and (not paper or record_id != "arxiv:" + paper[1]):
+            fail(location, "primary arXiv record id must be arxiv:<canonical arXiv id>")
+        authors = row.get("authors")
+        if not isinstance(authors, list) or not authors or not all(isinstance(name, str) and name.strip() for name in authors):
+            fail(location, "primary arXiv record requires a nonempty author list")
+        elif any("," in name for name in authors):
+            fail(location, 'primary arXiv authors must be "Given Surname", not "Surname, Given"')
 
 
 def check_index(expected_raw_records: int) -> None:
@@ -230,8 +400,8 @@ def check_index(expected_raw_records: int) -> None:
         fail("source index", "run python3 scripts/build_source_index.py")
         return
     try:
-        payload = json.loads(index_path.read_text())
-        snapshot = json.loads(count_path.read_text())
+        payload = json.loads(index_path.read_text(encoding="utf-8"))
+        snapshot = json.loads(count_path.read_text(encoding="utf-8"))
         rows, counts = payload["sources"], payload["counts"]
         if counts["raw_records"] != expected_raw_records:
             fail("source index", "not all nonexcluded source ledger records are accounted for")
@@ -239,7 +409,7 @@ def check_index(expected_raw_records: int) -> None:
         if any(not required.issubset(row) for row in rows):
             fail("source index", "missing website source fields")
         levels = collections.Counter(row["verification_level"] for row in rows)
-        if counts["unique_records"] != len(rows) or len({r["url"] for r in rows}) != len(rows):
+        if counts["unique_records"] != len(rows) or len({source_index.canonical(r["url"]) for r in rows}) != len(rows):
             fail("source index", "unique source count or URL deduplication mismatch")
         if counts["raw_records"] != counts["unique_records"] + counts["duplicate_records"]:
             fail("source index", "raw, unique, and duplicate counts do not reconcile")
@@ -261,14 +431,86 @@ def check_index(expected_raw_records: int) -> None:
         fail("source index", "invalid index or count-snapshot schema")
 
 
+def bib_fields(body: str) -> list[tuple[str, str]] | None:
+    """Split an entry body at top-level commas into (field, value) pairs; None if malformed."""
+    parts, current, depth, quoted = [], [], 0, False
+    for char in body:
+        depth += {"{": 1, "}": -1}.get(char, 0)
+        quoted = not quoted if char == '"' and depth == 0 else quoted
+        if char == "," and depth == 0 and not quoted:
+            parts.append("".join(current))
+            current = []
+        else:
+            current.append(char)
+    parts.append("".join(current))
+    fields = []
+    for part in parts:
+        name, separator, value = part.partition("=")
+        if not separator and part.strip():
+            return None
+        if separator:
+            fields.append((name.strip().casefold(), value.strip()))
+    return fields
+
+
+def check_bibtex(path: Path) -> None:
+    # The published bibliography must load in BibTeX/biber: one balanced entry per
+    # "@type{key," block, unique keys, and the fields every citation style needs.
+    relative = str(path.relative_to(ROOT))
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        return  # Already reported by the text check.
+    starts = [match.start() for match in re.finditer(r"^[ \t]*@", text, re.M)]
+    if not starts:
+        fail(relative, "no BibTeX entries")
+    keys: set[str] = set()
+    for start, end in zip(starts, starts[1:] + [len(text)]):
+        line = text.count("\n", 0, start) + 1
+        location = f"{relative}:{line}"
+        chunk = text[start:end]
+        if re.match(r"\s*@(?:comment|preamble|string)\b", chunk, re.I):
+            continue
+        head = re.match(r"\s*@(\w+)\s*\{\s*([^\s,{}]+)\s*,", chunk)
+        if not head:
+            fail(location, "malformed BibTeX entry header")
+            continue
+        key = head[2]
+        if key.casefold() in keys:
+            fail(location, f"duplicate BibTeX key {key}")
+        keys.add(key.casefold())
+        depth, close = 0, None
+        for position in range(chunk.index("{"), len(chunk)):
+            depth += {"{": 1, "}": -1}.get(chunk[position], 0)
+            if depth == 0:
+                close = position
+                break
+        trailing = chunk[close + 1:] if close is not None else ""
+        if close is None or any(line.strip() and not line.lstrip().startswith("%") for line in trailing.splitlines()):
+            fail(location, f"unbalanced braces in BibTeX entry {key}")
+            continue
+        fields = bib_fields(chunk[head.end():close])
+        if fields is None:
+            fail(location, f"malformed field in BibTeX entry {key}")
+            continue
+        values = {name: value.strip('{}" \t\n') for name, value in fields}
+        for name in ("title", "author", "year"):
+            if not values.get(name):
+                fail(location, f"BibTeX entry {key} is missing {name}")
+        if values.get("year") and not re.fullmatch(r"\d{4}", values["year"]):
+            fail(location, f"BibTeX entry {key} needs a four-digit year")
+
+
 def main() -> int:
     all_files = files()
+    check_symlinks()
     try:
         policy = load_policy(ROOT / "data/source-curation.json", source_index.canonical)
     except PolicyError as exc:
         fail("data/source-curation.json", str(exc))
         policy = None
     ledgers = []
+    accepted, excluded = {}, {}
     for path in all_files:
         relative = path.relative_to(ROOT)
         if any(pattern.search(str(relative)) for pattern in LEAK_PATTERNS.values()):
@@ -285,12 +527,20 @@ def main() -> int:
                 fail(str(relative), "expected UTF-8 text")
                 continue
             check_text(path, text)
+            if path.suffix == ".json":
+                check_json(path, text)
         if path.suffix == ".jsonl" and path.parent == ROOT / "data":
             rows = check_ledger(path, policy)
+            check_vocabulary(path)
+            check_record_ids_and_authors(path)
             if ".excluded." not in path.name:
                 ledgers.extend(rows)
+                accepted[path] = rows
+            else:
+                excluded[path] = rows
     if not ledgers:
         fail("data", "no source ledger records")
+    check_ledger_overlap(accepted, excluded)
     node = shutil.which("node")
     if not node:
         fail("JavaScript", "Node.js is required for syntax validation")
@@ -301,6 +551,9 @@ def main() -> int:
                 if result.returncode:
                     fail(str(path.relative_to(ROOT)), "JavaScript syntax check failed")
     check_index(len(ledgers))
+    for path in all_files:
+        if path.suffix == ".bib" and not path.is_symlink():
+            check_bibtex(path)
     if errors:
         print("Validation failed:")
         for error in errors[:80]:

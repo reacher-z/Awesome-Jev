@@ -32,29 +32,39 @@ try:
     from . import collect_ecosystem as ecosystem
     from . import collect_research as research
     from . import build_source_index as index
-    from .source_policy import load_policy
+    from .source_policy import credential_query, load_policy
     from .validate import LEAK_PATTERNS
 except ImportError:
     import collect_ecosystem as ecosystem
     import collect_research as research
     import build_source_index as index
-    from source_policy import load_policy
+    from source_policy import credential_query, load_policy
     from validate import LEAK_PATTERNS
 
 ROOT = Path(__file__).resolve().parents[1]
 LEVEL = {"metadata_only": 0, "abstract_checked": 1, "content_screened": 2, "editorial_reviewed": 3}
-SECRET_QUERY = re.compile(r"(?:token|api.?key|password|secret|signature|credential|authorization)", re.I)
 DIRECT_QUERIES = ["Jev TypeSafe", "typed decision model", "System One model Jev", "RLCD calibrated decisions"]
 MAX_BODY = 6_000_000
+# Scan-wide deadline for issuing requests, including Retry-After and backoff
+# waits. It leaves the 25-minute scan job time to merge, rebuild and validate,
+# so a heavily rate-limited run ends partial instead of hitting the job timeout.
+# Research queries run after the ecosystem phase, so each phase has its own
+# guaranteed share: a slow ecosystem phase cannot fail every research query.
+# Time that a phase leaves unused passes to the next one.
+PHASE_TIME_BUDGET_SECONDS = {"ecosystem": 14 * 60, "research": 4 * 60}
+SCAN_TIME_BUDGET_SECONDS = sum(PHASE_TIME_BUDGET_SECONDS.values())
 SAFE_FETCH_ERRORS = frozenset({
     "unsafe_url_syntax", "unsafe_url_scheme_or_credentials", "unsupported_port",
     "non_public_host", "credential_query_rejected", "non_public_ip",
     "dns_non_public_address", "dns_resolution_failed", "response_size_limit",
     "network_failure", "redirect_without_location", "unsupported_binary_document",
-    "redirect_limit", "excluded_discovery_url",
-    "invalid_arxiv_abstract_page", "arxiv_version_mismatch",
+    "redirect_limit", "excluded_discovery_url", "retry_after_exceeded",
+    "retry_budget_exhausted", "invalid_arxiv_abstract_page", "arxiv_version_mismatch",
 })
 CURATED_PAPERS_ORIGIN = "https://awesomejev.github.io/papers.json"
+# json.dumps(ensure_ascii=False) leaves these unescaped, but str.splitlines()
+# and many line-oriented tools treat them as record breaks.
+LINE_BREAK_ESCAPES = str.maketrans({"\u0085": "\\u0085", "\u2028": "\\u2028", "\u2029": "\\u2029"})
 
 
 def now():
@@ -128,7 +138,7 @@ def public_url(url: str):
             raise FetchError("non_public_host")
         if host in {"localhost", "localhost.localdomain"} or host.endswith((".localhost", ".local", ".internal", ".home", ".lan")):
             raise FetchError("non_public_host")
-        if any(SECRET_QUERY.search(k) for k, _ in urllib.parse.parse_qsl(p.query, keep_blank_values=True)):
+        if credential_query(p.query):
             raise FetchError("credential_query_rejected")
         try:
             if not ipaddress.ip_address(host).is_global:
@@ -154,13 +164,56 @@ def public_addresses(host: str, port: int):
 
 class PublicFetcher:
     """Bounded GETs with checked redirects, DNS pinning and no ambient auth."""
-    def __init__(self, retries=2, timeout=18, pause=0.0, cache_bytes=32 * 1024 * 1024):
+    def __init__(self, retries=2, timeout=18, pause=0.0, cache_bytes=32 * 1024 * 1024, budget=SCAN_TIME_BUDGET_SECONDS):
         self.retries, self.timeout, self.pause = retries, timeout, pause
         self.cache = OrderedDict()
         self.cache_bytes = cache_bytes
         self.cached_bytes = 0
         self.lock = threading.Lock()
         self.requests = 0
+        # Workers share each host's not-before time, so a rate-limit delay holds
+        # every request to that host, and the current phase's deadline.
+        self.not_before = {}
+        self.budget = budget
+        self.started = time.monotonic()
+        self.deadline = self.started + budget
+        self.allotted = 0
+        self.phase = None
+        self.exhausted_phases = []
+        self.budget_exhausted = False
+
+    def begin_phase(self, name, seconds):
+        """Give a scan phase `seconds` from now, or more when earlier phases
+        finished inside their shares: the deadline is never before the end of
+        all shares allotted so far."""
+        with self.lock:
+            self.phase = name
+            self.allotted += seconds
+            self.deadline = max(time.monotonic() + seconds, self.started + self.allotted)
+
+    def _hold(self, host, ready=0.0, delay=0.0, host_wide=True):
+        """Wait for the host's not-before time and any new `delay`, within the deadline.
+
+        `ready` is the time this request has already waited until; the result
+        is the new one. A `host_wide` delay also holds every other request to
+        the host. A wait that would end at or after the deadline is not
+        started: no further request is sent and the scan reports a partial result.
+        """
+        with self.lock:
+            current = max(time.monotonic(), ready)
+            shared = self.not_before.get(host, 0.0)
+            until = max(shared, current + delay)
+            if until >= self.deadline:
+                self.budget_exhausted = True
+                if self.phase and self.phase not in self.exhausted_phases:
+                    self.exhausted_phases.append(self.phase)
+                raise FetchError("retry_budget_exhausted")
+            if delay and host_wide:
+                self.not_before[host] = until
+        wait = max(delay, shared - current)
+        if wait > 0:
+            time.sleep(wait)
+        return until
 
     def _request(self, url):
         p = public_url(url)
@@ -174,7 +227,18 @@ class PublicFetcher:
         conn = connection_type(host, port, **kwargs)
         # HTTPSConnection still verifies the original hostname/SNI; only TCP is
         # pinned, preventing a second DNS resolution from reaching a private IP.
-        conn._create_connection = lambda _address, timeout, source_address=None: socket.create_connection((addresses[0], port), timeout, source_address)
+        def pinned_connection(_address, timeout, source_address=None):
+            # Like socket.create_connection, try each validated address in turn.
+            error = OSError("no_address")
+            for address in addresses:
+                if not ipaddress.ip_address(address).is_global:
+                    raise FetchError("dns_non_public_address")
+                try:
+                    return socket.create_connection((address, port), timeout, source_address)
+                except OSError as exc:
+                    error = exc
+            raise error
+        conn._create_connection = pinned_connection
         try:
             target = urllib.parse.urlunsplit(("", "", p.path or "/", p.query, ""))
             conn.request("GET", target, headers={"User-Agent": "AwesomeJev-Public-Refresh/1.0", "Accept": "application/json,text/plain,text/html", "Accept-Encoding": "identity"})
@@ -197,10 +261,11 @@ class PublicFetcher:
                 self.cache.move_to_end(url)
         if cached:
             return cached
-        current = url
+        current, ready = url, 0.0
         for hop in range(6):
-            public_url(current)
+            host = public_url(current).hostname
             for attempt in range(self.retries + 1):
+                ready = self._hold(host, ready)
                 try:
                     status, headers, raw = self._request(current)
                 except FetchError as e:
@@ -216,9 +281,14 @@ class PublicFetcher:
                 if status == 429 or 500 <= status < 600:
                     if attempt == self.retries:
                         raise FetchError("http_" + str(status))
-                    retry = headers.get("retry-after", "")
-                    delay = min(float(retry), 8) if retry.isdigit() else min(2 ** attempt, 8)
-                    time.sleep(delay)
+                    delay = research.retry_after_seconds(headers.get("retry-after"))
+                    if delay is not None and delay > research.MAX_RETRY_AFTER_SECONDS:
+                        # Never send a request the server has asked us not to send.
+                        raise FetchError("retry_after_exceeded")
+                    # A 429 or a Retry-After is the host's rate-limit signal and holds
+                    # every worker; plain backoff after a 5xx delays only this request.
+                    ready = self._hold(host, ready, min(2 ** attempt, 8) if delay is None else delay,
+                                       host_wide=status == 429 or delay is not None)
                     continue
                 break
             if status in {301, 302, 303, 307, 308}:
@@ -280,6 +350,11 @@ def identity(row):
     return key
 
 
+def jsonl_record(row):
+    """Serialize one ledger record as exactly one newline-terminated line."""
+    return json.dumps(row, ensure_ascii=False, sort_keys=True).translate(LINE_BREAK_ESCAPES) + "\n"
+
+
 def content_hash(row):
     return row.get("content_sha256") or row.get("abstract_sha256")
 
@@ -307,7 +382,9 @@ class Ledger:
     def read(cls, path):
         if not path.exists():
             return cls([], [])
-        lines = path.read_bytes().decode("utf-8").splitlines(keepends=True)
+        # Records end at "\n" only; splitlines() would also break a record at
+        # U+2028, U+2029 or U+0085 inside a JSON string.
+        lines = re.findall(r"[^\n]*\n|[^\n]+\Z", path.read_bytes().decode("utf-8"))
         if any(not line.strip() for line in lines):
             raise ValueError("blank_ledger_record")
         return cls([json.loads(line) for line in lines], lines)
@@ -378,7 +455,16 @@ def primary_review_candidate(prior, incoming):
 def merge_records(old: Ledger, incoming, max_new=None, policy=None):
     """Keep old bytes on unchanged hashes/failure; never grant editorial status."""
     rows, lines = list(old.rows), list(old.lines)
-    positions = {identity(row): i for i, row in enumerate(rows)}
+    positions, strengths, aliases = {}, {}, {}
+    for i, row in enumerate(rows):
+        key = identity(row)
+        aliases[key] = aliases.get(key, 0) + 1
+        # Historical aliases can share one logical source. Prefer protected
+        # evidence, then the canonical spelling; ledger order is not authority.
+        strength = (pinned_primary_abstract(row), LEVEL.get(row.get("verification_level"), 0),
+                    row.get("canonical_url", row.get("url")) == key)
+        if key not in positions or strength > strengths[key]:
+            positions[key], strengths[key] = i, strength
     hashes = {content_hash(row) for row in rows if content_hash(row)}
     changes = {"added": [], "changed": [], "editorial_review_required": [], "duplicates": 0, "preserved_after_failure": 0, "rejected": 0, "curation_excluded": []}
     candidates, pinned_observations = {}, {}
@@ -429,7 +515,7 @@ def merge_records(old: Ledger, incoming, max_new=None, policy=None):
                     # retain every other field, including prior abstract evidence.
                     repaired = {**prior, "canonical_page_separately_fetched": True}
                     rows[i] = repaired
-                    lines[i] = json.dumps(repaired, ensure_ascii=False, sort_keys=True) + "\n"
+                    lines[i] = jsonl_record(repaired)
                     changes["changed"].append(key)
                 continue
             if LEVEL.get(new.get("verification_level"), 0) < LEVEL.get(prior.get("verification_level"), 0) and prior.get("verification_level") != "editorial_reviewed":
@@ -444,13 +530,28 @@ def merge_records(old: Ledger, incoming, max_new=None, policy=None):
             # Retain fields the machine collector does not own, including any
             # manually supplied notes; preserve explicit editorial annotations.
             merged = {**prior, **new}
+            # Fields that describe an earlier observation must not outlive it:
+            # a relevance rescreen of the old bytes does not cover the new ones,
+            # and a successful fetch supersedes the errors of a failed attempt.
+            if content_hash(new) != content_hash(prior) and "relevance_rescreened_at" not in new:
+                merged.pop("relevance_rescreened_at", None)
+            if new.get("status") == "screened" and "fetch_errors" not in new:
+                merged.pop("fetch_errors", None)
+            if aliases.get(key, 0) > 1:
+                # Refresh one owner without turning another retained alias
+                # into an exact duplicate of its stored URL identity.
+                for field in ("url", "canonical_url"):
+                    if field in prior:
+                        merged[field] = prior[field]
+                    else:
+                        merged.pop(field, None)
             for field in ("editorial_note", "manual_notes", "reviewed_by", "review_date", "curated"):
                 if field in prior:
                     merged[field] = prior[field]
             if has_abstract_provenance(merged) and new.get("verification_level") == "content_screened":
                 merged["canonical_page_separately_fetched"] = canonical_page_observed(new)
             rows[i] = merged
-            lines[i] = json.dumps(merged, ensure_ascii=False, sort_keys=True) + "\n"
+            lines[i] = jsonl_record(merged)
             if content_hash(merged):
                 hashes.add(content_hash(merged))
             changes["changed"].append(key)
@@ -465,7 +566,7 @@ def merge_records(old: Ledger, incoming, max_new=None, policy=None):
             positions[key] = len(rows)
             rows.append(new)
             separator = "\n" if lines and not lines[-1].endswith("\n") else ""
-            lines.append(separator + json.dumps(new, ensure_ascii=False, sort_keys=True) + "\n")
+            lines.append(separator + jsonl_record(new))
             if content_hash(new):
                 hashes.add(content_hash(new))
             changes["added"].append(key)
@@ -503,14 +604,14 @@ class ArxivAbstractPage(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
-        if tag == "blockquote" and "abstract" in attrs.get("class", "").split():
+        if tag == "blockquote" and "abstract" in (attrs.get("class") or "").split():
             self.in_abstract = True
-        if tag == "td" and "arxividv" in attrs.get("class", "").split():
+        if tag == "td" and "arxividv" in (attrs.get("class") or "").split():
             self.in_version = True
         if self.in_version and tag == "a":
             self.version = arxiv_version_url(attrs.get("href")) or self.version
         if tag == "meta" and attrs.get("name") == "citation_date":
-            value = attrs.get("content", "").replace("/", "-")
+            value = (attrs.get("content") or "").replace("/", "-")
             if re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
                 self.published_at = value
 
@@ -615,6 +716,7 @@ class Scan:
         request_seed = {k: v for k, v in seed.items() if k != "fetch_url"}
         request_seed["url"] = target
         row, children = ecosystem.audit(request_seed)
+        ecosystem.classify_relation(row)
         row["url"] = key
         if key not in self.pinned_sources:
             return [row], children
@@ -645,7 +747,7 @@ class Scan:
                     "canonical_page_separately_fetched": True, "full_text_reviewed": False, "editorial_reviewed": False,
                     "relevance": "Observed primary abstract for a pinned paper; changes require maintainer review.",
                     "screening_method": "Primary arXiv abstract and version metadata only; no full-paper review or reproduction."})
-            except (FetchError, ValueError, UnicodeError) as error:
+            except (FetchError, ValueError, UnicodeError, AttributeError) as error:
                 self.error(requested, "pinned_paper_observation_failed:" + safe_exception_code(error))
         return observations, children if observations else []
 
@@ -706,7 +808,7 @@ class Scan:
                                     seeds.setdefault(key, child)
                                 except FetchError:
                                     self.excluded += 1
-                        except (FetchError, ValueError, TypeError, KeyError) as e:
+                        except (FetchError, ValueError, TypeError, KeyError, AttributeError) as e:
                             self.error(seed["url"], "document_failed:" + safe_exception_code(e))
                         if i % 200 == 0:
                             print(json.dumps({"phase": "ecosystem", "completed": i}), flush=True)
@@ -836,13 +938,25 @@ def write_if_changed(path, text):
         return False
     path.parent.mkdir(parents=True, exist_ok=True)
     temp = path.with_suffix(path.suffix + ".refresh-tmp")
-    temp.write_text(text, encoding="utf-8")
+    temp.write_text(text, encoding="utf-8", newline="\n")
     temp.replace(path)
     return True
 
 
+def prune_promoted_exclusions(excluded: Ledger, accepted_rows) -> tuple[Ledger, list[str]]:
+    """Drop exclusion-screen rows for sources that a later screen accepted.
+
+    Keeping both would record two opposite decisions about one source.
+    """
+    accepted = {identity(row) for row in accepted_rows}
+    kept = [(row, line) for row, line in zip(excluded.rows, excluded.lines) if identity(row) not in accepted]
+    pruned = sorted({identity(row) for row in excluded.rows} & accepted)
+    return Ledger([row for row, _ in kept], [line for _, line in kept]), pruned
+
+
 def publish_summary(report):
-    text = "\n".join(["## Public source scan", "", "Status: **" + report["status"] + "**.", f"Added: {report['added_count']}; updated: {report['changed_count']}; source changes awaiting review: {report['editorial_review_required_count']}.", f"Provider/document issues: {report['error_count']}. Earlier evidence was retained on failures.", f"Diagnostic examples stored: {report['error_examples_count']} of {report['error_count']}; error_code_counts covers all issues.", "", "Automated source screening is not scientific review or reproduction. No source instructions or downloaded code were executed.", ""])
+    phases = report.get("retry_budget_exhausted_phases") or ["scan"]
+    text = "\n".join(["## Public source scan", "", "Status: **" + report["status"] + "**.", f"Added: {report['added_count']}; updated: {report['changed_count']}; source changes awaiting review: {report['editorial_review_required_count']}.", f"Provider/document issues: {report['error_count']}. Earlier evidence was retained on failures.", f"Diagnostic examples stored: {report['error_examples_count']} of {report['error_count']}; error_code_counts covers all issues.", *([f"Retry budget exhausted in the {' and '.join(phases)} phase{'s' if len(phases) > 1 else ''}: no further requests were sent there once the time share ran out; unscanned sources keep their earlier evidence."] if report.get("retry_budget_exhausted") else []), "", "Automated source screening is not scientific review or reproduction. No source instructions or downloaded code were executed.", ""])
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:
             f.write(text)
@@ -874,7 +988,9 @@ def main(argv=None):
     scan = Scan(fetcher, args.workers, curated_seeds=curated_seeds, policy=policy, pinned_sources=pinned_sources,
                 known_keys={identity(row) for ledger in originals for row in ledger.rows})
     limit = min(args.max_new, 5) if args.smoke and args.max_new is not None else 5 if args.smoke else args.max_new
+    fetcher.begin_phase("ecosystem", PHASE_TIME_BUDGET_SECONDS["ecosystem"])
     ecosystem_rows = scan.scan_ecosystem(originals[0], limit, args.smoke)
+    fetcher.begin_phase("research", PHASE_TIME_BUDGET_SECONDS["research"])
     research_rows, direct = scan.scan_research(args.smoke)
     ecosystem_input, research_input = route_observations(originals, ecosystem_rows + direct, research_rows)
     merged_ecosystem, ec = merge_records(originals[0], ecosystem_input, limit, policy=policy)
@@ -882,21 +998,25 @@ def main(argv=None):
     merged_research, rc = merge_records(originals[1], research_input, remaining, policy=policy)
     changes = {k: ec[k] + rc[k] for k in ("added", "changed", "editorial_review_required")}
     report_path = ROOT / "data/scan-latest.json"
-    previous = json.loads(report_path.read_text()) if report_path.exists() else {}
+    previous = json.loads(report_path.read_text(encoding="utf-8")) if report_path.exists() else {}
     pending, pending_changed, pending_count = pending_reviews(previous, changes["editorial_review_required"], merged_ecosystem.rows + merged_research.rows)
     changed = bool(changes["added"] or changes["changed"] or pending_changed)
     successful_content = sum(r.get("verification_level") != "metadata_only" for r in ecosystem_rows) + scan.successful_queries
-    status = "failed" if not successful_content else "partial" if scan.errors else "success"
+    status = "failed" if not successful_content else "partial" if scan.errors or fetcher.budget_exhausted else "success"
     if status == "failed":
         changed = False
+    excluded_path = ROOT / "data/ecosystem-sources.excluded.jsonl"
+    excluded, promoted = prune_promoted_exclusions(Ledger.read(excluded_path), merged_ecosystem.rows + merged_research.rows)
     if not args.smoke:
         for path, ledger in zip(paths, (merged_ecosystem, merged_research)):
             write_if_changed(path, "".join(ledger.lines))
+        if promoted:
+            write_if_changed(excluded_path, "".join(excluded.lines))
         subprocess.run([sys.executable, str(ROOT / "scripts/build_source_index.py")], cwd=ROOT, check=True)
-        counts = json.loads((ROOT / "data/source-counts.json").read_text())["counts"]
+        counts = json.loads((ROOT / "data/source-counts.json").read_text(encoding="utf-8"))["counts"]
     else:
-        counts = json.loads((ROOT / "data/source-counts.json").read_text())["counts"]
-    report = {"schema_version": 1, "started_at": started_at, "completed_at": now(), "status": status, "changed": changed, "dry_run": args.smoke, "added_count": len(changes["added"]), "changed_count": len(changes["changed"]), "editorial_review_required_count": pending_count, "added_urls": changes["added"][:100], "changed_urls": changes["changed"][:100], "editorial_refresh_candidates": pending, "editorial_examples_truncated": pending_count > 100, **error_report(scan.errors), "counts": counts, "index_revision": scan.index_revision, "network_requests": fetcher.requests, "excluded_discoveries": scan.excluded, "preserved_after_failure": ec["preserved_after_failure"] + rc["preserved_after_failure"], "duplicate_candidates_skipped": ec["duplicates"] + rc["duplicates"], "privacy_rejected_records": ec["rejected"] + rc["rejected"], "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources."}
+        counts = json.loads((ROOT / "data/source-counts.json").read_text(encoding="utf-8"))["counts"]
+    report = {"schema_version": 1, "started_at": started_at, "completed_at": now(), "status": status, "changed": changed, "dry_run": args.smoke, "added_count": len(changes["added"]), "changed_count": len(changes["changed"]), "editorial_review_required_count": pending_count, "added_urls": changes["added"][:100], "changed_urls": changes["changed"][:100], "editorial_refresh_candidates": pending, "editorial_examples_truncated": pending_count > 100, **error_report(scan.errors), "counts": counts, "index_revision": scan.index_revision, "network_requests": fetcher.requests, "retry_budget_exhausted": fetcher.budget_exhausted, "retry_budget_seconds": fetcher.budget, "retry_budget_exhausted_phases": fetcher.exhausted_phases, "phase_budget_seconds": PHASE_TIME_BUDGET_SECONDS, "excluded_discoveries": scan.excluded, "preserved_after_failure": ec["preserved_after_failure"] + rc["preserved_after_failure"], "duplicate_candidates_skipped": ec["duplicates"] + rc["duplicates"], "privacy_rejected_records": ec["rejected"] + rc["rejected"], "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources."}
     report["curation_excluded_count"] = len(set(ec["curation_excluded"] + rc["curation_excluded"]) | scan.curation_excluded)
     # Report every attempt, including failures. The publisher must gate on
     # report.changed, not this report's timestamp or a raw git-diff count.

@@ -12,6 +12,6 @@ Link canonical public sources. State dates or versions, what was checked, and ma
 - [ ] I stated the verification level and relevant limitations.
 - [ ] I included dates or versions for changing claims.
 - [ ] I checked for credentials, private paths, and unlicensed assets.
-- [ ] I ran `python3 scripts/validate.py` and updated the generated source index if needed.
+- [ ] I ran the checks in CONTRIBUTING.md (`python3 -m unittest discover -s tests`, `python3 scripts/validate.py`, `node scripts/build_site.mjs --check`, `python3 scripts/build_source_index.py --check`) and committed any regenerated site pages or source index.
 
 The automated PR comment performs deterministic provenance and hygiene checks. It is not a human review or a scientific verdict; maintainers decide whether to merge.

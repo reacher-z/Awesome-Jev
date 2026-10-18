@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-17T03:38:33.813019+00:00",
+  "baseline_commit": "dd22269297785875eb11ce8c59bed71299eb8752",
+  "curated_paper_additions": 3,
+  "curated_model_additions": 1,
+  "accepted_new_sources": 1,
+  "scope": "Main-session fixed-version abstract and citation review, model-card reading and targeted public repository overview checks; no subagent review, full-paper review or experiment reproduction.",
+  "papers": [
+    {
+      "canonical_url": "https://arxiv.org/abs/2610.02586",
+      "fixed_url": "https://arxiv.org/abs/2610.02586v1",
+      "title": "Labels Override Definitions in Jev-Style Typed Decision Models",
+      "authors": [
+        "Azizi, Seyedarmin",
+        "Potraghloo, Erfan Baghaei",
+        "Pedram, Massoud"
+      ],
+      "first_submitted": "2026-10-01",
+      "reviewed_version": "v1",
+      "reviewed_version_date": "2026-10-01",
+      "new_resource_count": 0,
+      "summary_en": "Studies option-label bias in open-weight decision models; prompt-rendering changes with fixed weights implicate the label/definition interface, without testing hosted Jev.",
+      "summary_zh": "研究开放权重决策模型的选项标签偏置；固定权重后改变提示渲染，指向标签／定义接口的影响，未测试托管 Jev。",
+      "limitations": "Fixed-v1 abstract review only. The reported intervention concerns inspected open implementations; it is not a causal audit of hosted Jev or proof that all option-channel attacks are removed.",
+      "primary_evidence": {
+        "url": "https://arxiv.org/abs/2610.02586v1",
+        "retrieved_at": "2026-10-17T03:35:18.226150+00:00",
+        "abstract_page_sha256": "7754c811569f5211c43d4bb3adc1df6a849252b490f332d9cab1ad0c412029cb",
+        "abstract_sha256": "fde0b2c9f899a082764f392acfae64ff81d329889c33555056c90c51224d1ca8",
+        "abstract_hash_scope": "Whitespace-normalized visible abstract; linked URLs retain the page link text.",
+        "scope": "Original versioned abstract and citation metadata; not full-paper review."
+      },
+      "provider_observation": {
+        "title": "Labels Override Definitions in Jev-Style Typed Decision Models",
+        "publishedAt": "2026-10-01T00:00:00.000Z"
+      },
+      "raw_preservation": {
+        "ledger": "data/ecosystem-sources.jsonl",
+        "raw_line_sha256": "9a7104e068f1126e3bfa1e7fed2864c0ba15105d6b9e2cb2cc6a6c1c21c53bf5",
+        "verification_level": "content_screened",
+        "no_change": true
+      }
+    },
+    {
+      "canonical_url": "https://arxiv.org/abs/2610.06354",
+      "fixed_url": "https://arxiv.org/abs/2610.06354v3",
+      "title": "GraphDecisionBench: Benchmarking System One Models on Graph Tasks",
+      "authors": [
+        "Yang, Xianliang",
+        "Zhang, Yapu",
+        "Zhao, Li"
+      ],
+      "first_submitted": "2026-10-05",
+      "reviewed_version": "v3",
+      "reviewed_version_date": "2026-10-12",
+      "new_resource_count": 0,
+      "summary_en": "Compares graph decisions across fourteen model-interface configurations; local adjacency, graph-text evidence use and sequential solution quality are separate capabilities.",
+      "summary_zh": "比较十四种模型—接口配置的图决策；局部邻接识别、图文证据利用与序列构造解的质量是不同能力。",
+      "limitations": "Fixed-v3 abstract review plus the public repository overview. Fourteen configurations are not fourteen independent model families. The repository exposes aggregate tables but says per-query and per-trajectory outputs are omitted.",
+      "primary_evidence": {
+        "url": "https://arxiv.org/abs/2610.06354v3",
+        "retrieved_at": "2026-10-17T03:35:18.289946+00:00",
+        "abstract_page_sha256": "1b6d68053bda6e3c1a88d43c430e384fb1389c6d509f834e991b5a5eb3bc35e9",
+        "abstract_sha256": "e525491e63b78590199d771904b154bd50c0e817b472614a51a3b2a20bc0be9d",
+        "abstract_hash_scope": "Whitespace-normalized visible abstract; linked URLs retain the page link text.",
+        "scope": "Original versioned abstract and citation metadata; not full-paper review."
+      },
+      "provider_observation": {
+        "title": "GraphDecisionBench: Benchmarking System One Models on Graph Tasks",
+        "publishedAt": "2026-10-09T00:00:00.000Z",
+        "githubRepo": "https://github.com/VictorYXL/GraphDecisionBench"
+      },
+      "raw_preservation": {
+        "ledger": "data/ecosystem-sources.jsonl",
+        "raw_line_sha256": "695c7940b9be65820eb2b5862c3b2e62551c2515e6e5d955fb588fe99a3b27f0",
+        "verification_level": "content_screened",
+        "no_change": true
+      }
+    },
+    {
+      "canonical_url": "https://arxiv.org/abs/2610.01293",
+      "fixed_url": "https://arxiv.org/abs/2610.01293v1",
+      "title": "AudioJev: Direct Audio Decisions with Order-Calibrated Probabilities",
+      "authors": [
+        "Lv, Sihan",
+        "Li, Zhen",
+        "Cao, Zhiqi",
+        "Zhang, Jinshan",
+        "Li, Ying",
+        "Xi, Meng",
+        "Yin, Jianwei"
+      ],
+      "first_submitted": "2026-10-01",
+      "reviewed_version": "v1",
+      "reviewed_version_date": "2026-10-01",
+      "new_resource_count": 0,
+      "summary_en": "Learns audio-conditioned candidate probabilities with aligned option-permutation training; order stability and empirical correctness calibration remain different properties.",
+      "summary_zh": "通过按候选身份对齐的选项重排训练学习音频条件概率；顺序稳定性与概率符合实际正确率仍是不同性质。",
+      "limitations": "Fixed-v1 abstract and released model card inspected. The paper summarizes three training seeds; the model card reports one released seed in original option order and discloses audio-source overlap. No model or audio was downloaded.",
+      "primary_evidence": {
+        "url": "https://arxiv.org/abs/2610.01293v1",
+        "retrieved_at": "2026-10-17T03:35:18.279552+00:00",
+        "abstract_page_sha256": "4fa88fe96f139544dfaa3f4c8981f2221acb8262a0f2b97b9c1ae186c8669bcf",
+        "abstract_sha256": "9a8b040b6c38b1924ab508ed37f47694b6ccb9c19cafa40cebf8de0a7c4825e8",
+        "abstract_hash_scope": "Whitespace-normalized visible abstract; linked URLs retain the page link text.",
+        "scope": "Original versioned abstract and citation metadata; not full-paper review."
+      },
+      "provider_observation": {
+        "title": "AudioJev: Direct Audio Decisions with Order-Calibrated Probabilities",
+        "publishedAt": "2026-10-01T00:00:00.000Z"
+      },
+      "raw_preservation": {
+        "ledger": "data/research-sources.jsonl",
+        "raw_line_sha256": "7716bd8415eda3fcfb768773cee6f24b7d996789f439572d64133bffee7559b1",
+        "verification_level": "abstract_checked",
+        "no_change": true
+      }
+    }
+  ],
+  "model": {
+    "url": "https://huggingface.co/shlv/AudioJev",
+    "title": "AudioJev checkpoint",
+    "retrieved_url": "https://huggingface.co/shlv/AudioJev/raw/main/README.md",
+    "retrieved_at": "2026-10-17T03:35:59.068352+00:00",
+    "content_sha256": "69e2a1cd0eccf1620f036779e0ef87e33e028b8c6f3a2b484e281425483a444a",
+    "content_bytes": 4923,
+    "verification_level": "content_screened",
+    "limitations": "The card states that 119 hidden MMAU questions overlap in audio source with fitting/development data; order consistency does not establish correctness calibration. Training audio and benchmark answers are not included. No weights, audio, code or experiments were executed."
+  },
+  "companion_links": [
+    {
+      "url": "https://github.com/VictorYXL/GraphDecisionBench",
+      "counting": "Already-known repository; zero new-source credit.",
+      "scope": "Public overview and availability statement inspected; aggregate outputs are distinct from omitted per-query and per-trajectory records."
+    },
+    {
+      "url": "https://github.com/SihanLv/AudioJev-Inference",
+      "counting": "Navigation link only; not added to the accepted ledger or expansion count.",
+      "scope": "Public repository page and README presentation inspected. Separate API README retrieval returned HTTP 403; no alternate credential or API retry was used. Code license and model license are distinct; no code executed."
+    }
+  ],
+  "identity_checks": "All three paper identities already occur in the frozen baseline. The new model URL and card hash are absent from the frozen baseline and current accepted sources. No size variants or component files counted.",
+  "privacy": "Only public bibliographic facts, source URLs, summaries and hashes are stored. No raw source bodies, accounts, contacts, local paths, credentials, weights or audio are published."
+}

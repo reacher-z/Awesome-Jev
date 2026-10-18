@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from html.parser import HTMLParser
+import http.client
 import json
 from pathlib import Path
 import re
@@ -83,7 +84,9 @@ def get_text(url, opener, limit=MAX_PAGE_BYTES):
         return body.decode("utf-8")
     except urllib.error.HTTPError as error:
         raise SubmissionError(f"Live verification failed with HTTP {error.code}; no submission was sent.") from None
-    except (urllib.error.URLError, TimeoutError, UnicodeError):
+    # urllib does not wrap errors raised while reading the status line or body
+    # (RemoteDisconnected, IncompleteRead, ConnectionResetError).
+    except (urllib.error.URLError, TimeoutError, http.client.HTTPException, OSError, UnicodeError):
         raise SubmissionError("Live verification failed; no submission was sent.") from None
 
 
@@ -117,7 +120,7 @@ def submit(urls, key, opener):
             return response.status
     except urllib.error.HTTPError as error:
         return error.code
-    except (urllib.error.URLError, TimeoutError):
+    except (urllib.error.URLError, TimeoutError, http.client.HTTPException, OSError):
         raise SubmissionError("The single submission request failed; receipt is unconfirmed. No automatic retry was attempted.") from None
 
 

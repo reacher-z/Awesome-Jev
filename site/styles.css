@@ -33,22 +33,32 @@
 }
 :root {
   --paper: #ffffff;
+  --wash: #f8fafb;
+  --tint: #bfd7ea;
   --ink: #111827;
   --muted: #374151;
   --link: #0b3954;
   --red: #c81d25;
   --line: #d1d5db;
   --accent: #ff5a5f;
-  --sans: "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --badge: #087e8b;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   --mono: "IBM Plex Mono", monospace;
+}
+/* Latin fallbacks come first so English punctuation never borrows full-width CJK glyphs; Chinese pages keep CJK fonts first. */
+:lang(zh) {
+  --sans: "Inter", "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 * {
   box-sizing: border-box;
 }
 html {
+  color-scheme: light;
   scroll-behavior: smooth;
   scroll-padding-top: 30px;
 }
+/* The site stays white with dark text, independent of the system color scheme. */
+
 body {
   margin: 0;
   background: var(--paper);
@@ -83,7 +93,7 @@ button {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible {
-  outline: 2px solid #0b3954;
+  outline: 2px solid var(--link);
   outline-offset: 5px;
 }
 ::selection {
@@ -98,7 +108,7 @@ input:focus-visible {
 .masthead {
   display: flex;
   align-items: center;
-  min-height: 105px;
+  min-height: 84px;
   border-bottom: 1px solid var(--line);
   gap: 32px;
 }
@@ -153,6 +163,11 @@ input:focus-visible {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
+.main-nav a[aria-current] {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
 .language-switch {
   display: flex;
   align-items: center;
@@ -191,6 +206,10 @@ html:not(.js) .corpus-disclosure {
   font-weight: 650;
   margin: 24px 0 18px;
 }
+/* A single long word in a page title (e.g. "GraphDecisionBench") may break rather than widen 320px screens. */
+.document-main > h1 {
+  overflow-wrap: break-word;
+}
 .document-deck,
 .document-main > p,
 .prose,
@@ -207,7 +226,7 @@ html:not(.js) .corpus-disclosure {
   font-size: 14px;
   color: var(--muted);
 }
-.document-main a:not(.resource-title a),
+.document-main a:not(.resource-title a, .artifact-chip),
 .document-footer a {
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -232,11 +251,102 @@ html:not(.js) .corpus-disclosure {
   padding: 24px 0 36px;
 }
 .document-main .resource-list { margin-top: 40px; }
+/* Comparison pages keep evidence readable while placing more rows above the fold. */
+.collection-stats { display:flex; flex-wrap:wrap; gap:12px 28px; margin:14px 0 18px; }
+.collection-stats > div { display:flex; flex-direction:row-reverse; gap:7px; align-items:baseline; }
+.collection-stats dt { font-size:13px; color:var(--muted); }
+.collection-stats dd { margin:0; font-size:18px; font-weight:650; font-variant-numeric:tabular-nums; }
+.collection-stats a { text-decoration:underline; text-underline-offset:3px; }
+.filter-count { font-size:11px; font-variant-numeric:tabular-nums; opacity:.85; }
+.model-directory { padding-top:24px; }
+.model-directory > h1 { font-size:clamp(28px,3.1vw,38px); margin:16px 0 12px; }
+.model-directory .document-deck { font-size:16px; line-height:1.6; margin-bottom:12px; }
+.model-directory .document-date { margin-block:10px; }
+.model-directory > p:not(.document-date) { margin-block:10px; }
+.model-directory .verification-legend summary { padding-block:10px; }
+.model-directory .verification-legend { margin-block:14px; }
+.model-controls { display:flex; gap:16px; align-items:end; margin:24px 0 12px; }
+.model-controls[hidden], .model-row[hidden] { display:none; }
+.model-controls label { display:flex; flex-direction:column; gap:6px; font-size:12px; font-weight:550; }
+.model-controls .model-search { flex:1; }
+.model-controls input, .model-controls select, .model-controls button { background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:0; min-height:42px; padding:9px 12px; font:14px var(--sans); }
+.model-controls input { width:100%; }
+.model-controls input::placeholder { color:var(--muted); }
+.model-controls button { cursor:pointer; }
+.model-controls :is(input,select,button):focus-visible { outline:2px solid var(--link); outline-offset:3px; }
+.model-list-meta { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 16px; font-size:12px; color:var(--muted); }
+.model-list-meta p { margin:0 0 10px; }
+.model-table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:14px; line-height:1.6; }
+.model-table th, .model-table td { text-align:left; vertical-align:top; padding:15px 18px 15px 0; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
+.model-table thead th { border-block:1px solid var(--ink); padding-block:10px; font-size:12px; font-weight:550; }
+.model-table thead th:first-child { width:28%; }
+.model-table thead th:nth-child(2) { width:19%; }
+.model-table th:last-child, .model-table td:last-child { padding-right:0; }
+.model-table tbody th { font-weight:600; }
+.model-table .icon { width:11px; height:11px; margin-left:3px; }
+.model-publisher { display:block; font-size:12px; color:var(--muted); font-weight:400; margin-top:3px; }
+.model-table tbody tr:hover { background:var(--wash); }
+@media(max-width:760px) {
+  .collection-stats { gap:8px 18px; }
+  .model-controls { flex-wrap:wrap; gap:12px; }
+  .model-controls .model-search { flex-basis:100%; }
+  .model-controls label:not(.model-search) { flex:1; }
+  .model-controls select { width:100%; }
+  .model-table, .model-table tbody { display:block; }
+  .model-table thead { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+  .model-table tr { display:block; padding:15px 0; border-bottom:1px solid var(--line); }
+  .model-table th, .model-table td { display:block; padding:0; border:0; }
+  .model-table td { margin-top:7px; }
+  .model-license::before { content:attr(data-label) ' · '; color:var(--muted); font-size:12px; }
+}
+/* Paper directory: one row per paper. Findings and artifact caveats clamp until the row is
+   hovered or focused (touch screens never clamp); artifact chips are the homepage ones. */
+#paper-list > h2 { font-size:20px; line-height:1.4; letter-spacing:-0.01em; margin:22px 0 6px; }
+.paper-controls[hidden] { display:none; }
+.paper-controls .filter-button { display:inline-flex; gap:6px; }
+.paper-directory .model-controls { margin:10px 0 12px; }
+.paper-directory .model-controls select { min-width:150px; }
+.paper-table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:14px; line-height:1.45; }
+.paper-table th, .paper-table td { text-align:left; vertical-align:top; padding:6px 16px 6px 0; border-bottom:1px solid var(--line); overflow-wrap:anywhere; font-weight:400; }
+.paper-table thead th { border-block:1px solid var(--ink); padding-block:8px; font-size:13px; font-weight:550; }
+.paper-table thead th:nth-child(1) { width:120px; }
+.paper-table thead th:nth-child(2) { width:37%; }
+.paper-table thead th:nth-child(3) { width:104px; }
+.paper-table thead th:nth-child(4) { width:15%; }
+.paper-table th:last-child, .paper-table td:last-child { padding-right:0; }
+.paper-row[hidden] { display:none; }
+.paper-row:hover { background:var(--wash); }
+.paper-date { font:13px/1.6 var(--mono); font-variant-numeric:tabular-nums; }
+.paper-first { display:block; color:var(--muted); }
+.document-main .paper-table a.paper-title { font-size:15px; font-weight:600; line-height:1.4; letter-spacing:-0.006em; text-decoration:none; }
+.document-main .paper-table a.paper-title:hover { text-decoration:underline; }
+.paper-authors { color:var(--muted); }
+.paper-table .paper-theme { overflow-wrap:normal; }
+.paper-artifacts .resource-artifacts { display:flex; flex-wrap:wrap; gap:4px; }
+.paper-artifacts .artifact-chip, .paper-artifacts .artifact-chip + .artifact-chip { margin-left:0; font-size:13px; }
+.paper-artifacts-none { color:var(--muted); }
+.artifact-note { margin-top:3px; color:var(--muted); font-size:13px; line-height:1.4; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-clamp:2; overflow:hidden; }
+.paper-finding-text { font-size:15px; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-clamp:2; overflow:hidden; }
+.paper-row:hover :is(.paper-finding-text,.artifact-note), .paper-row:focus-within :is(.paper-finding-text,.artifact-note) { -webkit-line-clamp:none; line-clamp:none; }
+@media (hover: none) {
+  .paper-finding-text, .artifact-note { -webkit-line-clamp:none; line-clamp:none; }
+}
+@media (max-width:900px) {
+  .paper-table, .paper-table tbody { display:block; }
+  .paper-table thead { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+  .paper-row { display:flex; flex-wrap:wrap; align-items:flex-start; column-gap:14px; padding:12px 0; border-bottom:1px solid var(--line); }
+  .paper-table .paper-row > * { display:block; padding:0; border:0; }
+  .paper-theme { order:1; color:var(--muted); }
+  .paper-table .paper-main { order:2; flex-basis:100%; margin-top:3px; }
+  .paper-table .paper-finding { order:3; flex-basis:100%; margin-top:4px; }
+  .paper-table .paper-artifacts { order:4; flex-basis:100%; margin-top:6px; }
+  .paper-table .paper-artifacts-none { display:none; }
+}
 .hero {
   display: grid;
   grid-template-columns: 1fr;
   gap: 18px;
-  padding: 32px 0 24px;
+  padding: 24px 0 18px;
   align-items: center;
 }
 .eyebrow {
@@ -254,7 +364,7 @@ html:not(.js) .corpus-disclosure {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #ff5a5f;
+  background: var(--accent);
 }
 .hero h1 {
   font-family: var(--sans);
@@ -375,12 +485,12 @@ html:not(.js) .corpus-disclosure {
 .probability-track {
   height: 18px;
   display: block;
-  background: #bfd7ea;
+  background: var(--tint);
 }
 .probability-fill {
   height: 100%;
   display: block;
-  background: #0b3954;
+  background: var(--link);
   min-width: 3px;
 }
 .probability-fill.primary {
@@ -467,15 +577,19 @@ figcaption {
   font: 13px var(--sans);
   white-space: nowrap;
 }
+/* Every <time> holds an ISO date; keep it on one line (browsers may break after a hyphen). */
+time {
+  white-space: nowrap;
+}
 .collection-section {
-  padding: 24px 0 48px;
+  padding: 18px 0 40px;
 }
 .section-heading {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   gap: 28px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .section-heading .eyebrow {
   margin-bottom: 10px;
@@ -525,12 +639,68 @@ figcaption {
   line-height: 1.4;
 }
 .filter-button:hover {
-  background: #bfd7ea;
+  background: var(--tint);
   color: var(--ink);
 }
 .filter-button.active {
   background: var(--ink);
   color: var(--paper);
+}
+/* Forced colours (e.g. Windows High Contrast) replace the ink fill that marks the selected
+   filter. Frame every filter so it reads as a control, and mark the pressed one, keyed on
+   aria-pressed, with the system selection colours plus an underline that survives any palette. */
+@media (forced-colors: active) {
+  .filter-button {
+    border: 1px solid ButtonText;
+  }
+  .filter-button[aria-pressed="true"] {
+    forced-color-adjust: none;
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+    text-decoration: underline 2px;
+    text-underline-offset: 4px;
+  }
+}
+/* "Has code" narrows any category, so it is a checkbox beside the category buttons, not one of them. */
+.filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--muted);
+  cursor: pointer;
+}
+.filter-toggle:hover,
+.filter-toggle:has(:checked) {
+  color: var(--ink);
+}
+.filter-toggle:hover {
+  background: var(--tint);
+}
+.filter-toggle input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+.filter-toggle input:focus-visible {
+  outline-offset: 3px;
+}
+/* Disabled in categories without artifact records. */
+.filter-toggle:has(:disabled) {
+  background: none;
+  color: var(--muted);
+  opacity: 0.5;
+  cursor: default;
+}
+.filter-toggle input:disabled {
+  cursor: default;
 }
 .search-field {
   display: flex;
@@ -581,36 +751,40 @@ figcaption {
 .index-meta p {
   margin: 0;
 }
+/* One-line legend for the row markers, linked to the method; it wraps below the count on phones. */
+.index-meta #result-count {
+  flex: none;
+}
+.evidence-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 2px 14px;
+}
+.evidence-legend strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.evidence-legend a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.evidence-legend a .icon {
+  width: 10px;
+  height: 10px;
+}
+/* Compact rows: category, byline and provenance share one metadata line; descriptions clamp to two lines. */
 .resource-row {
   display: grid;
-  grid-template-columns: 135px 1fr 1fr 23px;
-  gap: 30px;
-  padding: 24px 0;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 16px;
+  gap: 32px;
+  padding: 13px 0;
   border-bottom: 1px solid var(--line);
   align-items: start;
-}
-.resource-kind {
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  padding-top: 3px;
-}
-.resource-category {
-  font: 13px var(--sans);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  font-family: var(--sans);
-  font-size: 12px;
-  line-height: 1.55;
-  font-weight: 600;
-}
-.resource-provenance {
-  font: 13px var(--sans);
-  color: var(--muted);
-  line-height: 1.55;
-  font-family: var(--sans);
-  font-size: 13px;
-  letter-spacing: 0;
 }
 .resource-title {
   margin: 0;
@@ -630,20 +804,63 @@ figcaption {
   background-size: 100% 1px;
 }
 .resource-subtitle {
-  font: 13px/1.7 var(--sans);
   color: var(--muted);
-  margin: 8px 0 0;
-  font-family: var(--sans);
+  margin: 2px 0 0;
   font-size: 13px;
   line-height: 1.55;
-  letter-spacing: 0;
   font-weight: 400;
+}
+/* Evidence marker: the glyph's fill names the source (solid official, half preprint, outline
+   community, dotted background) and the same words follow in text, so colour is never the only cue. */
+.evidence-marker {
+  white-space: nowrap;
+}
+.evidence-glyph {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 5px;
+  border: 1.5px solid var(--badge);
+  vertical-align: 0;
+}
+.evidence-glyph[data-source="official"] {
+  background: var(--badge);
+}
+.evidence-glyph[data-source="preprint"] {
+  background: linear-gradient(to top right, var(--badge) 50%, transparent 50%);
+}
+.evidence-glyph[data-source="background"] {
+  border-style: dotted;
+}
+@media (forced-colors: active) {
+  .evidence-glyph {
+    forced-color-adjust: none;
+    --badge: CanvasText;
+  }
 }
 .resource-description {
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--ink);
   margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+/* The full text stays reachable: hover or focus expands a row, and touch
+   screens, which cannot hover, never clamp. */
+.resource-row:hover .resource-description,
+.resource-row:focus-within .resource-description {
+  -webkit-line-clamp: none;
+  line-clamp: none;
+}
+@media (hover: none) {
+  .resource-description {
+    -webkit-line-clamp: none;
+    line-clamp: none;
+  }
 }
 .resource-arrow {
   font-size: 19px;
@@ -907,7 +1124,7 @@ figcaption {
 .skip-link:focus {
   top: 15px;
 }
-html[lang="zh"] .hero h1 {
+html:lang(zh) .hero h1 {
   font-family: var(--sans);
   font-size: clamp(32px, 4vw, 44px);
   line-height: 1.2;
@@ -915,31 +1132,31 @@ html[lang="zh"] .hero h1 {
   margin: 0 0 16px;
   font-weight: 650;
 }
-html[lang="zh"] .hero h1 em {
+html:lang(zh) .hero h1 em {
   font-style: normal;
 }
-html[lang="zh"] .section-heading h2 {
+html:lang(zh) .section-heading h2 {
   font-size: 24px;
   line-height: 1.35;
   letter-spacing: 0;
   font-family: var(--sans);
   font-weight: 600;
 }
-html[lang="zh"] .start-copy h2 {
+html:lang(zh) .start-copy h2 {
   font-size: 24px;
   line-height: 1.35;
   font-family: var(--sans);
   font-weight: 600;
   letter-spacing: 0;
 }
-html[lang="zh"] .contribute-section h2 {
+html:lang(zh) .contribute-section h2 {
   font-size: 24px;
   font-family: var(--sans);
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0;
 }
-html[lang="zh"] .resource-description {
+html:lang(zh) .resource-description {
   line-height: 1.7;
   font-size: 15px;
 }
@@ -957,7 +1174,7 @@ html[lang="zh"] .resource-description {
     padding-bottom: 90px;
     grid-template-columns: 1fr;
   gap: 18px;
-  padding: 32px 0 24px;
+  padding: 24px 0 18px;
 }
   .decision-figure {
     max-width: 455px;
@@ -972,7 +1189,7 @@ html[lang="zh"] .resource-description {
   .hero {
     gap: 18px;
     grid-template-columns: 1fr;
-  padding: 32px 0 24px;
+  padding: 24px 0 18px;
 }
   .hero h1 {
     font-size: clamp(32px, 4vw, 44px);
@@ -992,8 +1209,8 @@ html[lang="zh"] .resource-description {
     margin-top: 8px;
   }
   .resource-row {
-    grid-template-columns: 110px 1fr 1fr 20px;
-    gap: 22px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 16px;
+    gap: 24px;
   }
   .start-inner {
     gap: 45px;
@@ -1023,6 +1240,26 @@ html[lang="zh"] .resource-description {
 }
   .language-switch {
     padding-left: 20px;
+  }
+}
+/* Subpage masthead up to 900px: its seven links plus the language switch do not fit on one
+   row below about 860px, so the nav takes its own full-width row (as on phones) and the page
+   never scrolls sideways or pushes EN / 中文 off-screen. The four-link homepage masthead fits. */
+@media (max-width: 900px) {
+  .document-masthead {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .document-masthead .main-nav {
+    order: 3;
+    flex-basis: 100%;
+    margin: 0;
+    justify-content: space-between;
+    padding: 0 0 17px;
+  }
+  .document-masthead .language-switch {
+    margin-left: auto;
+    padding-left: 14px;
   }
 }
 @media (max-width: 760px) {
@@ -1067,7 +1304,7 @@ html[lang="zh"] .resource-description {
   }
   .hero {
     grid-template-columns: 1fr;
-    padding: 32px 0 24px;
+    padding: 24px 0 18px;
     gap: 18px;
   }
   .hero .eyebrow {
@@ -1194,6 +1431,7 @@ html[lang="zh"] .resource-description {
     gap: 13px;
   }
   .index-meta {
+    flex-direction: column;
     font-size: 13px;
     gap: 10px;
     padding-top: 16px;
@@ -1201,66 +1439,21 @@ html[lang="zh"] .resource-description {
   line-height: 1.55;
   letter-spacing: 0;
 }
-  .index-meta > span {
-    font-size: 13px;
-    letter-spacing: 0.2px;
+  .evidence-legend {
+    justify-content: flex-start;
   }
   .resource-row {
-    grid-template-columns: 1fr 23px;
-    gap: 9px 15px;
-    padding: 22px 0;
+    grid-template-columns: minmax(0, 1fr) 16px;
+    gap: 6px 14px;
+    padding: 14px 0;
   }
-  .resource-kind {
-    grid-column: 1;
-    flex-wrap: wrap;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 2px;
-    padding: 0;
-  }
-  .resource-category {
-    font-size: 12px;
-    font-family: var(--sans);
-  line-height: 1.55;
-  letter-spacing: 0.04em;
-  font-weight: 600;
-}
-  .resource-provenance {
-    font-size: 13px;
-    font-family: var(--sans);
-  line-height: 1.55;
-  letter-spacing: 0;
-}
-  .resource-heading {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  .resource-title {
-    font-size: 16px;
-    line-height: 1.5;
-    font-weight: 600;
-  letter-spacing: -0.012em;
-}
-  .resource-subtitle {
-    font-size: 13px;
-    margin-top: 6px;
-    font-family: var(--sans);
-  line-height: 1.55;
-  letter-spacing: 0;
-  font-weight: 400;
-}
   .resource-description {
     grid-column: 1;
-    grid-row: 3;
-    font-size: 15px;
-    line-height: 1.7;
-    margin-top: 2px;
+    grid-row: 2;
   }
   .resource-arrow {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 1;
   }
   .editorial-note {
     font-size: 14px;
@@ -1369,7 +1562,7 @@ html[lang="zh"] .resource-description {
     grid-row: 1/4;
     margin: 0;
   }
-  html[lang="zh"] .hero h1 {
+  html:lang(zh) .hero h1 {
     font-size: clamp(32px, 4vw, 44px);
     line-height: 1.2;
   letter-spacing: 0;
@@ -1377,21 +1570,21 @@ html[lang="zh"] .resource-description {
   font-family: var(--sans);
   font-weight: 650;
 }
-  html[lang="zh"] .section-heading h2 {
+  html:lang(zh) .section-heading h2 {
     font-size: 24px;
     line-height: 1.35;
   letter-spacing: 0;
   font-family: var(--sans);
   font-weight: 600;
 }
-  html[lang="zh"] .start-copy h2 {
+  html:lang(zh) .start-copy h2 {
     font-size: 24px;
     font-family: var(--sans);
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0;
 }
-  html[lang="zh"] .contribute-section h2 {
+  html:lang(zh) .contribute-section h2 {
     font-size: 24px;
     font-family: var(--sans);
   font-weight: 600;
@@ -1430,7 +1623,7 @@ html[lang="zh"] .resource-description {
   flex: 1;
   height: 45px;
   background: var(--accent);
-  border: 1px solid #0b3954;
+  border: 1px solid var(--link);
 }
 .featured-symbol span:nth-child(2) {
   height: 64px;
@@ -1526,7 +1719,7 @@ html[lang="zh"] .resource-description {
   display: none;
 }
 .corpus-disclosure summary:focus-visible {
-  outline: 2px solid #0b3954;
+  outline: 2px solid var(--link);
   outline-offset: 5px;
 }
 .corpus-open-icon {
@@ -1608,6 +1801,14 @@ html[lang="zh"] .resource-description {
   font-size: 18px;
   margin-left: auto;
 }
+/* Long unbroken tokens (URLs, markup left in collected titles) wrap instead of widening phone
+   pages. "anywhere" also lowers the min-content width, so the 1fr grid columns can shrink. */
+.corpus-row h3,
+.corpus-row p,
+.resource-title,
+.resource-description {
+  overflow-wrap: anywhere;
+}
 .corpus-empty {
   font-size: 13px;
   color: var(--muted);
@@ -1626,14 +1827,14 @@ html[lang="zh"] .resource-description {
 #corpus-more[hidden] {
   display: none;
 }
-html[lang="zh"] .corpus-heading h2 {
+html:lang(zh) .corpus-heading h2 {
   font-size: 24px;
   font-family: var(--sans);
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0;
 }
-html[lang="zh"] .featured-copy h2 {
+html:lang(zh) .featured-copy h2 {
   font-size: 24px;
   font-family: var(--sans);
   font-weight: 600;
@@ -1785,14 +1986,14 @@ html[lang="zh"] .featured-copy h2 {
   .corpus-entry-meta span {
     display: none;
   }
-  html[lang="zh"] .corpus-heading h2 {
+  html:lang(zh) .corpus-heading h2 {
     font-size: 24px;
     font-family: var(--sans);
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0;
 }
-  html[lang="zh"] .featured-copy h2 {
+  html:lang(zh) .featured-copy h2 {
     font-size: 24px;
     font-family: var(--sans);
   font-weight: 600;
@@ -1850,15 +2051,46 @@ html[lang="zh"] .featured-copy h2 {
 .resource-category {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-family: var(--sans);
-  font-size: 12px;
-  line-height: 1.55;
-  letter-spacing: 0.04em;
-  font-weight: 600;
+  gap: 6px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.resource-provenance {
+  white-space: nowrap;
 }
 .resource-category .icon {
-  font-size: 13px;
+  font-size: 12px;
+}
+/* Artifact chips sit on the metadata line: text label plus icon, framed at >= 3:1 against the
+   page; an artifact the README could not verify is plain muted text in a dashed frame. */
+.artifact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
+  padding: 0 6px;
+  border: 1px solid color-mix(in srgb, currentColor 55%, var(--paper));
+  color: var(--link);
+  line-height: 18px;
+  white-space: nowrap;
+  vertical-align: top;
+}
+.artifact-chip + .artifact-chip {
+  margin-left: 4px;
+}
+.artifact-chip .icon {
+  font-size: 11px;
+}
+a.artifact-chip:hover {
+  background: var(--tint);
+  color: var(--ink);
+}
+a.artifact-chip:focus-visible {
+  outline-offset: 2px;
+}
+.artifact-unverified {
+  border-style: dashed;
+  color: var(--muted);
 }
 .resource-arrow .icon {
   width: 12px;
@@ -1887,6 +2119,10 @@ html[lang="zh"] .featured-copy h2 {
 }
   .filter-button .icon {
     font-size: 13px;
+  }
+  .filter-toggle {
+    margin-left: 0;
+    padding: 8px 9px;
   }
   .main-nav {
     gap: 12px;
@@ -2039,7 +2275,7 @@ html[lang="zh"] .featured-copy h2 {
   display: none;
 }
 .verification-legend summary:focus-visible {
-  outline: 2px solid #0b3954;
+  outline: 2px solid var(--link);
   outline-offset: 4px;
 }
 .verification-hint {
@@ -2054,6 +2290,10 @@ html[lang="zh"] .featured-copy h2 {
 .verification-legend summary > span:last-child {
   font-size: 19px;
   line-height: 1;
+}
+/* Summaries without a hint: push the indicator to the right edge. */
+.verification-legend summary > span:only-child {
+  margin-left: auto;
 }
 .verification-legend[open] summary > span:last-child {
   transform: rotate(45deg);
@@ -2145,7 +2385,7 @@ html[lang="zh"] .featured-copy h2 {
   font-family: var(--mono);
   font-variant-numeric: tabular-nums;
 }
-html[lang="zh"] h1, html[lang="zh"] h2, html[lang="zh"] h3 {
+html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3 {
   letter-spacing: 0;
 }
 
@@ -2167,3 +2407,79 @@ html[lang="zh"] h1, html[lang="zh"] h2, html[lang="zh"] h3 {
   margin: 0;
 }
 .discovery-category-list li + li { margin-top: 0; }
+
+/* Print: content only. The skip link is position: fixed, so Chrome repeats it over every printed
+   page; it, the navigation, the language switch and the interactive controls are hidden, the
+   screen gutters are dropped, and external source links print their address after the text. */
+/* Papers per week (scripts/paper_activity.mjs): a small supporting figure that floats beside the
+   papers page introduction on wide screens. Series steps are validated per scheme for adjacent
+   stacks; the legend and the table of numbers keep identity and values off colour alone. */
+.paper-activity { max-width:400px; margin:18px 0 22px; }
+.paper-overview > .paper-activity { float:none; width:100%; max-width:600px; margin:14px 0 18px; }
+.activity-chart { display:block; width:100%; height:auto; font-family:var(--sans); font-variant-numeric:tabular-nums;
+  --viz-1:#2a78d6; --viz-2:#eb6834; --viz-3:#1baf7a; --viz-4:#eda100; --viz-5:#e87ba4; --viz-6:#008300; --viz-grid:#e5e7eb; --viz-axis:#9ca3af; }
+
+.activity-chart .viz-series1 { fill:var(--viz-1); }
+.activity-chart .viz-series2 { fill:var(--viz-2); }
+.activity-chart .viz-series3 { fill:var(--viz-3); }
+.activity-chart .viz-series4 { fill:var(--viz-4); }
+.activity-chart .viz-series5 { fill:var(--viz-5); }
+.activity-chart .viz-series6 { fill:var(--viz-6); }
+.activity-chart .viz-ink { fill:var(--ink); }
+.activity-chart .viz-muted { fill:var(--muted); }
+.activity-chart .viz-grid { stroke:var(--viz-grid); }
+.activity-chart .viz-axis { stroke:var(--viz-axis); }
+/* Forced colours would paint every segment alike; keep the hues (the table carries the values). */
+@media (forced-colors: active) {
+  .activity-chart [class^="viz-series"] { forced-color-adjust:none; }
+}
+.paper-activity figcaption { display:block; margin-top:6px; padding:0; border:0; font-size:13px; line-height:1.5; color:var(--muted); }
+.paper-activity details { overflow-x:auto; font-size:13px; color:var(--muted); }
+.paper-activity details p { margin:6px 0 0; line-height:1.5; }
+.paper-activity summary { margin-top:4px; cursor:pointer; font-size:13px; }
+.paper-activity table { margin-top:6px; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums; color:var(--ink); }
+.paper-activity :is(th,td) { padding:3px 0 3px 10px; text-align:right; border-bottom:1px solid var(--line); font-weight:400; }
+.paper-activity :is(th,td):first-child { padding-left:0; text-align:left; }
+.paper-activity thead th, .paper-activity tbody tr:last-child > * { font-weight:600; }
+@media (min-width:1240px) {
+  .paper-activity { float:right; width:400px; margin:0 0 16px 32px; }
+  .paper-activity ~ .document-toc { display:flow-root; }
+  #paper-list { clear:both; }
+}
+@media print {
+  :root {
+    color-scheme: light;
+  }
+  .skip-link,
+  .main-nav,
+  .language-switch,
+  .collection-controls,
+  .corpus-disclosure,
+  .model-controls,
+  .paper-controls,
+  #copy-code,
+  .back-top {
+    display: none !important;
+  }
+  .page-shell,
+  .start-inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+  .resource-row {
+    break-inside: avoid;
+  }
+  .source-links a[href^="http"]::after,
+  .resource-title a[href^="http"]::after {
+    content: " " attr(href);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 400;
+    overflow-wrap: anywhere;
+  }
+}

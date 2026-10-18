@@ -23,6 +23,13 @@ from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 
+try:
+    from .build_source_index import identifying_query
+    from .source_policy import credential_query
+except ImportError:
+    from build_source_index import identifying_query
+    from source_policy import credential_query
+
 SPACE = "multimodalart/jev-decision-index"
 SPACE_URL = "https://huggingface.co/spaces/" + SPACE
 KEYWORDS = {
@@ -42,6 +49,17 @@ BLOCKED_HOSTS = {
     "api.openai.com", "api.typesafe.ai", "wandb.ai", "www.youtube.com", "youtu.be",
 }
 SKIP_GH = {"huggingface/transformers", "huggingface/huggingface_hub", "pytorch/pytorch"}
+# Site routes whose first path segment is not an owner or namespace; for
+# example README image embeds under github.com/user-attachments/assets/<id>.
+GH_RESERVED = {
+    "topics", "orgs", "settings", "features", "sponsors", "user-attachments", "apps", "marketplace",
+    "login", "about", "pricing", "enterprise", "security", "search", "explore", "trending",
+    "advisories", "customer-stories",
+}
+HF_RESERVED = {
+    "docs", "collections", "organizations", "blog", "join", "settings", "api", "tasks", "learn",
+    "models", "new", "pricing", "login", "chat", "posts", "search",
+}
 REQ_HEADERS = {"User-Agent": "Awesome-Jev-public-source-audit/1.0", "Accept": "text/plain,text/html,application/json"}
 NOW = lambda: datetime.now(timezone.utc).isoformat(timespec="seconds")
 
@@ -106,7 +124,9 @@ def canonical(url: str):
     except ValueError:
         return None
     host = p.netloc.lower()
-    if p.scheme not in {"http", "https"} or host in BLOCKED_HOSTS or "@" in host:
+    # Identifying query parameters are kept below, so a credential-bearing
+    # link is rejected outright, as the scheduled scan does.
+    if p.scheme not in {"http", "https"} or host in BLOCKED_HOSTS or "@" in host or credential_query(p.query):
         return None
     path = re.sub(r"/+", "/", p.path).rstrip("/")
     if host in {"arxiv.org", "www.arxiv.org", "export.arxiv.org"}:
@@ -114,7 +134,7 @@ def canonical(url: str):
         return "https://arxiv.org/abs/" + m.group(1) if m else None
     if host in {"github.com", "www.github.com", "raw.githubusercontent.com"}:
         seg = path.strip("/").split("/")
-        if len(seg) < 2 or seg[0] in {"topics", "orgs", "settings", "features", "sponsors"}:
+        if len(seg) < 2 or seg[0].lower() in GH_RESERVED:
             return None
         owner = re.match(r"[A-Za-z0-9_.-]+", seg[0])
         name = re.match(r"[A-Za-z0-9_.-]+", seg[1])
@@ -126,7 +146,7 @@ def canonical(url: str):
         return "https://github.com/" + repo.lower()
     if host in {"huggingface.co", "www.huggingface.co", "hf.co"}:
         seg = path.strip("/").split("/")
-        if len(seg) < 2 or seg[0] in {"docs", "collections", "organizations", "blog", "join", "settings"}:
+        if len(seg) < 2 or seg[0] in HF_RESERVED:
             return None
         if seg[0] == "papers":
             if re.fullmatch(r"\d{4}\.\d{4,5}", seg[1]):
@@ -147,7 +167,8 @@ def canonical(url: str):
     # A PDF has one scholarly landing-page identity when the provider supports it.
     if host == "aclanthology.org":
         path = path.removesuffix(".pdf")
-    return urllib.parse.urlunsplit(("https", host, path or "/", "", ""))
+    # Keep identifying parameters (OpenReview id, CiteSeer doi) as the source index does.
+    return urllib.parse.urlunsplit(("https", host, path or "/", identifying_query(p.query), ""))
 
 
 def links(text: str):
@@ -162,6 +183,19 @@ def eligible(record: dict):
         return True
     # One-hop repository/model entries must have explicit decision/Jev content.
     return bool(set(record.get("matched_topics", [])) & {"Jev", "TypeSafe AI", "typed decisions"})
+
+
+DIRECT_ONE_HOP_RELEVANCE = ("An index-linked community resource whose retrieved content explicitly discusses Jev or TypeSafe AI; "
+                            "independent ecosystem evidence, not a vendor endorsement.")
+
+
+def classify_relation(record: dict):
+    """One rule for full collections and scans: a one-hop record whose retrieved
+    content names Jev or TypeSafe AI is a direct ecosystem resource."""
+    if record.get("discovery_depth", 0) > 0 and set(record.get("matched_topics", [])) & {"Jev", "TypeSafe AI"}:
+        record["relation"] = "direct"
+        record["relevance"] = DIRECT_ONE_HOP_RELEVANCE
+    return record
 
 
 def repo_target(url: str):
@@ -291,35 +325,49 @@ def main():
     add("https://arxiv.org/abs/2609.35342", "research-paper", "direct", "https://huggingface.co/papers/2609.35342", "Sys1Cal-v1 is a Jev probability-calibration dataset study.")
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
+    previous = []
+    if out.exists():
+        previous = [json.loads(line) for line in out.read_text(encoding="utf-8").split("\n") if line.strip()]
     cache = {}
-    if args.resume and out.exists():
-        for line in out.read_text().splitlines():
-            old = json.loads(line)
+    if args.resume:
+        for old in previous:
             key = canonical(old["url"])
             if key and old.get("content_sha256") and (key == old["url"] or key.lower() == old["url"].lower()):
                 cache[key] = old
+    reviewed = {old["url"]: old for old in previous if old.get("verification_level") == "editorial_reviewed"}
+
+    def keep_review(record):
+        """The ledger is rewritten whole, but like scripts/refresh_sources.py a
+        documented editorial review stays while its URL, revision and fetched
+        bytes are unchanged. Changed content keeps this run's automated grade."""
+        prior = reviewed.get(record["url"])
+        if (prior and record.get("status") == "screened" and record.get("content_sha256")
+                and record["content_sha256"] == prior.get("content_sha256")
+                and record.get("resolved_revision") == prior.get("resolved_revision")):
+            return dict(prior)
+        return record
     results = {}
     # Source files are distinct datasets/documents, not per-model report URLs.
+    # Automated collection never grants editorial_reviewed (docs/maintenance.md),
+    # and evidence states only what this run parsed from the fetched bytes;
+    # keep_review() only retains an earlier documented review of unchanged bytes.
     for f, raw in files.items():
         url = SPACE_URL if f == "README.md" else SPACE_URL + "/blob/" + revision + "/" + f
         data = json.loads(raw) if f.endswith(".json") else None
-        evidence = "Inspected community tracker source; independent implementations are not TypeSafe weights."
+        evidence = "Current public index document parsed for linked artifacts and evaluation provenance."
         if f == "data/index.json":
             evidence = f"Structured scoreboard contains {len(data['models'])} entrant records and public panel size {data['suite']['panel']}; reference version is {data['suite']['jev_version']}."
         elif f == "data/methodology.json":
-            evidence = "Methodology records 37 public benchmarks, chance correction, private-test weighting and a 0.3.2 scoring correction; private tests are not publicly reproducible."
-        elif f == "data/v03.json":
-            evidence = "Full-score component data specifies public/same-skills/new-domains weights of 0.2/0.5/0.3 and scale-equating parameters."
-        elif f == "data/vision.json":
-            evidence = "Separate vision scoreboard specifies public/private weights of 0.5/0.5, benchmark composition and model-entry metadata."
+            count = len(data.get("benchmarks", []) + data.get("added_benchmarks", []))
+            evidence = f"Methodology lists {count} benchmark entries; parsed for upstream benchmark sources."
         elif f == "news.html":
-            evidence = "Static news corpus separates trained models, decoding approaches, prior art and explainers; source links extracted without executing JavaScript."
-        results[url] = {"url": url, "title": "Jev Decision Index — " + f, "topic": "community-evaluation-index", "relation": "direct", "verification_level": "editorial_reviewed" if f in {"README.md", "data/index.json", "data/methodology.json", "data/v03.json"} else "content_screened", "status": "screened", "retrieved_at": NOW(), "checked_via": "Public repository source inspection", "retrieved_url": root + f, "resolved_revision": revision, "content_sha256": hashlib.sha256(raw).hexdigest(), "content_bytes": len(raw), "evidence": evidence, "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.", "discovered_from": [SPACE_URL]}
+            evidence = f"Static news page; {len(links(raw.decode()))} links extracted without executing JavaScript."
+        results[url] = keep_review({"url": url, "title": "Jev Decision Index — " + f, "topic": "community-evaluation-index", "relation": "direct", "verification_level": "content_screened", "status": "screened", "retrieved_at": NOW(), "checked_via": "Automated retrieval and structural inspection of community index source; not editorial review.", "retrieved_url": root + f, "resolved_revision": revision, "content_sha256": hashlib.sha256(raw).hexdigest(), "content_bytes": len(raw), "evidence": evidence, "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.", "discovered_from": [SPACE_URL]})
     def save():
         kept = [(u, r) for u, r in sorted(results.items()) if eligible(r)]
         excluded = [dict(r, exclusion_reason="Explicit Jev, TypeSafe AI, or typed-decision content was not established for this one-hop implementation; excluded from checked-source totals.") for u, r in sorted(results.items()) if not eligible(r)]
-        out.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for _, r in kept), encoding="utf-8")
-        out.with_suffix(".excluded.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in excluded), encoding="utf-8")
+        out.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for _, r in kept), encoding="utf-8", newline="\n")
+        out.with_suffix(".excluded.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in excluded), encoding="utf-8", newline="\n")
     for depth in range(args.max_depth + 1):
         batch = [s for u, s in seeds.items() if u not in results and s["discovery_depth"] == depth]
         print(json.dumps({"phase": "screen", "depth": depth, "pending": len(batch)}, ensure_ascii=False), flush=True)
@@ -332,10 +380,7 @@ def main():
                     record.update(seed)
                     record["title"] = cache[seed["url"]]["title"]
                     record["relevance_rescreened_at"] = NOW()
-                    if "Jev" in record.get("matched_topics", []) or "TypeSafe AI" in record.get("matched_topics", []):
-                        record["relation"] = "direct"
-                        record["relevance"] = "An index-linked community resource whose retrieved content explicitly discusses Jev or TypeSafe AI; independent ecosystem evidence, not a vendor endorsement."
-                    results[record["url"]] = record
+                    results[record["url"]] = classify_relation(record)
                 else:
                     remaining.append(seed)
             batch = remaining
@@ -350,10 +395,7 @@ def main():
                 except Exception as e:
                     record = dict(seed, retrieved_at=NOW(), verification_level="metadata_only", status="audit_error", evidence=str(e)[:200])
                     children = []
-                results[record["url"]] = record
-                if record.get("discovery_depth", 0) > 0 and set(record.get("matched_topics", [])) & {"Jev", "TypeSafe AI"}:
-                    record["relation"] = "direct"
-                    record["relevance"] = "An index-linked community resource whose retrieved content explicitly discusses Jev or TypeSafe AI; independent ecosystem evidence, not a vendor endorsement."
+                results[record["url"]] = keep_review(classify_relation(record))
                 candidates.extend(children)
                 if i % 30 == 0:
                     save()
@@ -366,8 +408,10 @@ def main():
         save()
     kept = [r for r in results.values() if eligible(r)]
     checked = [r for r in kept if r["verification_level"] != "metadata_only"]
-    summary = {"generated_at": NOW(), "index_revision": revision, "index_edition": index["suite"]["label"], "public_panel": index["suite"]["panel"], "records": len(kept), "verification_levels": dict(Counter(r["verification_level"] for r in kept)), "statuses": dict(Counter(r["status"] for r in kept)), "relations": dict(Counter(r["relation"] for r in kept)), "distinct_checked_content_hashes": len({r["content_sha256"] for r in checked}), "excluded_scope": len(results)-len(kept), "discovered_not_screened": len([u for u in seeds if u not in results]), "method": "One-hop public primary-artifact discovery. Full retrieved text screened automatically; editorial_reviewed is reserved for manually inspected index sources. Dependency implementation pages require explicit Jev/TypeSafe/typed-decision content. metadata_only and excluded-scope records are excluded from content-checked totals. No experiment reproduced."}
-    out.with_suffix(".summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")
+    summary = {"generated_at": NOW(), "index_revision": revision, "index_edition": index["suite"]["label"], "public_panel": index["suite"]["panel"], "records": len(kept), "verification_levels": dict(Counter(r["verification_level"] for r in kept)), "statuses": dict(Counter(r["status"] for r in kept)), "relations": dict(Counter(r["relation"] for r in kept)), "distinct_checked_content_hashes": len({r["content_sha256"] for r in checked}), "excluded_scope": len(results)-len(kept), "discovered_not_screened": len([u for u in seeds if u not in results]), "method": "One-hop public primary-artifact discovery. Full retrieved text screened automatically; this collector never grants editorial_reviewed, which is reserved for documented manual review. Dependency implementation pages require explicit Jev/TypeSafe/typed-decision content. metadata_only and excluded-scope records are excluded from content-checked totals. No experiment reproduced."}
+    # Report this run on stdout only. Scans and reviewed additions change the
+    # ledger afterwards, so a committed copy would go stale; current counts are
+    # generated and checked by build_source_index.py (data/source-counts.json).
     print(json.dumps(summary, ensure_ascii=False), flush=True)
 
 

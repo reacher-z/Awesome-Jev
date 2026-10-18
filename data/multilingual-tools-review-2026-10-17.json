@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "c32d7c27fbaace6ed783541ed8b492dcc2d1a6f2",
+  "reviewed_at": "2026-10-17T02:57:44.877539+00:00",
+  "accepted_new_sources": 12,
+  "curated_additions": 8,
+  "input_sha256": "eec121fdaa2219f925d6af0cb754162df3f10dba5ea4d71545d99ab9924e2fd9",
+  "scan_pr": "https://github.com/reacher-z/Awesome-Jev/pull/4",
+  "scan_head": "bd0c9de6abd50644dfe803074aadf6d38340049a",
+  "all_hashes_match_scan": true,
+  "review_scope": "Main-session README overview and selected limitation/validation-section review with deterministic identity/hash checks. Only documentation bytes were fetched; no executable source files, model weights, dataset rows or archives were downloaded, and no model/API/cloud workload was run. File inventories and implementation correctness were not audited. No extra subagent review was available.",
+  "records": [
+    {
+      "url": "https://github.com/ai-forever/frida-decisions",
+      "title": "FRIDA-Decisions",
+      "retrieved_url": "https://raw.githubusercontent.com/ai-forever/frida-decisions/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.389251+00:00",
+      "content_sha256": "f736f879cfe610b16e835a5520cbac226d8ae82c9cfbf9284d75839527eba6b5",
+      "content_bytes": 31804,
+      "limitations": "README overview, architecture and limits inspected; backend equivalence and cache/performance claims were not reproduced.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/iapp-technology/openthai-systemone",
+      "title": "OpenThai-SystemOne",
+      "retrieved_url": "https://raw.githubusercontent.com/iapp-technology/openthai-systemone/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.379469+00:00",
+      "content_sha256": "241cd0a2d6e11e999e2baf0c7b88d559f6a5831fa04d6c3e0b28b2b2d35f4491",
+      "content_bytes": 4449,
+      "limitations": "README overview, package layout and pipeline inspected; no training, data preparation, model download or serving call was performed.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/ncchinh/quyet",
+      "title": "Quyet runtime",
+      "retrieved_url": "https://raw.githubusercontent.com/ncchinh/quyet/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.383605+00:00",
+      "content_sha256": "dce73db902f3696cd78da718fb674baf4fe34e54ab3ff04b7431b3cd9d2baf31",
+      "content_bytes": 4364,
+      "limitations": "Runtime documentation only. Weights are separate; no safety/bias/robustness evaluation, model loading or inference was performed here.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/atmaneayoubdev/jev-ar",
+      "title": "Jev-AR routing implementation",
+      "retrieved_url": "https://raw.githubusercontent.com/atmaneayoubdev/jev-ar/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.365863+00:00",
+      "content_sha256": "6b70c9e185e319324edf131c6ca66dc87600ff85d31285cddd74c477161ae8e3",
+      "content_bytes": 10603,
+      "limitations": "Code is declared Apache-2.0; weights are gated and declared CC BY-NC 4.0. No weight access was requested, and development targets are not treated as deployment guarantees.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/ai-ecoverse/decision-vision-bench",
+      "title": "Browser decision-vision benchmark",
+      "retrieved_url": "https://raw.githubusercontent.com/ai-ecoverse/decision-vision-bench/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.594365+00:00",
+      "content_sha256": "1aa192e05161dc9a1fefeffb7d37ebe101d3c2b24dfc6d1e6a7f0d20b7d55f06",
+      "content_bytes": 12371,
+      "limitations": "README methods and caveats only; no images, predictions, browser models or benchmark commands were loaded or executed.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/jiaqisjtu/canitrustu-jev",
+      "title": "CITY-Jev",
+      "retrieved_url": "https://raw.githubusercontent.com/jiaqisjtu/canitrustu-jev/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.629031+00:00",
+      "content_sha256": "1efd91840bbeae8e74d9bf20c08a582745fadf54242953173641cb054878cc82",
+      "content_bytes": 34269,
+      "limitations": "The project explicitly describes primarily automated development with partial human review. Current test-v1 and historical Jev cohorts are not pooled; answer preservation and results were not validated here.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/emretheus/jev-rag-benchmark",
+      "title": "English Jev RAG Benchmark",
+      "retrieved_url": "https://raw.githubusercontent.com/emretheus/jev-rag-benchmark/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.556475+00:00",
+      "content_sha256": "019324a11d262886d160b3321566a152d31da5bb0edcdf6f097579f6d1398908",
+      "content_bytes": 19680,
+      "limitations": "README protocol and limitations inspected. Saved-run claims, synthetic unanswerable cases and generation proxies were not independently reproduced.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/wallerchen/jev-measured",
+      "title": "jev-measured",
+      "retrieved_url": "https://raw.githubusercontent.com/wallerchen/jev-measured/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.598582+00:00",
+      "content_sha256": "b107d15738d83af27b413bef5d9558b6df1a8906de1b8d0f86ce93e236e5d8ae",
+      "content_bytes": 24697,
+      "limitations": "Only README measurement scope and correction notes were checked. Historical prices are not current pricing advice, and network-floor adjustment is not isolated inference timing.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/timmikeladze/jevlang",
+      "title": "JevLang",
+      "retrieved_url": "https://raw.githubusercontent.com/timmikeladze/jevlang/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.699069+00:00",
+      "content_sha256": "6829b1e070a62610ae1103151cabb301fa918d03fd921b59bfb3d18ecf064a35",
+      "content_bytes": 33086,
+      "limitations": "README feature and interface description only; no policy, action, hosted product or security claim was executed or independently audited.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/sgaseretto/sysonelib",
+      "title": "sysone decision-learning library",
+      "retrieved_url": "https://raw.githubusercontent.com/sgaseretto/sysonelib/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.748436+00:00",
+      "content_sha256": "d4e6e42b7e5affa2ec73e965cab4f66facf87e80d52eaf60d604c74ddade5ec4",
+      "content_bytes": 38123,
+      "limitations": "README overview, module layout and selected reported-validation sections only; no notebooks, training, cloud jobs or model backends were executed.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/rodlaf/decision-model-rl",
+      "title": "Interaction-trained decision-model experiments",
+      "retrieved_url": "https://raw.githubusercontent.com/rodlaf/decision-model-rl/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.807168+00:00",
+      "content_sha256": "0ce4d3e37ea917c1906d0c1b79726aed2ab980505f3968d836b494fc69424d56",
+      "content_bytes": 8813,
+      "limitations": "README training/evaluation scope only. A selected seed, failed transfer trial and later joint training are separate conditions; no environments, videos, weights or training commands were run.",
+      "verification_level": "content_screened"
+    },
+    {
+      "url": "https://github.com/raxitlabs/decision-models-as-guardrails",
+      "title": "Decision models as guardrails",
+      "retrieved_url": "https://raw.githubusercontent.com/raxitlabs/decision-models-as-guardrails/main/README.md",
+      "retrieved_at": "2026-10-17T02:51:57.828974+00:00",
+      "content_sha256": "6c37a5d507f086b0262825bedb82adc18ae2875806a8afbd818693b79e98b43d",
+      "content_bytes": 4719,
+      "limitations": "README release scope and licenses inspected. The withheld rows originate in public upstream data, so their withholding is not a secret-test guarantee; no account, VM, model call or scoring run was used.",
+      "verification_level": "content_screened"
+    }
+  ],
+  "counting": "One repository per whole implementation or evaluation project. Linked weights, size variants, notebooks, demos, data mirrors and component files do not add counts.",
+  "guide_scope": "The two added implementation examples describe transfer conditions from documentation; no cross-language validation or calibrated-accuracy guarantee is asserted.",
+  "privacy": "No source-body text, contacts, credentials, customer records or local cache paths are included.",
+  "local_consistency_checks": {
+    "new_records": 12,
+    "prior_ecosystem_bytes_preserved": true,
+    "research_ledger_unchanged": true,
+    "new_expansion_urls": 12,
+    "expansion_count": 772,
+    "curated_resources": 118,
+    "selected_arxiv_papers": 59,
+    "bibliography_entries": 68,
+    "unique_discovery_descriptions": 437,
+    "all_discoveries_have_chinese": true,
+    "new_metadata_privacy_matches": []
+  }
+}

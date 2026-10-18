@@ -347,7 +347,7 @@
       "name": "research_papers",
       "input_sha256": "b59e5ee2d749dac8766c1ae1474a07aea3e23013e31d64220983e4ef5c402b79",
       "screened_records_proposed": 345,
-      "accepted_count": 345,
+      "accepted_count": 340,
       "accepted_urls": [
         "https://arxiv.org/abs/2609.26532",
         "https://arxiv.org/abs/2609.36059",
@@ -518,7 +518,6 @@
         "https://arxiv.org/abs/2008.08037",
         "https://arxiv.org/abs/2102.05143",
         "https://arxiv.org/abs/2106.07998",
-        "https://arxiv.org/abs/2106.09385",
         "https://arxiv.org/abs/2108.00106",
         "https://arxiv.org/abs/2202.04530",
         "https://arxiv.org/abs/2203.07559",
@@ -558,7 +557,6 @@
         "https://arxiv.org/abs/2504.10007",
         "https://arxiv.org/abs/2505.01997",
         "https://arxiv.org/abs/2505.23854",
-        "https://arxiv.org/abs/2508.08204",
         "https://arxiv.org/abs/2510.03136",
         "https://arxiv.org/abs/2510.10913",
         "https://arxiv.org/abs/2511.09228",
@@ -610,7 +608,6 @@
         "https://doi.org/10.18653/v1/2026.findings-acl.610",
         "https://doi.org/10.3390/stats9050109",
         "https://arxiv.org/abs/2601.19944",
-        "https://doi.org/10.64748/8gkysx36",
         "https://doi.org/10.69987/aimlr.2025.60401",
         "https://hdl.handle.net/1983/6e0c0e3e-9911-4be8-85dd-27358e23c98c",
         "https://ora.ox.ac.uk/objects/uuid:5fd484f2-b605-4256-8982-e5c10949c875",
@@ -618,7 +615,6 @@
         "https://arxiv.org/abs/1106.2489",
         "https://arxiv.org/abs/1805.07737",
         "https://arxiv.org/abs/1808.07501",
-        "https://arxiv.org/abs/1902.06881",
         "https://doi.org/10.1007/s44248-026-00119-w",
         "https://doi.org/10.1063/1.4759598",
         "https://doi.org/10.1086/289244",
@@ -680,13 +676,12 @@
         "https://doi.org/10.23919/fruct67853.2025.11239207",
         "https://doi.org/10.3233/aic-130566",
         "https://doi.org/10.54216/jnfs.110201",
-        "https://doi.org/10.5555/1390681.1442792",
+        "https://jmlr.org/papers/v9/bartlett08a.html",
         "https://doi.org/10.64388/irev10i4-1723870",
         "https://horizon.documentation.ird.fr/exl-doc/pleins_textes/divers17-10/010049968.pdf",
         "https://arxiv.org/abs/2512.23712",
         "https://arxiv.org/abs/2603.05540",
         "https://arxiv.org/abs/2603.13404",
-        "https://arxiv.org/abs/2604.18170",
         "https://arxiv.org/abs/2607.18357",
         "https://arxiv.org/abs/2608.03065",
         "https://arxiv.org/abs/2608.05493",
@@ -946,6 +941,97 @@
       ],
       "evidence_scope": "One whole author checkpoint separate from known code. Fixed model-card training/calibration/limitations sections and public inventory independently reviewed; parent card refetch matched. No weights, code, raw predictions or data rows loaded or executed.",
       "accepted_at": "2026-10-16T13:22:46.235793+00:00"
+    },
+    {
+      "name": "scheduled_scan_selected_implementations",
+      "input_sha256": "e141ccca4afa8643f943b2c7c97ed6092331e8880e2b1fc0565bc7dd355f20c6",
+      "screened_records_proposed": 6,
+      "accepted_count": 6,
+      "accepted_urls": [
+        "https://github.com/bufbuild/protoc-gen-jev",
+        "https://github.com/alonsuare/typed-decisions-shadow-layer",
+        "https://github.com/fstandhartinger/weiche",
+        "https://github.com/earino/zero-shot-complaint-benchmark",
+        "https://github.com/vicfei/jev-rag-zh-benchmark",
+        "https://github.com/evan-py-chen/jev-survey"
+      ],
+      "evidence_scope": "Six whole documentation-backed projects manually selected from PR4 after fresh README hash matches. No code execution, customer data, prediction archive or model-weight access. Remaining scan candidates are pending, not accepted through this batch.",
+      "accepted_at": "2026-10-17T02:18:06.859164+00:00"
+    },
+    {
+      "name": "multilingual_runtime_and_evaluation_projects",
+      "input_sha256": "eec121fdaa2219f925d6af0cb754162df3f10dba5ea4d71545d99ab9924e2fd9",
+      "screened_records_proposed": 12,
+      "accepted_count": 12,
+      "accepted_urls": [
+        "https://github.com/ai-forever/frida-decisions",
+        "https://github.com/iapp-technology/openthai-systemone",
+        "https://github.com/ncchinh/quyet",
+        "https://github.com/atmaneayoubdev/jev-ar",
+        "https://github.com/ai-ecoverse/decision-vision-bench",
+        "https://github.com/jiaqisjtu/canitrustu-jev",
+        "https://github.com/emretheus/jev-rag-benchmark",
+        "https://github.com/wallerchen/jev-measured",
+        "https://github.com/timmikeladze/jevlang",
+        "https://github.com/sgaseretto/sysonelib",
+        "https://github.com/rodlaf/decision-model-rl",
+        "https://github.com/raxitlabs/decision-models-as-guardrails"
+      ],
+      "evidence_scope": "Twelve whole projects reviewed through public README overview and selected limitation/validation sections; all fresh hashes matched the scan. No source code, model inference or experiment was run; model weights and raw data were not downloaded. Other scan candidates remain pending.",
+      "accepted_at": "2026-10-17T02:57:44.874265+00:00"
+    },
+    {
+      "name": "audio_decision_checkpoint",
+      "input_sha256": "0089dbb5c2f031f57858ae60d8e2aa22ba36419db480d0cdd3a7bf80c045afd0",
+      "screened_records_proposed": 1,
+      "accepted_count": 1,
+      "accepted_urls": [
+        "https://huggingface.co/shlv/AudioJev"
+      ],
+      "accepted_at": "2026-10-17T03:38:33.813019+00:00",
+      "evidence_scope": "One new complete checkpoint repository, inspected through its public model card. Three already-known papers are curated separately with zero new-source credit. No model files or data were downloaded."
+    },
+    {
+      "name": "domain_and_transfer_primary_studies",
+      "input_sha256": "7a1c47c8942b5cbf00bada37c107497ebc52379919d7ec1334cf8fc8ced5287b",
+      "screened_records_proposed": 4,
+      "accepted_count": 4,
+      "accepted_urls": [
+        "https://arxiv.org/abs/2610.00381",
+        "https://arxiv.org/abs/2610.02638",
+        "https://arxiv.org/abs/2610.06425",
+        "https://arxiv.org/abs/2610.14112"
+      ],
+      "accepted_at": "2026-10-17T03:54:37.369598+00:00",
+      "evidence_scope": "Four fixed-v1 primary arXiv abstracts and citation records. Companion links do not add resource counts; remaining scan candidates are not merged."
+    },
+    {
+      "name": "decision_model_card_releases",
+      "input_sha256": "79167aea1b364f87e4d2f52d55c5332e809c0aff5953a5e9d3f9368dbd392c2b",
+      "screened_records_proposed": 4,
+      "accepted_count": 4,
+      "accepted_urls": [
+        "https://huggingface.co/mukaddamzaid/amos-1-large",
+        "https://huggingface.co/PelaAI/KnowLine-35B-A3B-Gen1",
+        "https://huggingface.co/LycheeAI/Lychee-27B",
+        "https://huggingface.co/respanai/span-02"
+      ],
+      "accepted_at": "2026-10-17T04:02:09.433301+00:00",
+      "evidence_scope": "Four distinct model repositories, one representative per reviewed family. Cards are pinned to verified Hub commits; model size/release siblings, component files and the Span-02 old account are not added separately."
+    },
+    {
+      "name": "browser_runtime_and_search_training",
+      "input_sha256": "d37c679bb31c4ad0f96a0591733f22d784d363c7ba809522c3a3645dcff12ab9",
+      "screened_records_proposed": 4,
+      "accepted_count": 4,
+      "accepted_urls": [
+        "https://github.com/ai-ecoverse/cua-s1.js",
+        "https://github.com/ai-ecoverse/jev-omni.js",
+        "https://github.com/evoscientist/searchjev",
+        "https://github.com/somarkai/mjev"
+      ],
+      "accepted_at": "2026-10-17T04:09:31.259136+00:00",
+      "evidence_scope": "Four whole implementation repositories; README source hashes match the scan. Model mirrors, bundle variants, demo pages, embedded PDF and component files are not separate additions."
     }
   ]
 }

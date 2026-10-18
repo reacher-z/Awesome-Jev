@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-16",
+  "updated": "2026-10-17",
   "en": {
     "title": "Jev guide: typed decisions, probabilities, and evaluation",
     "description": "A source-backed introduction to Jev, its decision primitives, confidence, evaluation methods, and independent model alternatives.",
@@ -139,6 +139,15 @@
                 "url": "https://docs.typesafe.ai/models"
               }
             ]
+          },
+          {
+            "text": "AudioJev uses order calibration to mean probability stability under equivalent candidate permutations. Align candidates by meaning before comparing reordered distributions, then assess accuracy and correctness calibration separately. Its released model card describes one seed, reports original-order scores and discloses audio-source overlap; those results should not be substituted for the paper’s three-seed averages.",
+            "sources": [
+              {
+                "label": "AudioJev release scope",
+                "url": "https://huggingface.co/shlv/AudioJev"
+              }
+            ]
           }
         ]
       },
@@ -195,6 +204,28 @@
                 "url": "https://arxiv.org/abs/2609.30243v2"
               }
             ]
+          },
+          {
+            "text": "Implementation documentation supplies additional transfer limits. FRIDA-Decisions recommends short Russian–English states and uses Russian instruction suffixes. Jev-AR reports synthetic Arabic training without native-speaker validation and says confidence fitted to its built-in routes is approximate on custom lists. These are documented operating conditions, not evidence that a confidence gate transfers; we did not run either implementation.",
+            "sources": [
+              {
+                "label": "FRIDA-Decisions limits",
+                "url": "https://github.com/ai-forever/FRIDA-Decisions"
+              },
+              {
+                "label": "Jev-AR limitations",
+                "url": "https://github.com/atmaneayoubdev/jev-ar"
+              }
+            ]
+          },
+          {
+            "text": "The Indonesian regional-language study supplies a concrete separation: expected calibration error did not increase while error-ranking ability degraded. Its translation comparison uses human Indonesian translations; classifier comparisons depend on label budgets, and cascades on the chosen fallback and routing fraction. Evaluate those factors separately before transferring a threshold. The preregistration and release claims remain author-reported here; no prediction files were audited.",
+            "sources": [
+              {
+                "label": "Indonesian regional-language transfer study, v1",
+                "url": "https://arxiv.org/abs/2610.14112v1"
+              }
+            ]
           }
         ]
       },
@@ -241,6 +272,15 @@
               {
                 "label": "Option-channel guardrail preprint, v1",
                 "url": "https://arxiv.org/abs/2610.12292v1"
+              }
+            ]
+          },
+          {
+            "text": "Separate evidence of label sensitivity from its mechanism. In the open implementations studied by Labels Override Definitions, changing label/definition rendering while holding weights fixed changed the bias. For a system you can inspect, record the rendered request and compare conflicting labels with definition-only or neutral-label variants. This is a proposed diagnostic; it neither identifies hosted Jev’s internal mechanism nor establishes a universal defense.",
+            "sources": [
+              {
+                "label": "Labels Override Definitions, v1",
+                "url": "https://arxiv.org/abs/2610.02586v1"
               }
             ]
           }
@@ -316,6 +356,19 @@
                 "url": "https://huggingface.co/bespokelabs/Bespoke-Nimble-9B-v3"
               }
             ]
+          },
+          {
+            "text": "API shape does not determine the inference path. Span-02 documents its own runtime and optional generated reasoning, with index settings that differ from normal serving. Lychee documents rejection rather than truncation for oversized requests. Record engine, hardware, reasoning mode, confidence definition and input limits with a comparison; these are publisher descriptions, not deployments tested by this collection.",
+            "sources": [
+              {
+                "label": "Span-02 runtime and index settings",
+                "url": "https://huggingface.co/respanai/span-02/raw/63cbdd774391f1b7d9bc3829179efe996d0191ce/README.md"
+              },
+              {
+                "label": "Lychee model-card limits",
+                "url": "https://huggingface.co/LycheeAI/Lychee-27B/raw/f3f95d18a3b1ef3c483c2a5d7e8e5272a2af31e2/README.md"
+              }
+            ]
           }
         ]
       },
@@ -337,7 +390,7 @@
             ]
           },
           {
-            "text": "TypeSafe WorkflowEvals publishes workflows and model-generated reference labels; agreement with those references differs from human-label accuracy. The community Decision Index also contains private tests, so public rankings do not make the entire evaluation independently reproducible.",
+            "text": "TypeSafe WorkflowEvals publishes workflows and model-generated reference labels; agreement with those references differs from human-label accuracy. The community Decision Index also contains private tests, so public rankings do not make the entire evaluation independently reproducible. The reviewed 0.3.2 snapshot uses a Jev 1.14 lab reference, while its frozen request payloads still name Jev 1.13. Record the model that produced a result separately from the model named in archived inputs.",
             "sources": [
               {
                 "label": "WorkflowEvals",
@@ -345,7 +398,20 @@
               },
               {
                 "label": "Decision Index methodology snapshot",
-                "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/5d09dd9cf226338c68fad22284c4982e6680af7d/data/methodology.json"
+                "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/methodology.json"
+              }
+            ]
+          },
+          {
+            "text": "Model cards may describe different evaluation conditions within one table. KnowLine discloses checkpoint selection using public-suite scores and task/source overlap in training. Amos separates zero-shot results from a setting that fits question priors on the benchmark’s train split. Keep those conditions separate, and do not treat publisher-run public results as the private-inclusive Decision Index score or as our reproduction.",
+            "sources": [
+              {
+                "label": "KnowLine selection and disclosures",
+                "url": "https://huggingface.co/PelaAI/KnowLine-35B-A3B-Gen1/raw/e800968d38761c190476da5c69c6a5087a3c9b29/README.md"
+              },
+              {
+                "label": "Amos evaluation conditions",
+                "url": "https://huggingface.co/mukaddamzaid/amos-1-large/raw/d67e051c763dc88a1e3662a5003c1e1ea5ffaa74/README.md"
               }
             ]
           }
@@ -387,6 +453,15 @@
               {
                 "label": "Radiology availability statement, v1",
                 "url": "https://arxiv.org/html/2609.27607v1#Sx1.p1"
+              }
+            ]
+          },
+          {
+            "text": "For control loops, a replay of isolated model latency does not establish deadline attainment. The network-control SoK separates request queues, execution times, action feasibility and responsibility for service checks; its examples use one bounded event model. Our proposed deployment check records arrival patterns and the complete path from request to verified outcome, alongside misses and infeasible actions. It does not substitute a synthetic replay for production evidence.",
+            "sources": [
+              {
+                "label": "Semantic decision engines in network control, v1",
+                "url": "https://arxiv.org/abs/2610.06425v1"
               }
             ]
           }
@@ -533,6 +608,15 @@
                 "url": "https://docs.typesafe.ai/models"
               }
             ]
+          },
+          {
+            "text": "AudioJev 将顺序校准定义为等价候选重排下的概率稳定性。比较重排分布前，按候选含义对齐，再分别评估准确率与概率是否符合实际正确率。发布模型卡描述的是一个种子、原始顺序得分，并披露音频来源重叠；这些结果不能替代论文三种子平均值。",
+            "sources": [
+              {
+                "label": "AudioJev 发布范围",
+                "url": "https://huggingface.co/shlv/AudioJev"
+              }
+            ]
           }
         ]
       },
@@ -589,6 +673,28 @@
                 "url": "https://arxiv.org/abs/2609.30243v2"
               }
             ]
+          },
+          {
+            "text": "实现文档还给出了迁移限制。FRIDA-Decisions 建议使用较短的俄英状态，并使用俄语指令后缀；Jev-AR 说明其合成阿拉伯语训练数据未经母语者验证，按内置路由拟合的置信度在自定义列表上只能近似使用。这些是文档中的适用条件，不是门控可以迁移的证据；本项目未运行这两个实现。",
+            "sources": [
+              {
+                "label": "FRIDA-Decisions 的限制",
+                "url": "https://github.com/ai-forever/FRIDA-Decisions"
+              },
+              {
+                "label": "Jev-AR 的限制",
+                "url": "https://github.com/atmaneayoubdev/jev-ar"
+              }
+            ]
+          },
+          {
+            "text": "印尼地方语言研究给出一个具体区别：预期校准误差未增加，但错误排序能力变差。翻译比较使用人类印尼语翻译，分类器比较受标签预算影响，级联则取决于后备模型和分流比例。迁移阈值前应分别评估这些因素。预注册与材料发布仍属作者报告，本项目没有审计逐项预测。",
+            "sources": [
+              {
+                "label": "印尼地方语言迁移研究 v1",
+                "url": "https://arxiv.org/abs/2610.14112v1"
+              }
+            ]
           }
         ]
       },
@@ -635,6 +741,15 @@
               {
                 "label": "选项通道防护预印本 v1",
                 "url": "https://arxiv.org/abs/2610.12292v1"
+              }
+            ]
+          },
+          {
+            "text": "区分标签敏感性的现象与成因。Labels Override Definitions 在所查开放实现中固定权重，改变标签／定义渲染后，偏置也随之改变。对可检查的系统，应记录实际渲染请求，并比较冲突标签、只含定义与中性标签变体。这是建议的诊断，既不能据此确定托管 Jev 的内部机制，也不构成通用防御。",
+            "sources": [
+              {
+                "label": "Labels Override Definitions v1",
+                "url": "https://arxiv.org/abs/2610.02586v1"
               }
             ]
           }
@@ -710,6 +825,19 @@
                 "url": "https://huggingface.co/bespokelabs/Bespoke-Nimble-9B-v3"
               }
             ]
+          },
+          {
+            "text": "API 形状不能决定实际推理路径。Span-02 文档包含专用运行库和可选生成推理，榜单配置也不同于普通服务；Lychee 说明超大请求会被拒绝，而非截断。比较时应记录引擎、硬件、推理模式、置信度定义和输入限制；这些是发布者说明，不是本项目已测试的部署。",
+            "sources": [
+              {
+                "label": "Span-02 运行库与榜单配置",
+                "url": "https://huggingface.co/respanai/span-02/raw/63cbdd774391f1b7d9bc3829179efe996d0191ce/README.md"
+              },
+              {
+                "label": "Lychee 模型卡限制",
+                "url": "https://huggingface.co/LycheeAI/Lychee-27B/raw/f3f95d18a3b1ef3c483c2a5d7e8e5272a2af31e2/README.md"
+              }
+            ]
           }
         ]
       },
@@ -731,7 +859,7 @@
             ]
           },
           {
-            "text": "TypeSafe WorkflowEvals 公开工作流和模型生成的参考标签；与这些参考结果一致，不等于人工标签上的准确率。社区 Decision Index 还包含私有测试，因此公开排名不代表整个评测都能独立复现。",
+            "text": "TypeSafe WorkflowEvals 公开工作流和模型生成的参考标签；与这些参考结果一致，不等于人工标签上的准确率。社区 Decision Index 还包含私有测试，因此公开排名不代表整个评测都能独立复现。 所查 0.3.2 快照使用 Jev 1.14 实验运行作参考，而冻结请求文件仍标为 Jev 1.13。应分别记录实际生成结果的模型与归档输入中的模型名称。",
             "sources": [
               {
                 "label": "WorkflowEvals",
@@ -739,7 +867,20 @@
               },
               {
                 "label": "Decision Index 方法快照",
-                "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/5d09dd9cf226338c68fad22284c4982e6680af7d/data/methodology.json"
+                "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/methodology.json"
+              }
+            ]
+          },
+          {
+            "text": "同一张模型卡表格可能包含不同评测条件。KnowLine 披露按公开评测得分选择检查点，以及训练中的任务／来源重叠；Amos 区分零样本结果与按基准训练切分拟合问题先验的设置。应保留这些区别，不能将发布者自行运行的公共结果当作含私有测试的 Decision Index 完整得分，也不能当作本项目复现。",
+            "sources": [
+              {
+                "label": "KnowLine 选点与披露",
+                "url": "https://huggingface.co/PelaAI/KnowLine-35B-A3B-Gen1/raw/e800968d38761c190476da5c69c6a5087a3c9b29/README.md"
+              },
+              {
+                "label": "Amos 评测条件",
+                "url": "https://huggingface.co/mukaddamzaid/amos-1-large/raw/d67e051c763dc88a1e3662a5003c1e1ea5ffaa74/README.md"
               }
             ]
           }
@@ -781,6 +922,15 @@
               {
                 "label": "放射学论文材料声明 v1",
                 "url": "https://arxiv.org/html/2609.27607v1#Sx1.p1"
+              }
+            ]
+          },
+          {
+            "text": "对控制环而言，重放单次模型延迟不能证明期限达成。网络控制综述区分请求排队、执行时间、动作可行性与服务核查责任；其例子采用一个有界事件模型。我们建议部署核查记录到达模式，以及从请求到结果验证的完整路径，同时保留超期与不可行动作。合成重放不能替代生产证据。",
+            "sources": [
+              {
+                "label": "网络控制中的语义决策引擎 v1",
+                "url": "https://arxiv.org/abs/2610.06425v1"
               }
             ]
           }

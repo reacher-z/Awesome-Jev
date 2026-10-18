@@ -1,5 +1,5 @@
 {
-  "added_count": 323,
+  "added_count": 318,
   "added_urls": [
     "https://aclanthology.org/2023.acl-long.368",
     "https://aclanthology.org/2024.naacl-long.301",
@@ -12,6 +12,7 @@
     "https://arxiv.org/abs/1903.00161",
     "https://arxiv.org/abs/2009.03300",
     "https://arxiv.org/abs/2103.06268",
+    "https://arxiv.org/abs/2106.09685",
     "https://arxiv.org/abs/2110.00976",
     "https://arxiv.org/abs/2110.05444",
     "https://arxiv.org/abs/2212.09251",
@@ -21,6 +22,7 @@
     "https://arxiv.org/abs/2308.13387",
     "https://arxiv.org/abs/2310.17389",
     "https://arxiv.org/abs/2401.13919",
+    "https://arxiv.org/abs/2402.03300",
     "https://arxiv.org/abs/2402.04249",
     "https://arxiv.org/abs/2402.17753",
     "https://arxiv.org/abs/2402.18091",
@@ -47,34 +49,26 @@
     "https://arxiv.org/abs/2603.14465",
     "https://arxiv.org/abs/2603.25434",
     "https://arxiv.org/abs/2607.09996",
-    "https://arxiv.org/abs/2610.00381",
-    "https://arxiv.org/abs/2610.02638",
-    "https://arxiv.org/abs/2610.06425",
-    "https://arxiv.org/abs/2610.14112",
+    "https://arxiv.org/abs/2610.18233",
     "https://github.com/adelvillar1/blend1",
     "https://github.com/adelvillar1/sem1",
     "https://github.com/adelvillar1/sys1",
     "https://github.com/agentculture/jev-factory",
     "https://github.com/agentiloop/agent.xcf.ai",
-    "https://github.com/ai-ecoverse/cua-s1.js",
-    "https://github.com/ai-ecoverse/decision-vision-bench",
-    "https://github.com/ai-ecoverse/jev-omni.js",
-    "https://github.com/ai-forever/frida-decisions",
     "https://github.com/aianytime/jev-crash-course",
     "https://github.com/akramovic1/jev-pilot",
-    "https://github.com/alonsuare/typed-decisions-shadow-layer",
+    "https://github.com/alpkeskin/jev-guardrail",
     "https://github.com/amazingljy1206/innerjev",
     "https://github.com/amyrmahdy/decima",
     "https://github.com/andyrewlee/awesome-system-one",
     "https://github.com/anthony-maio/eve-rlcd",
     "https://github.com/appliedmachinelearning-lab/jev-benchmarking",
-    "https://github.com/atmaneayoubdev/jev-ar",
     "https://github.com/atoma-run/atoma",
     "https://github.com/barneyjm/circuit",
+    "https://github.com/bencaunt/jev-box-tracking",
     "https://github.com/bitomule/jevi",
     "https://github.com/blobfishai/jevfish",
     "https://github.com/brainstormity/jevsnap",
-    "https://github.com/bufbuild/protoc-gen-jev",
     "https://github.com/cadence-trading/ai-trading-lab",
     "https://github.com/camellia86/jev-for-mor-and-moe",
     "https://github.com/clduab11/jev-test",
@@ -84,14 +78,9 @@
     "https://github.com/deepaleph/jevreel",
     "https://github.com/devexzh/jev-solver",
     "https://github.com/djhoomin/local-system-one",
-    "https://github.com/earino/zero-shot-complaint-benchmark",
     "https://github.com/embabel/embabel-agent",
-    "https://github.com/emretheus/jev-rag-benchmark",
-    "https://github.com/evan-py-chen/jev-survey",
-    "https://github.com/evoscientist/searchjev",
     "https://github.com/fabric-runtime/jev-fabric",
     "https://github.com/firelex/jeff",
-    "https://github.com/fstandhartinger/weiche",
     "https://github.com/garrytan/gbrain-evals",
     "https://github.com/gopalanj/jevons",
     "https://github.com/grivn/mnemon-memory-agent",
@@ -99,11 +88,22 @@
     "https://github.com/gsaini/jev-claude-code-case-study",
     "https://github.com/hakkisagdic/sosariaai",
     "https://github.com/harshnandwana/grounding-jet",
-    "https://github.com/iapp-technology/openthai-systemone",
-    "https://github.com/iapp-technology/openthai-systemone-doom"
+    "https://github.com/hkust-knowcomp/jev-tom",
+    "https://github.com/iapp-technology/openthai-systemone-doom",
+    "https://github.com/j1s4nn/jev-adaptive-granularity-wm",
+    "https://github.com/jermeyhu/jev-gateway",
+    "https://github.com/jevbench/jevbench",
+    "https://github.com/jevplays-games/jev-factorio-agent",
+    "https://github.com/jibril-frej/jev-at-home",
+    "https://github.com/jjongguet/gjc-plugin",
+    "https://github.com/john-rocky/coreai-kit",
+    "https://github.com/jtankariya/langgraph-jev-router",
+    "https://github.com/jundot/omlx",
+    "https://github.com/junnyofficial/nano_jev",
+    "https://github.com/kgaspard/jev-factorio"
   ],
   "changed": true,
-  "changed_count": 132,
+  "changed_count": 222,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -136,8 +136,11 @@
     "https://arxiv.org/abs/2610.00831",
     "https://arxiv.org/abs/2610.02076",
     "https://arxiv.org/abs/2610.02293",
+    "https://arxiv.org/abs/2610.02586",
     "https://arxiv.org/abs/2610.03935",
+    "https://arxiv.org/abs/2610.06354",
     "https://arxiv.org/abs/2610.06625",
+    "https://arxiv.org/abs/2610.06744",
     "https://arxiv.org/abs/2610.07716",
     "https://arxiv.org/abs/2610.07730",
     "https://arxiv.org/abs/2610.11316",
@@ -149,119 +152,98 @@
     "https://arxiv.org/abs/2610.21244",
     "https://arxiv.org/abs/2610.21412",
     "https://entagl.com/blog/typesafe-jev-benchmark-ai-decision-models",
+    "https://github.com/0x7067/claude-jev",
+    "https://github.com/0x7067/jev-browse",
     "https://github.com/0xleonhack/tellagent",
     "https://github.com/abdelstark/awesome-typesafe-jev",
     "https://github.com/abovecolin/ha-jev",
     "https://github.com/abovecolin/jevclient",
     "https://github.com/acquiredintelligence/attend",
+    "https://github.com/adventists-ai/duplexjev",
     "https://github.com/agent-labs-dev/fastbrowse",
+    "https://github.com/ai-ecoverse/jev-omni.js",
+    "https://github.com/ai-ecoverse/kev.js",
+    "https://github.com/alilibx/system-one-bench",
     "https://github.com/aminry/decisio",
     "https://github.com/appitstudio/awesome-jev",
     "https://github.com/avinash-jetwani/jevmem",
+    "https://github.com/bitranox/btx-skill-jev-judge",
     "https://github.com/blaizzy/mlx-vlm",
+    "https://github.com/burnigtm/jev-mcp",
     "https://github.com/caglarkc/agent-browser",
     "https://github.com/caiovicentino/jev-risk-check-provider",
     "https://github.com/call518/deciflow",
+    "https://github.com/chenstarmr/jev-chat-windows",
+    "https://github.com/chez-shanpu/typesafeai-go",
+    "https://github.com/clouatre-labs/decisions-judge-mcp",
+    "https://github.com/cmzy/ajev-infer",
+    "https://github.com/codeitlikemiley/typesafe-sdk-rust",
     "https://github.com/cyber-security-dev-dep-mitake-com-tw/jef",
     "https://github.com/cybrking/modelrudder",
     "https://github.com/daftai2026/awesome-jev",
+    "https://github.com/dimedatacloud/claude-modder",
     "https://github.com/dongtsi/awesome-trustworthy-jev",
+    "https://github.com/dzhng/jevgrep",
     "https://github.com/eligrip/computer-guidance-with-jev",
     "https://github.com/eve2512/strayguard",
     "https://github.com/everyinfra/jev-radar",
+    "https://github.com/faycall1l/bouncer",
+    "https://github.com/feder-cr/jev",
+    "https://github.com/frontierlabai/jevhub",
     "https://github.com/gabrielcoelhocruz/jev-scanr",
+    "https://github.com/gabrielcoelhocruz/jev-skill-router",
+    "https://github.com/gopaljigaur/decide",
+    "https://github.com/gordan-code/dsh-jev-advisor",
     "https://github.com/gudcks0305/jev-java",
+    "https://github.com/hajdu-patrik/trirouter",
     "https://github.com/hellogumbo/awesome-jev",
+    "https://github.com/higress-group/hiroute",
     "https://github.com/hotchpotch/s1mb",
+    "https://github.com/iammrduncan/inference-benchmarks",
+    "https://github.com/iammrduncan/typesafe-ai-benchmark",
+    "https://github.com/iamvineeth23/chesswithjev",
+    "https://github.com/insanearts/typesafe-sdk-swift",
     "https://github.com/ishantanu/jevmetrics",
-    "https://github.com/jackthony/ia-local",
-    "https://github.com/jessie-qingyu/jev-in-the-wild",
-    "https://github.com/kodr-pro/aiwrangler",
-    "https://github.com/luobosibing2/dsh-jev-plugin",
-    "https://github.com/malevrigns/agent-jev",
-    "https://github.com/maneeshmenongit/model-selector",
-    "https://github.com/mcg-nju/videojev",
-    "https://github.com/mindbreaker81/system-one-bench-public",
-    "https://github.com/monglong0214/jev-gate",
-    "https://github.com/monotykamary/reflex",
-    "https://github.com/nedcut/gm-bench",
-    "https://github.com/neostryder/augur",
-    "https://github.com/omnijev/onejev",
-    "https://github.com/philippelhaus/codex-decision",
-    "https://github.com/posthog/jeeves",
-    "https://github.com/receptron/kenteiscript",
-    "https://github.com/rhighs/jev-code",
-    "https://github.com/run-saina/saina-decision-index",
-    "https://github.com/shibing624/train-jev",
-    "https://github.com/shivanathd/gavel",
-    "https://github.com/shivanathd/jev-playground",
-    "https://github.com/simplejev/jevany",
-    "https://github.com/snapif/snapif",
-    "https://github.com/startluxlabs/startlux-decision",
-    "https://github.com/tanxarx/awesome-jev",
-    "https://github.com/temikus/lgtm",
-    "https://github.com/the-sof/home-assistant-typesafe-conversation-agent",
-    "https://github.com/thiago-lage/jev-claud",
-    "https://github.com/tomerglick57/jevstiller",
-    "https://github.com/uehaj/sys1grep",
-    "https://github.com/usail-hkust/jevlight"
+    "https://github.com/itsamejoshab/jevlab"
   ],
-  "completed_at": "2026-10-16T19:37:22+00:00",
+  "completed_at": "2026-10-18T04:34:37+00:00",
   "counts": {
-    "abstract_checked": 1872,
-    "checked_sources": 4513,
-    "content_screened": 2637,
-    "duplicate_records": 15,
+    "abstract_checked": 1883,
+    "checked_sources": 4540,
+    "content_screened": 2653,
+    "duplicate_records": 20,
     "editorial_reviewed": 4,
     "metadata_only": 58,
-    "raw_records": 4586,
-    "unique_records": 4571
+    "raw_records": 4618,
+    "unique_records": 4598
   },
   "curation_excluded_count": 3,
   "dry_run": false,
-  "duplicate_candidates_skipped": 10,
+  "duplicate_candidates_skipped": 9,
   "editorial_examples_truncated": false,
   "editorial_refresh_candidates": [
     {
-      "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "243a2c72bebfff94e1a8f7d047b4a3b60b5efa8869972a8d62818245b615f2c3",
-      "observed_verification_level": "content_screened",
-      "old_content_sha256": "40c5d8a9d037456f4a8c35c70a3df93312f2207979cb376dbc442de6ed7463a2",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/README.md",
-      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index"
-    },
-    {
-      "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "23496572ce8da74277208b5796060331b366b015a800f281e7df21960a9ef609",
-      "observed_verification_level": "content_screened",
-      "old_content_sha256": "228e4a762ecdaf8fa17d64bc64bd88fa192da6dcedf1de4aea6cc6a48a8801b2",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/index.json",
-      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/index.json"
-    },
-    {
-      "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "c952b113916d255d926b27e4fc629a767d929f32ba68af0f058caee77fc4bf86",
-      "observed_verification_level": "content_screened",
-      "old_content_sha256": "8f37754c6c66eac7919c96712dce16b9ec7e226cb38b8933483a0a3117bd53cc",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/methodology.json",
-      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/methodology.json"
-    },
-    {
-      "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "7b5a4586e1260d58dd534721d5f7ce278718effe469d3912747cff48cc7b8a51",
-      "observed_verification_level": "content_screened",
-      "old_content_sha256": "ebf80ffe13ba7c00d6ff77abc809f2ebe3bf5cb6dd7875b3be125a4b35cf3a1f",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/v03.json",
-      "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/v03.json"
+      "note": "Pinned primary abstract preserved without a grade change; observed version: https://arxiv.org/abs/2610.00381v1. Maintainer review is required before replacing the pinned evidence.",
+      "observed_abstract_page_sha256": "977a292cea521aa54ef5cd63ce27d40c12256db001dae39e111893008fd74d2e",
+      "observed_abstract_sha256": "74415286ed9eb2560fa34125ad501015d02034eda2ead91ae827355534042b9a",
+      "observed_content_sha256": "74415286ed9eb2560fa34125ad501015d02034eda2ead91ae827355534042b9a",
+      "observed_first_submitted": "2026-09-30",
+      "observed_verification_level": "abstract_checked",
+      "observed_version_url": "https://arxiv.org/abs/2610.00381v1",
+      "old_content_sha256": "db3f31ecc4900f74780fdb27ff421fa894c8d277920a8eb2017a71b47411736f",
+      "old_first_submitted": "2026-09-30",
+      "old_reviewed_version_url": "https://arxiv.org/abs/2610.00381v1",
+      "retrieved_url": "https://arxiv.org/abs/2610.00381v1",
+      "review_kind": "pinned_arxiv_abstract",
+      "url": "https://arxiv.org/abs/2610.00381"
     }
   ],
-  "editorial_review_required_count": 4,
+  "editorial_review_required_count": 1,
   "error_code_counts": {
-    "insufficient_content": 92,
-    "paper_query_failed:http_429": 4,
-    "unavailable": 57
+    "insufficient_content": 94,
+    "unavailable": 58
   },
-  "error_count": 153,
+  "error_count": 152,
   "error_examples_count": 100,
   "error_examples_truncated": true,
   "errors": [
@@ -331,10 +313,6 @@
     },
     {
       "code": "insufficient_content",
-      "url": "https://github.com/browser-use/browser-harness"
-    },
-    {
-      "code": "insufficient_content",
       "url": "https://github.com/cardotrejos/jev-ad-preflight"
     },
     {
@@ -392,6 +370,10 @@
     {
       "code": "insufficient_content",
       "url": "https://github.com/goreleaser/goreleaser"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/hotcoffeeshake/tong-jincheng-skill"
     },
     {
       "code": "insufficient_content",
@@ -611,6 +593,10 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/causalNLP/cladder"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://huggingface.co/datasets/glaiveai/glaive-function-calling-v2"
     },
     {
@@ -634,20 +620,8 @@
       "url": "https://huggingface.co/datasets/zhiqiulin/GenAI-Bench-800"
     },
     {
-      "code": "paper_query_failed:http_429",
-      "url": "https://huggingface.co/api/papers/search?q=cost+sensitive+classification&limit=120"
-    },
-    {
-      "code": "paper_query_failed:http_429",
-      "url": "https://huggingface.co/api/papers/search?q=efficient+classifier+early+exit&limit=120"
-    },
-    {
-      "code": "paper_query_failed:http_429",
-      "url": "https://huggingface.co/api/papers/search?q=learning+to+route+language+models&limit=120"
-    },
-    {
-      "code": "paper_query_failed:http_429",
-      "url": "https://huggingface.co/api/papers/search?q=model+routing+calibrated+confidence&limit=120"
+      "code": "insufficient_content",
+      "url": "https://huggingface.co/spaces/ai-forever/FRIDA-Decisions"
     },
     {
       "code": "unavailable",
@@ -664,15 +638,30 @@
     {
       "code": "unavailable",
       "url": "https://github.com/arelit/phishnchips"
+    },
+    {
+      "code": "unavailable",
+      "url": "https://github.com/bestagentkits/typesafe-demo-mcp"
+    },
+    {
+      "code": "unavailable",
+      "url": "https://github.com/dgoettlich/mert"
     }
   ],
-  "excluded_discoveries": 310,
+  "excluded_discoveries": 316,
   "index_revision": "0ddf6758073eb77ae449a3541f57286d7f39d93f",
-  "network_requests": 3709,
+  "network_requests": 3768,
+  "phase_budget_seconds": {
+    "ecosystem": 840,
+    "research": 240
+  },
   "preserved_after_failure": 27,
   "privacy_rejected_records": 0,
+  "retry_budget_exhausted": false,
+  "retry_budget_exhausted_phases": [],
+  "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-16T19:34:57+00:00",
+  "started_at": "2026-10-18T04:31:28+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources."
 }

@@ -17,6 +17,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import { translations } from "./site/catalog.mjs";
+import { englishLang } from "./site/resource-view.mjs";
 
 // Run the actual app with a small DOM substitute. No requests leave this process.
 const source = readFileSync("site/app.js", "utf8")
@@ -62,7 +63,7 @@ function harness(language, firstFailure) {
     return new Promise(resolve => { finishRetry = resolve; });
   };
   const context = vm.createContext({
-    resources: [], translations, renderResource: () => "", document,
+    resources: [], translations, renderResource: () => "", englishLang, document,
     window: {IntersectionObserver: Observer, location: {search: "", pathname: "/", hash: ""}},
     IntersectionObserver: Observer, fetch, URL, URLSearchParams, setTimeout, clearTimeout,
   });
@@ -106,6 +107,9 @@ for (const language of ["en", "zh"]) {
     assert.equal(app.node("#corpus-recovery").hidden, true);
     assert.equal(app.node("#corpus-status").textContent, translations[language].corpusResults(1, 1));
     assert.match(app.node("#corpus-list").innerHTML, /Recovered source/);
+    // English titles and untranslated descriptions on Chinese pages carry lang="en".
+    assert.equal(/<a [^>]*lang="en"[^>]*>Recovered source</.test(app.node("#corpus-list").innerHTML), language === "zh");
+    assert.equal(app.node("#corpus-list").innerHTML.includes('<p lang="en">Available after retry</p>'), language === "zh");
     assert.equal(app.document.activeElement, app.node("#corpus-search"), "Focus must not remain in a hidden recovery panel");
     await app.node(".corpus-disclosure").emit("toggle");
     await retryButton.emit("click");

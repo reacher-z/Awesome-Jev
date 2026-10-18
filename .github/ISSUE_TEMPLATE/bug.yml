@@ -1,0 +1,73 @@
+name: Report a site or tooling bug
+description: Report a defect in the website, the Python or Node scripts, or the scan and deploy workflows.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: To correct a claim, link, attribution, or review-level label in the collection, use **Report a correction** instead.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Website (search, filters, language switch, layout)
+        - Scripts (validator, site generator, collectors, source index)
+        - Scheduled source scan workflow
+        - Deployment or repository checks workflow
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Page URL or command
+      description: The full page URL, or the exact command run from the repository root.
+      placeholder: https://awesomejev.github.io/zh/ or python3 scripts/validate.py
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: Site language
+      options:
+        - English
+        - Chinese (zh-CN)
+        - Both
+        - Not applicable
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser and operating system for website bugs; Python and Node versions for script bugs.
+      placeholder: Firefox 140 on Windows 11, or Python 3.13 and Node 24
+  - type: input
+    id: run
+    attributes:
+      label: Workflow run link
+      description: For workflow bugs, link the GitHub Actions run.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the error output or a screenshot. Remove credentials, tokens, and personal filesystem paths first.
+    validations:
+      required: true
+  - type: checkboxes
+    id: public
+    attributes:
+      label: Publication check
+      options:
+        - label: This report contains only public information, with no credentials, private paths, or unlicensed assets.
+          required: true

@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "prepared_at": "2026-10-16T13:32:30+00:00",
+  "baseline_commit": "9f81b3784b991e2b4092bf64612b8d4e6aaf4475",
+  "recommendation": "Curate the three already-known workflow studies after independent review.",
+  "curated_paper_additions": 3,
+  "expansion_new_resource_count": 0,
+  "raw_ledger_rows_changed": 0,
+  "papers": [
+    {
+      "canonical_url": "https://arxiv.org/abs/2609.30186",
+      "fixed_url": "https://arxiv.org/abs/2609.30186v1",
+      "title": "Jev-Mobile: Jev as an Executor for Mobile GUI Agents",
+      "authors": [
+        "Zhang, Linghua"
+      ],
+      "first_submitted": "2026-09-24",
+      "reviewed_version": "v1",
+      "reviewed_version_date": "2026-09-24",
+      "suggested_readme_section": "Applications and domain studies",
+      "summary_en": "Uses VLM local-goal planning with Jev action selection over Android accessibility-tree candidates; reported time and API-cost savings are conditional on successful trajectories and the tested controller configurations.",
+      "summary_zh": "用 VLM 规划局部目标，再由 Jev 从 Android 无障碍树候选中选动作；报告的时延和 API 成本节省仅针对成功轨迹及所测控制器配置。",
+      "limitations_en": [
+        "AndroidWorld evidence does not establish transfer to web interfaces or isolate a Jev component effect within an otherwise identical delegated controller. Dedicated author release links were not verified in the inspected fixed-v1 pages."
+      ],
+      "limitations_zh": [
+        "AndroidWorld 结果不能确立向网页界面的迁移，也未在其他部分完全相同的委派控制器中隔离 Jev 组件的贡献。已查固定 v1 页面未核验到专用作者发布入口。"
+      ],
+      "catalog_resource": {
+        "category": "Papers",
+        "title": "Jev-Mobile: Jev as an Executor for Mobile GUI Agents",
+        "by": "Zhang · 2026-09-24 · v1",
+        "date": "2026-09-24",
+        "first_submitted": "2026-09-24",
+        "url": "https://arxiv.org/abs/2609.30186v1",
+        "en": "Uses VLM local-goal planning with Jev action selection over Android accessibility-tree candidates; reported time and API-cost savings are conditional on successful trajectories and the tested controller configurations.",
+        "zh": "用 VLM 规划局部目标，再由 Jev 从 Android 无障碍树候选中选动作；报告的时延和 API 成本节省仅针对成功轨迹及所测控制器配置。"
+      },
+      "primary_evidence": {
+        "url": "https://arxiv.org/abs/2609.30186v1",
+        "abstract_page_sha256": "543ed766c6d6aca4bdba5fe09b98b7234b92172db98747337f43f9d378ebbb96",
+        "abstract_sha256": "b387c1cfe77f6e06477415944b3923189a1f0ca30be0680f01815cb65b0067bc",
+        "original_retrieved_at": "2026-10-16T10:59:20+00:00",
+        "cached_page_and_abstract_hashes_match": true,
+        "scope": "Original fixed-v1 abstract and citation metadata reused; no new retrieval or full-paper review."
+      },
+      "raw_preservation": {
+        "ledger": "data/research-sources.jsonl",
+        "raw_line_sha256": "6b17ff9c5afb34ee6c79f0776fb0361b638b6076f97577981d2e2db014276c8b",
+        "verification_level": "abstract_checked",
+        "retrieved_at": "2026-10-16T10:59:20+00:00",
+        "no_change": true
+      },
+      "new_resource_count": 0,
+      "known_companion_link": null
+    },
+    {
+      "canonical_url": "https://arxiv.org/abs/2609.27331",
+      "fixed_url": "https://arxiv.org/abs/2609.27331v1",
+      "title": "JEV-Star: Fast, Low-Cost StarCraft II Control with Language-Model Planning",
+      "authors": [
+        "Ma, Weiyu",
+        "Zhao, Liangbing",
+        "Zeng, Yongcheng",
+        "Zhao, Jian"
+      ],
+      "first_submitted": "2026-09-23",
+      "reviewed_version": "v1",
+      "reviewed_version_date": "2026-09-23",
+      "suggested_readme_section": "Applications and domain studies",
+      "summary_en": "Combines Jev action selection with persistent language-model planning for StarCraft II; limited full-game evidence and simultaneous interface changes prevent isolating the planning contribution.",
+      "summary_zh": "在星际争霸 II 中结合 Jev 动作选择与持续的语言模型规划；完整对局证据有限，同时发生的接口变化使规划贡献无法单独归因。",
+      "limitations_en": [
+        "Complete-system comparisons and selected game records are not an isolated planning ablation. The already-known code release includes selected comparison materials, not the full original logs; its current expanded experiments do not replace the paper snapshot."
+      ],
+      "limitations_zh": [
+        "完整系统比较与部分对局记录不是隔离规划变量的消融。已有代码发布包含部分比较材料，而非完整原始日志；当前仓库扩展实验不能替代论文快照。"
+      ],
+      "catalog_resource": {
+        "category": "Papers",
+        "title": "JEV-Star: Fast, Low-Cost StarCraft II Control with Language-Model Planning",
+        "by": "Ma, Zhao, Zeng & Zhao · 2026-09-23 · v1",
+        "date": "2026-09-23",
+        "first_submitted": "2026-09-23",
+        "url": "https://arxiv.org/abs/2609.27331v1",
+        "en": "Combines Jev action selection with persistent language-model planning for StarCraft II; limited full-game evidence and simultaneous interface changes prevent isolating the planning contribution.",
+        "zh": "在星际争霸 II 中结合 Jev 动作选择与持续的语言模型规划；完整对局证据有限，同时发生的接口变化使规划贡献无法单独归因。"
+      },
+      "primary_evidence": {
+        "url": "https://arxiv.org/abs/2609.27331v1",
+        "abstract_page_sha256": "9a16a61dc6d1701d6b53a85a0ad833a4a7c5ed22540ca899b222adae7413a6e3",
+        "abstract_sha256": "1200b29815b7e13b36740843f0286ad6316d575dfa61d30989bd4355d7e0ffb0",
+        "original_retrieved_at": "2026-10-16T10:59:20+00:00",
+        "cached_page_and_abstract_hashes_match": true,
+        "scope": "Original fixed-v1 abstract and citation metadata reused; no new retrieval or full-paper review."
+      },
+      "raw_preservation": {
+        "ledger": "data/research-sources.jsonl",
+        "raw_line_sha256": "952182b817bfc9775294b2e3676ff5bd72e6bfc367af8d03313d68a6f311aa90",
+        "verification_level": "abstract_checked",
+        "retrieved_at": "2026-10-16T10:59:20+00:00",
+        "no_change": true
+      },
+      "new_resource_count": 0,
+      "known_companion_link": {
+        "url": "https://github.com/sc2musa/jev_star",
+        "new_resource_count": 0,
+        "verification_level": "content_screened",
+        "review_record": "data/expansion-implementation-review-2026-10-16.json",
+        "scope": "Complete-system comparisons and selected game records are not an isolated planning ablation. The already-known code release includes selected comparison materials, not the full original logs; its current expanded experiments do not replace the paper snapshot."
+      }
+    },
+    {
+      "canonical_url": "https://arxiv.org/abs/2610.08155",
+      "fixed_url": "https://arxiv.org/abs/2610.08155v1",
+      "title": "Token-Efficient Multi-Agent Collaboration via System One-Guided Computational Division of Labor",
+      "authors": [
+        "Zhou, Zihan",
+        "Hu, Xinzhe",
+        "Yang, Hanxu",
+        "Wen, Liangjian",
+        "Kang, Zhao"
+      ],
+      "first_submitted": "2026-10-06",
+      "reviewed_version": "v1",
+      "reviewed_version_date": "2026-10-06",
+      "suggested_readme_section": "Judging and selective automation",
+      "summary_en": "Separates bounded multi-agent coordination from LLM reasoning through a controller–reader loop; reported GPT-4o-token and end-to-end latency reductions concern complete framework comparisons on seven benchmarks.",
+      "summary_zh": "通过控制器—读取器循环分离多智能体的有界协调与 LLM 推理；报告的 GPT-4o token 用量和端到端时延下降来自七个基准上的完整框架比较。",
+      "limitations_en": [
+        "The abstract reports framework-level comparisons with AgentVerse, DyLAN and SelfOrg, not an isolated controller-cost result or a universal accuracy guarantee. A dedicated author implementation was not verified in the fixed-v1 material."
+      ],
+      "limitations_zh": [
+        "摘要报告的是与 AgentVerse、DyLAN 和 SelfOrg 的框架级比较，不是独立控制器成本结果或通用准确性保证。已查固定 v1 材料未核验到专用作者实现。"
+      ],
+      "catalog_resource": {
+        "category": "Papers",
+        "title": "Token-Efficient Multi-Agent Collaboration via System One-Guided Computational Division of Labor",
+        "by": "Zhou et al. · 2026-10-06 · v1",
+        "date": "2026-10-06",
+        "first_submitted": "2026-10-06",
+        "url": "https://arxiv.org/abs/2610.08155v1",
+        "en": "Separates bounded multi-agent coordination from LLM reasoning through a controller–reader loop; reported GPT-4o-token and end-to-end latency reductions concern complete framework comparisons on seven benchmarks.",
+        "zh": "通过控制器—读取器循环分离多智能体的有界协调与 LLM 推理；报告的 GPT-4o token 用量和端到端时延下降来自七个基准上的完整框架比较。"
+      },
+      "primary_evidence": {
+        "url": "https://arxiv.org/abs/2610.08155v1",
+        "abstract_page_sha256": "bae5ffd39ca4f93d22777bead6957b0db8e036cba015002d5c26bb8b088d3c05",
+        "abstract_sha256": "2b2eba5bd11807c0cfa6b2acb758e2fb997e7f101dd8e6e81570ae51b7761084",
+        "original_retrieved_at": "2026-10-16T10:59:20+00:00",
+        "cached_page_and_abstract_hashes_match": true,
+        "scope": "Original fixed-v1 abstract and citation metadata reused; no new retrieval or full-paper review."
+      },
+      "raw_preservation": {
+        "ledger": "data/research-sources.jsonl",
+        "raw_line_sha256": "cce6701fd251d8cb1e7244d38fd4ee606d09b2fa39a6f8e1c4f123eec02e3b69",
+        "verification_level": "abstract_checked",
+        "retrieved_at": "2026-10-16T10:59:20+00:00",
+        "no_change": true
+      },
+      "new_resource_count": 0,
+      "known_companion_link": null
+    }
+  ],
+  "display_annotations": [],
+  "display_annotation_reason": "Existing source titles, first-version dates, relationships and concise ledger relevance already represent the reviewed scope. No extra policy overrides are needed for this promotion.",
+  "companion_scope": "JEV-Star uses its already-reviewed repository; the same fixed Jev-Mobile and S1-MAS availability checks found no dedicated author release URL. No resource is inferred from a baseline, replay, archive or selected video.",
+  "review_limits": "Fixed-version original abstracts and existing targeted workflow/availability reviews only; no new source fetch, scientific full-paper review, code/game/model execution or reproduction.",
+  "shared_repository_modified": false,
+  "stage": "Independently accepted for parent integration; no shared files changed.",
+  "bibtex": "@misc{zhang2026jevmobile,\n  title = {{Jev-Mobile: Jev as an Executor for Mobile GUI Agents}},\n  author = {Zhang, Linghua},\n  year = {2026},\n  date = {2026-09-24},\n  eprint = {2609.30186},\n  archivePrefix = {arXiv},\n  url = {https://arxiv.org/abs/2609.30186v1},\n  note = {Version 1, 2026-09-24; preprint}\n}\n\n@misc{ma2026jevstar,\n  title = {{JEV-Star: Fast, Low-Cost StarCraft II Control with Language-Model Planning}},\n  author = {Ma, Weiyu and Zhao, Liangbing and Zeng, Yongcheng and Zhao, Jian},\n  year = {2026},\n  date = {2026-09-23},\n  eprint = {2609.27331},\n  archivePrefix = {arXiv},\n  url = {https://arxiv.org/abs/2609.27331v1},\n  note = {Version 1, 2026-09-23; preprint}\n}\n\n@misc{zhou2026s1mas,\n  title = {{Token-Efficient Multi-Agent Collaboration via System One-Guided Computational Division of Labor}},\n  author = {Zhou, Zihan and Hu, Xinzhe and Yang, Hanxu and Wen, Liangjian and Kang, Zhao},\n  year = {2026},\n  date = {2026-10-06},\n  eprint = {2610.08155},\n  archivePrefix = {arXiv},\n  url = {https://arxiv.org/abs/2610.08155v1},\n  note = {Version 1, 2026-10-06; preprint}\n}\n",
+  "catalog_resources": [
+    {
+      "category": "Papers",
+      "title": "Jev-Mobile: Jev as an Executor for Mobile GUI Agents",
+      "by": "Zhang · 2026-09-24 · v1",
+      "date": "2026-09-24",
+      "first_submitted": "2026-09-24",
+      "url": "https://arxiv.org/abs/2609.30186v1",
+      "en": "Uses VLM local-goal planning with Jev action selection over Android accessibility-tree candidates; reported time and API-cost savings are conditional on successful trajectories and the tested controller configurations.",
+      "zh": "用 VLM 规划局部目标，再由 Jev 从 Android 无障碍树候选中选动作；报告的时延和 API 成本节省仅针对成功轨迹及所测控制器配置。"
+    },
+    {
+      "category": "Papers",
+      "title": "JEV-Star: Fast, Low-Cost StarCraft II Control with Language-Model Planning",
+      "by": "Ma, Zhao, Zeng & Zhao · 2026-09-23 · v1",
+      "date": "2026-09-23",
+      "first_submitted": "2026-09-23",
+      "url": "https://arxiv.org/abs/2609.27331v1",
+      "en": "Combines Jev action selection with persistent language-model planning for StarCraft II; limited full-game evidence and simultaneous interface changes prevent isolating the planning contribution.",
+      "zh": "在星际争霸 II 中结合 Jev 动作选择与持续的语言模型规划；完整对局证据有限，同时发生的接口变化使规划贡献无法单独归因。"
+    },
+    {
+      "category": "Papers",
+      "title": "Token-Efficient Multi-Agent Collaboration via System One-Guided Computational Division of Labor",
+      "by": "Zhou et al. · 2026-10-06 · v1",
+      "date": "2026-10-06",
+      "first_submitted": "2026-10-06",
+      "url": "https://arxiv.org/abs/2610.08155v1",
+      "en": "Separates bounded multi-agent coordination from LLM reasoning through a controller–reader loop; reported GPT-4o-token and end-to-end latency reductions concern complete framework comparisons on seven benchmarks.",
+      "zh": "通过控制器—读取器循环分离多智能体的有界协调与 LLM 推理；报告的 GPT-4o token 用量和端到端时延下降来自七个基准上的完整框架比较。"
+    }
+  ],
+  "readme_en": "- **[Jev-Mobile: Jev as an Executor for Mobile GUI Agents](https://arxiv.org/abs/2609.30186v1)** — Zhang. *2026-09-24, arXiv v1*. Uses VLM local-goal planning with Jev action selection over Android accessibility-tree candidates; reported time and API-cost savings are conditional on successful trajectories and the tested controller configurations.\n\n- **[JEV-Star: Fast, Low-Cost StarCraft II Control with Language-Model Planning](https://arxiv.org/abs/2609.27331v1)** — Ma, Zhao, Zeng & Zhao. *2026-09-23, arXiv v1*. Combines Jev action selection with persistent language-model planning for StarCraft II; limited full-game evidence and simultaneous interface changes prevent isolating the planning contribution. [Code and selected comparison artifacts](https://github.com/sc2musa/jev_star).\n\n- **[Token-Efficient Multi-Agent Collaboration via System One-Guided Computational Division of Labor](https://arxiv.org/abs/2610.08155v1)** — Zhou et al. *2026-10-06, arXiv v1*. Separates bounded multi-agent coordination from LLM reasoning through a controller–reader loop; reported GPT-4o-token and end-to-end latency reductions concern complete framework comparisons on seven benchmarks.\n",
+  "readme_zh": "- **[Jev-Mobile: Jev as an Executor for Mobile GUI Agents](https://arxiv.org/abs/2609.30186v1)** — Zhang. *2026-09-24, arXiv v1*. 用 VLM 规划局部目标，再由 Jev 从 Android 无障碍树候选中选动作；报告的时延和 API 成本节省仅针对成功轨迹及所测控制器配置。\n\n- **[JEV-Star: Fast, Low-Cost StarCraft II Control with Language-Model Planning](https://arxiv.org/abs/2609.27331v1)** — Ma, Zhao, Zeng & Zhao. *2026-09-23, arXiv v1*. 在星际争霸 II 中结合 Jev 动作选择与持续的语言模型规划；完整对局证据有限，同时发生的接口变化使规划贡献无法单独归因。 [代码与部分比较材料](https://github.com/sc2musa/jev_star)。\n\n- **[Token-Efficient Multi-Agent Collaboration via System One-Guided Computational Division of Labor](https://arxiv.org/abs/2610.08155v1)** — Zhou et al. *2026-10-06, arXiv v1*. 通过控制器—读取器循环分离多智能体的有界协调与 LLM 推理；报告的 GPT-4o token 用量和端到端时延下降来自七个基准上的完整框架比较。\n",
+  "independent_review": {
+    "schema_version": 1,
+    "reviewed_at": "2026-10-16T13:35:48.408775+00:00",
+    "verdict": "accept_all_three",
+    "required_corrections": [],
+    "checks": [
+      {
+        "url": "https://arxiv.org/abs/2609.30186v1",
+        "primary_page_and_abstract_hashes_match": true,
+        "visible_authors_metadata_Bib_match": true,
+        "title_first_revision_dates_match": true,
+        "catalog_and_readme_match": true,
+        "original_raw_line_hash_and_grade_match": true,
+        "new_resource_count": 0
+      },
+      {
+        "url": "https://arxiv.org/abs/2609.27331v1",
+        "primary_page_and_abstract_hashes_match": true,
+        "visible_authors_metadata_Bib_match": true,
+        "title_first_revision_dates_match": true,
+        "catalog_and_readme_match": true,
+        "original_raw_line_hash_and_grade_match": true,
+        "new_resource_count": 0
+      },
+      {
+        "url": "https://arxiv.org/abs/2610.08155v1",
+        "primary_page_and_abstract_hashes_match": true,
+        "visible_authors_metadata_Bib_match": true,
+        "title_first_revision_dates_match": true,
+        "catalog_and_readme_match": true,
+        "original_raw_line_hash_and_grade_match": true,
+        "new_resource_count": 0
+      }
+    ],
+    "input_artifacts": [
+      {
+        "name": "awesomejev-workflow-paper-promotions.json",
+        "sha256": "37b8da09c247afe2e66de7b3b9e256648461e65df42056f84440fd4246a6422d"
+      },
+      {
+        "name": "awesomejev-workflow-paper-references.bib",
+        "sha256": "0fb6b17019b93b4fe2503e745b448b2869d384eced43421cbf1fbf396df9f209"
+      },
+      {
+        "name": "awesomejev-workflow-paper-catalog.json",
+        "sha256": "a4e4258c5e3ffe952c77b279514634f43cce6373782384772b14300cb6138126"
+      },
+      {
+        "name": "awesomejev-workflow-paper-readme.en.md",
+        "sha256": "e4e9404314db28b569c121b954f4fdc4ac852077978c06ed6d1372f96c019f8d"
+      },
+      {
+        "name": "awesomejev-workflow-paper-readme.zh-CN.md",
+        "sha256": "121a809ca3d762d059824f1c9a61a25b73d56a974f3d462ad5c85f3058370af9"
+      }
+    ],
+    "scope_findings": [
+      "Mobile retains successful-trajectory conditioning for time and API cost; no universal agent efficiency or equal-success claim is introduced.",
+      "JEV-Star retains limited full-game evidence and concurrent interface changes. Its known code link promises selected comparison artifacts, not the full original raw logs or an isolated planning ablation.",
+      "S1-MAS retains complete-framework comparisons, its named token-accounting scope and seven-benchmark setting; it does not attribute every measured saving to the controller alone.",
+      "No unsupported new author-code links are invented for Mobile or S1-MAS. All canonical paper identities and the JEV-Star code are already present.",
+      "No source-curation override is necessary; original evidence hashes, retrieval times, versions and abstract-checked grades are preserved."
+    ],
+    "review_scope": "Cached fixed-v1 abstracts/visible author lists/citation metadata plus existing targeted workflow and companion-release reviews; no full-paper audit.",
+    "new_http_requests": 0,
+    "test_suites_run": 0,
+    "source_code_executed": false,
+    "shared_repository_modified": false,
+    "new_expansion_resource_count": 0
+  }
+}

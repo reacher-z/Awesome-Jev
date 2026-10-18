@@ -44,13 +44,13 @@ The separate twice-daily public-source workflow remains enabled. Its data-only P
 
 A second reviewed release adds **58 distinct resources**: 32 additional projects from the reserve, 12 paper-linked reproducibility artifacts, and 14 robustness tools or result archives. One project appeared in both candidate batches; its richer robustness record was retained once, not counted twice. The cumulative expansion is **713 new sources**, including 368 content-screened artifacts and 345 abstract-checked papers. The full index contains 4,208 unique sources, with 4,161 checked at their explicit tiers and 47 metadata-only entries.
 
-Eight selected project READMEs and six selected reproducibility cards were independently refetched; every fetched body matched the input hash. Five selected robustness cards were separately refetched and matched. File inventories were inspected for the reproducibility artifacts, without downloading dataset rows or model weights, executing software, or reproducing results.
+Eight selected project READMEs and six selected reproducibility cards were independently refetched; every fetched body matched the input hash. Five selected robustness cards were separately refetched and matched. File inventories were inspected for the reproducibility artifacts, without downloading dataset rows or model weights, executing software, or reproducing results. The [follow-up review record](../../data/expansion-followup-review-2026-10-16.json) retains the batch counts, the cross-batch duplicate, the spot-check results and the robustness review.
 
 Material limits are visible in the directory descriptions. SecurityEval distributes saved observations without original input or response text; Bongard omits part of its training recipe; Chinese-Jev model weights remain pending; some agent datasets omit question texts or raw trajectories. JEV-Contrast stores the gold answer first in both candidate arrays, so evaluation requires shuffling with label remapping. Mock demonstrations, synthetic policy-author fixtures and partially reviewed LLM-assisted annotations remain labeled as such. A neutral display title keeps a small zero-shot Laya diagnostic from reading as a universal model verdict.
 
 Four sources already included in the first intake were promoted to the main curated collection: the Artificial Analysis Decision Index, Entagl's dated workflow evaluation, and the official SDE cascade and Structure recovery cookbooks. This brings the curated collection to 75 entries; these promotions add **zero** to the distinct expansion count. Artificial Analysis includes private questions, Entagl's private customer replays limit reproduction, and the cookbook walkthroughs are not independently reproduced experiments.
 
-**后续批次：** 本次新增58项，跨批次重复项目只保留一次，累计净新增713项。其中368项为正文筛查、345篇为摘要检查；全文精读、模型运行和实验复现均未被声称。关键复现限制、正确选项位置泄漏、模拟或合成标签等信息已直接写入展示简介。四项既有来源提升为精选条目不增加净新增计数，精选目录现有75项。
+**后续批次：** 本次新增58项，跨批次重复项目只保留一次，累计净新增713项。其中368项为正文筛查、345篇为摘要检查；全文精读、模型运行和实验复现均未被声称。关键复现限制、正确选项位置泄漏、模拟或合成标签等信息已直接写入展示简介。四项既有来源提升为精选条目不增加净新增计数，精选目录现有75项。批次计数、跨批次重复项、抽查结果与稳健性复核见[后续审阅记录](../../data/expansion-followup-review-2026-10-16.json)。
 
 ## Direct-paper follow-up and Chinese descriptions
 
@@ -71,7 +71,7 @@ The Chinese directory now translates every resource description, including quali
 
 ## Implementation follow-up
 
-Two author-linked repositories add independently inspectable code resources: [Selective Reasoning](https://github.com/binzheng-joey/selective-reasoning) and [JEV-Star](https://github.com/sc2musa/jev_star). Both primary READMEs were independently refetched with matching hashes, and public file/release inventories were inspected. The [implementation review](../../data/expansion-implementation-review-2026-10-16.json) records those checks. Software/data archives, selected replays and videos remain components of their repositories, not additional resources or independent studies.
+Two author-linked repositories add independently inspectable code resources: [Selective Reasoning](https://github.com/binzheng-joey/selective-reasoning) and [JEV-Star](https://github.com/sc2musa/Jev_Star). Both primary READMEs were independently refetched with matching hashes, and public file/release inventories were inspected. The [implementation review](../../data/expansion-implementation-review-2026-10-16.json) records those checks. Software/data archives, selected replays and videos remain components of their repositories, not additional resources or independent studies.
 
 The expansion reaches **721 distinct additions**: 370 content-screened resources and 351 abstract-checked papers. The complete index has 4,216 unique sources, including 4,169 checked at their stated tiers and 47 metadata-only discoveries. Selective Reasoning's measurement recomputation does not rerun model inference; external weights, benchmarks and feature caches remain necessary. JEV-Star omits full original logs, and implementation/service timing differences confound causal claims about planning. Neither repository was executed.
 
@@ -140,3 +140,57 @@ One distinct ufakzeka-karar checkpoint brings the expansion to **754**. The pape
 Three existing papers were promoted without adding raw source rows or upgrading evidence. Two known code-project links and a same-release benchmark mirror also add zero. Five display-only annotations clarify titles, first-submission dates and scope: one 2025 routing paper moves to background, while NeoHorse v2 retains its directly relevant typed-decision adaptation with the wider family results kept separate. All original ledger bytes, hashes, retrieval times and grades remain intact apart from appending the one new checkpoint row.
 
 **中文：** 本轮只新增一个独立模型检查点，累计754项；三篇论文精选提升、已知代码与基准镜像均不重复计数。模型卡、元数据及目录已核查，未下载或执行权重、加载器、校准文件和数据记录；测试反馈影响训练及客服校准的限制保留。五项展示注释修正题名、日期与范围，早期路由研究归入背景，NeoHorse的决策适配与整体家族结果分开，原台账证据不改。
+
+## Selected scheduled-scan sources — 17 October 2026 (UTC)
+
+Six whole projects bring the reviewed expansion to **760**: a Protobuf client generator, a shadow-routing example, Weiche routing research, complaint-classification analysis, Chinese RAG reranking evaluation and a community survey package. Their public READMEs were freshly fetched and all six hashes matched the scheduled scan. Descriptions distinguish experimental interfaces, synthetic fixtures, author-reported measurements, saved-output analysis and fresh execution. No source code was executed and no paid model API was called. Complaint/customer records, model weights and prediction archives were not downloaded.
+
+The automatic [scan PR](https://github.com/reacher-z/Awesome-Jev/pull/4) remains open. It reported 323 new records and a partial scan, including provider failures; this release accepts only the six individually inspected projects. The remaining candidates are not automatically added to this reviewed expansion. [Selection and scope](../../data/scan-review-2026-10-17.json).
+
+The four existing Decision Index documents were separately refreshed to commit `0ddf675`. The edition is still 0.3.2, but its reference now names Jev 1.14 while frozen inputs retain 1.13. Public/private weights and scoring rules remain unchanged. The Hub’s old tracker name redirects to this same Space; canonicalizing that alias prevents a content update from creating an extra counted source. Raw historical alias evidence remains in the ledger. These document refreshes, three paper promotions and the alias correction add zero expansion identities.
+
+**中文：** 本轮从自动扫描中单独核查并接受六个完整项目，累计760项；说明文件哈希全部匹配，但没有执行源码或重放实验。自动PR仍待继续审阅，323条提议不能直接当作已接受成果。四份Decision Index文档更新至新提交，区分1.14参考运行与1.13冻结输入；旧Space名称按官方跳转合并，不因正文变化虚增来源。原证据仍保留，文档刷新和论文精选提升均不重复计数。
+
+## Multilingual runtimes and evaluation tools — 17 October 2026 (UTC)
+
+Twelve documentation-backed projects bring the expansion to **772**. All fresh README hashes match the retained scheduled-scan observations, and no canonical URL or body hash duplicates were found in the current/frozen collection. Linked weights, size variants, example notebooks, data mirrors and component files are not additional sources. [Review record](../../data/multilingual-tools-review-2026-10-17.json).
+
+The language implementations have different operating limits: FRIDA describes Russian–English inputs and Russian suffixes; OpenThai documents a Thai/English training pipeline; Quyet varies by checkpoint and caps option counts; Jev-AR reports synthetic Arabic data without native-speaker validation, approximate confidence on custom routes, and gated noncommercial weights. No gated access was requested or model downloaded.
+
+Evaluation scope is equally important. CITY-Jev identifies its content as preliminary with partial human review and evaluates decisions rather than complete agents. The browser comparison uses native request formats, ambiguous GUI labels and nonidentical browser/timing environments. English RAG gating is exploratory, while the guardrail benchmark withholds part of its test set. The measurement project separates response-shape fixtures from accuracy data and records corrected baselines. The game-training project separates a selected seed, retention checks and later joint training. We did not execute any of these workflows or inspect raw predictions, customer data or model weights.
+
+Eight projects were selected for the main catalog; all twelve have parallel Chinese discovery descriptions. The guide adds two documentation-based language-transfer examples without asserting that confidence thresholds transfer. The remaining scan proposal stays open for further review.
+
+**中文：** 本轮十二个项目使扩展资源达到772项，说明文件哈希均与扫描一致，镜像、权重变体和组件文件不拆分计数。多语言实现的语言／长度／选项限制、阿拉伯语标签未由母语者验证、社区评测的初步状态、不同浏览器与计时环境、探索性门控和未公开测试切片均保留。八项进入精选，十二项都有中文简介；未执行代码、调用模型或检查原始数据，剩余候选继续待审。
+
+## Audio checkpoint follow-up — 17 October 2026 UTC
+
+One complete AudioJev checkpoint repository was accepted from its inspected public model card, bringing the expansion to **773 sources**. Three associated paper selections were already in the frozen baseline and add zero source counts; the inference-code navigation link is not an accepted ledger addition. The model card identifies a single seed and Qwen Research license, discloses audio-source overlap and distinguishes order stability from correctness calibration. No weights or audio were downloaded. [Evidence and preserved provider records](../../data/label-graph-audio-review-2026-10-17.json).
+
+**中文：** 新增一个已查模型卡的完整AudioJev检查点，累计773项扩展来源；三篇精选论文均为既有来源，推理代码链接只作导航，均不重复计数。保留单种子、许可、音频来源重叠及顺序稳定与正确率校准的区别，未下载权重或音频。
+
+## Four primary domain and transfer studies — 17 October 2026 UTC
+
+Four distinct papers were accepted from fixed-v1 arXiv abstract pages, bringing the expansion to **777 sources**. Candidate identities came from the open scan proposal; the acceptance uses fresh, version-protected primary evidence. No old ledger rows were altered, no companion links were counted, and remaining scan records are still pending. English and Chinese descriptions retain medical, hardware, event-model and language-transfer limitations. [Review record](../../data/domain-transfer-review-2026-10-17.json).
+
+**中文：** 四篇固定v1原始摘要使扩展达到777项；采用新抓取并固定版本的证据，不改写旧台账，不计入配套链接，扫描其余候选仍待审。中英文简介均保留医学、硬件、事件模型及语言迁移限制。
+
+## Four model-card releases — 17 October 2026 UTC
+
+Four distinct model repositories bring the expansion to **781 sources** and the main catalog to **130 curated resources**. All inspected card bytes match explicit Hub commits; three match the earlier scan, while Span-02 has changed and moved from `lihe07` to `respanai`. The old and new addresses are one identity, including in subsequent scanner matching. A regression test distinguishes the real alias from a similarly prefixed model. [Pinned evidence and review limits](../../data/model-card-review-2026-10-17.json).
+
+Amos separates zero-shot and benchmark-train-prior settings. KnowLine discloses public-score checkpoint selection, related task/source exposure and approximate self-run calibration comparisons. Lychee declares CC BY-NC 4.0; an Apache-2.0 base does not replace that model license. Span-02 documents a dedicated engine, optional reasoning and separate index/default settings. These descriptions are publisher evidence, not reproduced performance. Sibling sizes, release variants and component files were not counted separately.
+
+**中文：** 四个模型仓库使扩展达到781项、精选达到130项，模型卡均与固定Hub提交的字节一致。Span-02迁移且文档改变，旧新地址只算一个来源，并以回归测试保护扫描身份匹配。保留Amos先验拟合条件、KnowLine公开评测选点与来源重叠、Lychee非商业许可、Span专用引擎与推理配置区别；没有执行模型或拆分尺寸、版本、组件来增加计数。
+
+## Browser and search runtimes — 17 October 2026 UTC
+
+Four whole implementation repositories bring the expansion to **785 sources** and the main collection to **134 curated resources**. Source README hashes match the existing scan proposal. Browser output parity, synthetic form coverage, training-set overlap, unfinished modalities, calibration inputs and cache memory tradeoffs are retained in the summaries. Model mirrors, bundle variants, demos and the embedded SearchJev PDF are not separate additions. The mJev display title is protected from an unrelated example heading. [Evidence and scope](../../data/runtime-search-review-2026-10-17.json).
+
+**中文：** 四个完整实现仓库使扩展达到785项、精选达到134项，README哈希与扫描一致。保留移植一致性与泛化的区别、合成表单范围、训练重叠、未完成模态、校准输入和缓存显存取舍；镜像、不同大小的包、演示及内嵌PDF不拆分计数。另修正mJev由代码示例标题引起的展示风险，未执行项目代码或下载模型数据。
+
+## Unavailable and withdrawn papers — 17 October 2026 UTC
+
+Five background papers were removed, leaving the expansion at **780 sources**. Four arXiv papers had been withdrawn by their authors before the 16 October intake: each current version is a withdrawal notice, and two notices state that the results are invalid. Their OpenAlex-reconstructed abstracts did not show the withdrawal. The fifth paper's DOI resolves only to `subscholar.org`, which no longer exists in DNS. *Classification with a Reject Option using a Hinge Loss* stays listed and now links its JMLR page, because its ACM `10.5555/` DOI is not registered with doi.org. Each removed or replaced URL has an exact-URL exclusion with its evidence and observation time in [source curation](../../data/source-curation.json), so a later scan cannot re-add it. The research-paper intake batch now lists 340 accepted URLs. ChenstarMr/jev-chat-windows was public again when rechecked, so its record is unchanged.
+
+**中文：** 删除五篇背景论文后，扩展为780项。四篇arXiv论文在10月16日收录前已被作者撤回，当前版本均为撤稿说明，其中两篇指出结果无效；OpenAlex重建的摘要未反映撤回。另一篇的DOI只指向已无域名解析的`subscholar.org`。《Classification with a Reject Option using a Hinge Loss》保留，因其ACM `10.5555/` DOI未在doi.org注册，改为链接JMLR页面。每个删除或替换的URL都在来源策展文件中记录精确URL排除、证据与观察时间，防止后续扫描重新加入；论文收录批次现列340个URL。ChenstarMr/jev-chat-windows复查时已恢复公开，记录不变。

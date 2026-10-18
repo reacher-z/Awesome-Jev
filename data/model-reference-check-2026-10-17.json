@@ -1,0 +1,12 @@
+{
+  "url": "https://docs.typesafe.ai/models",
+  "http_status": 200,
+  "content_sha256": "8d8eabd03f997c2dfc1e87e298ecd69e4e2dbf5f7864592396ae60c7a39a8ea7",
+  "retrieved_at": "2026-10-17T02:14:44.875463+00:00",
+  "title": "Models - TypeSafe",
+  "aliases": {
+    "jev-latest": "jev-1.13.0",
+    "jev-preview": "jev-1.14.0"
+  },
+  "scope": "Official models page alias table inspected. No model call, SDK installation or broader API-contract re-audit."
+}

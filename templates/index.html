@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111418" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
       content="Papers, models, datasets, and tools for Jev and typed decision models."
@@ -76,7 +77,7 @@
     >
     <div class="page-shell">
       <header class="masthead">
-        <a class="wordmark" href="#" aria-label="AwesomeJev home"
+        <a class="wordmark" href="#" aria-label="AwesomeJev home" data-i18n-aria="homeLabel"
           ><span class="brand-mark" aria-hidden="true">a<span>j</span></span
           >Awesome<span class="brand-jev">Jev</span
           ><span class="brand-period">.</span></a
@@ -112,19 +113,24 @@
           <a href="/zh/" data-language="zh" lang="zh-CN" hreflang="zh-CN">中文</a>
         </div>
       </header>
+    </div>
 
-      <main>
+    <main>
+    <div class="page-shell">
         <section class="hero project-intro" aria-labelledby="hero-title">
           <div class="hero-main">
             <h1 id="hero-title" data-i18n="heroLine1">Awesome Jev</h1>
             <p class="hero-description" data-i18n="heroDescription">
               Papers, models, datasets, and tools for typed decisions.
             </p>
+            {{COLLECTION_STATS}}
             <nav class="reference-links intro-links" aria-label="Project links" data-i18n-aria="readFurther">
               <a href="{{DISCOVERIES_URL}}">{{DISCOVERIES_LABEL}}</a>
               <a href="https://github.com/reacher-z/Awesome-Jev/blob/main/README.md" data-document="readme" data-i18n="readmeLink">README</a>
               <a href="/guide/" data-document="survey" data-i18n="surveyLink">Research survey</a>
               <a href="{{PAPERS_URL}}">{{PAPERS_LABEL}}</a>
+              <a href="{{MODELS_URL}}">{{MODELS_LABEL}}</a>
+              <a href="{{TOPICS_URL}}">{{TOPICS_LABEL}}</a>
               <a href="/references.bib" data-i18n="bibtexLink">BibTeX</a>
               <a href="https://huggingface.co/spaces/multimodalart/jev-decision-index" target="_blank" rel="noopener noreferrer" data-i18n="indexTitle">Decision Index</a>
             </nav>
@@ -162,6 +168,7 @@
               <button type="button" class="filter-button" data-filter="Evaluations" aria-pressed="false" data-i18n="filterEvaluations">Evaluations</button>
               <button type="button" class="filter-button" data-filter="Guides" aria-pressed="false" data-i18n="filterGuides">Guides</button>
               <button type="button" class="filter-button" data-filter="Foundations" aria-pressed="false" data-i18n="filterFoundations">Foundations</button>
+              <label class="filter-toggle"><input type="checkbox" id="code-filter" /><span data-i18n="filterHasCode">Papers with code</span><span class="filter-count" aria-hidden="true">{{CODE_COUNT}}</span></label>
             </div>
             <form class="search-field" role="search">
               <label
@@ -180,14 +187,14 @@
               /><kbd aria-hidden="true">/</kbd>
             </form>
           </div>
-          <aside class="version-note compact-version">
+          <div class="version-note compact-version">
             <span data-i18n="versionNote">Stable: Jev 1.13 · Preview: Jev 1.14.</span>
             <a href="https://docs.typesafe.ai/models" target="_blank" rel="noopener noreferrer" data-i18n="modelNotes">Model notes ↗</a>
-            <time datetime="2026-10-16">2026-10-16</time>
-          </aside>
+            <time datetime="2026-10-17">2026-10-17</time>
+          </div>
           <div class="index-meta">
             <p id="result-count" role="status" aria-live="polite">{{RESOURCE_COUNT}}</p>
-            <span data-i18n="sourceNote">DIRECT LINKS · CLEAR PROVENANCE</span>
+            <p class="evidence-legend">{{EVIDENCE_LEGEND}}</p>
           </div>
           <p
             class="model-evidence"
@@ -227,9 +234,6 @@
         >
           <div class="corpus-heading">
             <div>
-              <p class="eyebrow" data-i18n="corpusEyebrow">
-                THE WIDER RESEARCH CORPUS
-              </p>
               <h2 id="corpus-title" data-i18n="corpusTitle">
                 Follow the connections.
               </h2>
@@ -325,8 +329,6 @@
                     placeholder="Search titles, topics, or sources…"
                     data-i18n-placeholder="corpusPlaceholder"
                     autocomplete="off" /></label
-                ><span class="tiny-label" data-i18n="corpusToggle"
-                  >SEARCHABLE SOURCE REGISTER</span
                 >
               </div>
               <p id="corpus-status" role="status" aria-live="polite"></p>
@@ -351,15 +353,11 @@
             </div>
           </details>
         </section>
-      </main>
     </div>
 
     <section class="getting-started" id="start" aria-labelledby="start-title">
       <div class="start-inner">
         <div class="start-copy">
-          <p class="eyebrow" data-i18n="startEyebrow">
-            A SMALL, PRACTICAL START
-          </p>
           <h2 id="start-title" data-i18n="startTitle">
             One call.<br /><em>Typed decisions.</em>
           </h2>
@@ -384,7 +382,7 @@
         <div class="code-panel">
           <div class="code-toolbar">
             <span
-              ><span class="code-dot" aria-hidden="true"></span>PYTHON
+              ><span class="code-dot" aria-hidden="true"></span>Python
               <span class="code-version">/ jev-1.13.0</span></span
             ><button id="copy-code" type="button" data-i18n="copyCode">
               Copy code ↗
@@ -431,9 +429,6 @@ print(answer.choice, answer.confidence)</code></pre>
     <div class="page-shell">
       <section class="contribute-section">
         <div>
-          <p class="eyebrow" data-i18n="contributeEyebrow">
-            A LIVING COLLECTION
-          </p>
           <h2 data-i18n="contributeTitle">Good work belongs here.</h2>
         </div>
         <div>
@@ -452,9 +447,13 @@ print(answer.choice, answer.confidence)</code></pre>
           ></a>
         </div>
       </section>
+    </div>
+    </main>
+
+    <div class="page-shell">
       <footer class="footer">
         <a class="footer-brand" href="#">AwesomeJev<span>.</span></a>
-        <p data-i18n="independent">
+        <p data-i18n="affiliation">
           Independent project. Not affiliated with TypeSafe AI.
         </p>
         <a
@@ -466,8 +465,8 @@ print(answer.choice, answer.confidence)</code></pre>
             <use href="/assets/fontawesome/icons.svg#github"></use></svg
           ><span data-i18n="sourceLink">Website source</span></a
         >
-        <p class="footer-date" data-i18n="lastCurated">
-          Last curated · October 16, 2026
+        <p class="footer-date">
+          <span data-i18n="lastCurated">Last curated</span> · <time datetime="{{CONTENT_DATE}}">{{CONTENT_DATE}}</time>
         </p>
         <a
           href="#"

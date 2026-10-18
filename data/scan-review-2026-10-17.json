@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-17T02:18:06.867088+00:00",
+  "scan_pr": "https://github.com/reacher-z/Awesome-Jev/pull/4",
+  "scan_head": "bd0c9de6abd50644dfe803074aadf6d38340049a",
+  "scan_status": "partial",
+  "scan_reported_new_records": 323,
+  "scan_errors": {
+    "total": 153,
+    "codes": {
+      "insufficient_content": 92,
+      "paper_query_failed:http_429": 4,
+      "unavailable": 57
+    }
+  },
+  "scan_pr_merged": false,
+  "accepted_new_sources": 6,
+  "accepted_input_sha256": "e141ccca4afa8643f943b2c7c97ed6092331e8880e2b1fc0565bc7dd355f20c6",
+  "accepted_sources": [
+    {
+      "url": "https://github.com/bufbuild/protoc-gen-jev",
+      "retrieved_url": "https://raw.githubusercontent.com/bufbuild/protoc-gen-jev/main/README.md",
+      "content_sha256": "db0092911e57f73c8be89d3ae1e46a917ac042fc2bb3ecf8a03ee761c0b52765",
+      "retrieved_at": "2026-10-17T02:10:26.852478+00:00",
+      "verification_level": "content_screened",
+      "limitations": "README describes generated clients and backend compatibility; no generator, client or backend was executed."
+    },
+    {
+      "url": "https://github.com/alonsuare/typed-decisions-shadow-layer",
+      "retrieved_url": "https://raw.githubusercontent.com/alonsuare/typed-decisions-shadow-layer/main/README.md",
+      "content_sha256": "cc00091b71a1fd80b9e953790a5fb226478499aa354518b1bcac14fe67de8302",
+      "retrieved_at": "2026-10-17T02:10:26.872032+00:00",
+      "verification_level": "content_screened",
+      "limitations": "README-only review. No real CRM records were accessed, no messages sent, and API-contract or production claims were not validated."
+    },
+    {
+      "url": "https://github.com/fstandhartinger/weiche",
+      "retrieved_url": "https://raw.githubusercontent.com/fstandhartinger/weiche/main/README.md",
+      "content_sha256": "7ff94acea2e4d4455509faf2da991e52a278cb37abfed6595cfa02df57949f0a",
+      "retrieved_at": "2026-10-17T02:10:26.879218+00:00",
+      "verification_level": "content_screened",
+      "limitations": "Repository documentation only; no model loading, training, export or benchmark execution. Code and data licenses remain separate."
+    },
+    {
+      "url": "https://github.com/earino/zero-shot-complaint-benchmark",
+      "retrieved_url": "https://raw.githubusercontent.com/earino/zero-shot-complaint-benchmark/main/README.md",
+      "content_sha256": "ab9804113452716972339750448b3f2f83f8f140cad89720aeb74d35792878a0",
+      "retrieved_at": "2026-10-17T02:10:27.038347+00:00",
+      "verification_level": "content_screened",
+      "limitations": "README describes numeral checks and saved-prediction analysis, with external files and source data dependencies. No complaint texts, predictions or archives were downloaded or replayed."
+    },
+    {
+      "url": "https://github.com/vicfei/jev-rag-zh-benchmark",
+      "retrieved_url": "https://raw.githubusercontent.com/vicfei/jev-rag-zh-benchmark/main/README.md",
+      "content_sha256": "540c89325155a04dd79f546e102e7d650183b064bc0148aa78557ed0f722927d",
+      "retrieved_at": "2026-10-17T02:10:27.062513+00:00",
+      "verification_level": "content_screened",
+      "limitations": "README-only source inspection; no API calls, source examples, prediction logs or experiments were run. Mirrors and companion prompt collections are not separate additions."
+    },
+    {
+      "url": "https://github.com/evan-py-chen/jev-survey",
+      "retrieved_url": "https://raw.githubusercontent.com/evan-py-chen/jev-survey/main/README.md",
+      "content_sha256": "7d9a2a9a91d550fe2d79bdb5593ea6b877518b3d7fe315341d40f15ca47f3b12",
+      "retrieved_at": "2026-10-17T02:10:27.077663+00:00",
+      "verification_level": "content_screened",
+      "limitations": "README abstract and manuscript-package description only; the full manuscript and LaTeX build were not audited or executed."
+    }
+  ],
+  "index_refresh": {
+    "revision": "0ddf6758073eb77ae449a3541f57286d7f39d93f",
+    "new_source_count": 0,
+    "previous_records": [
+      {
+        "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+        "title": "Jev Decision Index — README.md",
+        "topic": "community-evaluation-index",
+        "relation": "direct",
+        "verification_level": "editorial_reviewed",
+        "status": "screened",
+        "retrieved_at": "2026-10-16T01:23:07+00:00",
+        "checked_via": "Public repository source inspection",
+        "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/5d09dd9cf226338c68fad22284c4982e6680af7d/README.md",
+        "resolved_revision": "5d09dd9cf226338c68fad22284c4982e6680af7d",
+        "content_sha256": "40c5d8a9d037456f4a8c35c70a3df93312f2207979cb376dbc442de6ed7463a2",
+        "content_bytes": 7921,
+        "evidence": "Inspected community tracker source; independent implementations are not TypeSafe weights.",
+        "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.",
+        "discovered_from": [
+          "https://huggingface.co/spaces/multimodalart/jev-decision-index"
+        ]
+      },
+      {
+        "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/5d09dd9cf226338c68fad22284c4982e6680af7d/data/index.json",
+        "title": "Jev Decision Index — data/index.json",
+        "topic": "community-evaluation-index",
+        "relation": "direct",
+        "verification_level": "editorial_reviewed",
+        "status": "screened",
+        "retrieved_at": "2026-10-16T01:23:07+00:00",
+        "checked_via": "Public repository source inspection",
+        "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/5d09dd9cf226338c68fad22284c4982e6680af7d/data/index.json",
+        "resolved_revision": "5d09dd9cf226338c68fad22284c4982e6680af7d",
+        "content_sha256": "228e4a762ecdaf8fa17d64bc64bd88fa192da6dcedf1de4aea6cc6a48a8801b2",
+        "content_bytes": 2295706,
+        "evidence": "Structured scoreboard contains 167 entrant records and public panel size 37; reference version is jev-1.13.0.",
+        "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.",
+        "discovered_from": [
+          "https://huggingface.co/spaces/multimodalart/jev-decision-index"
+        ]
+      },
+      {
+        "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/5d09dd9cf226338c68fad22284c4982e6680af7d/data/methodology.json",
+        "title": "Jev Decision Index — data/methodology.json",
+        "topic": "community-evaluation-index",
+        "relation": "direct",
+        "verification_level": "editorial_reviewed",
+        "status": "screened",
+        "retrieved_at": "2026-10-16T01:23:07+00:00",
+        "checked_via": "Public repository source inspection",
+        "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/5d09dd9cf226338c68fad22284c4982e6680af7d/data/methodology.json",
+        "resolved_revision": "5d09dd9cf226338c68fad22284c4982e6680af7d",
+        "content_sha256": "8f37754c6c66eac7919c96712dce16b9ec7e226cb38b8933483a0a3117bd53cc",
+        "content_bytes": 294298,
+        "evidence": "Methodology records 37 public benchmarks, chance correction, private-test weighting and a 0.3.2 scoring correction; private tests are not publicly reproducible.",
+        "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.",
+        "discovered_from": [
+          "https://huggingface.co/spaces/multimodalart/jev-decision-index"
+        ]
+      },
+      {
+        "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/5d09dd9cf226338c68fad22284c4982e6680af7d/data/v03.json",
+        "title": "Jev Decision Index — data/v03.json",
+        "topic": "community-evaluation-index",
+        "relation": "direct",
+        "verification_level": "editorial_reviewed",
+        "status": "screened",
+        "retrieved_at": "2026-10-16T01:23:07+00:00",
+        "checked_via": "Public repository source inspection",
+        "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/5d09dd9cf226338c68fad22284c4982e6680af7d/data/v03.json",
+        "resolved_revision": "5d09dd9cf226338c68fad22284c4982e6680af7d",
+        "content_sha256": "ebf80ffe13ba7c00d6ff77abc809f2ebe3bf5cb6dd7875b3be125a4b35cf3a1f",
+        "content_bytes": 48635,
+        "evidence": "Full-score component data specifies public/same-skills/new-domains weights of 0.2/0.5/0.3 and scale-equating parameters.",
+        "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.",
+        "discovered_from": [
+          "https://huggingface.co/spaces/multimodalart/jev-decision-index"
+        ]
+      }
+    ],
+    "updated_records": [
+      {
+        "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+        "title": "Jev Decision Index — README.md",
+        "topic": "community-evaluation-index",
+        "relation": "direct",
+        "verification_level": "editorial_reviewed",
+        "status": "screened",
+        "retrieved_at": "2026-10-17T02:04:53.891433+00:00",
+        "checked_via": "Public fixed-revision source comparison and structured metadata review; no model execution or score recalculation.",
+        "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/README.md",
+        "resolved_revision": "0ddf6758073eb77ae449a3541f57286d7f39d93f",
+        "content_sha256": "243a2c72bebfff94e1a8f7d047b4a3b60b5efa8869972a8d62818245b615f2c3",
+        "content_bytes": 8417,
+        "evidence": "Tracker body retained; model links expanded. Independent implementations are not TypeSafe weights.",
+        "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.",
+        "discovered_from": [
+          "https://huggingface.co/spaces/multimodalart/jev-decision-index"
+        ],
+        "review_scope": "Changed metadata, document structure and scoring-rule continuity reviewed; no underlying model outputs or private tests reproduced."
+      },
+      {
+        "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/index.json",
+        "title": "Jev Decision Index — data/index.json",
+        "topic": "community-evaluation-index",
+        "relation": "direct",
+        "verification_level": "editorial_reviewed",
+        "status": "screened",
+        "retrieved_at": "2026-10-17T02:04:54.117348+00:00",
+        "checked_via": "Public fixed-revision source comparison and structured metadata review; no model execution or score recalculation.",
+        "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/index.json",
+        "resolved_revision": "0ddf6758073eb77ae449a3541f57286d7f39d93f",
+        "content_sha256": "23496572ce8da74277208b5796060331b366b015a800f281e7df21960a9ef609",
+        "content_bytes": 2374266,
+        "evidence": "Parsed 173 scoreboard engine records and a separate Jev 1.14 reference; this is source inspection, not validation of reported scores.",
+        "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.",
+        "discovered_from": [
+          "https://huggingface.co/spaces/multimodalart/jev-decision-index"
+        ],
+        "review_scope": "Changed metadata, document structure and scoring-rule continuity reviewed; no underlying model outputs or private tests reproduced."
+      },
+      {
+        "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/methodology.json",
+        "title": "Jev Decision Index — data/methodology.json",
+        "topic": "community-evaluation-index",
+        "relation": "direct",
+        "verification_level": "editorial_reviewed",
+        "status": "screened",
+        "retrieved_at": "2026-10-17T02:04:54.063646+00:00",
+        "checked_via": "Public fixed-revision source comparison and structured metadata review; no model execution or score recalculation.",
+        "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/methodology.json",
+        "resolved_revision": "0ddf6758073eb77ae449a3541f57286d7f39d93f",
+        "content_sha256": "c952b113916d255d926b27e4fc629a767d929f32ba68af0f058caee77fc4bf86",
+        "content_bytes": 293662,
+        "evidence": "Edition remains 0.3.2; the reference is a Jev 1.14 lab run while frozen requests were built for 1.13. Public/private scoring rules and weights are unchanged.",
+        "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.",
+        "discovered_from": [
+          "https://huggingface.co/spaces/multimodalart/jev-decision-index"
+        ],
+        "review_scope": "Changed metadata, document structure and scoring-rule continuity reviewed; no underlying model outputs or private tests reproduced."
+      },
+      {
+        "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/v03.json",
+        "title": "Jev Decision Index — data/v03.json",
+        "topic": "community-evaluation-index",
+        "relation": "direct",
+        "verification_level": "editorial_reviewed",
+        "status": "screened",
+        "retrieved_at": "2026-10-17T02:04:54.008184+00:00",
+        "checked_via": "Public fixed-revision source comparison and structured metadata review; no model execution or score recalculation.",
+        "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/0ddf6758073eb77ae449a3541f57286d7f39d93f/data/v03.json",
+        "resolved_revision": "0ddf6758073eb77ae449a3541f57286d7f39d93f",
+        "content_sha256": "7b5a4586e1260d58dd534721d5f7ce278718effe469d3912747cff48cc7b8a51",
+        "content_bytes": 50473,
+        "evidence": "Parsed 174 full-score records including the reference. Public/same-skills/new-domains weights remain 0.2/0.5/0.3; private tests are not fully reproducible from public material.",
+        "relevance": "User-specified central community source for Jev-inspired implementations and evaluation.",
+        "discovered_from": [
+          "https://huggingface.co/spaces/multimodalart/jev-decision-index"
+        ],
+        "review_scope": "Changed metadata, document structure and scoring-rule continuity reviewed; no underlying model outputs or private tests reproduced."
+      }
+    ],
+    "pending_scan_hashes_matched": true,
+    "unchanged_rules_and_weights": true,
+    "edition": "0.3.2",
+    "reference_version": "jev-1.14.0",
+    "reference_edition": "Lab run, 2026-10-14",
+    "frozen_request_model": "jev-1.13.0",
+    "index_engine_rows": 173,
+    "full_score_rows": 174,
+    "metadata_limit": "Methodology generated_utc retains an older build time; this review is identified by commit SHA and actual retrieval time. No scores or private evaluations were reproduced."
+  },
+  "reviewer_scope": "Source-document inspection and deterministic consistency checks in the main review session; no additional subagent review was available for this batch.",
+  "remaining_candidates": "Not merged or counted as accepted additions; the original automated proposal remains open for further review.",
+  "privacy": "Public metadata, original short scope summaries and hashes only; source bodies, customer records, credentials and local cache paths are excluded.",
+  "legacy_tracker_alias": {
+    "evidence": {
+      "requested_url": "https://huggingface.co/api/spaces/multimodalart/jev-reproductions-tracker",
+      "resolved_url": "https://huggingface.co/api/spaces/multimodalart/jev-decision-index",
+      "http_status": 200,
+      "id": "multimodalart/jev-decision-index",
+      "sha": "0ddf6758073eb77ae449a3541f57286d7f39d93f",
+      "retrieved_at": "2026-10-17T02:22:48.639249+00:00",
+      "metadata_sha256": "55aafc3d06ee569e9a484ce9a3c79079546776eacdec2c259135f9da1591c50e"
+    },
+    "scope": "The Hub redirects the old Space identity to the current Decision Index. Canonicalization prevents an old README hash from turning this alias into another resource after a content update.",
+    "regression": "A fixture with different old/new content hashes and an unrelated similarly named Space failed before the fix and passes after it; the current reviewed record wins without rewriting the raw historical alias."
+  }
+}

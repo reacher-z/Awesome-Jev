@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-17T13:10:04+00:00",
+  "baseline_commit": "c8b582d8a710fed416cdb5f9a70a422061dff6e0",
+  "curated_additions": 6,
+  "ledger_additions": 6,
+  "source_issues": [
+    "https://github.com/reacher-z/Awesome-Jev/issues/41",
+    "https://github.com/reacher-z/Awesome-Jev/issues/42",
+    "https://github.com/reacher-z/Awesome-Jev/issues/43",
+    "https://github.com/reacher-z/Awesome-Jev/issues/44",
+    "https://github.com/reacher-z/Awesome-Jev/issues/45",
+    "https://github.com/reacher-z/Awesome-Jev/issues/46"
+  ],
+  "scope": "Fixed-version primary arXiv abstract pages and citation metadata, fetched at the recorded times; linked repositories only where noted. No full-paper reading (except where a check names it), model execution, data download or reproduction is claimed.",
+  "primary_checks": [
+    {
+      "url": "https://arxiv.org/abs/2610.11392",
+      "title": "TypedBench: A Benchmark for Calibration, Framing Sensitivity, and Cost in System One Decision Models",
+      "authors": [
+        "Sharma, Rahul",
+        "Duncan, Andrew B.",
+        "Caron, Gaétan Marceau",
+        "Vollmer, Sebastian J."
+      ],
+      "primary_class": "Artificial Intelligence (cs.AI)",
+      "first_submitted": "2026-10-08",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.11392v2",
+      "reviewed_version_date": "2026-10-09",
+      "retrieved_at": "2026-10-17T12:15:35.681511+00:00",
+      "abstract_page_sha256": "e5f52f038a41592478cb00872dd93e6c60089f8ac8e4e8e6ba0efba017e9fdd9",
+      "abstract_sha256": "f0880d3e79fa2ad1df154d1e1e61cc8cf765353d929ea495dc3be707f17d151c",
+      "abstract_word_count": 226,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/41",
+      "limitations": "Fixed-v2 abstract only. Items come from seven synthetic policy-labelled generators, the abstract does not name the hosted model or its version, and no code or data release is linked. No experiment was reproduced."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.16655",
+      "title": "Does a Hosted Decision Model Respect Irrelevant Alternatives? A Pre-Registered Test of Option-Set Dependence in Jev",
+      "authors": [
+        "Rajput, Dushyant",
+        "Chauhan, Nirdesh",
+        "Kosaraju, Siddharth"
+      ],
+      "primary_class": "Artificial Intelligence (cs.AI)",
+      "first_submitted": "2026-10-12",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.16655v1",
+      "reviewed_version_date": "2026-10-12",
+      "retrieved_at": "2026-10-17T12:15:40.111865+00:00",
+      "abstract_page_sha256": "07af7be8356340679cb625bcd913565a7284f82111134dc94440dfd08ff17e97",
+      "abstract_sha256": "6bae55e5a32549201fcc42a14af69a27c8eae28928d1deb10f2c4610513c9c19",
+      "abstract_word_count": 275,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/42",
+      "limitations": "Fixed-v1 abstract only. One pinned model version and three intent and topic classification datasets; no code or call records are linked. No experiment was reproduced."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.18612",
+      "title": "Nudge the Judge: Uncovering Program Decision Hijacking in Real-World Jev Applications",
+      "authors": [
+        "Luo, Yang",
+        "Ji, Tiantian",
+        "Kang, Zifeng",
+        "Wang, Yucheng",
+        "Liu, Yong",
+        "Yin, Zhiyi",
+        "Liu, Xinran"
+      ],
+      "primary_class": "Cryptography and Security (cs.CR)",
+      "first_submitted": "2026-10-13",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.18612v1",
+      "reviewed_version_date": "2026-10-13",
+      "retrieved_at": "2026-10-17T12:15:44.189999+00:00",
+      "abstract_page_sha256": "abbb7115785a5d6f6985c84f521a1b0cbe751d319c6157310db644b202299dba",
+      "abstract_sha256": "e5a1e1e8f086dc6a8a58d886af8aa7f8c26fed0570a5224351b92a6110e6fbef",
+      "abstract_word_count": 216,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/43",
+      "limitations": "Fixed-v1 abstract plus the linked repository's README and file list; nothing was executed. Impact is potential rather than demonstrated exploitation, applications were chosen by popularity, and maintainer responses to the disclosure were pending. The released benchmark manifest and README describe the 2,273 records as a flips-first selection capped at ten per project, so the 81.5% and 98.6% rates describe that curated subset, not an unbiased estimate."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.20907",
+      "title": "From Detection to Decision: Calibration and Deferral for Prompt-Injection Detection",
+      "authors": [
+        "Lan, Qianlong",
+        "Kaul, Anuj",
+        "Pandurangan, Vinothini",
+        "Sanyal, Indranil"
+      ],
+      "primary_class": "Cryptography and Security (cs.CR)",
+      "first_submitted": "2026-10-14",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.20907v1",
+      "reviewed_version_date": "2026-10-14",
+      "retrieved_at": "2026-10-17T12:15:48.424165+00:00",
+      "abstract_page_sha256": "fa1ea7680e2cd94212035818c527e7829d19d73f5b26fe8a41c1ccd3e8b91ad6",
+      "abstract_sha256": "212348dcda46baf8292b3a9fa69b3617103cc8c5d98f44d5c9bb4a709c88a1bc",
+      "abstract_word_count": 201,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/44",
+      "limitations": "Fixed-v1 abstract only. The abstract does not state the Jev version, and no data or code release is linked. No experiment was reproduced."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.18529",
+      "title": "How Reliable Are System-One Decisions in Medicine? A Comparative Study of Jev, Jev-like Models, and LLMs",
+      "authors": [
+        "Du, Yanrui",
+        "Zhao, Danyang",
+        "Zhao, Sendong",
+        "Li, Wenhao",
+        "Gao, Yibo",
+        "Wang, Haochun",
+        "Xu, Zhuoer",
+        "Cui, Shiwen",
+        "Qin, Bing"
+      ],
+      "primary_class": "Computation and Language (cs.CL)",
+      "first_submitted": "2026-10-13",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.18529v1",
+      "reviewed_version_date": "2026-10-13",
+      "retrieved_at": "2026-10-17T12:15:52.627610+00:00",
+      "abstract_page_sha256": "fb456de2e66b3cf455c50ca5bd128eb425d122ff3f632211e6d510f436913e13",
+      "abstract_sha256": "13b0e5c7110b8c9a74a50c62d8fec501e4bb0ea775c82ee9d7a62b2b1e4d64ff",
+      "abstract_word_count": 174,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/45",
+      "limitations": "Fixed-v1 abstract only. Benchmark questions, not patient care or prospective clinical validation; no code or data release is linked. No experiment was reproduced."
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.18610",
+      "title": "Jev-ToM: Evaluating Theory of Mind in Typed Decision Models",
+      "authors": [
+        "Chung, Kawai",
+        "Chan, Chunkit",
+        "Liu, Yuxuan",
+        "Yim, Yauwai",
+        "Yang, Xi",
+        "Hu, Wenbin",
+        "Jing, Huihao",
+        "Tang, Chiu Yeung",
+        "Fan, Changxuan",
+        "Hung, Ki Sen",
+        "Kwok, Tsun On",
+        "Li, Haoran"
+      ],
+      "primary_class": "Computation and Language (cs.CL)",
+      "first_submitted": "2026-10-13",
+      "reviewed_version_url": "https://arxiv.org/abs/2610.18610v1",
+      "reviewed_version_date": "2026-10-13",
+      "retrieved_at": "2026-10-17T12:15:56.773722+00:00",
+      "abstract_page_sha256": "37ef096d3e60a222fb65caaac448d580c08f865b6d66b18dea24dad2e367dc11",
+      "abstract_sha256": "6334c091da411a19b0c9f147985d924b847da41af6442027d5d14aaaefc6946c",
+      "abstract_word_count": 170,
+      "source_issue": "https://github.com/reacher-z/Awesome-Jev/issues/46",
+      "limitations": "Fixed-v1 abstract plus the linked repository's README, license note and file list; nothing was executed. English text only, and the README says model selection followed evaluation. Author material is CC BY 4.0; source benchmarks keep their own, partly noncommercial, terms."
+    }
+  ],
+  "counting": "Canonical arXiv identities checked against README, catalog, bibliography and both ledgers before intake; none was present. Companion repositories add no ledger records.",
+  "provenance": "Candidates came from public [Source] issues. Every summary was rewritten from the fetched primary page, not copied from the issue; issue claims that the page did not support were dropped.",
+  "companion_links": [
+    {
+      "url": "https://github.com/xiaoxiaohg8d/JevProbe-",
+      "scope": "Linked from the fixed-v1 abstract. README and top-level files read at commit 9cec1be6ee57cc9872626222ba99739c8fcca610: MIT license, frozen single-pass protocol, benchmarks/JevProbeBench with manifest, project list and records; its manifest records a predeclared flips-first selection capped at ten records per project, and its README says the aggregate rates describe that curated subset. Not executed; not added as a separate ledger source."
+    },
+    {
+      "url": "https://github.com/HKUST-KnowComp/Jev-ToM",
+      "scope": "Linked from the fixed-v1 comments field. README, LICENSE.md and top-level files read at commit 158d65b200ad2ef023c18d24cdeed80157ee6791: frozen questions, separate answer keys, saved predictions and standard-library offline scoring; the README names Jev-1.13. GitHub reports NOASSERTION; LICENSE.md designates CC BY 4.0 for author material and preserves upstream benchmark terms. Not executed; not added as a separate ledger source."
+    }
+  ],
+  "expansion": "Not added to the 2026-10-16 reviewed-expansion intake; that audited count remains a maintainer release decision.",
+  "privacy": "Only public bibliographic metadata, concise summaries, source links and hashes are published. No abstracts, raw HTML, contacts, private paths or credentials are included."
+}

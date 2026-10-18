@@ -98,11 +98,22 @@ jobs:
           path: ${{ runner.temp }}/source-scan-bundle
       - name: Restore fixed data paths after manifest and run-identity checks
         run: python3 scripts/open_scan_pr.py restore --directory "$RUNNER_TEMP/source-scan-bundle"
+      - name: Retain absent candidates from the existing bot PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/open_scan_pr.py reconcile --directory "$RUNNER_TEMP/source-scan-bundle"
       - name: Validate restored data with trusted base-branch code
         run: |
           python3 -m unittest discover -s tests -v
           python3 scripts/validate.py
           python3 scripts/build_source_index.py --check
+      - name: Retain the validated reconciled proposal
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: source-scan-reconciled-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/source-scan-bundle
+          if-no-files-found: error
+          retention-days: 7
       - name: Create or update the single source-scan PR
         env:
           GH_TOKEN: ${{ github.token }}

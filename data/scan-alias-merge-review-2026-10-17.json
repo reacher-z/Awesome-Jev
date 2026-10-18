@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-17T07:42:06.516341+00:00",
+  "baseline_commit": "017f526533ed2ede77204d81ca56cf89abe66a19",
+  "failed_run": "https://github.com/reacher-z/Awesome-Jev/actions/runs/39006523362",
+  "failure": "The collector finished, but repository validation rejected an exact duplicate URL in the ecosystem ledger. Packaging and publication were skipped; the accepted main ledgers and existing PR were not changed.",
+  "cause": "The merge owner map kept the last row for a logical identity. A legacy Decision Index alias followed the canonical editorial record, so the weaker row received the refresh and its URL became a duplicate of the canonical row.",
+  "repair": "Choose a merge owner by pinned-primary protection, evidence tier and canonical spelling, independent of historical row order. For identities with multiple retained rows, preserve the selected owner’s stored URL fields. Historical shadow rows remain unchanged.",
+  "regressions": [
+    "Changed alias observations cannot bypass stronger editorial evidence in either row order.",
+    "Equal-tier alias observations update the canonical owner without creating exact duplicate stored URLs or changing the legacy row."
+  ],
+  "offline_real_ledger_check": {
+    "raw_records": 2450,
+    "all_prior_bytes_preserved": true,
+    "queued_editorial_change": 1,
+    "new_records": 0,
+    "changed_records": 0,
+    "scope": "One deliberately synthetic changed observation passed into the real ledger merge; no network requests or source modifications."
+  },
+  "runtime_verification": {
+    "run": "https://github.com/reacher-z/Awesome-Jev/actions/runs/39014659959",
+    "fix_commit": "3fd618791dee911f93cf99dc82f02717a6fab9ae",
+    "observed_at": "2026-10-17T07:50:46.894149+00:00",
+    "scan_job": "success",
+    "scan_data_validation": "success",
+    "artifact_packaging": "success",
+    "restored_data_validation": "success",
+    "publish_job": "failure",
+    "failure_reason": "Pending-evidence continuity gate preserved the existing PR: 43 identities absent, 4 lower evidence-tier labels, 3 unresolved editorial candidates. No automation branch update occurred.",
+    "scan_status": "partial",
+    "proposed_new_records": 263,
+    "changed_records": 175,
+    "editorial_candidates": 1,
+    "network_requests": 3751,
+    "reported_errors": 167,
+    "six_artifact_file_hashes_verified": true,
+    "accepted_source_change_count": 0
+  },
+  "pending_reconciliation": {
+    "open_pr": "https://github.com/reacher-z/Awesome-Jev/pull/4",
+    "retained_pr_head": "bd0c9de6abd50644dfe803074aadf6d38340049a",
+    "scope": "Read-only comparison of the previous PR with the validated scan artifact. This is diagnosis, not acceptance of pending records or permission to remove the guard.",
+    "observations": [
+      "Forty missing identities are paper proposals not present in this scan; the older PR retains their evidence.",
+      "Three missing identities and three unresolved editorial candidates use different Decision Index blob revisions. Scanner identity normalizes those paths; the publisher continuity comparison currently does not.",
+      "The four reported lower tiers correspond to domain papers accepted on main from fixed original arXiv abstracts. Their protected evidence remains abstract_checked; no automatic grade upgrade was made."
+    ],
+    "next_step": "Reconcile missing proposals and maintainer-accepted version changes explicitly before updating the open scan PR; do not blindly rerun or discard old evidence."
+  }
+}

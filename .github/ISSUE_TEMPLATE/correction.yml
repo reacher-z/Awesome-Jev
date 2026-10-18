@@ -1,6 +1,7 @@
 name: Report a correction
 description: Correct a claim, broken link, attribution, or review-level label.
 title: "[Correction] "
+labels: ["documentation"]
 body:
   - type: textarea
     id: location
