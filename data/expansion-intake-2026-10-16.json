@@ -1060,6 +1060,102 @@
       ],
       "accepted_at": "2026-10-18T05:31:33.538129+00:00",
       "evidence_scope": "Four new paper identities checked against fixed-v1 primary abstracts, current canonical abstracts and selected manuscript sections. Author repository links, archive status pages and bibliography links add no source identities. No experiments were run."
+    },
+    {
+      "name": "stability_fallback_security_and_recalibration",
+      "input_sha256": "2afb96f643b0fea8d5aa935ce9c48e5982411fa9f5d9a0e3d32d83c18e14992c",
+      "screened_records_proposed": 5,
+      "accepted_count": 5,
+      "accepted_urls": [
+        "https://arxiv.org/abs/2610.22066",
+        "https://arxiv.org/abs/2610.19856",
+        "https://arxiv.org/abs/2610.03073",
+        "https://arxiv.org/abs/2610.18780",
+        "https://arxiv.org/abs/2610.18488"
+      ],
+      "accepted_at": "2026-10-18T06:22:32.093170+00:00",
+      "evidence_scope": "Five fixed-version primary studies selected from the arXiv scan; abstracts match retained evidence. Targeted manuscript sections and SecJev release documentation/metadata inspected. Companion links and package variants add no identities; no models, data packages or experiments run."
+    },
+    {
+      "name": "judging_adaptation_and_workflow_security",
+      "input_sha256": "99cfafeec8f71d57e6ac6910e5dff0a809a4751a4e31c20ea40b0de8acc5413c",
+      "screened_records_proposed": 8,
+      "accepted_count": 8,
+      "accepted_urls": [
+        "https://arxiv.org/abs/2610.18389",
+        "https://arxiv.org/abs/2610.18122",
+        "https://arxiv.org/abs/2610.17175",
+        "https://arxiv.org/abs/2610.15537",
+        "https://arxiv.org/abs/2609.36115",
+        "https://arxiv.org/abs/2610.14404",
+        "https://arxiv.org/abs/2609.35865",
+        "https://arxiv.org/abs/2609.36116"
+      ],
+      "accepted_at": "2026-10-18T07:54:20.605585+00:00",
+      "evidence_scope": "Eight whole paper identities, fixed abstracts and selected manuscript/README sections. FunDM PDF page 10 was rendered and inspected. Four author repositories supply navigation links; no source code, models, raw benchmark records or experiments were executed."
+    },
+    {
+      "name": "calibration_rejection_and_cascade_evidence",
+      "input_sha256": "3a1a47fe8819e92c5d0d8eaee89834eb3acedb9426979bbc04e6cb426ea4f298",
+      "screened_records_proposed": 6,
+      "accepted_count": 6,
+      "accepted_urls": [
+        "https://arxiv.org/abs/2610.03387",
+        "https://arxiv.org/abs/2609.37470",
+        "https://arxiv.org/abs/2610.02267",
+        "https://arxiv.org/abs/2610.20634",
+        "https://arxiv.org/abs/2609.39496",
+        "https://arxiv.org/abs/2609.33843"
+      ],
+      "accepted_at": "2026-10-18T08:44:58.645346+00:00",
+      "evidence_scope": "Six whole paper identities, fixed abstracts and selected manuscript sections. Three author repository READMEs/inventories and the Laya ancillary README inspected. Artifact links add no identities; no code, datasets, prediction records or model experiments executed."
+    },
+    {
+      "name": "training_distillation_and_system_boundaries",
+      "input_sha256": "b8c67fa82d5df5751e22edfbd79cc4d1839784479e8746d6fcea17248c5935a7",
+      "screened_records_proposed": 6,
+      "accepted_count": 6,
+      "accepted_urls": [
+        "https://arxiv.org/abs/2610.09188",
+        "https://arxiv.org/abs/2610.07327",
+        "https://arxiv.org/abs/2610.02516",
+        "https://arxiv.org/abs/2610.02046",
+        "https://arxiv.org/abs/2609.38850",
+        "https://arxiv.org/abs/2609.28587"
+      ],
+      "accepted_at": "2026-10-18T09:07:45.349129+00:00",
+      "evidence_scope": "Six whole paper identities, fixed abstracts and selected manuscript sections. Three author repository READMEs/inventories inspected, including a verified repository rename. Artifact links add no identities; no code, datasets, prediction records or model experiments executed."
+    },
+    {
+      "name": "language_moderation_and_sentiment_evidence",
+      "input_sha256": "49fa00bc92e5cf1c151f400d12e3caa26488234a334c0e3538ebd53c8e63a95e",
+      "screened_records_proposed": 5,
+      "accepted_count": 5,
+      "accepted_urls": [
+        "https://arxiv.org/abs/2610.11901",
+        "https://arxiv.org/abs/2610.07953",
+        "https://arxiv.org/abs/2610.03324",
+        "https://arxiv.org/abs/2610.08829",
+        "https://arxiv.org/abs/2609.35293"
+      ],
+      "accepted_at": "2026-10-18T09:23:31.703442+00:00",
+      "evidence_scope": "Five whole paper identities, fixed abstracts and selected manuscript sections. One author repository README/inventory inspected; raw prediction caches and dataset text are not redistributed. Artifact links add no identities; no code, datasets, prediction records or model experiments executed."
+    },
+    {
+      "name": "infrastructure_and_deployment_boundaries",
+      "input_sha256": "7512040d683544382e07c4920430af55660148a6b8d724c6acdd849c5352c071",
+      "screened_records_proposed": 6,
+      "accepted_count": 6,
+      "accepted_urls": [
+        "https://arxiv.org/abs/2610.09937",
+        "https://arxiv.org/abs/2610.02048",
+        "https://arxiv.org/abs/2610.04345",
+        "https://arxiv.org/abs/2609.33689",
+        "https://arxiv.org/abs/2610.00376",
+        "https://arxiv.org/abs/2610.01079"
+      ],
+      "accepted_at": "2026-10-18T09:43:33.517153+00:00",
+      "evidence_scope": "Six whole paper identities, fixed abstracts and selected manuscript sections. Two repository READMEs/inventories and one ancillary README inspected. Jev-IDS PDF pages 2 and 7 were rendered and inspected to verify a configuration mismatch. Artifact links add no identities; no code, datasets, prediction records or model experiments executed."
     }
   ]
 }

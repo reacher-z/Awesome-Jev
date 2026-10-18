@@ -131,6 +131,7 @@ def artifact_caveat(cell):
 
 def plain_title(title):
     """BibTeX or Markdown title text without case-protecting braces and with uniform quotes."""
+    title = title.replace(r"\&", "&")
     title = title.replace("``", '"').replace("''", '"').replace("{", "").replace("}", "")
     title = re.sub(r"[“”]", '"', title)
     title = re.sub(r"[‘’]", "'", title)

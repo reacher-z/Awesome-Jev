@@ -4,7 +4,7 @@ Independent community project, not affiliated with TypeSafe AI.
 Canonical website: https://awesomejev.github.io/
 Curated snapshot: 2026-10-18. Findings are author-reported; no model experiments reproduced here.
 
-# Jev guide: typed decisions, probabilities, and evaluation
+# Jev guide: decisions, confidence and evaluation
 
 Jev is a useful case study in models that return decisions for software. This independent guide separates documented interfaces, provider claims, and empirical evaluation. It does not reproduce model experiments.
 
@@ -42,6 +42,14 @@ For abstention or escalation, report coverage and error among accepted cases, an
 
 AudioJev uses order calibration to mean probability stability under equivalent candidate permutations. Align candidates by meaning before comparing reordered distributions, then assess accuracy and correctness calibration separately. Its released model card describes one seed, reports original-order scores and discloses audio-source overlap; those results should not be substituted for the paper’s three-seed averages. [AudioJev release scope](https://huggingface.co/shlv/AudioJev)
 
+## Can a calibrated judge still be biased?
+
+Keep probability calibration, agreement with human rankings and verdict stability separate. The CALM study finds position and rewrite sensitivity in its tested typed-decision judges despite favorable calibration or consistency. Its labels and rewrites are inherited from benchmarks; changes in clarity and other unintended factors limit a causal reading of tone effects. [Typed decision models as judges, v1](https://arxiv.org/html/2610.18122v1#Sx1)
+
+PRISM uses counterfactual emphasis probes and human labels to fit a correction to overall judge scores. Its reported ranking-agreement gains on SummEval and HANNA are a different target from matching probabilities to observed correctness. Rubric-free does not mean label-free, and the extra probes have a cost. This PRISM method is separate from the similarly named Prism-1 option-readout architecture. [PRISM original abstract, v1](https://arxiv.org/abs/2610.18389v1) · [PRISM limits, v1](https://arxiv.org/html/2610.18389v1#Sx1) · [Prism-1, v1](https://arxiv.org/abs/2610.22066v1)
+
+Our proposed evaluation reports ranking agreement, probability reliability and perturbation sensitivity in separate columns. Verify that a supposedly meaning-preserving rewrite retains the task’s label, reserve held-out groups for learned corrections, and count probe calls in the evaluation budget. Repeated identical requests estimate variability; they do not establish correctness.
+
 ## How should I compare decision models with trained classifiers and LLMs?
 
 The v2 decision-gate benchmark reports that a fine-tuned DeBERTa-v3-large had the highest observed accuracy on all but one labeled benchmark. That result concerns access to task labels. For your comparison, separate settings with and without task-specific training labels; record data exposure, development/test splits, output formats and failures before comparing accuracy, selective coverage or cost. [Decision-gate benchmark, v2](https://arxiv.org/abs/2610.00346v2)
@@ -49,6 +57,16 @@ The v2 decision-gate benchmark reports that a fine-tuned DeBERTa-v3-large had th
 LLM-as-Jev v3 studies frozen Qwen readouts, optional KL-anchored fine-tuning and budgeted reasoning. To distinguish these effects, we recommend a frozen comparator with the same backbone, explicit option sets and splits, and separately recorded reasoning budgets. The reported comparisons concern two Qwen backbones and an independent framework; they do not reveal hosted Jev’s training or architecture. [LLM-as-Jev, v3](https://arxiv.org/abs/2610.02076v3)
 
 HakemBench v1 states that most Turkish reference labels are AI-derived, not human-verified, and that earlier test results influenced the lab’s own model on flagged tracks. Report label provenance, known prior test exposure and per-track metric components. Translation probes should remain separate from independent language validation. These are proposed comparison checks; this collection has not reproduced the studies. [HakemBench, v1](https://arxiv.org/abs/2610.02293v1)
+
+Question grouping is part of the inference protocol. Perplexity Decider v1.2 lets questions within a request attend to one another; its fast path isolates separate requests. The card reports that grouping related attributes can help while grouping competing retrieval candidates can hurt. By contrast, tasksource-decider-nano describes tree attention that isolates options while sharing the state. Record the grouping rule alongside scores; a multi-question API does not imply independent answers. [Perplexity v1.2: question grouping](https://huggingface.co/perplexity-ai/pplx-decider-v1.2/raw/225c913ddc8761a8264f04f64548e1f97e443eb3/README.md) · [tasksource: tree attention](https://huggingface.co/tasksource/tasksource-decider-nano/raw/46e88e08cc1a3122a348ce134f18865e93f8e1c8/README.md)
+
+## What does a fast benchmark establish about deployment?
+
+Identify whether the evidence comes from measured equipment, simulation, replay or an operating service. The HVAC study uses public equipment measurements, but few fault days and feature-dependent diagnoses limit transfer. HydroJEV uses simulated windows with the same hydraulic model generating both events and the twin. Its interval margins and multiplicity-corrected tests are distinct; one transfer endpoint does not pass the adjusted test. Neither study establishes a general field-performance guarantee. [HVAC study limits, v1](https://arxiv.org/html/2610.09937v1#S5.SS5) · [HydroJEV simulation limits, v1](https://arxiv.org/html/2610.02048v1#S4.SS4) · [Transfer endpoints](https://arxiv.org/html/2610.02048v1#Sx18)
+
+Keep successful-request latency separate from observation, feature construction, retry waits, queueing and downstream execution. The wireless study excludes pacing and retry waits and reuses an external orchestration study to show that faster interpretation need not improve completed service outcomes. The traffic-classification study does not time packet observation or feature extraction. Our proposed deployment comparison records every stage, deadline misses and final utility under the same workload. [Wireless timing boundaries, v1](https://arxiv.org/html/2610.04345v1#S4.SS1) · [External orchestration evidence](https://arxiv.org/html/2610.04345v1#S4.SS4) · [Traffic-classification scope, v1](https://arxiv.org/html/2610.00376v1#S5)
+
+Output validity and paraphrase stability are not sufficient tests of control behavior. The 5G testbed study changes only the question while retaining state and options, exposing a fine-tuned checkpoint that keeps returning its training answer. Its RAN plane is not closed, there is no real radio, and risk statements depend on the calibration protocol. Test the expected change in action as well as invariance, and evaluate the complete controller rather than inferring reliability from a typed response. [Changed-question controls, v1](https://arxiv.org/html/2609.33689v1#S8) · [Testbed and certification limits](https://arxiv.org/html/2609.33689v1#S9)
 
 ## Can I reuse a confidence gate across languages or domains?
 
@@ -59,6 +77,18 @@ The social-science audit reports task-dependent confidence failures using benchm
 Implementation documentation supplies additional transfer limits. FRIDA-Decisions recommends short Russian–English states and uses Russian instruction suffixes. Jev-AR reports synthetic Arabic training without native-speaker validation and says confidence fitted to its built-in routes is approximate on custom lists. These are documented operating conditions, not evidence that a confidence gate transfers; we did not run either implementation. [FRIDA-Decisions limits](https://github.com/ai-forever/FRIDA-Decisions) · [Jev-AR limitations](https://github.com/atmaneayoubdev/jev-ar)
 
 The Indonesian regional-language study supplies a concrete separation: expected calibration error did not increase while error-ranking ability degraded. Its translation comparison uses human Indonesian translations; classifier comparisons depend on label budgets, and cascades on the chosen fallback and routing fraction. Evaluate those factors separately before transferring a threshold. The preregistration and release claims remain author-reported here; no prediction files were audited. [Indonesian regional-language transfer study, v1](https://arxiv.org/abs/2610.14112v1)
+
+The candidate-coverage benchmark compares source-frozen and target-local thresholds at equal label budgets. A threshold can fail after a task change even when its source calibration constraint was met. Separate artificial omissions, natural retrieval misses and out-of-scope inputs; the latter two need their own denominators. Our calibration and abstention note connects these tests with interface coherence, random-escalation controls and total cascade cost. [Candidate coverage and policy transfer, v2](https://arxiv.org/abs/2610.03387v2) · [Calibration and abstention research note](https://awesomejev.github.io/topics/calibration-and-abstention/)
+
+Language and task changes must be separated. The stance study compares English single-text records with Chinese conversations, while moderation studies vary policies, labeled precedents and answer menus. These are useful task observations, not isolated language-transfer experiments. The language-task note also distinguishes extra-question cost from quality and frozen backbones from supervised calibration. [Stance study, v1](https://arxiv.org/abs/2610.11901v1) · [Language-task evaluation note](https://awesomejev.github.io/topics/language-task-evaluation/)
+
+## Is a fallback option the same as a confidence gate?
+
+A named Other or Defer option is an answer the model must select according to its definition. A confidence gate is application code deciding whether to act on a returned answer or escalate it. TypeSafe’s routing example illustrates the latter. Define which interface you are testing before comparing reliability. [Fallback definitions, v1](https://arxiv.org/html/2610.19856v1#S2.SS0.SSS0.Px2) · [TypeSafe confidence routing](https://docs.typesafe.ai/patterns/confidence-routing)
+
+The Paired Fallback Robustness test changes the correct output from a regular option to fallback while holding the input and option positions fixed. It also tests equivalent fallback definitions. On the tested open models, correct recognition and even a supplied correct category do not guarantee correct reassignment. This is a controlled diagnosis on text datasets, not an established production repair. [Paired reassignment and definition tests, v1](https://arxiv.org/html/2610.19856v1#S3.SS1) · [Study limitations, v1](https://arxiv.org/html/2610.19856v1#Sx1)
+
+Our suggested evaluation reports regular-choice accuracy, correct fallback selection, unnecessary fallback and disagreement between equivalent definitions separately. Test the application’s confidence gate on held-out cases and include escalated calls in its cost. Order stability and stable relative odds are additional properties: Prism-1 explicitly identifies none-of-the-above rules as a poor fit for independent option scoring. [Prism-1 scope and limitations, v1](https://arxiv.org/html/2610.22066v1#S7)
 
 ## How should I test decisions over tables and cited evidence?
 
@@ -90,6 +120,16 @@ Check each release’s model card and license separately. For example, Bespoke N
 
 API shape does not determine the inference path. Span-02 documents its own runtime and optional generated reasoning, with index settings that differ from normal serving. Lychee documents rejection rather than truncation for oversized requests. Record engine, hardware, reasoning mode, confidence definition and input limits with a comparison; these are publisher descriptions, not deployments tested by this collection. [Span-02 runtime and index settings](https://huggingface.co/respanai/span-02/raw/63cbdd774391f1b7d9bc3829179efe996d0191ce/README.md) · [Lychee model-card limits](https://huggingface.co/LycheeAI/Lychee-27B/raw/f3f95d18a3b1ef3c483c2a5d7e8e5272a2af31e2/README.md)
 
+Input support and calibration can differ by modality within one checkpoint. Liquid d1-omni-600M accepts images or audio per request, limits speech to 30 seconds, and caps text at 896 tokens for image requests. Its fitted temperatures apply to text, not images or audio. The release uses custom inference code and the LFM Open License v1.0; inspect that license separately from the base model or other d1 releases. [Liquid d1-omni-600M: limits and calibration](https://huggingface.co/LiquidAI/d1-omni-600M/raw/02b55d7076f15129e59ab3f94783f32c4b088674/README.md) · [LFM Open License v1.0](https://huggingface.co/LiquidAI/d1-omni-600M/raw/02b55d7076f15129e59ab3f94783f32c4b088674/LICENSE)
+
+## Does an open RLCD implementation reproduce Jev's training?
+
+A shared RLCD name or compatible API does not establish identical training. OpenJev-RLCD explicitly describes an independent implementation and makes no claim about TypeSafe's internal algorithm. It trains a reasoning model's probability readout after sampled rationales; that experimental design is distinct from establishing how the hosted Jev service was trained. [OpenJev-RLCD scope, v1](https://arxiv.org/html/2609.38850v1#S7)
+
+The two-stage recipe first trains the answer readout with a proper score, then reinforces rationales with that score and an anchor to the first-stage model. Its experiments use one 1.7B backbone, three seeds and short training runs; the second stage helps one main task and is neutral on the other. Keep the scored distribution, generated-rationale budget, fitting split and temperature-scaled baselines explicit. A scoring-rule argument is not by itself a deployment calibration guarantee. [Two-stage method and setup, v1](https://arxiv.org/html/2609.38850v1#S3) · [Experimental setup](https://arxiv.org/html/2609.38850v1#S4)
+
+Distillation poses a different question: what can a smaller model learn from teacher judgments? The student-guided routing paper uses a fixed 60-label taxonomy and reports preliminary teacher agreement, with human-reviewed and full-baseline tests still pending. The search-distillation study trains compact evaluators offline; search supplies lookahead and teacher value differs across tasks. Compare label budgets and downstream outcomes, and separate offline labeling cost from runtime inference. [Student-guided routing: pending evaluation, v1](https://arxiv.org/html/2610.02516v1#S7) · [Search distillation: component roles, v1](https://arxiv.org/html/2610.09188v1#S7) · [Labeling cost](https://arxiv.org/html/2610.09188v1#S8)
+
 ## Where should I look for research and benchmark evidence?
 
 Start with versioned empirical papers and their available code or data. The broad Jev benchmark study is one entry point; its findings remain author-reported, rather than independently reproduced by this collection. [Jev benchmark paper, v1](https://arxiv.org/abs/2609.37647v1) · [Accompanying benchmark code](https://github.com/AppliedMachineLearning-Lab/jev-benchmarking)
@@ -110,7 +150,17 @@ The radiology paper’s v1 availability statement says analysis scripts and aggr
 
 For control loops, a replay of isolated model latency does not establish deadline attainment. The network-control SoK separates request queues, execution times, action feasibility and responsibility for service checks; its examples use one bounded event model. Our proposed deployment check records arrival patterns and the complete path from request to verified outcome, alongside misses and infeasible actions. It does not substitute a synthetic replay for production evidence. [Semantic decision engines in network control, v1](https://arxiv.org/abs/2610.06425v1)
 
+Check that abstract, manuscript and released code describe the same cohort and comparator. Jev-IDS v1 does not: PDF page 2 and the cited code describe a 300-flow GPT-5.6 Luna pilot, while page 7 describes 2,000 flows and Gemini. We retain the paper with this explicit caveat and link the pilot revision; no combined performance claim follows from the two configurations. [Jev-IDS v1: PDF page 2](https://arxiv.org/pdf/2610.01079v1#page=2) · [PDF page 7](https://arxiv.org/pdf/2610.01079v1#page=7) · [Paper-cited pilot revision](https://github.com/jev-sec/jev-ids/tree/286a310fea249a7b4a5a8c45377049e914f8b9c9)
+
 # Curated resources
+
+## Prism-1: Position- and Rival-Independent Scoring for System One Models
+
+Papers · Teng et al. · 2026-10-15 · v1
+
+An option-isolated readout targets order invariance and stable relative odds when candidates change; it requires fine-tuning, limits within-model comparison, and fits independently judged options better than menu-dependent fallback rules.
+
+Primary source: https://arxiv.org/abs/2610.22066v1
 
 ## Qwen-Audio-Jev: A Unified Interface for Audio Decisions
 
@@ -176,6 +226,14 @@ Encodes shared state once for multiple typed questions; invariance requires iden
 
 Primary source: https://arxiv.org/abs/2610.20778v1
 
+## Lost in the Fallback: How Reliably Do Typed Decision Models Use Fallback Options?
+
+Papers · Xie et al. · 2026-10-14 · v1
+
+Paired tests on three text datasets separate category recognition from executing fallback rules; tested open models can disagree under equivalent definitions even when supplied the correct category, and the study diagnoses failures without establishing a fix.
+
+Primary source: https://arxiv.org/abs/2610.19856v1
+
 ## Calibration and Risk-Budgeted Decisions with System One Models
 
 Papers · Messoudi & Mansar · 2026-10-14 · v1
@@ -208,6 +266,14 @@ Tests classification and verification under content-preserving table rewrites ac
 
 Primary source: https://arxiv.org/abs/2610.19536v1
 
+## SecJev: Bringing Security Expertise to System One Decision Models
+
+Papers · Chen et al. · 2026-10-14 · v2
+
+Adapts decision scorers to 14 security tasks; source-label prediction and displayed-policy execution are distinct targets, task difficulty is uneven, and benchmark accuracy does not establish end-to-end attack prevention.
+
+Primary source: https://arxiv.org/abs/2610.03073v2
+
 ## More Choices, Fewer Decisions: Ordinal-Scale Bias in JEV-like Direct-Decision Models
 
 Papers · Gao et al. · 2026-10-14 · v2
@@ -223,6 +289,14 @@ Papers · Lan et al. · 2026-10-13 · v1
 Text and vision attacks with label-validity checks and held-out evaluation models.
 
 Primary source: https://arxiv.org/abs/2610.19118v1
+
+## BLADE: Auditing Information Use for Failure Attribution in LLM Multi-Agent Systems
+
+Papers · Guo, Long & Zhang · 2026-10-13 · v1
+
+Uses Jev to audit information use at agent handoffs and localize failures; comparisons share one decision model on five benchmark subsets, and attribution depends on the completeness of retained traces.
+
+Primary source: https://arxiv.org/abs/2610.18780v1
 
 ## Jeva: System One Models from First Principles
 
@@ -280,6 +354,22 @@ Tool-argument judges including Jev reject some correct derived values without vi
 
 Primary source: https://arxiv.org/abs/2610.18497v1
 
+## Recalibrating Many Questions with Few Labels: Minimax Rates and Identification Limits
+
+Papers · Li & Yang · 2026-10-13 · v1
+
+Derives excess-Brier risk bounds for pooling recalibration across questions under shared-distribution and monotonicity assumptions; fixed-effects and empirical-Bayes results have different targets, and risk lower bounds do not directly become calibration-error lower bounds.
+
+Primary source: https://arxiv.org/abs/2610.18488v1
+
+## PRISM: Calibrating Black-Box Judges with Counterfactual Probes
+
+Papers · Yamamoto & Kuroki · 2026-10-13 · v1
+
+Learns a score correction from counterfactual probes and human labels; improved ranking agreement on two text tasks is distinct from probability calibration, and probe cost and cross-task transfer remain relevant limits.
+
+Primary source: https://arxiv.org/abs/2610.18389v1
+
 ## Consider, Then Choose: Order-Invariant Decisions in System One Models
 
 Papers · Huang, Teng, Deng & An · 2026-10-13 · v1
@@ -287,6 +377,14 @@ Papers · Huang, Teng, Deng & An · 2026-10-13 · v1
 Runoff scores options individually, then balances finalist positions; order invariance assumes deterministic responses and a unique ranking, and does not resolve option-name bias or guarantee more accurate decisions.
 
 Primary source: https://arxiv.org/abs/2610.18233v1
+
+## Cheap, Consistent, Calibrated, but Biased? Typed Decision Models as Judges
+
+Papers · Lukassen, Weisser & Silbersdorff · 2026-10-13 · v1
+
+CALM pairwise challenges expose position and rewrite sensitivity despite consistency and calibration; inherited reference labels and rewrites that change more than tone limit causal interpretation and transfer to other judging tasks.
+
+Primary source: https://arxiv.org/abs/2610.18122v1
 
 ## Same Attack, Different Judge: A First Controlled Adversarial Comparison of Jev, LLM Judges, and Purpose-Built Safety Classifiers
 
@@ -320,6 +418,14 @@ Answer-letter readout and supervised LoRA baselines; evaluation includes model-g
 
 Primary source: https://arxiv.org/abs/2610.17205v1
 
+## FunDM: Cheap & Label-Free Decision Models from Frozen Language Models
+
+Papers · Panchal · 2026-10-12 · v1
+
+Distills teacher probabilities into small heads using fewer layers of a frozen Qwen3-8B; label-free means no correct-answer training labels, and efficiency measurements cover one GPU and engine workload rather than production serving.
+
+Primary source: https://arxiv.org/abs/2610.17175v1
+
 ## Does a Hosted Decision Model Respect Irrelevant Alternatives? A Pre-Registered Test of Option-Set Dependence in Jev
 
 Papers · Rajput, Chauhan & Kosaraju · 2026-10-12 · v1
@@ -352,6 +458,14 @@ Jev memory-retirement evaluation separates confirmed updates from suggestions; m
 
 Primary source: https://arxiv.org/abs/2610.15710v1
 
+## Poisoned into Action: Context Attacks on Typed Decision Workflows
+
+Papers · Wu, Chang & Yan · 2026-10-11 · v1
+
+Traces context poisoning through retrieval, typed choices and persisted execution while measuring retained clean utility; two synthetic development workflows and nonsignificant prespecified contrasts make the findings exploratory.
+
+Primary source: https://arxiv.org/abs/2610.15537v1
+
 ## SanSi: A Looped Typed Decision Model for System 1.5 Thinking
 
 Papers · Gan, Lee & Kang · 2026-10-10 · v2
@@ -368,6 +482,14 @@ Candidate-menu interventions and confidence cascades; ranking stability does not
 
 Primary source: https://arxiv.org/abs/2610.07716v2
 
+## Koa-decision: Fast and Consistent Structured Decision Making with Generative LLMs
+
+Papers · Dai et al. · 2026-10-10 · v2
+
+Uses atomic label tokens and supervised fine-tuning for single-step constrained decisions; latency follows a specified sequential serving protocol, adaptation differs across baselines, and the production intent data cannot be released.
+
+Primary source: https://arxiv.org/abs/2609.36115v2
+
 ## Jev in Medicine: A Benchmark Evaluation
 
 Papers · Madrid-García & Merino-Barbancho · 2026-10-10 · v4
@@ -383,6 +505,14 @@ Papers · Zhang et al. · 2026-10-10 · v2
 ContractNLI request variations can change which answers are wrong while aggregate accuracy stays unchanged; stable answers may preserve errors. This benchmark does not validate real legal deployment.
 
 Primary source: https://arxiv.org/abs/2609.27678v2
+
+## DICE: Tilting the Odds through Interface Attackson System One Model
+
+Papers · Dong, Lu, Guo & Wang · 2026-10-09 · v1
+
+Tests bounded substitutions at state-extraction, question-generation and output-interpretation adapters while leaving authentic Jev responses intact; three synthetic pilots locate decision-integrity failures without estimating deployed attack prevalence.
+
+Primary source: https://arxiv.org/abs/2610.14404v1
 
 ## Does System One Transfer? Calibrated Typed-Decision Models, Label Budgets, and Translation for Indonesian Regional Languages
 
@@ -432,6 +562,14 @@ Knowledge, reasoning and multilingual multiple-choice evaluation of Jev; reporte
 
 Primary source: https://arxiv.org/abs/2610.11978v1
 
+## Can Decision Models Understand Stance? Evaluating Jev Against General-Purpose LLMs
+
+Papers · Li et al. · 2026-10-08 · v1
+
+Compares Jev on English single-text stance and Chinese conversational stance. Support/opposition errors grow in the conversational task, but language, dataset and input structure change together; differing batching and prompt formats also limit a general language-capability ranking.
+
+Primary source: https://arxiv.org/abs/2610.11901v1
+
 ## MetaEncoder: Exploring the Limit of Bi-Encoders for Multimodal System One Decision Making with Natural Language Interface
 
 Papers · Cheng et al. · 2026-10-08 · v1
@@ -456,6 +594,22 @@ Tests conflicts between option names and definitions despite structurally valid 
 
 Primary source: https://arxiv.org/abs/2609.26758v3
 
+## Where Can a Decision Model Diagnose HVAC Faults? Reasoning Demand, Physical Representation, and Robustness Under Shift
+
+Papers · Jung · 2026-10-07 · v1
+
+Tests fault diagnosis across equipment, representations and operating shifts. Physical features enable selected diagnoses, while context-dependent faults remain difficult; shared-day training conditions, small fault-day counts and dataset-specific option sets limit general claims of robustness.
+
+Primary source: https://arxiv.org/abs/2610.09937v1
+
+## From Probabilities to Decisions: Search and Multi-Teacher Distillation with Jev
+
+Papers · Sadoun, Sharif & Banad · 2026-10-06 · v1
+
+Distills Jev and LLM judgments into compact search evaluators and rerankers; matched-label-budget gains in chess do not generalize to every tested game. The deployed bot also uses Stockfish, opening books and tablebases, and API wall time differs from GPU labeling time.
+
+Primary source: https://arxiv.org/abs/2610.09188v1
+
 ## Same-Number Citation Swaps: Stress-Testing Jev as a Financial Evidence Judge
 
 Papers · Xu et al. · 2026-10-06 · v1
@@ -472,6 +626,14 @@ Separates bounded multi-agent coordination from LLM reasoning through a controll
 
 Primary source: https://arxiv.org/abs/2610.08155v1
 
+## Benchmarking System One Models in Online Moderation
+
+Papers · Mazzoni & Failla · 2026-10-06 · v1
+
+Separates written rules, retrieved precedents and candidate restrictions across five moderation benchmarks. Retrieval can improve discrimination or merely change flagging rates; using labeled evaluation examples as precedents and representing media through generated captions limits deployment claims.
+
+Primary source: https://arxiv.org/abs/2610.07953v1
+
 ## JEV versus LLMs: Accuracy, Cost and Calibration on Seven Political Science Replications
 
 Papers · Denney & DiGiuseppe · 2026-10-06 · v2
@@ -480,6 +642,14 @@ Studies accuracy, cost, and calibration in seven political-science replication t
 
 Primary source: https://arxiv.org/abs/2610.06625v2
 
+## Benchmarking candidate coverage and rejection policy transfer in typed decision models
+
+Papers · Lu & Wu · 2026-10-06 · v2
+
+Separates artificial omissions, retrieval misses and out-of-scope queries under matched calibration budgets; a source-task threshold can reject covered target inputs or miss absent answers. Candidate membership, label ambiguity and small natural-miss samples limit transfer claims.
+
+Primary source: https://arxiv.org/abs/2610.03387v2
+
 ## Benchmarking System One decision models against trained classifiers and language models for automated decision gates
 
 Papers · Rafe & Das · 2026-10-06 · v2
@@ -487,6 +657,14 @@ Papers · Rafe & Das · 2026-10-06 · v2
 A common-request harness compares typed decision models, generative readouts and trained classifiers; accuracy, selective coverage and out-of-scope acceptance depend on label access and task.
 
 Primary source: https://arxiv.org/abs/2610.00346v2
+
+## SharedKV-BT: Node-Local Typed Decisions for Behavior-Tree Agents
+
+Papers · Wake & Wagle · 2026-10-05 · v1
+
+Combines shared-prefix candidate scoring with behavior-tree node interfaces and external execution checks. The experiments separate scoring speed, stage restrictions and postcondition authority; predefined trees, simulated tasks and order-sensitive choices limit broader closed-loop reliability claims.
+
+Primary source: https://arxiv.org/abs/2610.07327v1
 
 ## ufakzeka-karar: An Open Turkish Typed-Decision Model with Order-Invariant Option Scoring
 
@@ -504,6 +682,14 @@ Surveys semantic engines in network control loops; separates valid decisions, ac
 
 Primary source: https://arxiv.org/abs/2610.06425v1
 
+## Probability Contracts: Accuracy, Coherence, and Decisions Across LLM Interfaces
+
+Papers · Chen & Li · 2026-10-05 · v2
+
+Known-posterior finite worlds separate probability accuracy, interface coherence and decision loss. Averaging can improve expected Brier score without improving a policy at every deferral cost; valid-report coverage and each comparison's reference policy remain essential.
+
+Primary source: https://arxiv.org/abs/2609.37470v2
+
 ## Hidden Risks of Jev: An Empirical Study of Security, Privacy, and Dual Use
 
 Papers · Wang et al. · 2026-10-04 · v1
@@ -511,6 +697,14 @@ Papers · Wang et al. · 2026-10-04 · v1
 Tests the official Jev API and the local NanoJev for prompt injection, data-poisoning backdoors, membership, attribute and knowledge inference, and dual use in four detection tasks; the authors report Jev remains vulnerable to the examined threats.
 
 Primary source: https://arxiv.org/abs/2610.04985v1
+
+## System One Models for Wireless Decision-Making:Applications and Performance Evaluation
+
+Papers · Rahimi et al. · 2026-10-03 · v1
+
+Compares bounded wireless action selection with LLMs and task-specific baselines. Lower successful-request latency trades off against decision quality; a separately reported orchestration study shows that faster interpretation need not improve end-to-end completion. Local and hosted timing boundaries differ.
+
+Primary source: https://arxiv.org/abs/2610.04345v1
 
 ## Calibrated to Whom? Persona and Language Effects on Cultural Values in JEV
 
@@ -528,6 +722,14 @@ Examines reliability, group-specific confident errors, and selective automation 
 
 Primary source: https://arxiv.org/abs/2609.33401v3
 
+## To Jev or Not? Evaluating the Accuracy and Efficiency of Structured Decision Models for Hate-Speech Moderation
+
+Papers · Paschalides, Pallis & Dikaiakos · 2026-10-02 · v1
+
+HATEDECIDE tests definitions and decomposed judgments across four English datasets. More explicit criteria change predictions without reliably improving annotation agreement; component outputs are not verified explanations, and diagnostic-set cost comparisons do not establish production moderation quality.
+
+Primary source: https://arxiv.org/abs/2610.03324v1
+
 ## Batched Speech Decisions Without Decoding: Single-Token Supervision Lets a Frozen LLM Hear Beyond the Transcript
 
 Papers · Jin et al. · 2026-10-02 · v1
@@ -544,6 +746,14 @@ Studies option-label bias in open-weight decision models; prompt-rendering chang
 
 Primary source: https://arxiv.org/abs/2610.02586v1
 
+## Student-Guided Teacher Distillation for Efficient LLM Task Routing: Positioning Against Jev-Style System-1 Classifiers
+
+Papers · Wu et al. · 2026-10-01 · v1
+
+Preliminary distillation for a fixed 60-label task taxonomy uses a student shortlist to reduce teacher scoring. Teacher agreement is not human accuracy; complete held-out controls remain pending, and the best checkpoint differs from the version used for serving measurements. No Jev head-to-head result is established.
+
+Primary source: https://arxiv.org/abs/2610.02516v1
+
 ## HakemBench: A Turkish Benchmark of Typed Decisions
 
 Papers · Teke · 2026-10-01 · v1
@@ -551,6 +761,30 @@ Papers · Teke · 2026-10-01 · v1
 Turkish typed-decision evaluation reports decision quality, Brier-based probability quality and risk–coverage alongside input probes; most labels are AI-derived, and the lab’s model used feedback from earlier test results.
 
 Primary source: https://arxiv.org/abs/2610.02293v1
+
+## Fast Models, Slow Evidence: A Paired and Self-Audited Evaluation of System-1 Decision Models for LLM Agent Harnesses
+
+Papers · Li · 2026-10-01 · v1
+
+Paired Laya/Jev evaluation of 11 agent decision points includes a self-audit: pre-screen cost, end-to-end quality, threshold leakage and unnatural channel content change deployment conclusions. Public English-dominant labels and zero-shot configurations limit generalization.
+
+Primary source: https://arxiv.org/abs/2610.02267v1
+
+## HydroJEV: A one-second, training-free screen for cyber-attack and fault attribution in water distribution networks
+
+Papers · Mu et al. · 2026-10-01 · v1
+
+Simulated water-network triage combines Jev, rule agreement and an LLM reviewer. Fewer reviewer calls coexist with accepted attacks, event-selection constraints and a transfer endpoint that misses multiplicity correction; reported timing and non-inferiority margins do not establish field reliability.
+
+Primary source: https://arxiv.org/abs/2610.02048v1
+
+## Prune First, Decide Fast: Scalable Semantic Query Processing with JEVDB
+
+Papers · Wang, Yan, Zhao & Liu · 2026-10-01 · v1
+
+Combines semantic SQL with relational pruning, semantic conditions and an optional decision-to-LLM cascade. Lossless pruning requires sound conditions and key extraction; empirically learned filters may lose recall. Imported SemBench baselines and separately amortized index preparation qualify efficiency comparisons.
+
+Primary source: https://arxiv.org/abs/2610.02046v1
 
 ## AudioJev: Direct Audio Decisions with Order-Calibrated Probabilities
 
@@ -560,6 +794,14 @@ Learns audio-conditioned candidate probabilities with aligned option-permutation
 
 Primary source: https://arxiv.org/abs/2610.01293v1
 
+## Jev-IDS: System One Models for Network Intrusion Detection
+
+Papers · Severo, Quincozes & Dias · 2026-10-01 · v1
+
+Studies typed intrusion decisions, but v1 mixes configurations: its abstract and pinned code describe a 300-flow GPT-5.6 Luna pilot, while its body describes 2,000 flows and Gemini. These cohorts and comparators must remain separate; benchmark-withheld attack types are not operational zero-day validation.
+
+Primary source: https://arxiv.org/abs/2610.01079v1
+
 ## Beyond Answer Confidence: A Controlled Audit of Self-Knowledge in a Black-Box Decision Model
 
 Papers · Shankaranarayana, Runje & Jannink · 2026-10-01 · v1
@@ -567,6 +809,14 @@ Papers · Shankaranarayana, Runje & Jannink · 2026-10-01 · v1
 Controls information and surface cues to distinguish Jev answer confidence from self-knowledge; black-box behavior does not establish access to an internal knowledge state.
 
 Primary source: https://arxiv.org/abs/2610.01006v1
+
+## Jev-as-a-Judge for RAG Claim Verification: Confidence-Gated Cascading Between a Non-Generative Verifier and a Frontier LLM
+
+Papers · Do Rosario & Atef · 2026-09-30 · v1
+
+Paired verification of 495 RAG claims finds different false-verification rates despite similar aggregate scores. One threshold is cross-fitted, but design choices and matched random-escalation controls remain exploratory; simulated savings do not establish equivalence or a better production gate.
+
+Primary source: https://arxiv.org/abs/2610.20634v1
 
 ## AnyJev Technical Report
 
@@ -592,6 +842,22 @@ Medical candidate-conditioned decisions are compared with a matched generative b
 
 Primary source: https://arxiv.org/abs/2610.00381v1
 
+## A First Glance at Jev for Network Traffic Classification: Accuracy, Processing Time, and Cost
+
+Papers · Xu & Mei · 2026-09-30 · v1
+
+Classifies ten application labels from early packet features over 26 later collection weeks. Labeled examples improve Jev but the tested tree ensembles remain more accurate; unequal supervision and service configurations prevent attributing the gap to architecture or intrinsic label efficiency.
+
+Primary source: https://arxiv.org/abs/2610.00376v1
+
+## When the Right Answer Is Missing: An Arithmetic-Dependent Rejection Bottleneck in Jev
+
+Papers · Zhong, Li & Lai · 2026-09-30 · v1
+
+Paired numerical menus expose strong answer-present selection but weak none-of-the-above rejection. Separate development thresholds recover much of the tested rejection performance, while Boolean verification behaves differently; this diagnoses an interface-dependent failure, not hidden model mechanisms or universal threshold transfer.
+
+Primary source: https://arxiv.org/abs/2609.39496v1
+
 ## Bongard: Training Machine Intuition
 
 Papers · Ding, Jin & Ji · 2026-09-30 · v1
@@ -599,6 +865,14 @@ Papers · Ding, Jin & Ji · 2026-09-30 · v1
 Shared evidence encoding and candidate-probability readout, trained with representation and action-outcome feedback.
 
 Primary source: https://arxiv.org/abs/2609.39111v1
+
+## OpenJev-RLCD: A Working RLCD Implementation
+
+Papers · Gao & Wang · 2026-09-30 · v1
+
+An independent two-stage RLCD recipe calibrates a reasoning model's answer readout, then reinforces rationales with a proper-score reward. Three-seed results on a 1.7B model show task-dependent gains; the implementation explicitly makes no claim to recover TypeSafe's internal training algorithm.
+
+Primary source: https://arxiv.org/abs/2609.38850v1
 
 ## Evaluating and Benchmarking the System One Model Jev
 
@@ -616,6 +890,14 @@ A Chinese typed-decision model and proposed benchmark; domain-specific training 
 
 Primary source: https://arxiv.org/abs/2609.36965v1
 
+## Dyad: Extending Large Language Models with Native Typed Decision-Making
+
+Papers · Zhan et al. · 2026-09-28 · v1
+
+Adds an environment-conditioned action encoder to an LLM for typed actions; frozen-LLM adaptation and joint reinforcement learning are separate settings, and the Jev latency comparison uses previously published API measurements.
+
+Primary source: https://arxiv.org/abs/2609.36116v1
+
 ## Mnemon: Raw Records, Fast Judgments, Slow Thoughts
 
 Papers · Wang · 2026-09-28 · v1
@@ -632,6 +914,14 @@ A controlled calibration study using constructed probabilities. Interpretations 
 
 Primary source: https://arxiv.org/abs/2609.35342v1
 
+## Decide, Don't Generate: Competitive Dimensional ABSA with Jev's Typed Decisions
+
+Papers · Zhang et al. · 2026-09-28 · v1
+
+Uses frozen Jev decisions plus 488 coefficients fitted to labels for multilingual sentiment regression and extraction. Supervised calibration and span selection drive the gains; reconstructed aggregate rankings, reused development data and incomplete overlap removal qualify the comparisons.
+
+Primary source: https://arxiv.org/abs/2609.35293v1
+
 ## JEV as a Judge for Agent Trace Security: An Empirical Comparison with Generative LLM Judges
 
 Papers · Wang & Gao · 2026-09-28 · v1
@@ -640,6 +930,30 @@ Compares Jev and generative judges on retrospective agent-trace risk classificat
 
 Primary source: https://arxiv.org/abs/2609.34862v1
 
+## Emo-Jev: Probabilistic Reasoning for Emotion Classification with Jev
+
+Papers · Zhang & Yu · 2026-09-27 · v1
+
+Adds atomic-question decomposition or multiple judgment paths for eight text-classification benchmarks. Neither extension improves average macro-F1 over direct Jev in the reported setup; extra questions increase cost, and fixed aggregation rules do not establish calibrated uncertainty.
+
+Primary source: https://arxiv.org/abs/2610.08829v1
+
+## Laya as a Typed Probabilistic Assessor: An Independent Reproduction and a Preregistered Study of Calibration and Selective Escalation
+
+Papers · Nandakishore · 2026-09-27 · v1
+
+A pinned Laya checkpoint is underconfident on synthetic teacher labels. Temperature fitting improves probability metrics, but the frozen calibrator-selection rule and escalation gate fail held-out targets; reported Jev comparisons are indirect, and the initial reproduction predates preregistration.
+
+Primary source: https://arxiv.org/abs/2609.33843v1
+
+## Type-Safe Decision Frameworks for Agentic 5G Control: A Theory-Driven Testbed Characterization of Where They Can Be Applied
+
+Papers · Kourtis & Xilouris · 2026-09-27 · v1
+
+Maps typed frameworks to timing, label-budget and decision-schema conditions on a 5G testbed. Changed-question probes expose failures hidden by output validity and paraphrase stability; simulator labels, open RAN-loop scope and conditional risk assumptions constrain deployment conclusions.
+
+Primary source: https://arxiv.org/abs/2609.33689v1
+
 ## Beyond Calibration: Do a Typed-Decision Model's Probabilities Obey the Probability Axioms?
 
 Papers · Li, He & Li · 2026-09-27 · v1
@@ -647,6 +961,14 @@ Papers · Li, He & Li · 2026-09-27 · v1
 Tests coherence between logically related probabilities, separately from accuracy and calibration.
 
 Primary source: https://arxiv.org/abs/2609.33209v1
+
+## PACT: Pairwise-Anchored Calibrated Tuning for Single-Token Typed Decisions
+
+Papers · Lin · 2026-09-26 · v1
+
+Uses certified contrastive pairs, permutation consistency and contextual temperature fitting to improve decision stability and ordinal error; a 324-item synthetic holdout, one model scale and certificate dependence limit generalization.
+
+Primary source: https://arxiv.org/abs/2609.35865v1
 
 ## Typed Decision Models: An Early Evidence Audit and Evaluation Checklist
 
@@ -703,6 +1025,14 @@ Papers · Wu & Lim · 2026-09-23 · v1
 Audits Jev injection on reconstructed InjecAgent cases, separating probability shifts from attacker-target selections; optimization results are checked on fresh calls, within this benchmark setting.
 
 Primary source: https://arxiv.org/abs/2609.28613v1
+
+## NumericJev: Jev-like LLM Numerical Decoding with Multiway Decision Trees
+
+Papers · Ye, Liu & Jiang · 2026-09-23 · v1
+
+Uses repeated Choice calls to refine a known numerical interval without retraining. Resolution is not accuracy or calibrated uncertainty, and early wrong branches are irreversible. Arithmetic variants share 64 base families; historical-index recall and later controller demonstrations are separate evidence.
+
+Primary source: https://arxiv.org/abs/2609.28587v1
 
 ## Can Jev Judge Radiology Reports? Evaluating a System One Model for Clinical Factuality
 
@@ -767,6 +1097,54 @@ Papers · Cheng, Dai & Sun · 2026-09-20 · v1
 An open typed-decision model using hidden-state readout. The abstract reports a small external comparison.
 
 Primary source: https://arxiv.org/abs/2609.23886v1
+
+## OneJev1.5-27B
+
+Models · OmniJev · Apache-2.0
+
+27B full fine-tune for text, image and video decisions, served through qev. Training includes public benchmark training splits; reported scores cover the public suite, and Jev comparison numbers are imported rather than a matched multimodal rerun.
+
+Primary source: https://huggingface.co/OmniJev/OneJev1.5-27B
+
+## d1-omni-600M
+
+Models · Liquid AI · LFM Open License v1.0
+
+587M encoder for text with images or up to 30 seconds of English speech; one request cannot mix both media. Only text uses fitted temperatures. Image requests cap text at 896 tokens; custom code and the LFM Open License apply.
+
+Primary source: https://huggingface.co/LiquidAI/d1-omni-600M
+
+## Torchcast Decision 27B
+
+Models · Torchcast AI · CC BY-NC 4.0
+
+Merged LoRA decision model with a CUDA serving package; weights are noncommercial, serving code Apache-2.0. Text-only, checkpoint-selected results use Decision Index 0.2.1; long states and more than 26 options change the inference path.
+
+Primary source: https://huggingface.co/torchcast-ai/torchcast-decision-27b
+
+## tasksource-decider-nano
+
+Models · tasksource · Apache-2.0
+
+150M joint cross-encoder with shared-state tree attention and choice/noul outputs. Rejects pairs above 8,192 tokens; training includes public benchmark training splits. Reported speed and public-suite scores use the documented A10 setup.
+
+Primary source: https://huggingface.co/tasksource/tasksource-decider-nano
+
+## Saracura PT-BR 4B
+
+Models · Felhen · Apache-2.0
+
+Brazilian Portuguese Kev adapter and pointer head. Source-matched tests and two-fold human-set calibration do not establish general Portuguese performance; private email-tuned results belong to an unreleased model. Use the documented 2,048-token state setting for comparisons.
+
+Primary source: https://huggingface.co/felhen-ai/saracura-ptbr-4b
+
+## Perplexity Decider v1.2 27B
+
+Models · Perplexity · Apache-2.0
+
+27B text/image model with joint question readouts: questions can affect one another. Public-suite training exposure and grouping affect comparisons. Anonymous Hub metadata and a weight HEAD were accessible on 18 Oct; the card still instructs private access.
+
+Primary source: https://huggingface.co/perplexity-ai/pplx-decider-v1.2
 
 ## Amos 1 large
 
@@ -855,14 +1233,6 @@ Models · InternLM · Apache-2.0
 A decision-tuned Qwen checkpoint with a structured inference wrapper and image support.
 
 Primary source: https://huggingface.co/internlm/Intern-Decision-4B
-
-## Perplexity Decider v1.1 27B
-
-Models · Perplexity · Apache-2.0
-
-A separate decision readout and saved calibration temperature. Follow the card’s attention-mode and access notes.
-
-Primary source: https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b
 
 ## GLiNER2.5-Decide
 
@@ -1426,6 +1796,68 @@ Primary source: https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f
 
 # Research topics
 
+## Jev moderation, stance and sentiment evaluation
+
+Canonical page: https://awesomejev.github.io/topics/language-task-evaluation/
+Updated: 2026-10-18
+
+A strong language-task benchmark score does not by itself establish policy adherence or transfer to another language. Compare annotation rules, input context, candidate menus, supervision and inference budgets before reusing the result.
+
+Five fixed-version abstracts, selected methods/results/limitations and one implementation README were inspected. Findings remain author-reported; no prediction records or experiments were reproduced.
+
+### Policy adherence or label agreement?
+
+HATEDECIDE finds that supplying definitions and decomposing a moderation decision do not reliably improve agreement with existing dataset labels. A prediction can follow the supplied definition yet disagree with the original annotation policy. Component answers make the aggregation rule inspectable, but they are not verified explanations without component-level reference labels. Evaluate the actual policy and both false-positive and false-negative costs; English diagnostic examples do not establish everyday or multilingual moderation performance. [HATEDECIDE: limitations, v1](https://arxiv.org/html/2610.03324v1#S5.SS1)
+
+### What information does retrieval add?
+
+The online-moderation study separates written rules, labeled precedents and restrictions on the answer menu. Its main policy contrast adds precedents while keeping the complete menu fixed. For OLID and HateXplain, however, precedents come from the cleaned evaluation population with the target excluded; this differs from using only a frozen training collection. Media inputs are generated textual captions, not a test of native Jev vision. Report these information sources and candidate restrictions alongside the score. [Information conditions, v1](https://arxiv.org/html/2610.07953v1#S3.SS2) · [Tasks and media representations](https://arxiv.org/html/2610.07953v1#S3.SS1)
+
+### What changes across languages?
+
+The stance study compares English text–target pairs with Chinese speaker-tagged conversations. Language, dataset and conversational structure therefore change together. Jev has more difficulty with support/opposition in the conversational benchmark, but this does not isolate a language effect or prove an internal mechanism. Some LLMs also receive batches while Jev receives single records. Our suggested transfer test holds task structure and information access fixed and checks target-language annotation definitions independently. [Stance evaluation setup, v1](https://arxiv.org/html/2610.11901v1#S4) · [Conversation-length analysis](https://arxiv.org/html/2610.11901v1#S5.SS4)
+
+### Do more questions improve the result?
+
+Emo-Jev compares direct classification with atomic-question composition and multiple predefined judgment paths. Both extensions have lower average macro-F1 than direct Jev in the reported eight-dataset setup, with task-specific gains and losses. Extra paths add dependent stages and cost; some retry usage is missing. HATEDECIDE likewise finds no consistent benefit from decomposition. Compare the direct baseline, the full added-question budget and held-out outcomes rather than assuming that more intermediate answers provide better reasoning or calibrated probabilities. [Emo-Jev results, v1](https://arxiv.org/html/2610.08829v1#S4.SS3) · [Efficiency accounting](https://arxiv.org/html/2610.08829v1#S4.SS5) · [HATEDECIDE decomposition](https://arxiv.org/html/2610.03324v1#S5)
+
+### What does a frozen backbone still learn?
+
+The DimABSA system uses frozen Jev with 488 coefficients fitted to task labels for regression and extraction. Its strong regression aggregate relies on supervised calibration; the competition ranks individual corpora, not the reconstructed pooled aggregate. Development scoring does not nest the full feature/threshold selection process, and some text overlap remains. The public code includes fitted parameters and metric summaries, while text-bearing prediction caches are withheld. Separate backbone tuning, supervised postprocessing, selection and artifact availability when comparing results. [DimABSA protocol, v1](https://arxiv.org/html/2609.35293v1#A2) · [Implementation and release limits](https://github.com/ZhangYiqun018/jev-dimabsa)
+
+## Jev calibration, abstention and confidence routing
+
+Canonical page: https://awesomejev.github.io/topics/calibration-and-abstention/
+Updated: 2026-10-18
+
+Better-calibrated probabilities do not guarantee a reliable abstention gate or a cheaper cascade. Evaluate the whole policy on held-out target data, separate missing-answer populations, and compare confidence routing with random escalation at the same budget.
+
+Six fixed-version abstracts, selected manuscript sections and release documentation were inspected. Findings remain author-reported; no model experiment, prediction replay or proof verification was performed.
+
+### Which quantity should improve?
+
+Probability accuracy, interface coherence, accepted-case error and decision cost answer different questions. Probability Contracts uses worlds with known posteriors to separate them: averaging two reports can improve expected Brier score without improving a decision at every deferral cost. Its guarantee compares averaging with random interface selection, not with each interface individually. Report validity and coverage too; an interface that produces no usable probabilities has undefined probability accuracy. [Probability Contracts, v2](https://arxiv.org/html/2609.37470v2#S7.SS2) · [Study limits](https://arxiv.org/html/2609.37470v2#S8)
+
+### Why is the correct answer missing?
+
+An artificially removed answer, a retrieval miss and an out-of-scope query are different populations. The candidate-coverage benchmark reports them separately; at ten retrieval candidates, its natural-miss result has only five supporting queries. The arithmetic rejection study adds another distinction: selecting None in a menu differs from verifying each candidate with a Boolean question. Thresholds tuned on separate development problems improve its tested rejection tradeoff, but do not establish a universal threshold. [Coverage sources and denominators, v2](https://arxiv.org/html/2610.03387v2#S3.SS2) · [Arithmetic rejection and threshold rules, v1](https://arxiv.org/html/2609.39496v1#S5)
+
+### Will a threshold survive a new task?
+
+A source-task calibration constraint is not a target-task risk guarantee. The coverage study holds calibration budgets equal and finds that transferred thresholds can over-reject covered inputs or stop detecting missing answers. The Laya reproduction separately finds that a better probability metric does not ensure the frozen gate meets its held-out error target. Its labels come from a synthetic teacher, and its initial reproduction is retrospective. Compare source-frozen and target-recalibrated policies on disjoint target data, with label budgets stated. [Fixed-budget transfer, v2](https://arxiv.org/html/2610.03387v2#S5.SS4) · [Laya study limitations, v1](https://arxiv.org/html/2609.33843v1#S11)
+
+### Does confidence improve routing?
+
+A cascade should be compared with the cheap model alone, the fallback alone, and random escalation at a matched budget. In the 495-claim RAG study, similar aggregate scores conceal different false-verification rates. One threshold is cross-fitted, while its matched-random control uses in-sample operating points; neither nonsignificance nor that control establishes equivalence. Our proposed stronger comparison freezes the entire routing procedure and random-control budget before testing on new claims. [Cross-fitted threshold, v1](https://arxiv.org/html/2610.20634v1#S9.SS2) · [Matched random escalation](https://arxiv.org/html/2610.20634v1#S9.SS5) · [Design limitations](https://arxiv.org/html/2610.20634v1#S12)
+
+### What belongs in total cost?
+
+Count the first-stage decision for every item, then all escalated calls, retries and routing overhead. Report cost per attempted input, coverage and end-to-end quality together. Fast Models, Slow Evidence corrected omitted pre-screen cost, confusion between gate accuracy and final quality, and in-sample threshold optimism. The RAG cascade is an offline replay whose price calculation excludes second-hop overhead, retries and queueing; it has no controlled latency result. These studies do not establish current prices or universal production savings. [Self-audited agent evaluation, v1](https://arxiv.org/abs/2610.02267v1) · [Replay and cost limits](https://arxiv.org/html/2610.20634v1#S12)
+
+### What do the artifacts support?
+
+The candidate-coverage repository separates recorded-output scoring from source-text reconstruction and fresh inference. sys1-eval documents raw-response reanalysis; the RAG repository requires upstream access to the gold labels. Laya’s ancillary inventory lists predictions, metric code and manifests, but also withheld collection/training source. A listed file or publisher checksum is not an independently reproduced result. We inspected the documentation and inventories, without running these procedures or auditing their prediction records. [Candidate-coverage code](https://github.com/luckykevvv/Decision_Model_Benchmark) · [Agent evaluation code](https://github.com/David-DL-Space/sys1-eval) · [RAG verification code](https://github.com/adorosario/jev-rag-claim-verification) · [Laya ancillary inventory](https://arxiv.org/src/2609.33843v1/anc/README.txt)
+
 ## Option-label bias in Jev-style decision models
 
 Canonical page: https://awesomejev.github.io/topics/option-label-bias/
@@ -1446,6 +1878,10 @@ The fixed-weight rendering intervention in Labels Override Definitions provides 
 ### Does order stability fix label bias?
 
 Runoff scores options individually before comparing balanced finalist listings. Its order-invariance argument assumes deterministic responses and a unique canonical ranking; the paper explicitly leaves option-name bias outside its target. Verdict-MQ describes architectural order/grouping invariance when retained state tokens are identical after truncation. These are conditional claims about changing a request’s arrangement, not proof of semantic correctness, calibrated confidence or resistance to malicious option names. [Runoff limitations and assumptions, v1](https://arxiv.org/html/2610.18233v1#Sx1.p1) · [Runoff invariance assumptions, v1](https://arxiv.org/html/2610.18233v1#A5.SS0.SSS0.Px2.p1) · [Verdict original abstract, v1](https://arxiv.org/abs/2610.20778v1)
+
+### What changes when an option is added?
+
+Prism-1 isolates option readouts to preserve order invariance and relative odds among original options when the candidate set changes, with state and question held fixed. This does not keep every normalized probability unchanged: an added score changes the softmax denominator. Its paper requires fine-tuning and limits the guarantee to numerical precision; independently judged options fit better than menu-dependent rules such as none of the above. Injected text in the shared state remains outside this protection. Evaluate menu-dependent fallback behavior separately, using the paired-rule tests rather than treating stable rankings as correct abstention. [Prism-1 limitations, v1](https://arxiv.org/html/2610.22066v1#S7) · [Choice-axiom tradeoffs, v1](https://arxiv.org/html/2610.22066v1#S5.SS6) · [Paired fallback test, v1](https://arxiv.org/html/2610.19856v1#S3.SS1)
 
 ### A diagnostic to use in your own evaluation
 

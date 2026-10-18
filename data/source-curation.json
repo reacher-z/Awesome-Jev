@@ -423,6 +423,46 @@
       "evidence_url": "https://raw.githubusercontent.com/coldteadotai/abide/21b7e74fa92cf96eb8bf525f5d1b612e6fcaa8dd/README.md",
       "reviewed_at": "2026-10-18T05:04:14.682049+00:00",
       "note": "Display-only project title from the pinned README heading. The automated parser selected a code-block heading; preserve source evidence and grade."
+    },
+    {
+      "url": "https://huggingface.co/OmniJev/OneJev1.5-27B",
+      "title": "OneJev1.5-27B",
+      "relevance": "27B full fine-tune for text, image and video decisions, served through qev. Training includes public benchmark training splits; reported scores cover the public suite, and Jev comparison numbers are imported rather than a matched multimodal rerun.",
+      "evidence_url": "https://huggingface.co/OmniJev/OneJev1.5-27B/raw/0742f8d16dd42c97643eec095cfc252acc4db18f/README.md",
+      "reviewed_at": "2026-10-18T08:31:10.698075+00:00",
+      "note": "Fixed model-card bytes match the existing accepted source hash. Display-only scope annotation from a manual model-card review; original evidence fields and verification grade are unchanged. Model weights and inference were not run. See docs/reviews/model-directory-2026-10-18.md."
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/d1-omni-600M",
+      "title": "d1-omni-600M",
+      "relevance": "587M encoder for text with images or up to 30 seconds of English speech; one request cannot mix both media. Only text uses fitted temperatures. Image requests cap text at 896 tokens; custom code and the LFM Open License apply.",
+      "evidence_url": "https://huggingface.co/LiquidAI/d1-omni-600M/raw/02b55d7076f15129e59ab3f94783f32c4b088674/README.md",
+      "reviewed_at": "2026-10-18T08:31:11.454849+00:00",
+      "note": "Fixed model-card bytes match the existing accepted source hash. Display-only scope annotation from a manual model-card review; original evidence fields and verification grade are unchanged. Model weights and inference were not run. See docs/reviews/model-directory-2026-10-18.md."
+    },
+    {
+      "url": "https://huggingface.co/torchcast-ai/torchcast-decision-27b",
+      "title": "Torchcast Decision 27B",
+      "relevance": "Merged LoRA decision model with a CUDA serving package; weights are noncommercial, serving code Apache-2.0. Text-only, checkpoint-selected results use Decision Index 0.2.1; long states and more than 26 options change the inference path.",
+      "evidence_url": "https://huggingface.co/torchcast-ai/torchcast-decision-27b/raw/08645834899cb8e00d370b77a3f4e0baa3241dd1/README.md",
+      "reviewed_at": "2026-10-18T08:31:11.839533+00:00",
+      "note": "Fixed model-card bytes match the existing accepted source hash. Display-only scope annotation from a manual model-card review; original evidence fields and verification grade are unchanged. Model weights and inference were not run. See docs/reviews/model-directory-2026-10-18.md."
+    },
+    {
+      "url": "https://huggingface.co/tasksource/tasksource-decider-nano",
+      "title": "tasksource-decider-nano",
+      "relevance": "150M joint cross-encoder with shared-state tree attention and choice/noul outputs. Rejects pairs above 8,192 tokens; training includes public benchmark training splits. Reported speed and public-suite scores use the documented A10 setup.",
+      "evidence_url": "https://huggingface.co/tasksource/tasksource-decider-nano/raw/46e88e08cc1a3122a348ce134f18865e93f8e1c8/README.md",
+      "reviewed_at": "2026-10-18T08:31:11.579384+00:00",
+      "note": "Fixed model-card bytes match the existing accepted source hash. Display-only scope annotation from a manual model-card review; original evidence fields and verification grade are unchanged. Model weights and inference were not run. See docs/reviews/model-directory-2026-10-18.md."
+    },
+    {
+      "url": "https://huggingface.co/felhen-ai/saracura-ptbr-4b",
+      "title": "Saracura PT-BR 4B",
+      "relevance": "Brazilian Portuguese Kev adapter and pointer head. Source-matched tests and two-fold human-set calibration do not establish general Portuguese performance; private email-tuned results belong to an unreleased model. Use the documented 2,048-token state setting for comparisons.",
+      "evidence_url": "https://huggingface.co/felhen-ai/saracura-ptbr-4b/raw/9b27a7be153afee62b778b61eb5d664ce978d3b1/README.md",
+      "reviewed_at": "2026-10-18T08:31:11.839322+00:00",
+      "note": "Fixed model-card bytes match the existing accepted source hash. Display-only scope annotation from a manual model-card review; original evidence fields and verification grade are unchanged. Model weights and inference were not run. See docs/reviews/model-directory-2026-10-18.md."
     }
   ]
 }

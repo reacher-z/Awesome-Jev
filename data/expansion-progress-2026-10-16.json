@@ -3,34 +3,34 @@
   "baseline_commit": "3519c15d7e00686a8dbf9b1e184c68726327ab1e",
   "baseline_source_index_sha256": "8bfdd20564f2cda54bb8264c3c802f315e3e9a11b153bd85dde4325f53c841d5",
   "target_new_sources": 301,
-  "accepted_new_sources": 788,
+  "accepted_new_sources": 824,
   "remaining_to_target": 0,
   "target_count_reached": true,
   "current_index_counts": {
     "editorial_reviewed": 4,
-    "content_screened": 2396,
-    "abstract_checked": 1847,
+    "content_screened": 2397,
+    "abstract_checked": 1883,
     "metadata_only": 47,
-    "raw_records": 4308,
-    "unique_records": 4294,
+    "raw_records": 4345,
+    "unique_records": 4331,
     "duplicate_records": 14,
-    "checked_sources": 4247
+    "checked_sources": 4284
   },
   "by_category": {
     "Datasets": 101,
     "Guides and evaluations": 38,
     "Models": 59,
-    "Papers": 35,
+    "Papers": 71,
     "Projects": 219,
     "Research foundations": 336
   },
   "by_relation": {
     "adjacent": 25,
     "background": 336,
-    "direct": 427
+    "direct": 463
   },
   "by_verification_level": {
-    "abstract_checked": 371,
+    "abstract_checked": 407,
     "content_screened": 417
   },
   "verification_note": "Evidence depth is labeled per source. Content screening and abstract checks do not establish full-paper review, peer review, endorsement, or experimental reproduction.",
@@ -2412,6 +2412,18 @@
       "ledger": "ecosystem-sources.jsonl"
     },
     {
+      "title": "A First Glance at Jev for Network Traffic Classification: Accuracy, Processing Time, and Cost",
+      "url": "https://arxiv.org/abs/2610.00376",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Classifies ten application labels from early packet features over 26 later collection weeks. Labeled examples improve Jev but the tested tree ensembles remain more accurate; unequal supervision and service configurations prevent attributing the gap to architecture or intrinsic label efficiency.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "01e5c5455d76aa008b2676ac990c6bd0695435f094ac079788245be3f21c5219",
+      "retrieved_at": "2026-10-18T09:32:24.918859+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Batched Speech Decisions Without Decoding: Single-Token Supervision Lets a Frozen LLM Hear Beyond the Transcript",
       "url": "https://arxiv.org/abs/2610.02638",
       "category": "Papers",
@@ -2424,6 +2436,30 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "Benchmarking candidate coverage and rejection policy transfer in typed decision models",
+      "url": "https://arxiv.org/abs/2610.03387",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Separates artificial omissions, retrieval misses and out-of-scope queries under matched calibration budgets; a source-task threshold can reject covered target inputs or miss absent answers. Candidate membership, label ambiguity and small natural-miss samples limit transfer claims.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "ac62baddac02c450110c4354254d3072e23ed6b4b704ec2bd9d9628bfbbad583",
+      "retrieved_at": "2026-10-18T08:41:00.150942+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Benchmarking System One Models in Online Moderation",
+      "url": "https://arxiv.org/abs/2610.07953",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Separates written rules, retrieved precedents and candidate restrictions across five moderation benchmarks. Retrieval can improve discrimination or merely change flagging rates; using labeled evaluation examples as precedents and representing media through generated captions limits deployment claims.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "5132c8e8b5e6c306f7316f81fec40045f0f031e7078201b0a055261ca00b6945",
+      "retrieved_at": "2026-10-18T09:18:14.029356+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Beyond Answer Confidence: A Controlled Audit of Self-Knowledge in a Black-Box Decision Model",
       "url": "https://arxiv.org/abs/2610.01006",
       "category": "Papers",
@@ -2433,6 +2469,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "abee899ad2ed5e5331283d34002c1129e09706fbf39fc8aab1aee6deac690882",
       "retrieved_at": "2026-10-16T11:20:08+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "BLADE: Auditing Information Use for Failure Attribution in LLM Multi-Agent Systems",
+      "url": "https://arxiv.org/abs/2610.18780",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Uses Jev to audit information use at agent handoffs and localize failures; comparisons share one decision model on five benchmark subsets, and attribution depends on the completeness of retained traces.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "77c44fd250d2b23b96c7298da687c01bab5f478191ccfc57b8c5f7de91e7d6b0",
+      "retrieved_at": "2026-10-18T06:12:56.234712+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2460,6 +2508,18 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "Can Decision Models Understand Stance? Evaluating Jev Against General-Purpose LLMs",
+      "url": "https://arxiv.org/abs/2610.11901",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Compares Jev on English single-text stance and Chinese conversational stance. Support/opposition errors grow in the conversational task, but language, dataset and input structure change together; differing batching and prompt formats also limit a general language-capability ranking.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "f76f3b1f66b0219c6340d19cda557b8a009a4099ec4bb67eba039d11f1115299",
+      "retrieved_at": "2026-10-18T09:18:14.017905+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Can Jev Judge Radiology Reports? Evaluating a System One Model for Clinical Factuality",
       "url": "https://arxiv.org/abs/2609.27607",
       "category": "Papers",
@@ -2469,6 +2529,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "3239e5a740f99121cc1ba98c04e31709b3a18c695b6860a8520f838721714e79",
       "retrieved_at": "2026-10-16T12:16:34.052101+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Cheap, Consistent, Calibrated, but Biased? Typed Decision Models as Judges",
+      "url": "https://arxiv.org/abs/2610.18122",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "CALM pairwise challenges expose position and rewrite sensitivity despite consistency and calibration; inherited reference labels and rewrites that change more than tone limit causal interpretation and transfer to other judging tasks.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "9e494e72cc14e18c1f5af0e210403dc916e96a5fbccea2b3b9981b46fb63ce90",
+      "retrieved_at": "2026-10-18T07:36:00.009551+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2484,6 +2556,18 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "Decide, Don't Generate: Competitive Dimensional ABSA with Jev's Typed Decisions",
+      "url": "https://arxiv.org/abs/2609.35293",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Uses frozen Jev decisions plus 488 coefficients fitted to labels for multilingual sentiment regression and extraction. Supervised calibration and span selection drive the gains; reconstructed aggregate rankings, reused development data and incomplete overlap removal qualify the comparisons.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "09fb88f04d832aa57ec61b751d2d1ea9dd929e3cb8d9f5d827d335d42b392468",
+      "retrieved_at": "2026-10-18T09:18:17.001552+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Decision Hijacking: Prompt Injection Attacks on Jev's Typed Probabilistic Decisions",
       "url": "https://arxiv.org/abs/2609.28613",
       "category": "Papers",
@@ -2493,6 +2577,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "898b72728a465d950ea191589cd6c4aebd1858bc658315ccf6cb7255a62a0d40",
       "retrieved_at": "2026-10-16T11:40:20+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "DICE: Tilting the Odds through Interface Attackson System One Model",
+      "url": "https://arxiv.org/abs/2610.14404",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Tests bounded substitutions at state-extraction, question-generation and output-interpretation adapters while leaving authentic Jev responses intact; three synthetic pilots locate decision-integrity failures without estimating deployed attack prevalence.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "25937c87d3c2f5f23c1d98acd013360cf64f26257d4ac9960764e0ece0b9c172",
+      "retrieved_at": "2026-10-18T07:40:34.341053+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2508,6 +2604,30 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "Dyad: Extending Large Language Models with Native Typed Decision-Making",
+      "url": "https://arxiv.org/abs/2609.36116",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Adds an environment-conditioned action encoder to an LLM for typed actions; frozen-LLM adaptation and joint reinforcement learning are separate settings, and the Jev latency comparison uses previously published API measurements.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "e39a0c45ea6313b105a9e900dfd215542968be27648acde6a3a8753b133e465f",
+      "retrieved_at": "2026-10-18T07:40:35.732895+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Emo-Jev: Probabilistic Reasoning for Emotion Classification with Jev",
+      "url": "https://arxiv.org/abs/2610.08829",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Adds atomic-question decomposition or multiple judgment paths for eight text-classification benchmarks. Neither extension improves average macro-F1 over direct Jev in the reported setup; extra questions increase cost, and fixed aggregation rules do not establish calibrated uncertainty.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "c049e746a8c7bb2452ae233c94c1f182287be37f56ac6cbfdd1480e0d9094cd5",
+      "retrieved_at": "2026-10-18T09:18:19.168344+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Evaluating Decision Models for Text Annotation in Computational Social Science",
       "url": "https://arxiv.org/abs/2609.24574",
       "category": "Papers",
@@ -2517,6 +2637,54 @@
       "verification_level": "abstract_checked",
       "content_sha256": "0f5170a5e8987b1e9e6f432e25e6decd3e18e1353f489d024310b7afc116cff3",
       "retrieved_at": "2026-10-16T11:40:20+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Fast Models, Slow Evidence: A Paired and Self-Audited Evaluation of System-1 Decision Models for LLM Agent Harnesses",
+      "url": "https://arxiv.org/abs/2610.02267",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Paired Laya/Jev evaluation of 11 agent decision points includes a self-audit: pre-screen cost, end-to-end quality, threshold leakage and unnatural channel content change deployment conclusions. Public English-dominant labels and zero-shot configurations limit generalization.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "736e572289c26676d2e18696416175b742146e1eec062cbef7e586e6839915a0",
+      "retrieved_at": "2026-10-18T08:41:00.144711+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "From Probabilities to Decisions: Search and Multi-Teacher Distillation with Jev",
+      "url": "https://arxiv.org/abs/2610.09188",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Distills Jev and LLM judgments into compact search evaluators and rerankers; matched-label-budget gains in chess do not generalize to every tested game. The deployed bot also uses Stockfish, opening books and tablebases, and API wall time differs from GPU labeling time.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "b0155e223e8f7cb406780a02014fea474bc46e444cdd73bc752ea5e3e300dd0c",
+      "retrieved_at": "2026-10-18T09:00:33.833251+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "FunDM: Cheap & Label-Free Decision Models from Frozen Language Models",
+      "url": "https://arxiv.org/abs/2610.17175",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Distills teacher probabilities into small heads using fewer layers of a frozen Qwen3-8B; label-free means no correct-answer training labels, and efficiency measurements cover one GPU and engine workload rather than production serving.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "99d50be47787c70764e0b8bf0ead4a0f9517e437a868eda85fbc6f7d0c7ee2d1",
+      "retrieved_at": "2026-10-18T07:40:33.844303+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "HydroJEV: A one-second, training-free screen for cyber-attack and fault attribution in water distribution networks",
+      "url": "https://arxiv.org/abs/2610.02048",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Simulated water-network triage combines Jev, rule agreement and an LLM reviewer. Fewer reviewer calls coexist with accepted attacks, event-selection constraints and a transfer endpoint that misses multiplicity correction; reported timing and non-inferiority margins do not establish field reliability.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "cfd06c21d054a1306def07983f83119b206a497c1bec7d77794eac694a3bf8ff",
+      "retrieved_at": "2026-10-18T09:32:22.363586+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2553,6 +2721,30 @@
       "verification_level": "abstract_checked",
       "content_sha256": "25988c14a48518f0e90f24f2f9b907edc4a4a96ef2f51fef7735cf38e89a5209",
       "retrieved_at": "2026-10-16T11:52:08+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Jev-as-a-Judge for RAG Claim Verification: Confidence-Gated Cascading Between a Non-Generative Verifier and a Frontier LLM",
+      "url": "https://arxiv.org/abs/2610.20634",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Paired verification of 495 RAG claims finds different false-verification rates despite similar aggregate scores. One threshold is cross-fitted, but design choices and matched random-escalation controls remain exploratory; simulated savings do not establish equivalence or a better production gate.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "3517bf947e256235bec70289397b8fc4a771b3fc8655ecd980fbadf4376cb8b3",
+      "retrieved_at": "2026-10-18T08:41:01.168280+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Jev-IDS: System One Models for Network Intrusion Detection",
+      "url": "https://arxiv.org/abs/2610.01079",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Studies typed intrusion decisions, but v1 mixes configurations: its abstract and pinned code describe a 300-flow GPT-5.6 Luna pilot, while its body describes 2,000 flows and Gemini. These cohorts and comparators must remain separate; benchmark-withheld attack types are not operational zero-day validation.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "b2bd2ef04edf9c55bb1315dfe021f8f6966345f7cac6324fc5ef2a523fc258f5",
+      "retrieved_at": "2026-10-18T09:32:22.354918+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2628,6 +2820,42 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "Koa-decision: Fast and Consistent Structured Decision Making with Generative LLMs",
+      "url": "https://arxiv.org/abs/2609.36115",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Uses atomic label tokens and supervised fine-tuning for single-step constrained decisions; latency follows a specified sequential serving protocol, adaptation differs across baselines, and the production intent data cannot be released.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "3004937444c0dd91c24363311735067389081b705a70b95bcf96c9aacf5f7960",
+      "retrieved_at": "2026-10-18T07:36:01.755206+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Laya as a Typed Probabilistic Assessor: An Independent Reproduction and a Preregistered Study of Calibration and Selective Escalation",
+      "url": "https://arxiv.org/abs/2609.33843",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "A pinned Laya checkpoint is underconfident on synthetic teacher labels. Temperature fitting improves probability metrics, but the frozen calibrator-selection rule and escalation gate fail held-out targets; reported Jev comparisons are indirect, and the initial reproduction predates preregistration.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "1eb43a152800c6eb8f824cbee399a16ffd9a03116a766c403a8184921c15c73c",
+      "retrieved_at": "2026-10-18T08:41:02.192931+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Lost in the Fallback: How Reliably Do Typed Decision Models Use Fallback Options?",
+      "url": "https://arxiv.org/abs/2610.19856",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Paired tests on three text datasets separate category recognition from executing fallback rules; tested open models can disagree under equivalent definitions even when supplied the correct category, and the study diagnoses failures without establishing a fix.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "1501bea0917b26ff46d630b2eab84803c098a05a4640d0895ad0e8d1d0c75854",
+      "retrieved_at": "2026-10-18T06:12:55.206425+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Mnemon: Raw Records, Fast Judgments, Slow Thoughts",
       "url": "https://arxiv.org/abs/2609.36059",
       "category": "Papers",
@@ -2649,6 +2877,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "11da327e2f623bfeb039d1d0f75b174b635d6dcb91612ae0fe8bf5f6ca47db7e",
       "retrieved_at": "2026-10-16T12:16:34.055084+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "NumericJev: Jev-like LLM Numerical Decoding with Multiway Decision Trees",
+      "url": "https://arxiv.org/abs/2609.28587",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Uses repeated Choice calls to refine a known numerical interval without retraining. Resolution is not accuracy or calibrated uncertainty, and early wrong branches are irreversible. Arithmetic variants share 64 base families; historical-index recall and later controller demonstrations are separate evidence.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "da888a65bf75666d2d3a646623c23e695a422c671e7cb41d5061c009fbdf9ce7",
+      "retrieved_at": "2026-10-18T09:00:35.966987+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2676,6 +2916,90 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "OpenJev-RLCD: A Working RLCD Implementation",
+      "url": "https://arxiv.org/abs/2609.38850",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "An independent two-stage RLCD recipe calibrates a reasoning model's answer readout, then reinforces rationales with a proper-score reward. Three-seed results on a 1.7B model show task-dependent gains; the implementation explicitly makes no claim to recover TypeSafe's internal training algorithm.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "c08303c3361d3daa1264a08644fa7fdcf79c20b28860df5b278165bac9a4fc4f",
+      "retrieved_at": "2026-10-18T09:00:35.831851+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "PACT: Pairwise-Anchored Calibrated Tuning for Single-Token Typed Decisions",
+      "url": "https://arxiv.org/abs/2609.35865",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Uses certified contrastive pairs, permutation consistency and contextual temperature fitting to improve decision stability and ordinal error; a 324-item synthetic holdout, one model scale and certificate dependence limit generalization.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "52b4a0b16a65064ae1d91ce3ca5d0910bb92eb3d1d4c7361944e2cd3501afb3c",
+      "retrieved_at": "2026-10-18T07:40:34.865796+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Poisoned into Action: Context Attacks on Typed Decision Workflows",
+      "url": "https://arxiv.org/abs/2610.15537",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Traces context poisoning through retrieval, typed choices and persisted execution while measuring retained clean utility; two synthetic development workflows and nonsignificant prespecified contrasts make the findings exploratory.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "3b7aad36a559044f48b167d0e5488070d6c65cf5b545c9c128fedab266ad6f94",
+      "retrieved_at": "2026-10-18T07:36:01.203150+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Prism-1: Position- and Rival-Independent Scoring for System One Models",
+      "url": "https://arxiv.org/abs/2610.22066",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "An option-isolated readout targets order invariance and stable relative odds when candidates change; it requires fine-tuning, limits within-model comparison, and fits independently judged options better than menu-dependent fallback rules.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "42fb228ac2f90cf10f8d36d9a1f91910799883260f9fba72d76137ffbd46cbcb",
+      "retrieved_at": "2026-10-18T06:12:55.266806+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "PRISM: Calibrating Black-Box Judges with Counterfactual Probes",
+      "url": "https://arxiv.org/abs/2610.18389",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Learns a score correction from counterfactual probes and human labels; improved ranking agreement on two text tasks is distinct from probability calibration, and probe cost and cross-task transfer remain relevant limits.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "bde2371bd422c478bb154bc278919017f9983fe7551434a2f184c536f444d5ed",
+      "retrieved_at": "2026-10-18T07:35:59.971948+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Probability Contracts: Accuracy, Coherence, and Decisions Across LLM Interfaces",
+      "url": "https://arxiv.org/abs/2609.37470",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Known-posterior finite worlds separate probability accuracy, interface coherence and decision loss. Averaging can improve expected Brier score without improving a policy at every deferral cost; valid-report coverage and each comparison's reference policy remain essential.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "c9debf348241821239fd263d7723eba91273229317e515be92d3396a3ed21d60",
+      "retrieved_at": "2026-10-18T08:40:29.736762+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Prune First, Decide Fast: Scalable Semantic Query Processing with JEVDB",
+      "url": "https://arxiv.org/abs/2610.02046",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Combines semantic SQL with relational pruning, semantic conditions and an optional decision-to-LLM cascade. Lossless pruning requires sound conditions and key extraction; empirically learned filters may lose recall. Imported SemBench baselines and separately amortized index preparation qualify efficiency comparisons.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "d6fa471f59672659eaa101f198287877e8df4fa601a7b86a4bde1ce6817c2c2f",
+      "retrieved_at": "2026-10-18T09:00:34.875548+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Prune the Summary, Not the History: Source-Judged Compaction for Long-Horizon Agents",
       "url": "https://arxiv.org/abs/2610.20927",
       "category": "Papers",
@@ -2685,6 +3009,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "9325f151ce56a69bbca9597e75cf7d2739bc3f0b874cf9a08a0d2021d057c11a",
       "retrieved_at": "2026-10-18T05:26:38.093753+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Recalibrating Many Questions with Few Labels: Minimax Rates and Identification Limits",
+      "url": "https://arxiv.org/abs/2610.18488",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Derives excess-Brier risk bounds for pooling recalibration across questions under shared-distribution and monotonicity assumptions; fixed-effects and empirical-Bayes results have different targets, and risk lower bounds do not directly become calibration-error lower bounds.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "6784e8ab881e2b02eff1a8bb0333b88590c61f47915c78ef56970686be6ccac4",
+      "retrieved_at": "2026-10-18T06:13:01.058316+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2724,6 +3060,18 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "SecJev: Bringing Security Expertise to System One Decision Models",
+      "url": "https://arxiv.org/abs/2610.03073",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Adapts decision scorers to 14 security tasks; source-label prediction and displayed-policy execution are distinct targets, task difficulty is uneven, and benchmark accuracy does not establish end-to-end attack prevention.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "3475324b78c1bc087406f26aa6fbb024f0e57a395d9fcfba9c244cfa73b6929c",
+      "retrieved_at": "2026-10-18T06:12:56.173973+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Selective Reasoning for Typed Decision Models: When to Start, Read, and Stop",
       "url": "https://arxiv.org/abs/2610.19644",
       "category": "Papers",
@@ -2733,6 +3081,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "fc2f52f0f0bd8395c70abfe3511f2fe9c16e98c0108bd378199458aff6165968",
       "retrieved_at": "2026-10-16T10:59:19+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "SharedKV-BT: Node-Local Typed Decisions for Behavior-Tree Agents",
+      "url": "https://arxiv.org/abs/2610.07327",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Combines shared-prefix candidate scoring with behavior-tree node interfaces and external execution checks. The experiments separate scoring speed, stage restrictions and postcondition authority; predefined trees, simulated tasks and order-sensitive choices limit broader closed-loop reliability claims.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "3e6dd354dad796572aba184c563aa771bbc30a0d969f67267c78a24ef897f998",
+      "retrieved_at": "2026-10-18T09:00:33.841851+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2760,6 +3120,18 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "Student-Guided Teacher Distillation for Efficient LLM Task Routing: Positioning Against Jev-Style System-1 Classifiers",
+      "url": "https://arxiv.org/abs/2610.02516",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Preliminary distillation for a fixed 60-label task taxonomy uses a student shortlist to reduce teacher scoring. Teacher agreement is not human accuracy; complete held-out controls remain pending, and the best checkpoint differs from the version used for serving measurements. No Jev head-to-head result is established.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "06133fb82ea4c207a98684d2818f5cabac26d19b5e7d4662ee11eb0c5fd502c8",
+      "retrieved_at": "2026-10-18T09:00:34.868275+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Suggested Is Not Superseded: A Pre-Registered Evaluation of a System-One Model as a Memory-Retirement Gate",
       "url": "https://arxiv.org/abs/2610.15710",
       "category": "Papers",
@@ -2772,6 +3144,30 @@
       "ledger": "research-sources.jsonl"
     },
     {
+      "title": "System One Models for Wireless Decision-Making:Applications and Performance Evaluation",
+      "url": "https://arxiv.org/abs/2610.04345",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Compares bounded wireless action selection with LLMs and task-specific baselines. Lower successful-request latency trades off against decision quality; a separately reported orchestration study shows that faster interpretation need not improve end-to-end completion. Local and hosted timing boundaries differ.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "2cb289240434634fe5abe38f1c3f9cc22932025fe4106bef3ab270614146f1d8",
+      "retrieved_at": "2026-10-18T09:32:19.808749+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "To Jev or Not? Evaluating the Accuracy and Efficiency of Structured Decision Models for Hate-Speech Moderation",
+      "url": "https://arxiv.org/abs/2610.03324",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "HATEDECIDE tests definitions and decomposed judgments across four English datasets. More explicit criteria change predictions without reliably improving annotation agreement; component outputs are not verified explanations, and diagnostic-set cost comparisons do not establish production moderation quality.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "99f838c08a4483c01b13961e185a4126736e032b79d15a42dc403a9387347d69",
+      "retrieved_at": "2026-10-18T09:18:16.579312+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
       "title": "Token-Efficient Multi-Agent Collaboration via System One-Guided Computational Division of Labor",
       "url": "https://arxiv.org/abs/2610.08155",
       "category": "Papers",
@@ -2781,6 +3177,18 @@
       "verification_level": "abstract_checked",
       "content_sha256": "2b2eba5bd11807c0cfa6b2acb758e2fb997e7f101dd8e6e81570ae51b7761084",
       "retrieved_at": "2026-10-16T10:59:20+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Type-Safe Decision Frameworks for Agentic 5G Control: A Theory-Driven Testbed Characterization of Where They Can Be Applied",
+      "url": "https://arxiv.org/abs/2609.33689",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Maps typed frameworks to timing, label-budget and decision-schema conditions on a 5G testbed. Changed-question probes expose failures hidden by output validity and paraphrase stability; simulator labels, open RAN-loop scope and conditional risk assumptions constrain deployment conclusions.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "d467da617d7fe4afe0495a87bbc05d99a12429c31c60c15690c3c01991d4613d",
+      "retrieved_at": "2026-10-18T09:32:24.972226+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -2829,6 +3237,30 @@
       "verification_level": "abstract_checked",
       "content_sha256": "5d320d1459fc23efa2129117d8938563810fe99c4d40932bcea2cf6ae522ffad",
       "retrieved_at": "2026-10-16T12:16:33.987559+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "When the Right Answer Is Missing: An Arithmetic-Dependent Rejection Bottleneck in Jev",
+      "url": "https://arxiv.org/abs/2609.39496",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Paired numerical menus expose strong answer-present selection but weak none-of-the-above rejection. Separate development thresholds recover much of the tested rejection performance, while Boolean verification behaves differently; this diagnoses an interface-dependent failure, not hidden model mechanisms or universal threshold transfer.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "6fcbac0e5226cdf94cfb5764dcf06987371f7fbbfd98c4f202fe22474132a270",
+      "retrieved_at": "2026-10-18T08:41:01.365995+00:00",
+      "ledger": "research-sources.jsonl"
+    },
+    {
+      "title": "Where Can a Decision Model Diagnose HVAC Faults? Reasoning Demand, Physical Representation, and Robustness Under Shift",
+      "url": "https://arxiv.org/abs/2610.09937",
+      "category": "Papers",
+      "topic": "direct-decision-research",
+      "description": "Tests fault diagnosis across equipment, representations and operating shifts. Physical features enable selected diagnoses, while context-dependent faults remain difficult; shared-day training conditions, small fault-day counts and dataset-specific option sets limit general claims of robustness.",
+      "relation": "direct",
+      "verification_level": "abstract_checked",
+      "content_sha256": "dce90f6104b820ef0b9828edd817b1f58e5be0d8b7919da63d28f347e90143a1",
+      "retrieved_at": "2026-10-18T09:32:19.801537+00:00",
       "ledger": "research-sources.jsonl"
     },
     {
@@ -9535,6 +9967,10 @@
     },
     {
       "url": "https://arxiv.org/abs/2610.21614",
+      "reason": "not_in_reviewed_intake"
+    },
+    {
+      "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2",
       "reason": "not_in_reviewed_intake"
     }
   ]

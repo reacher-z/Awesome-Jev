@@ -12,10 +12,10 @@ from test_site_discovery import ROOT
 NAMES = {
     "ai-ecoverse", "convaiinnovations", "emretheus", "hotchpotch", "iapp-technology", "mukaddamzaid",
     "ncchinh", "sgaseretto", "shlv", "ufak AI", "Ariño de la Rubia", "Jeva authors",
-    "coldteadotai", "fabric-runtime", "atoma-run",
+    "coldteadotai", "fabric-runtime", "atoma-run", "tasksource",
 }
-# SPDX identifiers retain their exact spelling, including the lowercase suffix.
-LICENSE_IDENTIFIERS = {"AGPL-3.0-only"}
+# License identifiers and formal license names retain their exact spelling.
+LICENSE_IDENTIFIERS = {"AGPL-3.0-only", "LFM Open License v1.0"}
 # "et al." in author lists, version tags, and the loanword "agent" used across the Chinese pages.
 ALLOWED = re.compile(r"\bet al\.|\b(?:v\d[\w.]*|jev-\d[\w.]*)\b|\bagent\b")
 

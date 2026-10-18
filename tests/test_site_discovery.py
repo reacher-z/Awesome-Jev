@@ -18,13 +18,13 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://awesomejev.github.io"
 PAIRS = (("/", "/zh/"), ("/guide/", "/zh/guide/"), ("/papers/", "/zh/papers/"), ("/models/", "/zh/models/"), ("/tools/", "/zh/tools/"), ("/discoveries/", "/zh/discoveries/"))
-TOPIC_SLUGS = ("option-label-bias", "audiojev", "graph-decision-benchmarks")
+TOPIC_SLUGS = ("option-label-bias", "audiojev", "graph-decision-benchmarks", "calibration-and-abstention", "language-task-evaluation")
 PAIRS += (("/topics/", "/zh/topics/"),) + tuple((f"/topics/{slug}/", f"/zh/topics/{slug}/") for slug in TOPIC_SLUGS)
 ROUTES = tuple(route for pair in PAIRS for route in pair)
 BUILD_INPUTS = (
     "scripts/build_site.mjs", "templates/index.html", "data/search-guide.json", "data/research-topics.json",
     "data/expansion-progress-2026-10-16.json", "data/discovery-translations.zh-CN.json", "references.bib",
-    "site/app.js", "site/directory-view.mjs", "site/model-directory.js", "site/paper-directory.js", "site/tool-directory.js", "site/catalog.mjs", "site/resource-view.mjs", "site/styles.css",
+    "site/app.js", "site/directory-view.mjs", "site/bibliography.mjs", "site/model-directory.js", "site/paper-directory.js", "site/tool-directory.js", "site/catalog.mjs", "site/resource-view.mjs", "site/styles.css",
 )
 # The build also draws the papers-per-week chart and rewrites its region in both READMEs.
 BUILD_INPUTS += ("scripts/paper_activity.mjs", "README.md", "README.zh-CN.md")

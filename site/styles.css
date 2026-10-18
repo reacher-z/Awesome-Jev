@@ -241,6 +241,10 @@ html:not(.js) .corpus-disclosure {
   margin: 0;
 }
 .document-toc li + li { margin-top: 8px; }
+@media (min-width: 800px) {
+  .topic-toc ol, .guide-toc ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 36px; row-gap: 8px; }
+  .topic-toc li + li, .guide-toc li + li { margin-top: 0; }
+}
 .prose section { margin: 40px 0; }
 .prose h2 { font-size: 25px; line-height: 1.4; letter-spacing: -0.02em; }
 .prose p { line-height: 1.85; }
@@ -302,7 +306,7 @@ html:not(.js) .corpus-disclosure {
   .model-license::before { content:attr(data-label) ' · '; color:var(--muted); font-size:12px; }
 }
 /* Paper directory: one row per paper. Findings and artifact caveats clamp until the row is
-   hovered or focused (touch screens never clamp); artifact chips are the homepage ones. */
+   hovered or focused. Views with up to three results and touch screens show full notes. */
 #paper-list > h2 { font-size:20px; line-height:1.4; letter-spacing:-0.01em; margin:22px 0 6px; }
 .paper-controls[hidden] { display:none; }
 .paper-controls .filter-button { display:inline-flex; gap:6px; }
@@ -329,7 +333,7 @@ html:not(.js) .corpus-disclosure {
 .paper-artifacts-none { color:var(--muted); }
 .artifact-note { margin-top:3px; color:var(--muted); font-size:13px; line-height:1.4; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-clamp:2; overflow:hidden; }
 .paper-finding-text { font-size:15px; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-clamp:2; overflow:hidden; }
-.paper-row:hover :is(.paper-finding-text,.artifact-note), .paper-row:focus-within :is(.paper-finding-text,.artifact-note) { -webkit-line-clamp:none; line-clamp:none; }
+.paper-row:hover :is(.paper-finding-text,.artifact-note), .paper-row:focus-within :is(.paper-finding-text,.artifact-note), .paper-results-expanded :is(.paper-finding-text,.artifact-note) { -webkit-line-clamp:none; line-clamp:none; }
 @media (hover: none) {
   .paper-finding-text, .artifact-note { -webkit-line-clamp:none; line-clamp:none; }
 }
@@ -2517,4 +2521,32 @@ html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3 {
   .tool-purpose::before { content: attr(data-label) ' · '; color: var(--muted); font-size: 12px; }
   .tool-purpose span { display: inline; }
   .tool-purpose span + span::before { content: ' / '; }
+}
+
+/* Keep the paper table close to the title; detailed reading notes remain available. */
+.paper-directory { padding-top:20px; }
+.paper-directory > h1 { font-size:clamp(26px,3.1vw,34px); margin:12px 0 8px; }
+.paper-directory .document-deck { line-height:1.55; margin-block:6px 8px; }
+.paper-directory .paper-overview { margin-block:8px; }
+.paper-directory .paper-overview summary { padding-block:6px; }
+.paper-reading-note { max-width:850px; font-size:14px; line-height:1.65; margin:8px 0 0; }
+#paper-list > h2.sr-only { margin:0; }
+.paper-result-actions { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 14px; }
+.model-list-meta .paper-result-actions p { margin-bottom:0; }
+.paper-export { border:0; padding:2px 0; min-height:24px; background:transparent; color:var(--link); font:13px var(--sans); text-decoration:underline; text-underline-offset:3px; }
+.paper-export[hidden] { display:none; }
+.paper-export:disabled { color:var(--muted); text-decoration:none; cursor:default; }
+@media print {
+  .paper-export, #paper-export-status { display:none; }
+}
+
+.paper-theme-choice { display:none; }
+@media (max-width:900px) {
+  .paper-controls [data-theme] { display:none; }
+  .paper-directory .model-controls select { min-width:0; }
+  .paper-controls .filter-group { align-items:flex-end; gap:12px; }
+  .paper-theme-choice { display:flex; flex:1; min-width:0; flex-direction:column; gap:6px; font-size:12px; font-weight:550; }
+  .paper-theme-choice select { width:100%; min-height:42px; padding:8px 10px; border:1px solid var(--line); border-radius:0; background:var(--paper); color:var(--ink); font:14px var(--sans); }
+  .paper-theme-choice select:focus-visible { outline:2px solid var(--link); outline-offset:3px; }
+  .paper-controls .filter-toggle { flex:1; min-width:0; min-height:42px; margin:0; padding:8px 0; font-size:13px; }
 }

@@ -1,6 +1,6 @@
 # Jev and typed decision models
 
-**A compact research survey · Evidence snapshot: 17 October 2026 (UTC)**
+**A compact research survey · Evidence snapshot: 18 October 2026 (UTC)**
 
 [English](survey.md) · [简体中文](survey.zh-CN.md) · [Resource index](../README.md) · [BibTeX](../references.bib)
 
@@ -66,6 +66,33 @@ Three recent studies sharpen different parts of this distinction. These are inte
 | [GraphDecisionBench, v3](https://arxiv.org/abs/2610.06354v3) | Recognizing local edges, combining graph and text evidence, and constructing a high-quality solution require separate measurements. |
 | [AudioJev, v1](https://arxiv.org/abs/2610.01293v1) | Stability under option permutations is different from agreement between probabilities and observed correctness. |
 
+### Judge alignment, calibration and bias
+
+The word calibration can name different targets. [PRISM, v1](https://arxiv.org/abs/2610.18389v1) learns a human-label-based score correction from probe responses and evaluates agreement with human rankings. The [CALM typed-judge study, v1](https://arxiv.org/abs/2610.18122v1) tests probability quality and sensitivity to answer position and rewrites. These results should not be combined into one claim of a reliable or unbiased judge.
+
+| Measurement | What it asks | Boundary |
+| --- | --- | --- |
+| Score/ranking agreement | Does the judge follow the reference ordering? | Human labels fit PRISM's correction; probe cost and transfer to other tasks remain open. |
+| Probability calibration | Do probabilities agree with reference correctness frequencies? | Label quality matters, and a calibrated judge can remain sensitive to the tested perturbations. |
+| Verdict consistency | Do repeats or controlled rewrites preserve a choice? | Stability does not establish correctness; a rewrite may alter more than the intended property. |
+
+These are interpretations of the fixed abstracts and selected limitation sections, not independent replications. Our suggested comparison retains held-out groups and verifies label preservation before drawing a causal conclusion about a perturbation.
+
+### Calibration, abstention and cascade utility
+
+A probability metric describes a report; an abstention gate and a cascade add decisions, reference labels and costs. Six fixed-version studies make those layers distinguishable. The [calibration and abstention note](https://awesomejev.github.io/topics/calibration-and-abstention/) connects their evidence and proposed controls.
+
+| Study | Useful distinction |
+| --- | --- |
+| [Candidate coverage, v2](https://arxiv.org/abs/2610.03387v2) | Artificial omission, natural retrieval misses and out-of-scope queries need separate denominators; source calibration does not guarantee target risk. |
+| [Probability Contracts, v2](https://arxiv.org/abs/2609.37470v2) | A better expected Brier score need not lower decision loss at each deferral cost; the reference policy and valid-report coverage matter. |
+| [Fast Models, Slow Evidence, v1](https://arxiv.org/abs/2610.02267v1) | Pre-screen cost, gate accuracy and end-to-end quality are separate accounting questions. |
+| [RAG claim verification, v1](https://arxiv.org/abs/2610.20634v1) | Similar aggregate scores can hide different false-verification rates; one cross-fitted threshold does not make the full design confirmatory. |
+| [Missing-answer arithmetic, v1](https://arxiv.org/abs/2609.39496v1) | Selecting a fallback and verifying candidates are different interfaces; a task-specific threshold is not a universal repair. |
+| [Laya reproduction, v1](https://arxiv.org/abs/2609.33843v1) | Temperature improvement does not imply a successful frozen gate; synthetic teacher agreement and human correctness remain distinct. |
+
+Our suggested evaluation freezes the full routing procedure before a held-out target test, includes cheap-only and fallback-only policies, and compares confidence routing with matched-budget random escalation. Report accepted-case error, coverage, false acceptance of unsupported/missing answers and total cost together. The source studies use different configurations and evidence populations; they do not form one leaderboard, and no experiment was reproduced here.
+
 ## 4. Connections worth studying
 
 **Probabilistic prediction.** Proper scoring rules evaluate whole predictive distributions, providing a foundation for Brier score and log loss. Calibration work shows why a highly accurate network still needs probability evaluation; language-model self-evaluation adds a relevant comparator. None establishes Jev’s training objective. [Gneiting & Raftery](https://doi.org/10.1198/016214506000001437) · [Guo et al.](https://proceedings.mlr.press/v70/guo17a.html) · [Kadavath et al.](https://arxiv.org/abs/2207.05221)
@@ -73,6 +100,50 @@ Three recent studies sharpen different parts of this distinction. These are inte
 **Constrained generation.** LMQL and XGrammar show how generative systems can impose output constraints. They motivate comparisons that distinguish a typed API from the model producing its answers. [LMQL](https://www.sri.inf.ethz.ch/publications/beurerkellner2023prompting) · [XGrammar](https://arxiv.org/abs/2411.15100)
 
 **Programmable inference.** DSPy studies optimization of model pipelines; SGLang studies their efficient execution. Both motivate controlling orchestration, caching, and serving conditions before attributing end-to-end improvements to one decision model. [DSPy](https://arxiv.org/abs/2310.03714) · [SGLang](https://papers.nips.cc/paper_files/paper/2024/file/724be4472168f31ba1c9ac630f15dec8-Paper-Conference.pdf)
+
+### Training, distillation and system boundaries
+
+A typed interface may sit inside a learned scorer, search algorithm or larger application. Keep the contribution of each layer explicit; these six studies do not recover TypeSafe's internal training or establish a universal deployment ranking.
+
+| Study | Added mechanism | Boundary to preserve |
+| --- | --- | --- |
+| [OpenJev-RLCD, v1](https://arxiv.org/abs/2609.38850v1) | Proper-score readout training followed by rationale reinforcement | Independent 1.7B experiment; stage-two benefit varies by task. |
+| [Student-guided distillation, v1](https://arxiv.org/abs/2610.02516v1) | A trained student shortlists a fixed 60-category taxonomy for a teacher | Preliminary teacher agreement; complete human-reviewed and baseline comparisons remain pending. |
+| [Search and multi-teacher distillation, v1](https://arxiv.org/abs/2610.09188v1) | Offline teacher judgments become compact search evaluators | Search, books and tablebases supply other capabilities; API wall time and GPU time use different accounting. |
+| [SharedKV-BT, v1](https://arxiv.org/abs/2610.07327v1) | Shared candidate scoring plus stage-specific behavior-tree interfaces | External postconditions control progress; valid choices do not guarantee successful execution. |
+| [JEVDB, v1](https://arxiv.org/abs/2610.02046v1) | Relational/semantic pruning plus typed decisions and optional escalation | Pruning is lossless only under sound conditions and extraction; index preparation and fast/cascade modes stay separate. |
+| [NumericJev, v1](https://arxiv.org/abs/2609.28587v1) | Repeated Choice calls refine a caller-specified numerical range | Resolution is not accuracy or a confidence interval; early wrong branches cannot be recovered. |
+
+For a useful comparison, hold the candidate generator, search/control policy and validation budget fixed before attributing gains to the decision model. Record training and preparation costs separately from per-request cost, and preserve incomplete runs and failed execution. These are proposed evaluation controls, not experiments performed by this collection.
+
+### Language tasks: labels, information and supervision
+
+Moderation, stance and sentiment scores should be interpreted under their annotation rules and input conditions. The [language-task research note](https://awesomejev.github.io/topics/language-task-evaluation/) connects five fixed-version studies without turning them into one capability ranking.
+
+| Study | What changes the interpretation |
+| --- | --- |
+| [Stance detection, v1](https://arxiv.org/abs/2610.11901v1) | English single-text and Chinese conversational inputs differ in more than language; prompt and batching formats also vary. |
+| [Online moderation, v1](https://arxiv.org/abs/2610.07953v1) | Rules, labeled precedents and candidate restrictions are separate information sources; generated captions mediate the media setting. |
+| [HATEDECIDE, v1](https://arxiv.org/abs/2610.03324v1) | Following a supplied definition and agreeing with an existing annotation can conflict; intermediate answers are not verified reasons. |
+| [Emo-Jev, v1](https://arxiv.org/abs/2610.08829v1) | Additional question paths increase inference work without improving average macro-F1 in the reported setup. |
+| [DimABSA, v1](https://arxiv.org/abs/2609.35293v1) | A frozen backbone still uses task-label supervision; pooled regression and structural extraction metrics describe different outcomes. |
+
+Our proposed comparison holds the candidate inventory and information access fixed, records label definitions and language-specific annotation checks, and reports class-specific errors alongside aggregate scores. Supervised calibration, development-set selection and all attempted calls belong in the comparison budget. The inspected artifacts do not establish production moderation reliability or a general language ranking.
+
+### From benchmark to deployed system
+
+A typed decision can be fast while the surrounding system remains inaccurate, slow or untested. Six infrastructure studies separate input preparation, inference, control and evidence scope. The [deployment guide](https://awesomejev.github.io/guide/#deployment-boundaries) summarizes the resulting comparison checks.
+
+| Study | Evidence unit | Deployment boundary |
+| --- | --- | --- |
+| [HVAC diagnosis, v1](https://arxiv.org/abs/2610.09937v1) | Windows from 128 fault days across four public equipment datasets | Physical features carry much of the signal; small day counts and shared-day supervised references qualify shift comparisons. |
+| [HydroJEV, v1](https://arxiv.org/abs/2610.02048v1) | Selected simulated alarm windows | Events and twin share a hydraulic model; a transfer endpoint misses the adjusted test, and benign agreement still accepts some attacks. |
+| [Wireless decision-making, v1](https://arxiv.org/abs/2610.04345v1) | Successful requests and separately borrowed orchestration results | Retry/pacing costs and end-to-end completion differ from request latency; reused evidence is not an independent replication. |
+| [Agentic 5G, v1](https://arxiv.org/abs/2609.33689v1) | Simulator-rule labels, testbed measurements and replay | No real radio or closed RAN loop; valid output and unchanged answers can conceal failure to follow a changed question. |
+| [Traffic classification, v1](https://arxiv.org/abs/2610.00376v1) | Early-packet records from 26 later weeks of one network | Unequal label budgets and service configurations do not isolate architectural or intrinsic label-efficiency effects. |
+| [Jev-IDS, v1](https://arxiv.org/abs/2610.01079v1) | Conflicting 300-flow pilot and 2,000-flow body descriptions | The abstract, PDF and pinned code must be scoped separately; no merged score or operational zero-day claim is warranted. |
+
+Group uncertainty by the actual independent unit—such as a fault day, event or flow—and retain repeats within that unit. Report observation and preprocessing time, successful-call time, retries and downstream outcomes separately. These are proposed evaluation controls; neither the cited formal assumptions nor the empirical results were independently reproduced here.
 
 ## 5. A proposed reproducible evaluation
 

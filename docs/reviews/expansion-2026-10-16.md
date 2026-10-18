@@ -206,3 +206,39 @@ Four independently identified implementation repositories bring the reviewed exp
 Four new paper identities bring the reviewed expansion to **788 sources**. Three were found through targeted primary-source searches; Runoff was also a pending scan candidate. Fixed/current abstract comparisons match. Companion links and selected manuscript sections add no identities, and previous ledger rows are unchanged. [Review scope](control-papers-2026-10-18.md).
 
 **中文：** 四篇新论文使扩展达到788项；三篇来自定向检索，Runoff也在扫描待审队列中。固定版本与当前摘要一致，配套代码链接和定向段落不重复计数，旧台账不改写。
+
+## Stability and policy studies — 18 October 2026 UTC
+
+Five new paper identities selected from the arXiv discovery batch bring the reviewed expansion to **793 sources**. Fixed abstracts match retained scan evidence; manuscript sections and SecJev release metadata add scope without changing the abstract-checked tier. Code, model and data navigation links add no separate identities. [Review](stability-papers-2026-10-18.md).
+
+**中文：** 五篇论文使扩展达到793项；固定摘要与扫描证据一致，定向段落和发布元数据用于说明范围，不提高证据等级，不将配套链接重复计数。
+
+## Judging and open-model studies — 18 October 2026 UTC
+
+Eight individually reviewed paper identities bring the expansion to **801 sources**. Abstract hashes match the retained arXiv scan evidence; selected manuscript sections and fixed README snapshots provide interpretation limits. Code repositories, release variants and later game demonstrations are navigation only, with zero additional identities. [Scope and fingerprints](judge-models-2026-10-18.md).
+
+**中文：** 八篇论文使扩展达到801项，固定摘要与扫描证据一致。代码仓库、版本变体和后续游戏演示只作导航，不增加来源计数；未执行模型或复现实验。
+
+## Calibration and routing evidence — 18 October 2026 UTC
+
+Six reviewed paper identities raise the expansion count to **807**. Fixed abstracts match the scan proposal; selected sections and artifact documentation constrain the summaries without raising the evidence tier. Versions, code files, ancillary files and the new bilingual topic pages add no extra source identities. [Review](calibration-papers-2026-10-18.md).
+
+**中文：** 六篇经核查论文使扩展达到807项；保留摘要核查等级，配套文件与新专题页面不重复计数。
+
+## Training and system boundaries — 18 October 2026 UTC
+
+Six reviewed paper identities raise the expansion to **813 sources**. Fixed abstracts match the raw scan proposal; targeted manuscript sections and three repository READMEs/inventories constrain the summaries. Renamed repositories, code and follow-up demonstrations add no separate identities. [Review](training-papers-2026-10-18.md).
+
+**中文：** 六篇论文使扩展达到813项；保留摘要核查等级，不将更名仓库、代码和后续演示重复计数。
+
+## Language-task evidence — 18 October 2026 UTC
+
+Five reviewed paper identities raise the expansion to **818 sources**. Fixed abstracts match the retained scan records; selected manuscript sections and the DimABSA repository documentation constrain the summaries. Code, topic pages and dataset links add zero separate identities. [Review](language-papers-2026-10-18.md).
+
+**中文：** 五篇论文使扩展达到818项；保留摘要核查等级，代码与新专题不重复计数。
+
+## Infrastructure evidence — 18 October 2026 UTC
+
+Six reviewed paper identities raise the expansion to **824 sources**. Fixed abstracts match retained scan records; selected sections, two repository READMEs, an ancillary README and Jev-IDS PDF pages constrain the summaries. Repository renames and artifact files add no identities. [Review](infrastructure-papers-2026-10-18.md).
+
+**中文：** 六篇论文使扩展达到824项；保留摘要核查等级，明确配置冲突及部署边界，不把代码或文件重复计数。

@@ -309,6 +309,570 @@ const toolTasks = [
 const resources = [
   {
     "category": "Papers",
+    "title": "Where Can a Decision Model Diagnose HVAC Faults? Reasoning Demand, Physical Representation, and Robustness Under Shift",
+    "by": "Jung · 2026-10-07 · v1",
+    "date": "2026-10-07",
+    "first_submitted": "2026-10-07",
+    "url": "https://arxiv.org/abs/2610.09937v1",
+    "theme": "applications",
+    "en": "Tests fault diagnosis across equipment, representations and operating shifts. Physical features enable selected diagnoses, while context-dependent faults remain difficult; shared-day training conditions, small fault-day counts and dataset-specific option sets limit general claims of robustness.",
+    "zh": "跨设备、表示和运行变化测试故障诊断。物理特征支持部分诊断，但依赖运行上下文的故障仍困难；共享日条件、少量故障日与各数据集不同的选项集，限制通用鲁棒性结论。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "HydroJEV: A one-second, training-free screen for cyber-attack and fault attribution in water distribution networks",
+    "by": "Mu et al. · 2026-10-01 · v1",
+    "date": "2026-10-01",
+    "first_submitted": "2026-10-01",
+    "url": "https://arxiv.org/abs/2610.02048v1",
+    "theme": "applications",
+    "en": "Simulated water-network triage combines Jev, rule agreement and an LLM reviewer. Fewer reviewer calls coexist with accepted attacks, event-selection constraints and a transfer endpoint that misses multiplicity correction; reported timing and non-inferiority margins do not establish field reliability.",
+    "zh": "仿真水网分诊结合 Jev、规则一致与语言模型复核。减少复核调用的同时仍会接纳部分攻击，受事件选择条件限制，且一个迁移端点未通过多重比较校正；所报耗时和非劣效界不证明现场可靠性。",
+    "artifacts": {
+      "code": "https://github.com/mutianwei521/hydrojev"
+    },
+    "artifact_note": {
+      "en": "README and inventory checked; paper/script round numbers differ and datasets remain separate.",
+      "zh": "已查说明和目录；论文与脚本轮次编号不同，数据集另行取得。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "System One Models for Wireless Decision-Making:Applications and Performance Evaluation",
+    "by": "Rahimi et al. · 2026-10-03 · v1",
+    "date": "2026-10-03",
+    "first_submitted": "2026-10-03",
+    "url": "https://arxiv.org/abs/2610.04345v1",
+    "theme": "applications",
+    "en": "Compares bounded wireless action selection with LLMs and task-specific baselines. Lower successful-request latency trades off against decision quality; a separately reported orchestration study shows that faster interpretation need not improve end-to-end completion. Local and hosted timing boundaries differ.",
+    "zh": "比较有限无线动作选择、语言模型与任务专用基线。较低的成功请求耗时需与决策质量权衡；另引的编排研究表明，更快解释不一定改善端到端完成率。本地与托管计时边界也不同。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Type-Safe Decision Frameworks for Agentic 5G Control: A Theory-Driven Testbed Characterization of Where They Can Be Applied",
+    "by": "Kourtis & Xilouris · 2026-09-27 · v1",
+    "date": "2026-09-27",
+    "first_submitted": "2026-09-27",
+    "url": "https://arxiv.org/abs/2609.33689v1",
+    "theme": "applications",
+    "en": "Maps typed frameworks to timing, label-budget and decision-schema conditions on a 5G testbed. Changed-question probes expose failures hidden by output validity and paraphrase stability; simulator labels, open RAN-loop scope and conditional risk assumptions constrain deployment conclusions.",
+    "zh": "在 5G 测试床上按时限、标签预算和决策模式评估类型化框架。改变问题的探针揭示了输出合法性与改写稳定性掩盖的失效；仿真标签、未闭合的 RAN 回路及有条件风险假设限制部署结论。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "A First Glance at Jev for Network Traffic Classification: Accuracy, Processing Time, and Cost",
+    "by": "Xu & Mei · 2026-09-30 · v1",
+    "date": "2026-09-30",
+    "first_submitted": "2026-09-30",
+    "url": "https://arxiv.org/abs/2610.00376v1",
+    "theme": "applications",
+    "en": "Classifies ten application labels from early packet features over 26 later collection weeks. Labeled examples improve Jev but the tested tree ensembles remain more accurate; unequal supervision and service configurations prevent attributing the gap to architecture or intrinsic label efficiency.",
+    "zh": "利用早期数据包特征，在后续 26 个采集周识别十类应用标签。带标签示例改善 Jev，但所测树集成仍更准确；监督预算和服务配置不同，不能把差距归因于架构或固有标签效率。",
+    "artifacts": {
+      "data": "https://arxiv.org/src/2610.00376v1/anc"
+    },
+    "artifact_note": {
+      "en": "Figure/table aggregates only; not a full flow-level prediction archive.",
+      "zh": "仅图表汇总数据，并非完整逐流预测归档。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Jev-IDS: System One Models for Network Intrusion Detection",
+    "by": "Severo, Quincozes & Dias · 2026-10-01 · v1",
+    "date": "2026-10-01",
+    "first_submitted": "2026-10-01",
+    "url": "https://arxiv.org/abs/2610.01079v1",
+    "theme": "applications",
+    "en": "Studies typed intrusion decisions, but v1 mixes configurations: its abstract and pinned code describe a 300-flow GPT-5.6 Luna pilot, while its body describes 2,000 flows and Gemini. These cohorts and comparators must remain separate; benchmark-withheld attack types are not operational zero-day validation.",
+    "zh": "研究类型化入侵判断，但 v1 混用了配置：摘要和固定代码描述 300 条流、GPT-5.6 Luna 试验，正文却描述 2,000 条流与 Gemini。两组样本及对照必须分开；基准内留出的攻击类型不等于真实零日攻击验证。",
+    "artifacts": {
+      "code": "https://github.com/jev-sec/jev-ids/tree/286a310fea249a7b4a5a8c45377049e914f8b9c9"
+    },
+    "artifact_note": {
+      "en": "v1 abstract/body mismatch; linked code is the paper-cited pilot revision.",
+      "zh": "v1 摘要与正文配置不一致；链接指向论文引用的试验代码版本。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Can Decision Models Understand Stance? Evaluating Jev Against General-Purpose LLMs",
+    "by": "Li et al. · 2026-10-08 · v1",
+    "date": "2026-10-08",
+    "first_submitted": "2026-10-08",
+    "url": "https://arxiv.org/abs/2610.11901v1",
+    "theme": "applications",
+    "en": "Compares Jev on English single-text stance and Chinese conversational stance. Support/opposition errors grow in the conversational task, but language, dataset and input structure change together; differing batching and prompt formats also limit a general language-capability ranking.",
+    "zh": "比较 Jev 的英语单文本立场与中文对话立场识别；对话任务中支持／反对混淆更明显，但语言、数据集和输入结构同时变化，批处理及提示格式也不同，不能据此形成通用语言能力排名。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Benchmarking System One Models in Online Moderation",
+    "by": "Mazzoni & Failla · 2026-10-06 · v1",
+    "date": "2026-10-06",
+    "first_submitted": "2026-10-06",
+    "url": "https://arxiv.org/abs/2610.07953v1",
+    "theme": "evaluation",
+    "en": "Separates written rules, retrieved precedents and candidate restrictions across five moderation benchmarks. Retrieval can improve discrimination or merely change flagging rates; using labeled evaluation examples as precedents and representing media through generated captions limits deployment claims.",
+    "zh": "在五个审核基准中区分书面规则、检索先例和候选限制。检索可改善区分能力，也可能只是改变被标记内容的比例；使用带标签评测样本作先例、用生成描述表示媒体，会限制部署结论。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "To Jev or Not? Evaluating the Accuracy and Efficiency of Structured Decision Models for Hate-Speech Moderation",
+    "by": "Paschalides, Pallis & Dikaiakos · 2026-10-02 · v1",
+    "date": "2026-10-02",
+    "first_submitted": "2026-10-02",
+    "url": "https://arxiv.org/abs/2610.03324v1",
+    "theme": "evaluation",
+    "en": "HATEDECIDE tests definitions and decomposed judgments across four English datasets. More explicit criteria change predictions without reliably improving annotation agreement; component outputs are not verified explanations, and diagnostic-set cost comparisons do not establish production moderation quality.",
+    "zh": "HATEDECIDE 在四个英语数据集上测试定义与分解判断。更明确的标准会改变预测，却不稳定提高标注一致率；组件输出不是已核验的解释，诊断集成本比较也不能证明生产审核质量。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Emo-Jev: Probabilistic Reasoning for Emotion Classification with Jev",
+    "by": "Zhang & Yu · 2026-09-27 · v1",
+    "date": "2026-09-27",
+    "first_submitted": "2026-09-27",
+    "url": "https://arxiv.org/abs/2610.08829v1",
+    "theme": "applications",
+    "en": "Adds atomic-question decomposition or multiple judgment paths for eight text-classification benchmarks. Neither extension improves average macro-F1 over direct Jev in the reported setup; extra questions increase cost, and fixed aggregation rules do not establish calibrated uncertainty.",
+    "zh": "在八个文本分类基准上加入原子问题分解或多条判断路径；所报设置中，两种扩展的平均宏 F1 均未超过直接 Jev。额外问题增加成本，固定聚合规则也不能证明不确定性已校准。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Decide, Don't Generate: Competitive Dimensional ABSA with Jev's Typed Decisions",
+    "by": "Zhang et al. · 2026-09-28 · v1",
+    "date": "2026-09-28",
+    "first_submitted": "2026-09-28",
+    "url": "https://arxiv.org/abs/2609.35293v1",
+    "theme": "applications",
+    "en": "Uses frozen Jev decisions plus 488 coefficients fitted to labels for multilingual sentiment regression and extraction. Supervised calibration and span selection drive the gains; reconstructed aggregate rankings, reused development data and incomplete overlap removal qualify the comparisons.",
+    "zh": "将冻结的 Jev 决策与 488 个由标签拟合的系数结合，用于多语言情感回归和抽取。监督校准与片段选择贡献主要收益；重建的汇总排名、重复使用的开发数据及未完全排除的重叠，限制比较结论。",
+    "artifacts": {
+      "code": "https://github.com/ZhangYiqun018/jev-dimabsa"
+    },
+    "artifact_note": {
+      "en": "Code, fitted parameters and summaries; dataset text and prediction caches are not distributed.",
+      "zh": "代码、拟合参数与汇总结果；未分发数据文本及预测缓存。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "From Probabilities to Decisions: Search and Multi-Teacher Distillation with Jev",
+    "by": "Sadoun, Sharif & Banad · 2026-10-06 · v1",
+    "date": "2026-10-06",
+    "first_submitted": "2026-10-06",
+    "url": "https://arxiv.org/abs/2610.09188v1",
+    "theme": "applications",
+    "en": "Distills Jev and LLM judgments into compact search evaluators and rerankers; matched-label-budget gains in chess do not generalize to every tested game. The deployed bot also uses Stockfish, opening books and tablebases, and API wall time differs from GPU labeling time.",
+    "zh": "将 Jev 与语言模型判断蒸馏为紧凑搜索评估器和重排器；相同标签预算下的棋类收益并未推广到所有测试游戏。部署机器人还依赖 Stockfish、开局库与残局库，API 墙钟时间也不同于 GPU 标注耗时。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "SharedKV-BT: Node-Local Typed Decisions for Behavior-Tree Agents",
+    "by": "Wake & Wagle · 2026-10-05 · v1",
+    "date": "2026-10-05",
+    "first_submitted": "2026-10-05",
+    "url": "https://arxiv.org/abs/2610.07327v1",
+    "theme": "applications",
+    "en": "Combines shared-prefix candidate scoring with behavior-tree node interfaces and external execution checks. The experiments separate scoring speed, stage restrictions and postcondition authority; predefined trees, simulated tasks and order-sensitive choices limit broader closed-loop reliability claims.",
+    "zh": "把共享前缀候选评分、行为树节点接口与外部执行检查结合，区分评分速度、阶段限制和后置条件的权限。预定义树、仿真任务及对顺序敏感的选择，限制了更广泛的闭环可靠性结论。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Student-Guided Teacher Distillation for Efficient LLM Task Routing: Positioning Against Jev-Style System-1 Classifiers",
+    "by": "Wu et al. · 2026-10-01 · v1",
+    "date": "2026-10-01",
+    "first_submitted": "2026-10-01",
+    "url": "https://arxiv.org/abs/2610.02516v1",
+    "theme": "architectures",
+    "en": "Preliminary distillation for a fixed 60-label task taxonomy uses a student shortlist to reduce teacher scoring. Teacher agreement is not human accuracy; complete held-out controls remain pending, and the best checkpoint differs from the version used for serving measurements. No Jev head-to-head result is established.",
+    "zh": "面向固定 60 标签任务分类的初步蒸馏研究，用学生候选表减少教师评分。与教师一致不等于人工准确率，完整留出对照仍待完成；最佳检查点与服务测量版本不同，未建立与 Jev 的直接对照结果。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Prune First, Decide Fast: Scalable Semantic Query Processing with JEVDB",
+    "by": "Wang, Yan, Zhao & Liu · 2026-10-01 · v1",
+    "date": "2026-10-01",
+    "first_submitted": "2026-10-01",
+    "url": "https://arxiv.org/abs/2610.02046v1",
+    "theme": "applications",
+    "en": "Combines semantic SQL with relational pruning, semantic conditions and an optional decision-to-LLM cascade. Lossless pruning requires sound conditions and key extraction; empirically learned filters may lose recall. Imported SemBench baselines and separately amortized index preparation qualify efficiency comparisons.",
+    "zh": "将语义 SQL、关系剪枝、语义条件与可选的决策模型—语言模型级联结合。无损剪枝依赖可靠的必要条件与键提取，经验学习的过滤器可能损失召回；引用的 SemBench 基线和单独摊销的索引准备成本限制效率比较。",
+    "artifacts": {
+      "code": "https://github.com/PDAIS/JEVDB"
+    },
+    "artifact_note": {
+      "en": "Implementation README and inventory checked; package and benchmarks not executed.",
+      "zh": "已查实现说明和目录，未执行软件包或基准。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "OpenJev-RLCD: A Working RLCD Implementation",
+    "by": "Gao & Wang · 2026-09-30 · v1",
+    "date": "2026-09-30",
+    "first_submitted": "2026-09-30",
+    "url": "https://arxiv.org/abs/2609.38850v1",
+    "theme": "calibration",
+    "en": "An independent two-stage RLCD recipe calibrates a reasoning model's answer readout, then reinforces rationales with a proper-score reward. Three-seed results on a 1.7B model show task-dependent gains; the implementation explicitly makes no claim to recover TypeSafe's internal training algorithm.",
+    "zh": "独立的两阶段 RLCD 方法先校准推理模型的答案读出，再用适当评分奖励强化推理。1.7B 模型上的三种子结果显示收益随任务变化；实现明确不声称还原 TypeSafe 内部训练算法。",
+    "artifacts": {
+      "code": "https://github.com/ZimmyGao/openjev-rlcd"
+    },
+    "artifact_note": {
+      "en": "Independent implementation; released result files were not replayed.",
+      "zh": "独立实现，未回放公开结果文件。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "NumericJev: Jev-like LLM Numerical Decoding with Multiway Decision Trees",
+    "by": "Ye, Liu & Jiang · 2026-09-23 · v1",
+    "date": "2026-09-23",
+    "first_submitted": "2026-09-23",
+    "url": "https://arxiv.org/abs/2609.28587v1",
+    "theme": "architectures",
+    "en": "Uses repeated Choice calls to refine a known numerical interval without retraining. Resolution is not accuracy or calibrated uncertainty, and early wrong branches are irreversible. Arithmetic variants share 64 base families; historical-index recall and later controller demonstrations are separate evidence.",
+    "zh": "无需重训，通过重复 Choice 调用缩小已知数值区间。分辨率不等于准确性或已校准不确定性，早期错误分支不可逆。算术变体共享 64 个基础问题族；历史指数回忆与后续控制演示属于不同证据。",
+    "artifacts": {
+      "code": "https://github.com/Bring-AI/JevNext"
+    },
+    "artifact_note": {
+      "en": "Renamed JevNext repository; current release declares PolyForm Noncommercial 1.0.0.",
+      "zh": "仓库已更名 JevNext，当前版本声明 PolyForm Noncommercial 1.0.0。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Benchmarking candidate coverage and rejection policy transfer in typed decision models",
+    "by": "Lu & Wu · 2026-10-06 · v2",
+    "date": "2026-10-06",
+    "first_submitted": "2026-10-02",
+    "url": "https://arxiv.org/abs/2610.03387v2",
+    "theme": "calibration",
+    "en": "Separates artificial omissions, retrieval misses and out-of-scope queries under matched calibration budgets; a source-task threshold can reject covered target inputs or miss absent answers. Candidate membership, label ambiguity and small natural-miss samples limit transfer claims.",
+    "zh": "在相同校准预算下区分人为移除、检索遗漏与范围外查询；源任务阈值可能误拒目标任务中已有答案的输入，或漏检缺失答案。候选成员、标签歧义及自然遗漏的小样本限制迁移结论。",
+    "artifacts": {
+      "code": "https://github.com/luckykevvv/Decision_Model_Benchmark"
+    },
+    "artifact_note": {
+      "en": "Recorded-output scoring is separate from reconstructing source text and fresh inference.",
+      "zh": "已记录输出评分与源文本重建、重新推理分开。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Probability Contracts: Accuracy, Coherence, and Decisions Across LLM Interfaces",
+    "by": "Chen & Li · 2026-10-05 · v2",
+    "date": "2026-10-05",
+    "first_submitted": "2026-09-27",
+    "url": "https://arxiv.org/abs/2609.37470v2",
+    "theme": "calibration",
+    "en": "Known-posterior finite worlds separate probability accuracy, interface coherence and decision loss. Averaging can improve expected Brier score without improving a policy at every deferral cost; valid-report coverage and each comparison's reference policy remain essential.",
+    "zh": "用已知后验的有限世界区分概率准确性、接口一致性和决策损失。取平均可改善期望 Brier 分数，却不保证每个转交成本下的策略更好；有效输出覆盖率与具体对照策略不可省略。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Fast Models, Slow Evidence: A Paired and Self-Audited Evaluation of System-1 Decision Models for LLM Agent Harnesses",
+    "by": "Li · 2026-10-01 · v1",
+    "date": "2026-10-01",
+    "first_submitted": "2026-10-01",
+    "url": "https://arxiv.org/abs/2610.02267v1",
+    "theme": "evaluation",
+    "en": "Paired Laya/Jev evaluation of 11 agent decision points includes a self-audit: pre-screen cost, end-to-end quality, threshold leakage and unnatural channel content change deployment conclusions. Public English-dominant labels and zero-shot configurations limit generalization.",
+    "zh": "成对评测 Laya／Jev 的 11 类 agent 决策并自查流程：前置筛查成本、端到端质量、阈值泄漏及不自然的通道内容都会改变部署结论。公开、英语为主的标签和零样本配置限制泛化。",
+    "artifacts": {
+      "code": "https://github.com/David-DL-Space/sys1-eval"
+    },
+    "artifact_note": {
+      "en": "README and inventory checked; raw responses and analyses not replayed.",
+      "zh": "已查说明和目录，未回放原始响应或分析。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Jev-as-a-Judge for RAG Claim Verification: Confidence-Gated Cascading Between a Non-Generative Verifier and a Frontier LLM",
+    "by": "Do Rosario & Atef · 2026-09-30 · v1",
+    "date": "2026-09-30",
+    "first_submitted": "2026-09-30",
+    "url": "https://arxiv.org/abs/2610.20634v1",
+    "theme": "judging",
+    "en": "Paired verification of 495 RAG claims finds different false-verification rates despite similar aggregate scores. One threshold is cross-fitted, but design choices and matched random-escalation controls remain exploratory; simulated savings do not establish equivalence or a better production gate.",
+    "zh": "对 495 条 RAG 声明的成对核验显示，汇总分数相近仍可有不同的误放率。一个阈值经过交叉拟合，但设计选择与同预算随机升级对照仍属探索；模拟节省不证明等效性或生产门控更优。",
+    "artifacts": {
+      "code": "https://github.com/adorosario/jev-rag-claim-verification"
+    },
+    "artifact_note": {
+      "en": "Gold labels require upstream dataset access; offline replay is not a deployed cascade.",
+      "zh": "参考标签需取得上游数据访问权限；离线回放并非已部署级联。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "When the Right Answer Is Missing: An Arithmetic-Dependent Rejection Bottleneck in Jev",
+    "by": "Zhong, Li & Lai · 2026-09-30 · v1",
+    "date": "2026-09-30",
+    "first_submitted": "2026-09-30",
+    "url": "https://arxiv.org/abs/2609.39496v1",
+    "theme": "robustness",
+    "en": "Paired numerical menus expose strong answer-present selection but weak none-of-the-above rejection. Separate development thresholds recover much of the tested rejection performance, while Boolean verification behaves differently; this diagnoses an interface-dependent failure, not hidden model mechanisms or universal threshold transfer.",
+    "zh": "成对数值候选集揭示：答案存在时选择较强，缺失时却难以选中“以上皆非”。独立开发集阈值改善了所测拒答表现，布尔核验则呈现不同结果；这是接口相关失效诊断，不揭示内部机制或普遍阈值迁移。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Laya as a Typed Probabilistic Assessor: An Independent Reproduction and a Preregistered Study of Calibration and Selective Escalation",
+    "by": "Nandakishore · 2026-09-27 · v1",
+    "date": "2026-09-27",
+    "first_submitted": "2026-09-27",
+    "url": "https://arxiv.org/abs/2609.33843v1",
+    "theme": "calibration",
+    "en": "A pinned Laya checkpoint is underconfident on synthetic teacher labels. Temperature fitting improves probability metrics, but the frozen calibrator-selection rule and escalation gate fail held-out targets; reported Jev comparisons are indirect, and the initial reproduction predates preregistration.",
+    "zh": "固定版本 Laya 检查点在合成教师标签上信心不足。温度拟合改善概率指标，但冻结的校准器选择规则与升级门控未达到留出目标；Jev 对照来自间接引用，初始复现早于预注册。",
+    "artifacts": {
+      "code": "https://arxiv.org/src/2609.33843v1/anc/metrics.py",
+      "data": "https://arxiv.org/src/2609.33843v1/anc"
+    },
+    "artifact_note": {
+      "en": "Metric code and ancillary records; full training/collection source is not included.",
+      "zh": "指标代码与附属记录；不包含完整训练／采集源码。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "PRISM: Calibrating Black-Box Judges with Counterfactual Probes",
+    "by": "Yamamoto & Kuroki · 2026-10-13 · v1",
+    "date": "2026-10-13",
+    "first_submitted": "2026-10-13",
+    "url": "https://arxiv.org/abs/2610.18389v1",
+    "theme": "judging",
+    "en": "Learns a score correction from counterfactual probes and human labels; improved ranking agreement on two text tasks is distinct from probability calibration, and probe cost and cross-task transfer remain relevant limits.",
+    "zh": "利用反事实评分探针和人类标签学习校正；两个文本任务上的排序一致性提升不同于概率校准，额外探针成本与跨任务迁移仍是重要限制。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Cheap, Consistent, Calibrated, but Biased? Typed Decision Models as Judges",
+    "by": "Lukassen, Weisser & Silbersdorff · 2026-10-13 · v1",
+    "date": "2026-10-13",
+    "first_submitted": "2026-10-13",
+    "url": "https://arxiv.org/abs/2610.18122v1",
+    "theme": "judging",
+    "en": "CALM pairwise challenges expose position and rewrite sensitivity despite consistency and calibration; inherited reference labels and rewrites that change more than tone limit causal interpretation and transfer to other judging tasks.",
+    "zh": "CALM 成对挑战显示，一致性和校准并不能消除位置与改写敏感性；沿用的参考标签，以及不只改变语气的改写，限制了因果解释和对其他评判任务的推广。",
+    "artifacts": {
+      "code": "https://github.com/fabian-lu/TDM_as_a_Judge"
+    },
+    "artifact_note": {
+      "en": "Declared MIT code; benchmark and results CC BY-NC-SA 4.0.",
+      "zh": "声明代码为 MIT；基准与结果为 CC BY-NC-SA 4.0。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "FunDM: Cheap & Label-Free Decision Models from Frozen Language Models",
+    "by": "Panchal · 2026-10-12 · v1",
+    "date": "2026-10-12",
+    "first_submitted": "2026-10-12",
+    "url": "https://arxiv.org/abs/2610.17175v1",
+    "theme": "architectures",
+    "en": "Distills teacher probabilities into small heads using fewer layers of a frozen Qwen3-8B; label-free means no correct-answer training labels, and efficiency measurements cover one GPU and engine workload rather than production serving.",
+    "zh": "把教师概率蒸馏到较浅的冻结 Qwen3-8B 计算路径上的小型决策头；无标签指不使用正确答案训练标签，效率测量只覆盖一个 GPU 和引擎任务，而非生产服务。",
+    "artifacts": {
+      "code": "https://github.com/Ujjawal-K-Panchal/FunDM"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Poisoned into Action: Context Attacks on Typed Decision Workflows",
+    "by": "Wu, Chang & Yan · 2026-10-11 · v1",
+    "date": "2026-10-11",
+    "first_submitted": "2026-10-11",
+    "url": "https://arxiv.org/abs/2610.15537v1",
+    "theme": "robustness",
+    "en": "Traces context poisoning through retrieval, typed choices and persisted execution while measuring retained clean utility; two synthetic development workflows and nonsignificant prespecified contrasts make the findings exploratory.",
+    "zh": "追踪上下文投毒经检索、类型化选择到持久化执行的路径，并衡量保留的正常任务效用；仅覆盖两个合成开发工作流，预设比较未达显著，结论仍属探索性。",
+    "artifacts": {
+      "code": "https://github.com/WuXixiong/jev-poisoning-bench"
+    },
+    "artifact_note": {
+      "en": "Public subset; full call archives and private attestations are omitted.",
+      "zh": "公开子集；完整调用归档与私有证明材料未包含。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Koa-decision: Fast and Consistent Structured Decision Making with Generative LLMs",
+    "by": "Dai et al. · 2026-10-10 · v2",
+    "date": "2026-10-10",
+    "first_submitted": "2026-09-28",
+    "url": "https://arxiv.org/abs/2609.36115v2",
+    "theme": "architectures",
+    "en": "Uses atomic label tokens and supervised fine-tuning for single-step constrained decisions; latency follows a specified sequential serving protocol, adaptation differs across baselines, and the production intent data cannot be released.",
+    "zh": "通过原子标签 token 和监督微调实现单步受约束决策；延迟采用指定的顺序服务测量协议，不同基线的适配程度不同，生产意图数据无法公开。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "DICE: Tilting the Odds through Interface Attackson System One Model",
+    "by": "Dong, Lu, Guo & Wang · 2026-10-09 · v1",
+    "date": "2026-10-09",
+    "first_submitted": "2026-10-09",
+    "url": "https://arxiv.org/abs/2610.14404v1",
+    "theme": "robustness",
+    "en": "Tests bounded substitutions at state-extraction, question-generation and output-interpretation adapters while leaving authentic Jev responses intact; three synthetic pilots locate decision-integrity failures without estimating deployed attack prevalence.",
+    "zh": "在状态抽取、问题生成和输出解释适配层测试有界替换，保持 Jev 原始响应不变；三个合成试验定位决策完整性失效，不估计实际部署中的攻击发生率。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "PACT: Pairwise-Anchored Calibrated Tuning for Single-Token Typed Decisions",
+    "by": "Lin · 2026-09-26 · v1",
+    "date": "2026-09-26",
+    "first_submitted": "2026-09-26",
+    "url": "https://arxiv.org/abs/2609.35865v1",
+    "theme": "calibration",
+    "en": "Uses certified contrastive pairs, permutation consistency and contextual temperature fitting to improve decision stability and ordinal error; a 324-item synthetic holdout, one model scale and certificate dependence limit generalization.",
+    "zh": "利用带证书的对比样本对、排列一致性和上下文温度拟合改善决策稳定性与序数误差；留出集仅324条合成样本，模型尺度单一，且依赖证书正确性，推广范围有限。",
+    "artifacts": {
+      "code": "https://github.com/BennyLinntu/PACT-Pairwise-Anchored-Calibrated-Tuning-for-Single-Token-Typed-Decisions"
+    },
+    "artifact_note": {
+      "en": "Paper results are separate from the repository’s later single-run Tetris demo.",
+      "zh": "论文结果与仓库中后续的单次 Tetris 演示应分开解读。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Dyad: Extending Large Language Models with Native Typed Decision-Making",
+    "by": "Zhan et al. · 2026-09-28 · v1",
+    "date": "2026-09-28",
+    "first_submitted": "2026-09-28",
+    "url": "https://arxiv.org/abs/2609.36116v1",
+    "theme": "architectures",
+    "en": "Adds an environment-conditioned action encoder to an LLM for typed actions; frozen-LLM adaptation and joint reinforcement learning are separate settings, and the Jev latency comparison uses previously published API measurements.",
+    "zh": "为 LLM 加入环境条件化行动编码器以选择类型化动作；冻结 LLM 仅适配编码器与联合强化学习是不同设置，Jev 延迟比较引用既有 API 测量。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Prism-1: Position- and Rival-Independent Scoring for System One Models",
+    "by": "Teng et al. · 2026-10-15 · v1",
+    "date": "2026-10-15",
+    "first_submitted": "2026-10-15",
+    "url": "https://arxiv.org/abs/2610.22066v1",
+    "theme": "robustness",
+    "en": "An option-isolated readout targets order invariance and stable relative odds when candidates change; it requires fine-tuning, limits within-model comparison, and fits independently judged options better than menu-dependent fallback rules.",
+    "zh": "通过隔离选项读出，使排列和候选变化时原有选项间的概率比保持稳定；需要微调并限制模型内选项比较，更适合可独立判断的选项，而非依赖整个候选集的兜底规则。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Lost in the Fallback: How Reliably Do Typed Decision Models Use Fallback Options?",
+    "by": "Xie et al. · 2026-10-14 · v1",
+    "date": "2026-10-14",
+    "first_submitted": "2026-10-14",
+    "url": "https://arxiv.org/abs/2610.19856v1",
+    "theme": "robustness",
+    "en": "Paired tests on three text datasets separate category recognition from executing fallback rules; tested open models can disagree under equivalent definitions even when supplied the correct category, and the study diagnoses failures without establishing a fix.",
+    "zh": "三个文本数据集的成对测试将类别识别与兜底规则执行分开；即使给出正确类别，所测开放模型在等价定义下仍可能产生分歧。研究诊断失效，未确立修复方法。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "SecJev: Bringing Security Expertise to System One Decision Models",
+    "by": "Chen et al. · 2026-10-14 · v2",
+    "date": "2026-10-14",
+    "first_submitted": "2026-10-02",
+    "url": "https://arxiv.org/abs/2610.03073v2",
+    "theme": "applications",
+    "en": "Adapts decision scorers to 14 security tasks; source-label prediction and displayed-policy execution are distinct targets, task difficulty is uneven, and benchmark accuracy does not establish end-to-end attack prevention.",
+    "zh": "将决策评分器适配到14项安全任务；来源标签预测与显式策略执行是不同目标，任务难度不均，基准准确率不证明端到端攻击防护能力。",
+    "artifacts": {
+      "code": "https://github.com/UESTC1010/SecJev",
+      "data": "https://github.com/UESTC1010/SecJev/releases/tag/v1.0.0",
+      "model": "https://github.com/UESTC1010/SecJev/releases/tag/v1.3.0"
+    },
+    "artifact_note": {
+      "en": "Release metadata checked; packages not loaded. Custom agreement and upstream terms apply.",
+      "zh": "已查发布元数据，未加载包；适用自定义协议及上游条款。"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "BLADE: Auditing Information Use for Failure Attribution in LLM Multi-Agent Systems",
+    "by": "Guo, Long & Zhang · 2026-10-13 · v1",
+    "date": "2026-10-13",
+    "first_submitted": "2026-10-13",
+    "url": "https://arxiv.org/abs/2610.18780v1",
+    "theme": "judging",
+    "en": "Uses Jev to audit information use at agent handoffs and localize failures; comparisons share one decision model on five benchmark subsets, and attribution depends on the completeness of retained traces.",
+    "zh": "用 Jev 审查 agent 交接时如何使用信息并定位失效；比较在五个基准子集上共用一个决策模型，归因质量受所保留轨迹证据完整性限制。",
+    "artifacts": {
+      "unverified": "code"
+    }
+  },
+  {
+    "category": "Papers",
+    "title": "Recalibrating Many Questions with Few Labels: Minimax Rates and Identification Limits",
+    "by": "Li & Yang · 2026-10-13 · v1",
+    "date": "2026-10-13",
+    "first_submitted": "2026-10-13",
+    "url": "https://arxiv.org/abs/2610.18488v1",
+    "theme": "calibration",
+    "en": "Derives excess-Brier risk bounds for pooling recalibration across questions under shared-distribution and monotonicity assumptions; fixed-effects and empirical-Bayes results have different targets, and risk lower bounds do not directly become calibration-error lower bounds.",
+    "zh": "在共享输出分布与单调性假设下，推导跨问题合并重校准的超额 Brier 风险界；固定效应与经验贝叶斯结果的目标不同，风险下界不能直接视为校准误差下界。"
+  },
+  {
+    "category": "Papers",
     "title": "Jev-LiteMAS: Separating Decisions from Generation in Multi-Agent Workflows",
     "by": "Wang, Zhou, Lou & Li · 2026-10-15 · v1",
     "date": "2026-10-15",
@@ -442,6 +1006,72 @@ const resources = [
     "tool_tasks": ["runtime"],
     "en": "Shared-context candidate scoring with HF/vLLM routes; normalized option probabilities are not calibrated confidence, and the reported cache speedup trades higher memory in one controlled video setup.",
     "zh": "通过 HF/vLLM 路径进行共享上下文候选评分；选项归一化概率不是已校准置信度，所报缓存加速在一个受控视频设置中需要更多显存。"
+  },
+  {
+    "publisher": "OmniJev",
+    "license": "Apache-2.0",
+    "category": "Models",
+    "title": "OneJev1.5-27B",
+    "by": "OmniJev · Apache-2.0",
+    "url": "https://huggingface.co/OmniJev/OneJev1.5-27B",
+    "en": "27B full fine-tune for text, image and video decisions, served through qev. Training includes public benchmark training splits; reported scores cover the public suite, and Jev comparison numbers are imported rather than a matched multimodal rerun.",
+    "zh": "面向文本、图像和视频决策的 27B 全量微调模型，通过 qev 提供服务。训练包含公开基准的训练切分；所报分数覆盖公共评测，Jev 对照数字来自已发表结果，并非同条件的多模态重测。",
+    "provenance": "modelcard"
+  },
+  {
+    "publisher": "Liquid AI",
+    "license": "LFM Open License v1.0",
+    "category": "Models",
+    "title": "d1-omni-600M",
+    "by": "Liquid AI · LFM Open License v1.0",
+    "url": "https://huggingface.co/LiquidAI/d1-omni-600M",
+    "en": "587M encoder for text with images or up to 30 seconds of English speech; one request cannot mix both media. Only text uses fitted temperatures. Image requests cap text at 896 tokens; custom code and the LFM Open License apply.",
+    "zh": "587M 编码器，支持文本配合图像或最长 30 秒的英语语音，单次请求不能同时使用两种媒体。仅文本使用拟合温度；图像请求的文本上限为 896 个 token，需使用自定义代码并遵循 LFM Open License。",
+    "provenance": "modelcard"
+  },
+  {
+    "publisher": "Torchcast AI",
+    "license": "CC BY-NC 4.0",
+    "category": "Models",
+    "title": "Torchcast Decision 27B",
+    "by": "Torchcast AI · CC BY-NC 4.0",
+    "url": "https://huggingface.co/torchcast-ai/torchcast-decision-27b",
+    "en": "Merged LoRA decision model with a CUDA serving package; weights are noncommercial, serving code Apache-2.0. Text-only, checkpoint-selected results use Decision Index 0.2.1; long states and more than 26 options change the inference path.",
+    "zh": "合并 LoRA 权重的决策模型，附 CUDA 服务包；权重限非商业用途，服务代码为 Apache-2.0。文本评测使用 Decision Index 0.2.1 且参与检查点选择；长状态或超过 26 个选项会改变推理路径。",
+    "provenance": "modelcard"
+  },
+  {
+    "publisher": "tasksource",
+    "license": "Apache-2.0",
+    "category": "Models",
+    "title": "tasksource-decider-nano",
+    "by": "tasksource · Apache-2.0",
+    "url": "https://huggingface.co/tasksource/tasksource-decider-nano",
+    "en": "150M joint cross-encoder with shared-state tree attention and choice/noul outputs. Rejects pairs above 8,192 tokens; training includes public benchmark training splits. Reported speed and public-suite scores use the documented A10 setup.",
+    "zh": "150M 联合交叉编码器，通过树形注意力共享状态，输出 choice／noul。超过 8,192 个 token 的配对会被拒绝；训练包含公开基准的训练切分，所报速度和公共评测分数使用文档所述 A10 配置。",
+    "provenance": "modelcard"
+  },
+  {
+    "publisher": "Felhen",
+    "license": "Apache-2.0",
+    "category": "Models",
+    "title": "Saracura PT-BR 4B",
+    "by": "Felhen · Apache-2.0",
+    "url": "https://huggingface.co/felhen-ai/saracura-ptbr-4b",
+    "en": "Brazilian Portuguese Kev adapter and pointer head. Source-matched tests and two-fold human-set calibration do not establish general Portuguese performance; private email-tuned results belong to an unreleased model. Use the documented 2,048-token state setting for comparisons.",
+    "zh": "面向巴西葡萄牙语的 Kev 适配器和指针头。同源测试及人工标注集上的两折校准不能证明通用葡语能力；私有邮件微调结果属于未发布模型。比较时需使用文档所述 2,048-token 状态设置。",
+    "provenance": "modelcard"
+  },
+  {
+    "publisher": "Perplexity",
+    "license": "Apache-2.0",
+    "category": "Models",
+    "title": "Perplexity Decider v1.2 27B",
+    "by": "Perplexity · Apache-2.0",
+    "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2",
+    "en": "27B text/image model with joint question readouts: questions can affect one another. Public-suite training exposure and grouping affect comparisons. Anonymous Hub metadata and a weight HEAD were accessible on 18 Oct; the card still instructs private access.",
+    "zh": "27B 文本／图像模型，联合读取多个问题，问题间可相互影响。公开评测训练数据的使用与问题分组会影响比较。10 月 18 日匿名元数据与权重 HEAD 请求可访问，但模型卡仍写着需私有访问权限。",
+    "provenance": "modelcard"
   },
   {
     "publisher": "mukaddamzaid",
@@ -1598,17 +2228,7 @@ const resources = [
     en: "A decision-tuned Qwen checkpoint with a structured inference wrapper and image support.",
     zh: "经过决策微调的 Qwen 检查点，提供结构化推理封装并支持图片输入。",
   },
-  {
-    "publisher": "Perplexity",
-    "license": "Apache-2.0",
-    category: "Models",
-    title: "Perplexity Decider v1.1 27B",
-    by: "Perplexity · Apache-2.0",
-    provenance: "modelcard",
-    url: "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b",
-    en: "A separate decision readout and saved calibration temperature. Follow the card’s attention-mode and access notes.",
-    zh: "采用独立决策读出与已保存的校准温度；需注意模型卡中的注意力模式及访问说明。",
-  },
+
   {
     "publisher": "Fastino",
     "license": "Apache-2.0",

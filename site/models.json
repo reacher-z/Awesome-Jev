@@ -5,6 +5,72 @@
   "scope": "Independent publisher releases and model-card summaries. Declared licenses and reported capabilities are not independently reproduced results or a universal ranking.",
   "models": [
     {
+      "publisher": "OmniJev",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "OneJev1.5-27B",
+      "by": "OmniJev · Apache-2.0",
+      "url": "https://huggingface.co/OmniJev/OneJev1.5-27B",
+      "en": "27B full fine-tune for text, image and video decisions, served through qev. Training includes public benchmark training splits; reported scores cover the public suite, and Jev comparison numbers are imported rather than a matched multimodal rerun.",
+      "zh": "面向文本、图像和视频决策的 27B 全量微调模型，通过 qev 提供服务。训练包含公开基准的训练切分；所报分数覆盖公共评测，Jev 对照数字来自已发表结果，并非同条件的多模态重测。",
+      "provenance": "modelcard"
+    },
+    {
+      "publisher": "Liquid AI",
+      "license": "LFM Open License v1.0",
+      "category": "Models",
+      "title": "d1-omni-600M",
+      "by": "Liquid AI · LFM Open License v1.0",
+      "url": "https://huggingface.co/LiquidAI/d1-omni-600M",
+      "en": "587M encoder for text with images or up to 30 seconds of English speech; one request cannot mix both media. Only text uses fitted temperatures. Image requests cap text at 896 tokens; custom code and the LFM Open License apply.",
+      "zh": "587M 编码器，支持文本配合图像或最长 30 秒的英语语音，单次请求不能同时使用两种媒体。仅文本使用拟合温度；图像请求的文本上限为 896 个 token，需使用自定义代码并遵循 LFM Open License。",
+      "provenance": "modelcard"
+    },
+    {
+      "publisher": "Torchcast AI",
+      "license": "CC BY-NC 4.0",
+      "category": "Models",
+      "title": "Torchcast Decision 27B",
+      "by": "Torchcast AI · CC BY-NC 4.0",
+      "url": "https://huggingface.co/torchcast-ai/torchcast-decision-27b",
+      "en": "Merged LoRA decision model with a CUDA serving package; weights are noncommercial, serving code Apache-2.0. Text-only, checkpoint-selected results use Decision Index 0.2.1; long states and more than 26 options change the inference path.",
+      "zh": "合并 LoRA 权重的决策模型，附 CUDA 服务包；权重限非商业用途，服务代码为 Apache-2.0。文本评测使用 Decision Index 0.2.1 且参与检查点选择；长状态或超过 26 个选项会改变推理路径。",
+      "provenance": "modelcard"
+    },
+    {
+      "publisher": "tasksource",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "tasksource-decider-nano",
+      "by": "tasksource · Apache-2.0",
+      "url": "https://huggingface.co/tasksource/tasksource-decider-nano",
+      "en": "150M joint cross-encoder with shared-state tree attention and choice/noul outputs. Rejects pairs above 8,192 tokens; training includes public benchmark training splits. Reported speed and public-suite scores use the documented A10 setup.",
+      "zh": "150M 联合交叉编码器，通过树形注意力共享状态，输出 choice／noul。超过 8,192 个 token 的配对会被拒绝；训练包含公开基准的训练切分，所报速度和公共评测分数使用文档所述 A10 配置。",
+      "provenance": "modelcard"
+    },
+    {
+      "publisher": "Felhen",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "Saracura PT-BR 4B",
+      "by": "Felhen · Apache-2.0",
+      "url": "https://huggingface.co/felhen-ai/saracura-ptbr-4b",
+      "en": "Brazilian Portuguese Kev adapter and pointer head. Source-matched tests and two-fold human-set calibration do not establish general Portuguese performance; private email-tuned results belong to an unreleased model. Use the documented 2,048-token state setting for comparisons.",
+      "zh": "面向巴西葡萄牙语的 Kev 适配器和指针头。同源测试及人工标注集上的两折校准不能证明通用葡语能力；私有邮件微调结果属于未发布模型。比较时需使用文档所述 2,048-token 状态设置。",
+      "provenance": "modelcard"
+    },
+    {
+      "publisher": "Perplexity",
+      "license": "Apache-2.0",
+      "category": "Models",
+      "title": "Perplexity Decider v1.2 27B",
+      "by": "Perplexity · Apache-2.0",
+      "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2",
+      "en": "27B text/image model with joint question readouts: questions can affect one another. Public-suite training exposure and grouping affect comparisons. Anonymous Hub metadata and a weight HEAD were accessible on 18 Oct; the card still instructs private access.",
+      "zh": "27B 文本／图像模型，联合读取多个问题，问题间可相互影响。公开评测训练数据的使用与问题分组会影响比较。10 月 18 日匿名元数据与权重 HEAD 请求可访问，但模型卡仍写着需私有访问权限。",
+      "provenance": "modelcard"
+    },
+    {
       "publisher": "mukaddamzaid",
       "license": "Apache-2.0",
       "category": "Models",
@@ -124,17 +190,6 @@
       "url": "https://huggingface.co/internlm/Intern-Decision-4B",
       "en": "A decision-tuned Qwen checkpoint with a structured inference wrapper and image support.",
       "zh": "经过决策微调的 Qwen 检查点，提供结构化推理封装并支持图片输入。"
-    },
-    {
-      "publisher": "Perplexity",
-      "license": "Apache-2.0",
-      "category": "Models",
-      "title": "Perplexity Decider v1.1 27B",
-      "by": "Perplexity · Apache-2.0",
-      "provenance": "modelcard",
-      "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b",
-      "en": "A separate decision readout and saved calibration temperature. Follow the card’s attention-mode and access notes.",
-      "zh": "采用独立决策读出与已保存的校准温度；需注意模型卡中的注意力模式及访问说明。"
     },
     {
       "publisher": "Fastino",

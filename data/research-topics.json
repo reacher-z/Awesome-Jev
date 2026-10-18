@@ -2,6 +2,404 @@
   "schema_version": 1,
   "topics": [
     {
+      "slug": "language-task-evaluation",
+      "published": "2026-10-18",
+      "updated": "2026-10-18",
+      "guide_section": "confidence-transfer",
+      "en": {
+        "title": "Jev moderation, stance and sentiment evaluation",
+        "description": "Read language-task results through policy labels, retrieval conditions, conversational context, extra inference and supervised postprocessing.",
+        "answer": "A strong language-task benchmark score does not by itself establish policy adherence or transfer to another language. Compare annotation rules, input context, candidate menus, supervision and inference budgets before reusing the result.",
+        "scope": "Five fixed-version abstracts, selected methods/results/limitations and one implementation README were inspected. Findings remain author-reported; no prediction records or experiments were reproduced.",
+        "sections": [
+          {
+            "id": "labels",
+            "title": "Policy adherence or label agreement?",
+            "text": "HATEDECIDE finds that supplying definitions and decomposing a moderation decision do not reliably improve agreement with existing dataset labels. A prediction can follow the supplied definition yet disagree with the original annotation policy. Component answers make the aggregation rule inspectable, but they are not verified explanations without component-level reference labels. Evaluate the actual policy and both false-positive and false-negative costs; English diagnostic examples do not establish everyday or multilingual moderation performance.",
+            "sources": [
+              {
+                "label": "HATEDECIDE: limitations, v1",
+                "url": "https://arxiv.org/html/2610.03324v1#S5.SS1"
+              }
+            ]
+          },
+          {
+            "id": "retrieval",
+            "title": "What information does retrieval add?",
+            "text": "The online-moderation study separates written rules, labeled precedents and restrictions on the answer menu. Its main policy contrast adds precedents while keeping the complete menu fixed. For OLID and HateXplain, however, precedents come from the cleaned evaluation population with the target excluded; this differs from using only a frozen training collection. Media inputs are generated textual captions, not a test of native Jev vision. Report these information sources and candidate restrictions alongside the score.",
+            "sources": [
+              {
+                "label": "Information conditions, v1",
+                "url": "https://arxiv.org/html/2610.07953v1#S3.SS2"
+              },
+              {
+                "label": "Tasks and media representations",
+                "url": "https://arxiv.org/html/2610.07953v1#S3.SS1"
+              }
+            ]
+          },
+          {
+            "id": "languages",
+            "title": "What changes across languages?",
+            "text": "The stance study compares English text–target pairs with Chinese speaker-tagged conversations. Language, dataset and conversational structure therefore change together. Jev has more difficulty with support/opposition in the conversational benchmark, but this does not isolate a language effect or prove an internal mechanism. Some LLMs also receive batches while Jev receives single records. Our suggested transfer test holds task structure and information access fixed and checks target-language annotation definitions independently.",
+            "sources": [
+              {
+                "label": "Stance evaluation setup, v1",
+                "url": "https://arxiv.org/html/2610.11901v1#S4"
+              },
+              {
+                "label": "Conversation-length analysis",
+                "url": "https://arxiv.org/html/2610.11901v1#S5.SS4"
+              }
+            ]
+          },
+          {
+            "id": "extra-questions",
+            "title": "Do more questions improve the result?",
+            "text": "Emo-Jev compares direct classification with atomic-question composition and multiple predefined judgment paths. Both extensions have lower average macro-F1 than direct Jev in the reported eight-dataset setup, with task-specific gains and losses. Extra paths add dependent stages and cost; some retry usage is missing. HATEDECIDE likewise finds no consistent benefit from decomposition. Compare the direct baseline, the full added-question budget and held-out outcomes rather than assuming that more intermediate answers provide better reasoning or calibrated probabilities.",
+            "sources": [
+              {
+                "label": "Emo-Jev results, v1",
+                "url": "https://arxiv.org/html/2610.08829v1#S4.SS3"
+              },
+              {
+                "label": "Efficiency accounting",
+                "url": "https://arxiv.org/html/2610.08829v1#S4.SS5"
+              },
+              {
+                "label": "HATEDECIDE decomposition",
+                "url": "https://arxiv.org/html/2610.03324v1#S5"
+              }
+            ]
+          },
+          {
+            "id": "supervision",
+            "title": "What does a frozen backbone still learn?",
+            "text": "The DimABSA system uses frozen Jev with 488 coefficients fitted to task labels for regression and extraction. Its strong regression aggregate relies on supervised calibration; the competition ranks individual corpora, not the reconstructed pooled aggregate. Development scoring does not nest the full feature/threshold selection process, and some text overlap remains. The public code includes fitted parameters and metric summaries, while text-bearing prediction caches are withheld. Separate backbone tuning, supervised postprocessing, selection and artifact availability when comparing results.",
+            "sources": [
+              {
+                "label": "DimABSA protocol, v1",
+                "url": "https://arxiv.org/html/2609.35293v1#A2"
+              },
+              {
+                "label": "Implementation and release limits",
+                "url": "https://github.com/ZhangYiqun018/jev-dimabsa"
+              }
+            ]
+          }
+        ]
+      },
+      "zh": {
+        "title": "Jev 审核、立场与情感任务评测",
+        "description": "从规则标签、检索条件、对话上下文、额外推理与监督后处理理解语言任务结果。",
+        "answer": "语言任务基准分数较强，本身不证明遵循新规则或迁移到另一语言。复用结果前，应比较标注规则、输入上下文、候选菜单、监督信息和推理预算。",
+        "scope": "已核查五篇固定版本摘要、指定方法／结果／局限段落，以及一个实现说明。结论仍为作者报告，未复现预测记录或实验。",
+        "sections": [
+          {
+            "id": "labels",
+            "title": "遵循规则，还是符合原有标签？",
+            "text": "HATEDECIDE 发现，提供定义或分解审核决策，并不稳定提高与已有标签的一致率。预测可能遵循所给定义，却与原始标注规则冲突。组件答案让聚合规则可检查，但没有组件级参考标签就不是已核实的解释。应评估实际规则以及误报、漏报的代价；英语诊断样本不能证明日常或多语言审核表现。",
+            "sources": [
+              {
+                "label": "HATEDECIDE 局限 v1",
+                "url": "https://arxiv.org/html/2610.03324v1#S5.SS1"
+              }
+            ]
+          },
+          {
+            "id": "retrieval",
+            "title": "检索究竟增加了什么信息？",
+            "text": "在线审核研究区分书面规则、带标签先例和候选菜单限制；其主要规则对照保持完整菜单，仅加入先例。不过，OLID 与 HateXplain 的先例来自清洗后的评测总体，只排除当前目标，这不同于只使用冻结训练集合。媒体输入是生成的文字描述，不是原生 Jev 视觉能力测试。分数旁应同时报告这些信息来源和候选限制。",
+            "sources": [
+              {
+                "label": "信息条件 v1",
+                "url": "https://arxiv.org/html/2610.07953v1#S3.SS2"
+              },
+              {
+                "label": "任务与媒体表示",
+                "url": "https://arxiv.org/html/2610.07953v1#S3.SS1"
+              }
+            ]
+          },
+          {
+            "id": "languages",
+            "title": "跨语言比较还改变了什么？",
+            "text": "立场研究比较英语文本—目标对与带说话人标签的中文对话，因此语言、数据集和对话结构同时改变。Jev 在对话基准中更难区分支持与反对，但这没有单独识别语言效应，也不证明内部机制。一些语言模型还使用批请求，而 Jev 使用单条请求。我们建议迁移测试固定任务结构与信息访问，并独立检查目标语言的标注定义。",
+            "sources": [
+              {
+                "label": "立场评测配置 v1",
+                "url": "https://arxiv.org/html/2610.11901v1#S4"
+              },
+              {
+                "label": "对话长度分析",
+                "url": "https://arxiv.org/html/2610.11901v1#S5.SS4"
+              }
+            ]
+          },
+          {
+            "id": "extra-questions",
+            "title": "问题更多，结果就更好吗？",
+            "text": "Emo-Jev 将直接分类与原子问题组合、多条预定义判断路径比较。在所报八个数据集上，两种扩展的平均宏 F1 都低于直接 Jev，各任务有增有减。额外路径增加依赖阶段与成本，部分重试用量还未计入。HATEDECIDE 同样未发现分解的稳定收益。应比较直接基线、全部新增问题预算与留出结果，不能默认更多中间答案代表更好的推理或已校准概率。",
+            "sources": [
+              {
+                "label": "Emo-Jev 结果 v1",
+                "url": "https://arxiv.org/html/2610.08829v1#S4.SS3"
+              },
+              {
+                "label": "效率核算",
+                "url": "https://arxiv.org/html/2610.08829v1#S4.SS5"
+              },
+              {
+                "label": "HATEDECIDE 分解分析",
+                "url": "https://arxiv.org/html/2610.03324v1#S5"
+              }
+            ]
+          },
+          {
+            "id": "supervision",
+            "title": "冻结骨干后，系统仍然学了什么？",
+            "text": "DimABSA 用冻结的 Jev 和 488 个由任务标签拟合的系数完成回归与抽取。较强的回归汇总表现依赖监督校准；比赛按各语料排名，而非重建的合并汇总。开发集评分没有嵌套完整的特征／阈值选择流程，部分文本重叠仍在。公开代码包含拟合参数和指标汇总，但未分发含原文的预测缓存。比较时应区分骨干微调、监督后处理、选择流程和材料可用性。",
+            "sources": [
+              {
+                "label": "DimABSA 协议 v1",
+                "url": "https://arxiv.org/html/2609.35293v1#A2"
+              },
+              {
+                "label": "实现与发布范围",
+                "url": "https://github.com/ZhangYiqun018/jev-dimabsa"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "slug": "calibration-and-abstention",
+      "published": "2026-10-18",
+      "updated": "2026-10-18",
+      "guide_section": "confidence-transfer",
+      "en": {
+        "title": "Jev calibration, abstention and confidence routing",
+        "description": "Compare probability quality, missing-answer rejection, threshold transfer and cascade cost using six versioned studies and explicit evaluation controls.",
+        "answer": "Better-calibrated probabilities do not guarantee a reliable abstention gate or a cheaper cascade. Evaluate the whole policy on held-out target data, separate missing-answer populations, and compare confidence routing with random escalation at the same budget.",
+        "scope": "Six fixed-version abstracts, selected manuscript sections and release documentation were inspected. Findings remain author-reported; no model experiment, prediction replay or proof verification was performed.",
+        "sections": [
+          {
+            "id": "metrics",
+            "title": "Which quantity should improve?",
+            "text": "Probability accuracy, interface coherence, accepted-case error and decision cost answer different questions. Probability Contracts uses worlds with known posteriors to separate them: averaging two reports can improve expected Brier score without improving a decision at every deferral cost. Its guarantee compares averaging with random interface selection, not with each interface individually. Report validity and coverage too; an interface that produces no usable probabilities has undefined probability accuracy.",
+            "sources": [
+              {
+                "label": "Probability Contracts, v2",
+                "url": "https://arxiv.org/html/2609.37470v2#S7.SS2"
+              },
+              {
+                "label": "Study limits",
+                "url": "https://arxiv.org/html/2609.37470v2#S8"
+              }
+            ]
+          },
+          {
+            "id": "missing-answers",
+            "title": "Why is the correct answer missing?",
+            "text": "An artificially removed answer, a retrieval miss and an out-of-scope query are different populations. The candidate-coverage benchmark reports them separately; at ten retrieval candidates, its natural-miss result has only five supporting queries. The arithmetic rejection study adds another distinction: selecting None in a menu differs from verifying each candidate with a Boolean question. Thresholds tuned on separate development problems improve its tested rejection tradeoff, but do not establish a universal threshold.",
+            "sources": [
+              {
+                "label": "Coverage sources and denominators, v2",
+                "url": "https://arxiv.org/html/2610.03387v2#S3.SS2"
+              },
+              {
+                "label": "Arithmetic rejection and threshold rules, v1",
+                "url": "https://arxiv.org/html/2609.39496v1#S5"
+              }
+            ]
+          },
+          {
+            "id": "transfer",
+            "title": "Will a threshold survive a new task?",
+            "text": "A source-task calibration constraint is not a target-task risk guarantee. The coverage study holds calibration budgets equal and finds that transferred thresholds can over-reject covered inputs or stop detecting missing answers. The Laya reproduction separately finds that a better probability metric does not ensure the frozen gate meets its held-out error target. Its labels come from a synthetic teacher, and its initial reproduction is retrospective. Compare source-frozen and target-recalibrated policies on disjoint target data, with label budgets stated.",
+            "sources": [
+              {
+                "label": "Fixed-budget transfer, v2",
+                "url": "https://arxiv.org/html/2610.03387v2#S5.SS4"
+              },
+              {
+                "label": "Laya study limitations, v1",
+                "url": "https://arxiv.org/html/2609.33843v1#S11"
+              }
+            ]
+          },
+          {
+            "id": "routing-value",
+            "title": "Does confidence improve routing?",
+            "text": "A cascade should be compared with the cheap model alone, the fallback alone, and random escalation at a matched budget. In the 495-claim RAG study, similar aggregate scores conceal different false-verification rates. One threshold is cross-fitted, while its matched-random control uses in-sample operating points; neither nonsignificance nor that control establishes equivalence. Our proposed stronger comparison freezes the entire routing procedure and random-control budget before testing on new claims.",
+            "sources": [
+              {
+                "label": "Cross-fitted threshold, v1",
+                "url": "https://arxiv.org/html/2610.20634v1#S9.SS2"
+              },
+              {
+                "label": "Matched random escalation",
+                "url": "https://arxiv.org/html/2610.20634v1#S9.SS5"
+              },
+              {
+                "label": "Design limitations",
+                "url": "https://arxiv.org/html/2610.20634v1#S12"
+              }
+            ]
+          },
+          {
+            "id": "total-cost",
+            "title": "What belongs in total cost?",
+            "text": "Count the first-stage decision for every item, then all escalated calls, retries and routing overhead. Report cost per attempted input, coverage and end-to-end quality together. Fast Models, Slow Evidence corrected omitted pre-screen cost, confusion between gate accuracy and final quality, and in-sample threshold optimism. The RAG cascade is an offline replay whose price calculation excludes second-hop overhead, retries and queueing; it has no controlled latency result. These studies do not establish current prices or universal production savings.",
+            "sources": [
+              {
+                "label": "Self-audited agent evaluation, v1",
+                "url": "https://arxiv.org/abs/2610.02267v1"
+              },
+              {
+                "label": "Replay and cost limits",
+                "url": "https://arxiv.org/html/2610.20634v1#S12"
+              }
+            ]
+          },
+          {
+            "id": "artifacts",
+            "title": "What do the artifacts support?",
+            "text": "The candidate-coverage repository separates recorded-output scoring from source-text reconstruction and fresh inference. sys1-eval documents raw-response reanalysis; the RAG repository requires upstream access to the gold labels. Laya’s ancillary inventory lists predictions, metric code and manifests, but also withheld collection/training source. A listed file or publisher checksum is not an independently reproduced result. We inspected the documentation and inventories, without running these procedures or auditing their prediction records.",
+            "sources": [
+              {
+                "label": "Candidate-coverage code",
+                "url": "https://github.com/luckykevvv/Decision_Model_Benchmark"
+              },
+              {
+                "label": "Agent evaluation code",
+                "url": "https://github.com/David-DL-Space/sys1-eval"
+              },
+              {
+                "label": "RAG verification code",
+                "url": "https://github.com/adorosario/jev-rag-claim-verification"
+              },
+              {
+                "label": "Laya ancillary inventory",
+                "url": "https://arxiv.org/src/2609.33843v1/anc/README.txt"
+              }
+            ]
+          }
+        ]
+      },
+      "zh": {
+        "title": "Jev 校准、拒答与置信度路由",
+        "description": "结合六篇固定版本研究，比较概率质量、缺失答案拒答、阈值迁移和级联成本，并明确评测对照。",
+        "answer": "概率校准更好，不保证拒答门控可靠或级联更便宜。应在留出的目标数据上评估完整策略，区分答案缺失的不同来源，并将置信度路由与同预算随机升级比较。",
+        "scope": "已核查六篇固定版本摘要、指定正文段落及发布说明；结论仍为作者报告，未运行模型实验、回放预测或验证证明。",
+        "sections": [
+          {
+            "id": "metrics",
+            "title": "到底要改善哪一个量？",
+            "text": "概率准确性、接口一致性、接纳样本错误率和决策成本回答不同问题。Probability Contracts 用已知后验的有限世界将它们分开：平均两份概率报告可改善期望 Brier 分数，却不保证每个转交成本下的决策更好。该保证的对照是随机选择接口，而非每个单独接口。还应报告输出有效性与覆盖率；无法输出可用概率的接口，其概率准确性没有定义。",
+            "sources": [
+              {
+                "label": "Probability Contracts v2",
+                "url": "https://arxiv.org/html/2609.37470v2#S7.SS2"
+              },
+              {
+                "label": "研究限制",
+                "url": "https://arxiv.org/html/2609.37470v2#S8"
+              }
+            ]
+          },
+          {
+            "id": "missing-answers",
+            "title": "正确答案为什么不在候选里？",
+            "text": "人为移除答案、检索遗漏与范围外查询属于不同总体。候选覆盖基准分别报告它们；当检索候选数为十时，自然遗漏结果仅由五条查询支持。算术拒答研究还区分了菜单中选择 None 与逐候选布尔核验。使用独立开发问题调节阈值，改善了所测拒答取舍，但没有确立通用阈值。",
+            "sources": [
+              {
+                "label": "缺失来源与分母 v2",
+                "url": "https://arxiv.org/html/2610.03387v2#S3.SS2"
+              },
+              {
+                "label": "算术拒答与阈值规则 v1",
+                "url": "https://arxiv.org/html/2609.39496v1#S5"
+              }
+            ]
+          },
+          {
+            "id": "transfer",
+            "title": "阈值换一个任务还能用吗？",
+            "text": "源任务上的校准约束不是目标任务的风险保证。候选覆盖研究固定校准预算，发现迁移阈值可能大量误拒已有答案的输入，或不再检出缺失答案。Laya 复现则显示，概率指标改善不保证冻结门控达到留出集错误率目标；其标签来自合成教师，初始复现属于回顾性分析。我们建议在独立目标数据上比较沿用源阈值与重新校准的策略，并明确标签预算。",
+            "sources": [
+              {
+                "label": "固定预算迁移 v2",
+                "url": "https://arxiv.org/html/2610.03387v2#S5.SS4"
+              },
+              {
+                "label": "Laya 研究限制 v1",
+                "url": "https://arxiv.org/html/2609.33843v1#S11"
+              }
+            ]
+          },
+          {
+            "id": "routing-value",
+            "title": "置信度是否优于同预算的随机升级？",
+            "text": "级联应同时对照仅用便宜模型、仅用后备模型，以及相同预算的随机升级。495 条声明的 RAG 研究显示，汇总分数相近仍可有不同误放率。一个阈值经过交叉拟合，但同预算随机对照使用样本内选择的工作点；不显著差异及该对照都不能证明等效性。我们建议更强的比较：在测试新声明前，冻结完整路由流程和随机对照预算。",
+            "sources": [
+              {
+                "label": "交叉拟合阈值 v1",
+                "url": "https://arxiv.org/html/2610.20634v1#S9.SS2"
+              },
+              {
+                "label": "同预算随机升级",
+                "url": "https://arxiv.org/html/2610.20634v1#S9.SS5"
+              },
+              {
+                "label": "设计局限",
+                "url": "https://arxiv.org/html/2610.20634v1#S12"
+              }
+            ]
+          },
+          {
+            "id": "total-cost",
+            "title": "总成本的分母和分子应包含什么？",
+            "text": "每条输入都要计入第一阶段判断，再加上所有升级调用、重试与路由开销；应同时报告每次尝试输入的成本、覆盖率与端到端质量。Fast Models, Slow Evidence 修正了遗漏前置筛查成本、混淆门控准确率与最终质量，以及样本内阈值过于乐观的问题。RAG 级联只是离线回放，其计价不含第二跳开销、重试和排队，也没有受控时延结果。这些研究不能确立当前价格或普遍生产节省。",
+            "sources": [
+              {
+                "label": "自查 agent 评测 v1",
+                "url": "https://arxiv.org/abs/2610.02267v1"
+              },
+              {
+                "label": "回放与成本限制",
+                "url": "https://arxiv.org/html/2610.20634v1#S12"
+              }
+            ]
+          },
+          {
+            "id": "artifacts",
+            "title": "公开材料能支持哪一步核查？",
+            "text": "候选覆盖仓库将已记录输出评分、源文本重建和重新推理分开。sys1-eval 说明了原始响应重分析方法；RAG 仓库的参考标签需取得上游访问权限。Laya 附属目录列出预测、指标代码和运行记录，同时明确部分采集／训练源码未公开。文件列出或发布者提供哈希，不等于独立复现结果。本项目只检查说明和目录，未执行这些流程或审计逐项预测。",
+            "sources": [
+              {
+                "label": "候选覆盖代码",
+                "url": "https://github.com/luckykevvv/Decision_Model_Benchmark"
+              },
+              {
+                "label": "agent 评测代码",
+                "url": "https://github.com/David-DL-Space/sys1-eval"
+              },
+              {
+                "label": "RAG 核验代码",
+                "url": "https://github.com/adorosario/jev-rag-claim-verification"
+              },
+              {
+                "label": "Laya 附属目录",
+                "url": "https://arxiv.org/src/2609.33843v1/anc/README.txt"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "slug": "option-label-bias",
       "published": "2026-10-17",
       "updated": "2026-10-18",
@@ -58,6 +456,25 @@
               {
                 "label": "Verdict original abstract, v1",
                 "url": "https://arxiv.org/abs/2610.20778v1"
+              }
+            ]
+          },
+          {
+            "id": "candidate-set",
+            "title": "What changes when an option is added?",
+            "text": "Prism-1 isolates option readouts to preserve order invariance and relative odds among original options when the candidate set changes, with state and question held fixed. This does not keep every normalized probability unchanged: an added score changes the softmax denominator. Its paper requires fine-tuning and limits the guarantee to numerical precision; independently judged options fit better than menu-dependent rules such as none of the above. Injected text in the shared state remains outside this protection. Evaluate menu-dependent fallback behavior separately, using the paired-rule tests rather than treating stable rankings as correct abstention.",
+            "sources": [
+              {
+                "label": "Prism-1 limitations, v1",
+                "url": "https://arxiv.org/html/2610.22066v1#S7"
+              },
+              {
+                "label": "Choice-axiom tradeoffs, v1",
+                "url": "https://arxiv.org/html/2610.22066v1#S5.SS6"
+              },
+              {
+                "label": "Paired fallback test, v1",
+                "url": "https://arxiv.org/html/2610.19856v1#S3.SS1"
               }
             ]
           },
@@ -132,6 +549,25 @@
               {
                 "label": "Verdict 原始摘要 v1",
                 "url": "https://arxiv.org/abs/2610.20778v1"
+              }
+            ]
+          },
+          {
+            "id": "candidate-set",
+            "title": "增加一个选项时，哪些量会变化？",
+            "text": "Prism-1 隔离选项读出，在固定状态和问题时，保持候选变化下的顺序不变性以及原有选项间的概率比。每个归一化概率并不因此保持不变：新增分数会改变 softmax 分母。论文说明它需要微调，保证受数值精度限制，更适合可独立判断的选项，而非“以上皆非”等依赖整个候选集的规则；共享状态中的注入文本也不在保护范围内。应单独用成对规则测试检查此类兜底行为，不把排序稳定当作正确拒答。",
+            "sources": [
+              {
+                "label": "Prism-1 局限 v1",
+                "url": "https://arxiv.org/html/2610.22066v1#S7"
+              },
+              {
+                "label": "选择公理的取舍 v1",
+                "url": "https://arxiv.org/html/2610.22066v1#S5.SS6"
+              },
+              {
+                "label": "成对兜底测试 v1",
+                "url": "https://arxiv.org/html/2610.19856v1#S3.SS1"
               }
             ]
           },

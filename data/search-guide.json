@@ -1,7 +1,7 @@
 {
-  "updated": "2026-10-17",
+  "updated": "2026-10-18",
   "en": {
-    "title": "Jev guide: typed decisions, probabilities, and evaluation",
+    "title": "Jev guide: decisions, confidence and evaluation",
     "description": "A source-backed introduction to Jev, its decision primitives, confidence, evaluation methods, and independent model alternatives.",
     "intro": "Jev is a useful case study in models that return decisions for software. This independent guide separates documented interfaces, provider claims, and empirical evaluation. It does not reproduce model experiments.",
     "sections": [
@@ -27,7 +27,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "What is Jev?"
       },
       {
         "id": "typed-output-and-llms",
@@ -51,7 +52,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "Typed vs. structured output"
       },
       {
         "id": "primitives",
@@ -93,7 +95,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "Choice, Score and Noul"
       },
       {
         "id": "probability-and-confidence",
@@ -108,7 +111,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "Probability vs. confidence"
       },
       {
         "id": "evaluate-calibration",
@@ -149,7 +153,45 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "Evaluate calibration"
+      },
+      {
+        "id": "judge-bias",
+        "title": "Can a calibrated judge still be biased?",
+        "paragraphs": [
+          {
+            "text": "Keep probability calibration, agreement with human rankings and verdict stability separate. The CALM study finds position and rewrite sensitivity in its tested typed-decision judges despite favorable calibration or consistency. Its labels and rewrites are inherited from benchmarks; changes in clarity and other unintended factors limit a causal reading of tone effects.",
+            "sources": [
+              {
+                "label": "Typed decision models as judges, v1",
+                "url": "https://arxiv.org/html/2610.18122v1#Sx1"
+              }
+            ]
+          },
+          {
+            "text": "PRISM uses counterfactual emphasis probes and human labels to fit a correction to overall judge scores. Its reported ranking-agreement gains on SummEval and HANNA are a different target from matching probabilities to observed correctness. Rubric-free does not mean label-free, and the extra probes have a cost. This PRISM method is separate from the similarly named Prism-1 option-readout architecture.",
+            "sources": [
+              {
+                "label": "PRISM original abstract, v1",
+                "url": "https://arxiv.org/abs/2610.18389v1"
+              },
+              {
+                "label": "PRISM limits, v1",
+                "url": "https://arxiv.org/html/2610.18389v1#Sx1"
+              },
+              {
+                "label": "Prism-1, v1",
+                "url": "https://arxiv.org/abs/2610.22066v1"
+              }
+            ]
+          },
+          {
+            "text": "Our proposed evaluation reports ranking agreement, probability reliability and perturbation sensitivity in separate columns. Verify that a supposedly meaning-preserving rewrite retains the task’s label, reserve held-out groups for learned corrections, and count probe calls in the evaluation budget. Repeated identical requests estimate variability; they do not establish correctness.",
+            "sources": []
+          }
+        ],
+        "toc_title": "Judge bias"
       },
       {
         "id": "decision-model-baselines",
@@ -179,6 +221,74 @@
               {
                 "label": "HakemBench, v1",
                 "url": "https://arxiv.org/abs/2610.02293v1"
+              }
+            ]
+          },
+          {
+            "text": "Question grouping is part of the inference protocol. Perplexity Decider v1.2 lets questions within a request attend to one another; its fast path isolates separate requests. The card reports that grouping related attributes can help while grouping competing retrieval candidates can hurt. By contrast, tasksource-decider-nano describes tree attention that isolates options while sharing the state. Record the grouping rule alongside scores; a multi-question API does not imply independent answers.",
+            "sources": [
+              {
+                "label": "Perplexity v1.2: question grouping",
+                "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2/raw/225c913ddc8761a8264f04f64548e1f97e443eb3/README.md"
+              },
+              {
+                "label": "tasksource: tree attention",
+                "url": "https://huggingface.co/tasksource/tasksource-decider-nano/raw/46e88e08cc1a3122a348ce134f18865e93f8e1c8/README.md"
+              }
+            ]
+          }
+        ],
+        "toc_title": "Compare classifiers and LLMs"
+      },
+      {
+        "id": "deployment-boundaries",
+        "title": "What does a fast benchmark establish about deployment?",
+        "toc_title": "Benchmark to deployment",
+        "paragraphs": [
+          {
+            "text": "Identify whether the evidence comes from measured equipment, simulation, replay or an operating service. The HVAC study uses public equipment measurements, but few fault days and feature-dependent diagnoses limit transfer. HydroJEV uses simulated windows with the same hydraulic model generating both events and the twin. Its interval margins and multiplicity-corrected tests are distinct; one transfer endpoint does not pass the adjusted test. Neither study establishes a general field-performance guarantee.",
+            "sources": [
+              {
+                "label": "HVAC study limits, v1",
+                "url": "https://arxiv.org/html/2610.09937v1#S5.SS5"
+              },
+              {
+                "label": "HydroJEV simulation limits, v1",
+                "url": "https://arxiv.org/html/2610.02048v1#S4.SS4"
+              },
+              {
+                "label": "Transfer endpoints",
+                "url": "https://arxiv.org/html/2610.02048v1#Sx18"
+              }
+            ]
+          },
+          {
+            "text": "Keep successful-request latency separate from observation, feature construction, retry waits, queueing and downstream execution. The wireless study excludes pacing and retry waits and reuses an external orchestration study to show that faster interpretation need not improve completed service outcomes. The traffic-classification study does not time packet observation or feature extraction. Our proposed deployment comparison records every stage, deadline misses and final utility under the same workload.",
+            "sources": [
+              {
+                "label": "Wireless timing boundaries, v1",
+                "url": "https://arxiv.org/html/2610.04345v1#S4.SS1"
+              },
+              {
+                "label": "External orchestration evidence",
+                "url": "https://arxiv.org/html/2610.04345v1#S4.SS4"
+              },
+              {
+                "label": "Traffic-classification scope, v1",
+                "url": "https://arxiv.org/html/2610.00376v1#S5"
+              }
+            ]
+          },
+          {
+            "text": "Output validity and paraphrase stability are not sufficient tests of control behavior. The 5G testbed study changes only the question while retaining state and options, exposing a fine-tuned checkpoint that keeps returning its training answer. Its RAN plane is not closed, there is no real radio, and risk statements depend on the calibration protocol. Test the expected change in action as well as invariance, and evaluate the complete controller rather than inferring reliability from a typed response.",
+            "sources": [
+              {
+                "label": "Changed-question controls, v1",
+                "url": "https://arxiv.org/html/2609.33689v1#S8"
+              },
+              {
+                "label": "Testbed and certification limits",
+                "url": "https://arxiv.org/html/2609.33689v1#S9"
               }
             ]
           }
@@ -226,8 +336,77 @@
                 "url": "https://arxiv.org/abs/2610.14112v1"
               }
             ]
+          },
+          {
+            "text": "The candidate-coverage benchmark compares source-frozen and target-local thresholds at equal label budgets. A threshold can fail after a task change even when its source calibration constraint was met. Separate artificial omissions, natural retrieval misses and out-of-scope inputs; the latter two need their own denominators. Our calibration and abstention note connects these tests with interface coherence, random-escalation controls and total cascade cost.",
+            "sources": [
+              {
+                "label": "Candidate coverage and policy transfer, v2",
+                "url": "https://arxiv.org/abs/2610.03387v2"
+              },
+              {
+                "label": "Calibration and abstention research note",
+                "url": "https://awesomejev.github.io/topics/calibration-and-abstention/"
+              }
+            ]
+          },
+          {
+            "text": "Language and task changes must be separated. The stance study compares English single-text records with Chinese conversations, while moderation studies vary policies, labeled precedents and answer menus. These are useful task observations, not isolated language-transfer experiments. The language-task note also distinguishes extra-question cost from quality and frozen backbones from supervised calibration.",
+            "sources": [
+              {
+                "label": "Stance study, v1",
+                "url": "https://arxiv.org/abs/2610.11901v1"
+              },
+              {
+                "label": "Language-task evaluation note",
+                "url": "https://awesomejev.github.io/topics/language-task-evaluation/"
+              }
+            ]
           }
-        ]
+        ],
+        "toc_title": "Transfer confidence gates"
+      },
+      {
+        "id": "fallback-options",
+        "title": "Is a fallback option the same as a confidence gate?",
+        "paragraphs": [
+          {
+            "text": "A named Other or Defer option is an answer the model must select according to its definition. A confidence gate is application code deciding whether to act on a returned answer or escalate it. TypeSafe’s routing example illustrates the latter. Define which interface you are testing before comparing reliability.",
+            "sources": [
+              {
+                "label": "Fallback definitions, v1",
+                "url": "https://arxiv.org/html/2610.19856v1#S2.SS0.SSS0.Px2"
+              },
+              {
+                "label": "TypeSafe confidence routing",
+                "url": "https://docs.typesafe.ai/patterns/confidence-routing"
+              }
+            ]
+          },
+          {
+            "text": "The Paired Fallback Robustness test changes the correct output from a regular option to fallback while holding the input and option positions fixed. It also tests equivalent fallback definitions. On the tested open models, correct recognition and even a supplied correct category do not guarantee correct reassignment. This is a controlled diagnosis on text datasets, not an established production repair.",
+            "sources": [
+              {
+                "label": "Paired reassignment and definition tests, v1",
+                "url": "https://arxiv.org/html/2610.19856v1#S3.SS1"
+              },
+              {
+                "label": "Study limitations, v1",
+                "url": "https://arxiv.org/html/2610.19856v1#Sx1"
+              }
+            ]
+          },
+          {
+            "text": "Our suggested evaluation reports regular-choice accuracy, correct fallback selection, unnecessary fallback and disagreement between equivalent definitions separately. Test the application’s confidence gate on held-out cases and include escalated calls in its cost. Order stability and stable relative odds are additional properties: Prism-1 explicitly identifies none-of-the-above rules as a poor fit for independent option scoring.",
+            "sources": [
+              {
+                "label": "Prism-1 scope and limitations, v1",
+                "url": "https://arxiv.org/html/2610.22066v1#S7"
+              }
+            ]
+          }
+        ],
+        "toc_title": "Fallback options"
       },
       {
         "id": "tables-and-cited-evidence",
@@ -251,7 +430,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "Tables and cited evidence"
       },
       {
         "id": "tool-arguments-and-option-channels",
@@ -284,7 +464,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "Tool arguments and option risks"
       },
       {
         "id": "attack-success-rates",
@@ -329,7 +510,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "Attack success rates"
       },
       {
         "id": "models-and-licenses",
@@ -369,8 +551,68 @@
                 "url": "https://huggingface.co/LycheeAI/Lychee-27B/raw/f3f95d18a3b1ef3c483c2a5d7e8e5272a2af31e2/README.md"
               }
             ]
+          },
+          {
+            "text": "Input support and calibration can differ by modality within one checkpoint. Liquid d1-omni-600M accepts images or audio per request, limits speech to 30 seconds, and caps text at 896 tokens for image requests. Its fitted temperatures apply to text, not images or audio. The release uses custom inference code and the LFM Open License v1.0; inspect that license separately from the base model or other d1 releases.",
+            "sources": [
+              {
+                "label": "Liquid d1-omni-600M: limits and calibration",
+                "url": "https://huggingface.co/LiquidAI/d1-omni-600M/raw/02b55d7076f15129e59ab3f94783f32c4b088674/README.md"
+              },
+              {
+                "label": "LFM Open License v1.0",
+                "url": "https://huggingface.co/LiquidAI/d1-omni-600M/raw/02b55d7076f15129e59ab3f94783f32c4b088674/LICENSE"
+              }
+            ]
           }
-        ]
+        ],
+        "toc_title": "Models and licenses"
+      },
+      {
+        "id": "open-rlcd",
+        "title": "Does an open RLCD implementation reproduce Jev's training?",
+        "paragraphs": [
+          {
+            "text": "A shared RLCD name or compatible API does not establish identical training. OpenJev-RLCD explicitly describes an independent implementation and makes no claim about TypeSafe's internal algorithm. It trains a reasoning model's probability readout after sampled rationales; that experimental design is distinct from establishing how the hosted Jev service was trained.",
+            "sources": [
+              {
+                "label": "OpenJev-RLCD scope, v1",
+                "url": "https://arxiv.org/html/2609.38850v1#S7"
+              }
+            ]
+          },
+          {
+            "text": "The two-stage recipe first trains the answer readout with a proper score, then reinforces rationales with that score and an anchor to the first-stage model. Its experiments use one 1.7B backbone, three seeds and short training runs; the second stage helps one main task and is neutral on the other. Keep the scored distribution, generated-rationale budget, fitting split and temperature-scaled baselines explicit. A scoring-rule argument is not by itself a deployment calibration guarantee.",
+            "sources": [
+              {
+                "label": "Two-stage method and setup, v1",
+                "url": "https://arxiv.org/html/2609.38850v1#S3"
+              },
+              {
+                "label": "Experimental setup",
+                "url": "https://arxiv.org/html/2609.38850v1#S4"
+              }
+            ]
+          },
+          {
+            "text": "Distillation poses a different question: what can a smaller model learn from teacher judgments? The student-guided routing paper uses a fixed 60-label taxonomy and reports preliminary teacher agreement, with human-reviewed and full-baseline tests still pending. The search-distillation study trains compact evaluators offline; search supplies lookahead and teacher value differs across tasks. Compare label budgets and downstream outcomes, and separate offline labeling cost from runtime inference.",
+            "sources": [
+              {
+                "label": "Student-guided routing: pending evaluation, v1",
+                "url": "https://arxiv.org/html/2610.02516v1#S7"
+              },
+              {
+                "label": "Search distillation: component roles, v1",
+                "url": "https://arxiv.org/html/2610.09188v1#S7"
+              },
+              {
+                "label": "Labeling cost",
+                "url": "https://arxiv.org/html/2610.09188v1#S8"
+              }
+            ]
+          }
+        ],
+        "toc_title": "Independent RLCD training"
       },
       {
         "id": "papers-and-benchmarks",
@@ -415,7 +657,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "Find research evidence"
       },
       {
         "id": "reproduction-boundaries",
@@ -464,8 +707,26 @@
                 "url": "https://arxiv.org/abs/2610.06425v1"
               }
             ]
+          },
+          {
+            "text": "Check that abstract, manuscript and released code describe the same cohort and comparator. Jev-IDS v1 does not: PDF page 2 and the cited code describe a 300-flow GPT-5.6 Luna pilot, while page 7 describes 2,000 flows and Gemini. We retain the paper with this explicit caveat and link the pilot revision; no combined performance claim follows from the two configurations.",
+            "sources": [
+              {
+                "label": "Jev-IDS v1: PDF page 2",
+                "url": "https://arxiv.org/pdf/2610.01079v1#page=2"
+              },
+              {
+                "label": "PDF page 7",
+                "url": "https://arxiv.org/pdf/2610.01079v1#page=7"
+              },
+              {
+                "label": "Paper-cited pilot revision",
+                "url": "https://github.com/jev-sec/jev-ids/tree/286a310fea249a7b4a5a8c45377049e914f8b9c9"
+              }
+            ]
           }
-        ]
+        ],
+        "toc_title": "Reproduction boundaries"
       }
     ]
   },
@@ -496,7 +757,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "什么是 Jev"
       },
       {
         "id": "typed-output-and-llms",
@@ -520,7 +782,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "类型化与结构化输出"
       },
       {
         "id": "primitives",
@@ -562,7 +825,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "Choice、Score 与 Noul"
       },
       {
         "id": "probability-and-confidence",
@@ -577,7 +841,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "概率与置信度"
       },
       {
         "id": "evaluate-calibration",
@@ -618,7 +883,45 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "怎样评估校准"
+      },
+      {
+        "id": "judge-bias",
+        "title": "校准良好的评判模型仍可能有偏差吗？",
+        "paragraphs": [
+          {
+            "text": "应区分概率校准、与人类排序的一致性及判断稳定性。CALM 研究发现，所测类型化评判模型即使校准或一致性较好，仍可能受位置和改写影响。研究沿用基准标签与改写，清晰度等非目标因素的变化限制了对语气影响的因果解释。",
+            "sources": [
+              {
+                "label": "类型化模型评判偏差研究 v1",
+                "url": "https://arxiv.org/html/2610.18122v1#Sx1"
+              }
+            ]
+          },
+          {
+            "text": "PRISM 用反事实强调探针和人类标签，学习对整体评判分数的校正。其在 SummEval 与 HANNA 上报告的排序一致性提升，与概率是否符合实际正确频率是不同目标。不要求逐项评分标准并不等于不需要标签，额外探针也有成本。这一 PRISM 方法与名称相近的 Prism-1 选项读出架构是不同工作。",
+            "sources": [
+              {
+                "label": "PRISM 原始摘要 v1",
+                "url": "https://arxiv.org/abs/2610.18389v1"
+              },
+              {
+                "label": "PRISM 局限 v1",
+                "url": "https://arxiv.org/html/2610.18389v1#Sx1"
+              },
+              {
+                "label": "Prism-1 v1",
+                "url": "https://arxiv.org/abs/2610.22066v1"
+              }
+            ]
+          },
+          {
+            "text": "我们建议分列报告排序一致性、概率可靠性和扰动敏感性；先核查所谓保留含义的改写是否仍应使用原标签，为学习到的校正保留独立测试分组，并把探针调用计入评估预算。重复相同请求可以估计变异性，但不能证明判断正确。",
+            "sources": []
+          }
+        ],
+        "toc_title": "评判偏差"
       },
       {
         "id": "decision-model-baselines",
@@ -648,6 +951,74 @@
               {
                 "label": "HakemBench v1",
                 "url": "https://arxiv.org/abs/2610.02293v1"
+              }
+            ]
+          },
+          {
+            "text": "问题分组属于推理协议。Perplexity Decider v1.2 允许同一请求中的问题相互关注，而快速路径会隔离不同请求；模型卡报告，将相关属性放在一起可能有帮助，将相互竞争的检索候选放在一起则可能降低表现。相对地，tasksource-decider-nano 描述了共享状态但隔离选项的树形注意力。报告分数时应同时记录分组规则，多问题 API 不代表答案相互独立。",
+            "sources": [
+              {
+                "label": "Perplexity v1.2：问题分组",
+                "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2/raw/225c913ddc8761a8264f04f64548e1f97e443eb3/README.md"
+              },
+              {
+                "label": "tasksource：树形注意力",
+                "url": "https://huggingface.co/tasksource/tasksource-decider-nano/raw/46e88e08cc1a3122a348ce134f18865e93f8e1c8/README.md"
+              }
+            ]
+          }
+        ],
+        "toc_title": "分类器与语言模型对照"
+      },
+      {
+        "id": "deployment-boundaries",
+        "title": "快速基准能证明哪些部署能力？",
+        "toc_title": "从基准到部署",
+        "paragraphs": [
+          {
+            "text": "先区分证据来自实测设备、仿真、回放还是运行中的服务。HVAC 研究使用公开设备测量，但故障日较少、诊断依赖特征，限制了迁移；HydroJEV 使用仿真窗口，事件和数字孪生来自同一水力模型。非劣效区间与多重比较校正后的检验不同，一个迁移端点没有通过校正检验。两篇研究均不能确立普遍的现场表现保证。",
+            "sources": [
+              {
+                "label": "HVAC 研究局限 v1",
+                "url": "https://arxiv.org/html/2610.09937v1#S5.SS5"
+              },
+              {
+                "label": "HydroJEV 仿真局限 v1",
+                "url": "https://arxiv.org/html/2610.02048v1#S4.SS4"
+              },
+              {
+                "label": "迁移端点",
+                "url": "https://arxiv.org/html/2610.02048v1#Sx18"
+              }
+            ]
+          },
+          {
+            "text": "成功请求耗时应与观测、特征构造、重试等待、排队及后续执行分开。无线研究不计主动间隔和重试等待，并引用另一项编排研究说明：解释更快不一定改善服务完成结果。流量分类研究没有计时数据包观测或特征提取。我们建议在同一负载下记录所有阶段、超期与最终效用，再比较部署表现。",
+            "sources": [
+              {
+                "label": "无线计时边界 v1",
+                "url": "https://arxiv.org/html/2610.04345v1#S4.SS1"
+              },
+              {
+                "label": "外部编排证据",
+                "url": "https://arxiv.org/html/2610.04345v1#S4.SS4"
+              },
+              {
+                "label": "流量分类范围 v1",
+                "url": "https://arxiv.org/html/2610.00376v1#S5"
+              }
+            ]
+          },
+          {
+            "text": "输出合法性和改写稳定性不足以检验控制行为。5G 测试床研究固定状态与选项，只改变问题，发现一个微调检查点仍返回训练时的答案。其 RAN 平面未闭合、没有真实无线电，风险结论也依赖校准协议。应同时测试理应改变的动作与应保持的不变性，并评估完整控制器，不能从类型化响应推断可靠性。",
+            "sources": [
+              {
+                "label": "改变问题的对照 v1",
+                "url": "https://arxiv.org/html/2609.33689v1#S8"
+              },
+              {
+                "label": "测试床与认证局限",
+                "url": "https://arxiv.org/html/2609.33689v1#S9"
               }
             ]
           }
@@ -695,8 +1066,77 @@
                 "url": "https://arxiv.org/abs/2610.14112v1"
               }
             ]
+          },
+          {
+            "text": "候选覆盖基准在相同标签预算下比较冻结的源阈值与目标任务本地阈值。即使满足源任务校准约束，阈值在换任务后仍可能失效。应区分人为移除、自然检索遗漏与范围外输入，后两者各用自己的分母。校准与拒答专题将这些测试与接口一致性、随机升级对照和级联总成本联系起来。",
+            "sources": [
+              {
+                "label": "候选覆盖与策略迁移 v2",
+                "url": "https://arxiv.org/abs/2610.03387v2"
+              },
+              {
+                "label": "校准与拒答研究专题",
+                "url": "https://awesomejev.github.io/zh/topics/calibration-and-abstention/"
+              }
+            ]
+          },
+          {
+            "text": "语言变化和任务变化需要分开。立场研究比较英语单文本与中文对话，审核研究则改变规则、带标签先例和答案菜单。这些是有价值的任务观察，却不是单独识别语言迁移的实验。语言任务专题还区分额外提问的成本与质量，以及冻结骨干与监督校准。",
+            "sources": [
+              {
+                "label": "立场研究 v1",
+                "url": "https://arxiv.org/abs/2610.11901v1"
+              },
+              {
+                "label": "语言任务评测专题",
+                "url": "https://awesomejev.github.io/zh/topics/language-task-evaluation/"
+              }
+            ]
           }
-        ]
+        ],
+        "toc_title": "门控阈值迁移"
+      },
+      {
+        "id": "fallback-options",
+        "title": "兜底选项和置信度门控是一回事吗？",
+        "paragraphs": [
+          {
+            "text": "名为 Other 或 Defer 的兜底选项，是模型需要按定义选出的答案。置信度门控则由应用代码决定是否执行已有答案，或将任务升级处理。TypeSafe 的路由示例展示后者。比较可靠性前，应明确测试的是哪一种接口。",
+            "sources": [
+              {
+                "label": "兜底定义 v1",
+                "url": "https://arxiv.org/html/2610.19856v1#S2.SS0.SSS0.Px2"
+              },
+              {
+                "label": "TypeSafe 置信度路由",
+                "url": "https://docs.typesafe.ai/patterns/confidence-routing"
+              }
+            ]
+          },
+          {
+            "text": "成对兜底鲁棒性测试固定输入与选项位置，将正确输出从常规选项改为兜底项，并比较含义等价的兜底定义。在所测开放模型中，正确识别类别，甚至直接给出正确类别，都不保证正确完成输出重分配。这是文本数据上的受控诊断，尚未确立生产修复方法。",
+            "sources": [
+              {
+                "label": "成对重分配与定义测试 v1",
+                "url": "https://arxiv.org/html/2610.19856v1#S3.SS1"
+              },
+              {
+                "label": "研究局限 v1",
+                "url": "https://arxiv.org/html/2610.19856v1#Sx1"
+              }
+            ]
+          },
+          {
+            "text": "我们建议分别报告常规选择准确率、正确兜底选择、不必要兜底及等价定义间的分歧。应用层置信度门控应在留出样本上另行测试，成本应计入升级调用。顺序稳定与选项间概率比稳定是另外的性质：Prism-1 明确指出，“以上皆非”规则并不适合独立选项评分。",
+            "sources": [
+              {
+                "label": "Prism-1 的范围与限制 v1",
+                "url": "https://arxiv.org/html/2610.22066v1#S7"
+              }
+            ]
+          }
+        ],
+        "toc_title": "兜底选项"
       },
       {
         "id": "tables-and-cited-evidence",
@@ -720,7 +1160,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "表格与引用证据"
       },
       {
         "id": "tool-arguments-and-option-channels",
@@ -753,7 +1194,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "工具参数与选项风险"
       },
       {
         "id": "attack-success-rates",
@@ -798,7 +1240,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "攻击成功率"
       },
       {
         "id": "models-and-licenses",
@@ -838,8 +1281,68 @@
                 "url": "https://huggingface.co/LycheeAI/Lychee-27B/raw/f3f95d18a3b1ef3c483c2a5d7e8e5272a2af31e2/README.md"
               }
             ]
+          },
+          {
+            "text": "同一检查点的输入支持与校准方法也可能因模态而异。Liquid d1-omni-600M 的单次请求只能选择图像或音频；语音限 30 秒，图像请求中的文本限 896 个 token。拟合温度仅用于文本，不用于图像或音频。该版本使用自定义推理代码与 LFM Open License v1.0，应单独检查许可，不能从基础模型或其他 d1 版本推断。",
+            "sources": [
+              {
+                "label": "Liquid d1-omni-600M：限制与校准",
+                "url": "https://huggingface.co/LiquidAI/d1-omni-600M/raw/02b55d7076f15129e59ab3f94783f32c4b088674/README.md"
+              },
+              {
+                "label": "LFM Open License v1.0",
+                "url": "https://huggingface.co/LiquidAI/d1-omni-600M/raw/02b55d7076f15129e59ab3f94783f32c4b088674/LICENSE"
+              }
+            ]
           }
-        ]
+        ],
+        "toc_title": "模型与许可"
+      },
+      {
+        "id": "open-rlcd",
+        "title": "开放 RLCD 实现是否复现了 Jev 的训练？",
+        "paragraphs": [
+          {
+            "text": "名称同为 RLCD 或 API 兼容，不证明训练方法相同。OpenJev-RLCD 明确将自己描述为独立实现，不声称揭示 TypeSafe 内部算法。它训练推理模型在采样推理之后给出的概率读出；这种实验设计不等于确定托管 Jev 服务的训练过程。",
+            "sources": [
+              {
+                "label": "OpenJev-RLCD 范围 v1",
+                "url": "https://arxiv.org/html/2609.38850v1#S7"
+              }
+            ]
+          },
+          {
+            "text": "两阶段方法先用适当评分训练答案读出，再用该评分和相对第一阶段模型的锚定项强化推理。实验仅覆盖一个 1.7B 骨干、三个种子和较短训练；第二阶段对一个主要任务有帮助，在另一个上中性。比较时应明确被评分的分布、生成推理预算、拟合切分及经过温度校准的基线。评分规则论证本身不是部署校准保证。",
+            "sources": [
+              {
+                "label": "两阶段方法与配置 v1",
+                "url": "https://arxiv.org/html/2609.38850v1#S3"
+              },
+              {
+                "label": "实验配置",
+                "url": "https://arxiv.org/html/2609.38850v1#S4"
+              }
+            ]
+          },
+          {
+            "text": "蒸馏问的是另一件事：小模型能从教师判断中学到什么？学生引导路由论文使用固定 60 标签分类，报告初步教师一致率，人工评审与完整基线测试仍待完成。搜索蒸馏研究离线训练紧凑评估器，由搜索提供前瞻，教师价值随任务改变。应比较标签预算和下游结果，并将离线标注成本与运行时推理分开。",
+            "sources": [
+              {
+                "label": "学生引导路由：待完成评测 v1",
+                "url": "https://arxiv.org/html/2610.02516v1#S7"
+              },
+              {
+                "label": "搜索蒸馏：组件作用 v1",
+                "url": "https://arxiv.org/html/2610.09188v1#S7"
+              },
+              {
+                "label": "标注成本",
+                "url": "https://arxiv.org/html/2610.09188v1#S8"
+              }
+            ]
+          }
+        ],
+        "toc_title": "独立 RLCD 训练"
       },
       {
         "id": "papers-and-benchmarks",
@@ -884,7 +1387,8 @@
               }
             ]
           }
-        ]
+        ],
+        "toc_title": "查找研究证据"
       },
       {
         "id": "reproduction-boundaries",
@@ -933,8 +1437,26 @@
                 "url": "https://arxiv.org/abs/2610.06425v1"
               }
             ]
+          },
+          {
+            "text": "应核对摘要、正文和公开代码是否描述相同样本及对照。Jev-IDS v1 并不一致：PDF 第2页和引用代码描述 300 条流、GPT-5.6 Luna 试验，第7页却描述 2,000 条流与 Gemini。本目录保留论文并明确标注此限制，代码链接固定到试验版本；两组配置不能合成一个性能结论。",
+            "sources": [
+              {
+                "label": "Jev-IDS v1：PDF 第2页",
+                "url": "https://arxiv.org/pdf/2610.01079v1#page=2"
+              },
+              {
+                "label": "PDF 第7页",
+                "url": "https://arxiv.org/pdf/2610.01079v1#page=7"
+              },
+              {
+                "label": "论文引用的试验代码版本",
+                "url": "https://github.com/jev-sec/jev-ids/tree/286a310fea249a7b4a5a8c45377049e914f8b9c9"
+              }
+            ]
           }
-        ]
+        ],
+        "toc_title": "复现边界"
       }
     ]
   }
