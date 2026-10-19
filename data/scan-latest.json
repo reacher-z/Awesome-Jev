@@ -1,5 +1,5 @@
 {
-  "added_count": 321,
+  "added_count": 328,
   "added_urls": [
     "https://aclanthology.org/2023.acl-long.368",
     "https://aclanthology.org/2024.naacl-long.301",
@@ -92,6 +92,7 @@
     "https://github.com/bennylinntu/pact-pairwise-anchored-calibrated-tuning-for-single-token-typed-decisions",
     "https://github.com/bitomule/jevi",
     "https://github.com/blobfishai/jevfish",
+    "https://github.com/blockstars-labs/30x-jev",
     "https://github.com/brainstormity/jevsnap",
     "https://github.com/cadence-trading/ai-trading-lab",
     "https://github.com/caiweihan/jev-account-filter",
@@ -99,7 +100,6 @@
     "https://github.com/chayan-bit/jev-frame",
     "https://github.com/chayan-bit/jev-harness",
     "https://github.com/clduab11/jev-test",
-    "https://github.com/dabit3/jev-experiments",
     "https://github.com/dakepeng/bonsai-jev"
   ],
   "arxiv_discovery": {
@@ -113,7 +113,7 @@
     "verified_new": 23
   },
   "changed": true,
-  "changed_count": 265,
+  "changed_count": 290,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -125,6 +125,7 @@
     "https://aclanthology.org/2025.naacl-long.174",
     "https://artificialanalysis.ai/evaluations/artificial-analysis-decision-index",
     "https://artificialanalysis.ai/methodology/decision-index",
+    "https://arxiv.org/abs/2609.14973",
     "https://arxiv.org/abs/2609.23886",
     "https://arxiv.org/abs/2609.23986",
     "https://arxiv.org/abs/2609.26550",
@@ -176,23 +177,31 @@
     "https://github.com/aleria-ml/morj",
     "https://github.com/alilibx/system-one-bench",
     "https://github.com/aminry/decisio",
+    "https://github.com/andyqiuqiubo/andy-harness",
     "https://github.com/anotiawang/awesome-decision-models",
     "https://github.com/anotiawang/awesome-jev",
+    "https://github.com/aoprisan/typesafe-ai-rust-sdk",
     "https://github.com/appitstudio/awesome-jev",
+    "https://github.com/asktheway/dsh-jev-interceptor",
     "https://github.com/atoma-run/atoma",
     "https://github.com/avinash-jetwani/jevmem",
+    "https://github.com/backmeupplz/jev_antispam_bot",
     "https://github.com/bitranox/btx-skill-jev-judge",
     "https://github.com/blaizzy/mlx-vlm",
+    "https://github.com/bnsd55/jevmlx",
+    "https://github.com/brendanh18/jev_fsd",
     "https://github.com/bunsdev/river-oaks",
     "https://github.com/burnigtm/jev-mcp",
     "https://github.com/caglarkc/agent-browser",
     "https://github.com/caiovicentino/jev-risk-check-provider",
     "https://github.com/call518/deciflow",
     "https://github.com/capitaharlock/jev-clone",
+    "https://github.com/charlyhno-eng/jev-codex-pilot",
     "https://github.com/chenrui333/jev-docs",
     "https://github.com/chenstarmr/jev-chat-windows",
     "https://github.com/chez-shanpu/typesafeai-go",
     "https://github.com/chussenot/judgment",
+    "https://github.com/ckaraca/awesome-jev",
     "https://github.com/clouatre-labs/decisions-judge-mcp",
     "https://github.com/cmzy/ajev-infer",
     "https://github.com/codeitlikemiley/typesafe-sdk-rust",
@@ -200,36 +209,27 @@
     "https://github.com/cyber-security-dev-dep-mitake-com-tw/jef",
     "https://github.com/cybrking/modelrudder",
     "https://github.com/daftai2026/awesome-jev",
+    "https://github.com/dicklesworthstone/skillranker",
     "https://github.com/dimedatacloud/claude-modder",
     "https://github.com/dongtsi/awesome-trustworthy-jev",
     "https://github.com/dzhng/jevgrep",
     "https://github.com/eligrip/computer-guidance-with-jev",
-    "https://github.com/eve2512/strayguard",
-    "https://github.com/everyinfra/jev-radar",
-    "https://github.com/exoticknight/dsh-system1",
-    "https://github.com/fatwang2/awesome-jev",
-    "https://github.com/faycall1l/bouncer",
-    "https://github.com/feder-cr/jev",
-    "https://github.com/frontierlabai/jevhub",
-    "https://github.com/gabrielcoelhocruz/jev-scanr",
-    "https://github.com/gabrielcoelhocruz/jev-skill-router",
-    "https://github.com/gi-dellav/jevdo",
-    "https://github.com/gopaljigaur/decide"
+    "https://github.com/eve2512/strayguard"
   ],
-  "completed_at": "2026-10-19T10:00:46+00:00",
+  "completed_at": "2026-10-19T21:09:12+00:00",
   "counts": {
     "abstract_checked": 1908,
-    "checked_sources": 4588,
-    "content_screened": 2676,
-    "duplicate_records": 19,
+    "checked_sources": 4595,
+    "content_screened": 2683,
+    "duplicate_records": 20,
     "editorial_reviewed": 4,
-    "metadata_only": 59,
-    "raw_records": 4666,
-    "unique_records": 4647
+    "metadata_only": 58,
+    "raw_records": 4673,
+    "unique_records": 4653
   },
   "curation_excluded_count": 3,
   "dry_run": false,
-  "duplicate_candidates_skipped": 10,
+  "duplicate_candidates_skipped": 12,
   "editorial_examples_truncated": false,
   "editorial_refresh_candidates": [
     {
@@ -355,9 +355,9 @@
   ],
   "editorial_review_required_count": 8,
   "error_code_counts": {
-    "insufficient_content": 93,
+    "insufficient_content": 92,
     "paper_query_failed:retry_after_exceeded": 15,
-    "unavailable": 60
+    "unavailable": 61
   },
   "error_count": 168,
   "error_examples_count": 100,
@@ -446,10 +446,6 @@
     {
       "code": "insufficient_content",
       "url": "https://github.com/compozy/compozy"
-    },
-    {
-      "code": "insufficient_content",
-      "url": "https://github.com/dabit3/jev-experiments"
     },
     {
       "code": "insufficient_content",
@@ -762,25 +758,29 @@
     {
       "code": "paper_query_failed:retry_after_exceeded",
       "url": "https://huggingface.co/api/papers/search?q=classifier+cascade&limit=120"
+    },
+    {
+      "code": "paper_query_failed:retry_after_exceeded",
+      "url": "https://huggingface.co/api/papers/search?q=cost+sensitive+classification&limit=120"
     }
   ],
-  "excluded_discoveries": 317,
+  "excluded_discoveries": 316,
   "index_revision": "0ddf6758073eb77ae449a3541f57286d7f39d93f",
-  "network_requests": 3913,
+  "network_requests": 3928,
   "phase_budget_seconds": {
     "ecosystem": 840,
     "research": 240
   },
-  "preserved_after_failure": 28,
+  "preserved_after_failure": 29,
   "privacy_rejected_records": 0,
   "retry_budget_exhausted": false,
   "retry_budget_exhausted_phases": [],
   "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-19T09:58:21+00:00",
+  "started_at": "2026-10-19T21:07:11+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources.",
-  "carried_forward_pending_count": 41,
+  "carried_forward_pending_count": 42,
   "carried_forward_pending_urls": [
     "https://arxiv.org/abs/2307.13692",
     "https://arxiv.org/abs/2310.02527",
@@ -822,7 +822,8 @@
     "https://arxiv.org/abs/2609.39071",
     "https://arxiv.org/abs/2610.01938",
     "https://arxiv.org/abs/2610.12758",
-    "https://doi.org/10.48550/arxiv.2601.03042"
+    "https://github.com/dabit3/jev-experiments",
+    "https://github.com/hakkisagdic/sosariaai"
   ],
   "pending_carry_note": "Absent candidates retained from the prior unmerged bot PR with original evidence and retrieval dates; not newly fetched or accepted into main."
 }
