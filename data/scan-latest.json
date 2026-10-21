@@ -1,5 +1,5 @@
 {
-  "added_count": 419,
+  "added_count": 421,
   "added_urls": [
     "https://aclanthology.org/2023.acl-long.368",
     "https://aclanthology.org/2024.naacl-long.301",
@@ -86,6 +86,8 @@
     "https://arxiv.org/abs/2610.26035",
     "https://arxiv.org/abs/2610.26325",
     "https://arxiv.org/abs/2610.26793",
+    "https://arxiv.org/abs/2610.27677",
+    "https://arxiv.org/abs/2610.28435",
     "https://github.com/7starsseeker/dsh-fact-check",
     "https://github.com/adelvillar1/blend1",
     "https://github.com/adelvillar1/sem1",
@@ -98,22 +100,20 @@
     "https://github.com/aleria-ml/aleria-judge",
     "https://github.com/ali-master/jev-browser-agent",
     "https://github.com/alpkeskin/jev-guardrail",
-    "https://github.com/amazingljy1206/innerjev",
-    "https://github.com/amir9480/jevcheck",
-    "https://github.com/amyrmahdy/decima"
+    "https://github.com/amazingljy1206/innerjev"
   ],
   "arxiv_discovery": {
-    "direct_candidates": 143,
-    "entries": 218,
+    "direct_candidates": 145,
+    "entries": 221,
     "known_skipped": 107,
     "pages": 2,
     "query_complete": true,
-    "total_results": 218,
+    "total_results": 221,
     "unavailable_new": 0,
-    "verified_new": 36
+    "verified_new": 38
   },
   "changed": true,
-  "changed_count": 403,
+  "changed_count": 413,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -216,16 +216,16 @@
     "https://docs.typesafe.ai/concepts/how-to-build-with-system-one",
     "https://docs.typesafe.ai/concepts/state"
   ],
-  "completed_at": "2026-10-20T20:03:42+00:00",
+  "completed_at": "2026-10-21T09:26:54+00:00",
   "counts": {
-    "abstract_checked": 1924,
-    "checked_sources": 4681,
+    "abstract_checked": 1926,
+    "checked_sources": 4683,
     "content_screened": 2753,
     "duplicate_records": 20,
     "editorial_reviewed": 4,
     "metadata_only": 63,
-    "raw_records": 4764,
-    "unique_records": 4744
+    "raw_records": 4766,
+    "unique_records": 4746
   },
   "curation_excluded_count": 3,
   "dry_run": false,
@@ -339,7 +339,7 @@
     },
     {
       "note": "Pinned primary abstract preserved without a grade change; observed version: https://arxiv.org/abs/2610.21411v2. Maintainer review is required before replacing the pinned evidence.",
-      "observed_abstract_page_sha256": "7e3c4cf108a948ba982b0fd37eb8c26ec80e3d0ddf5af25cea86be1fcbf30a63",
+      "observed_abstract_page_sha256": "c6c234dc8f2dce7086487883771a37f677cc98b072951997f5e1a8a21343740b",
       "observed_abstract_sha256": "097a055e166e2bee05e94fa0cd5e1d716b7e2432adb8f992d42286d519ae4313",
       "observed_content_sha256": "097a055e166e2bee05e94fa0cd5e1d716b7e2432adb8f992d42286d519ae4313",
       "observed_first_submitted": "2026-10-15",
@@ -813,7 +813,7 @@
   ],
   "excluded_discoveries": 315,
   "index_revision": "133313cf8963f2b6bed960abb0152fd14cbb6731",
-  "network_requests": 4026,
+  "network_requests": 4028,
   "phase_budget_seconds": {
     "ecosystem": 840,
     "research": 240
@@ -824,7 +824,7 @@
   "retry_budget_exhausted_phases": [],
   "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-20T20:01:37+00:00",
+  "started_at": "2026-10-21T09:24:29+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources.",
   "carried_forward_pending_count": 47,
