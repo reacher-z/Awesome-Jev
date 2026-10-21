@@ -1,7 +1,6 @@
 {
-  "added_count": 421,
+  "added_count": 511,
   "added_urls": [
-    "https://aclanthology.org/2023.acl-long.368",
     "https://aclanthology.org/2024.naacl-long.301",
     "https://aclanthology.org/2025.findings-naacl.441",
     "https://arxiv.org/abs/1011.0686",
@@ -88,6 +87,7 @@
     "https://arxiv.org/abs/2610.26793",
     "https://arxiv.org/abs/2610.27677",
     "https://arxiv.org/abs/2610.28435",
+    "https://github.com/1000luca/flexdm",
     "https://github.com/7starsseeker/dsh-fact-check",
     "https://github.com/adelvillar1/blend1",
     "https://github.com/adelvillar1/sem1",
@@ -96,11 +96,11 @@
     "https://github.com/agentculture/jev-factory",
     "https://github.com/agentiloop/agent.xcf.ai",
     "https://github.com/aianytime/jev-crash-course",
+    "https://github.com/akivet/mica",
     "https://github.com/akramovic1/jev-pilot",
     "https://github.com/aleria-ml/aleria-judge",
     "https://github.com/ali-master/jev-browser-agent",
-    "https://github.com/alpkeskin/jev-guardrail",
-    "https://github.com/amazingljy1206/innerjev"
+    "https://github.com/alpkeskin/jev-guardrail"
   ],
   "arxiv_discovery": {
     "direct_candidates": 145,
@@ -113,7 +113,7 @@
     "verified_new": 38
   },
   "changed": true,
-  "changed_count": 413,
+  "changed_count": 428,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -182,7 +182,6 @@
     "https://arxiv.org/abs/2609.32160",
     "https://arxiv.org/abs/2609.33209",
     "https://arxiv.org/abs/2609.33401",
-    "https://arxiv.org/abs/2609.34227",
     "https://arxiv.org/abs/2609.35342",
     "https://arxiv.org/abs/2609.36965",
     "https://arxiv.org/abs/2609.37647",
@@ -214,22 +213,23 @@
     "https://dev.to/nandakishor_m_6cc0adfde9f/i-built-non-autoregressive-decision-models-a-year-ago-then-a-frontier-lab-called-it-a-18me",
     "https://docs.typesafe.ai/agent-skill",
     "https://docs.typesafe.ai/concepts/how-to-build-with-system-one",
-    "https://docs.typesafe.ai/concepts/state"
+    "https://docs.typesafe.ai/concepts/state",
+    "https://docs.typesafe.ai/concepts/system-one"
   ],
-  "completed_at": "2026-10-21T09:26:54+00:00",
+  "completed_at": "2026-10-21T20:15:34+00:00",
   "counts": {
-    "abstract_checked": 1926,
-    "checked_sources": 4683,
-    "content_screened": 2753,
-    "duplicate_records": 20,
+    "abstract_checked": 1967,
+    "checked_sources": 4772,
+    "content_screened": 2801,
+    "duplicate_records": 21,
     "editorial_reviewed": 4,
     "metadata_only": 63,
-    "raw_records": 4766,
-    "unique_records": 4746
+    "raw_records": 4856,
+    "unique_records": 4835
   },
   "curation_excluded_count": 3,
   "dry_run": false,
-  "duplicate_candidates_skipped": 13,
+  "duplicate_candidates_skipped": 12,
   "editorial_examples_truncated": false,
   "editorial_refresh_candidates": [
     {
@@ -264,7 +264,7 @@
     },
     {
       "note": "Pinned primary abstract preserved without a grade change; observed version: https://arxiv.org/abs/2610.00381v1. Maintainer review is required before replacing the pinned evidence.",
-      "observed_abstract_page_sha256": "685d7de0549cf16cdb551ad0fc3ad148600f7139d773c38638ff2ecf301938a1",
+      "observed_abstract_page_sha256": "977a292cea521aa54ef5cd63ce27d40c12256db001dae39e111893008fd74d2e",
       "observed_abstract_sha256": "74415286ed9eb2560fa34125ad501015d02034eda2ead91ae827355534042b9a",
       "observed_content_sha256": "74415286ed9eb2560fa34125ad501015d02034eda2ead91ae827355534042b9a",
       "observed_first_submitted": "2026-09-30",
@@ -354,7 +354,7 @@
     },
     {
       "note": "Pinned primary abstract preserved without a grade change; observed version: https://arxiv.org/abs/2610.22066v2. Maintainer review is required before replacing the pinned evidence.",
-      "observed_abstract_page_sha256": "ed0c26091f9e384327ae37e4a33a3ef49450ea5cd0c51e70b40fcad0fa144c7e",
+      "observed_abstract_page_sha256": "cac1954ebaa4f9d2c94275e401f57148cbb73866ce44701d2df78d96a3a7dde9",
       "observed_abstract_sha256": "42fb228ac2f90cf10f8d36d9a1f91910799883260f9fba72d76137ffbd46cbcb",
       "observed_content_sha256": "42fb228ac2f90cf10f8d36d9a1f91910799883260f9fba72d76137ffbd46cbcb",
       "observed_first_submitted": "2026-10-15",
@@ -369,44 +369,43 @@
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "a6b59120286747e7a937bec215b93b8e02374667f041d2e284bb68c5772620df",
+      "observed_content_sha256": "91ded377ac0038e7b19aaca7984a491c3739ff753e32d9549d6e39210ef5256d",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "243a2c72bebfff94e1a8f7d047b4a3b60b5efa8869972a8d62818245b615f2c3",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/133313cf8963f2b6bed960abb0152fd14cbb6731/README.md",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/99015c7fe7038e648a7bcb3f5ce3e6705c12c481/README.md",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index"
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "bd6b95ddabedd3813591f9e481257c6679a89273ed291256e7720044c76d4119",
+      "observed_content_sha256": "a0fffc4a594a71a28b4a4d5a2cf32bfedbe8366a127dc271a7919d3359cd2988",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "23496572ce8da74277208b5796060331b366b015a800f281e7df21960a9ef609",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/133313cf8963f2b6bed960abb0152fd14cbb6731/data/index.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/99015c7fe7038e648a7bcb3f5ce3e6705c12c481/data/index.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/index.json"
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "e24fc5d71df0361c64a042d8d4788de48b281c62c95b01ea502509268dac8635",
+      "observed_content_sha256": "bf299b4961972eae6c8c6924c494e934205e72eab1aa062b9b3457eebcbc1bdc",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "c952b113916d255d926b27e4fc629a767d929f32ba68af0f058caee77fc4bf86",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/133313cf8963f2b6bed960abb0152fd14cbb6731/data/methodology.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/99015c7fe7038e648a7bcb3f5ce3e6705c12c481/data/methodology.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/methodology.json"
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "6970a73ba7dff04cfbca0181939c660da3e282553af76864f3d83b303e5a5ffe",
+      "observed_content_sha256": "eb527d1a83d2481c669f756f3775ad91c91341875de2bcf36485e9108d85160e",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "7b5a4586e1260d58dd534721d5f7ce278718effe469d3912747cff48cc7b8a51",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/133313cf8963f2b6bed960abb0152fd14cbb6731/data/v03.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/99015c7fe7038e648a7bcb3f5ce3e6705c12c481/data/v03.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/v03.json"
     }
   ],
   "editorial_review_required_count": 13,
   "error_code_counts": {
-    "insufficient_content": 91,
-    "paper_query_failed:retry_after_exceeded": 15,
-    "unavailable": 67
+    "insufficient_content": 89,
+    "unavailable": 68
   },
-  "error_count": 173,
+  "error_count": 157,
   "error_examples_count": 100,
   "error_examples_truncated": true,
   "errors": [
@@ -468,10 +467,6 @@
     },
     {
       "code": "insufficient_content",
-      "url": "https://github.com/all-hands-ai/openhands"
-    },
-    {
-      "code": "insufficient_content",
       "url": "https://github.com/anthropics/skills"
     },
     {
@@ -508,10 +503,6 @@
     },
     {
       "code": "insufficient_content",
-      "url": "https://github.com/deepseek-ai/deepseek-harness"
-    },
-    {
-      "code": "insufficient_content",
       "url": "https://github.com/deepwise-ailab/chestx-det-dataset"
     },
     {
@@ -536,11 +527,15 @@
     },
     {
       "code": "insufficient_content",
-      "url": "https://github.com/hotcoffeeshake/tong-jincheng-skill"
+      "url": "https://github.com/incluwin/botstory"
     },
     {
       "code": "insufficient_content",
       "url": "https://github.com/indonlp/nusax"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/jaimebuelta/jev-webinar"
     },
     {
       "code": "insufficient_content",
@@ -632,10 +627,6 @@
     },
     {
       "code": "insufficient_content",
-      "url": "https://github.com/niiightmarexd/windows-capture"
-    },
-    {
-      "code": "insufficient_content",
       "url": "https://github.com/nvm-sh/nvm"
     },
     {
@@ -653,6 +644,10 @@
     {
       "code": "insufficient_content",
       "url": "https://github.com/openssh/openssh-portable"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/osu-slatelab/mapqa"
     },
     {
       "code": "insufficient_content",
@@ -724,10 +719,6 @@
     },
     {
       "code": "insufficient_content",
-      "url": "https://github.com/zhiyiyo/pyqt-fluent-widgets"
-    },
-    {
-      "code": "insufficient_content",
       "url": "https://github.com/zycck/claude-mods"
     },
     {
@@ -775,107 +766,80 @@
       "url": "https://huggingface.co/spaces/ai-forever/FRIDA-Decisions"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judge+bias&limit=120"
+      "code": "unavailable",
+      "url": "https://anonymous.4open.science/r/jev_ordinal_scale_bia"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judge+consistency&limit=120"
+      "code": "unavailable",
+      "url": "https://github.com/adelvillar1/gen1"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judges+uncertainty&limit=120"
+      "code": "unavailable",
+      "url": "https://github.com/agentiloop/bossman"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+model+routing&limit=120"
+      "code": "unavailable",
+      "url": "https://github.com/arelit/phishnchips"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=adaptive+inference+language+models&limit=120"
+      "code": "unavailable",
+      "url": "https://github.com/bestagentkits/typesafe-demo-mcp"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=calibrating+language+model+evaluators&limit=120"
+      "code": "unavailable",
+      "url": "https://github.com/chenstarmr/jev-chat-windows"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=classifier+cascade&limit=120"
+      "code": "unavailable",
+      "url": "https://github.com/fastino-ai/flashdeberta"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=cost+sensitive+classification&limit=120"
+      "code": "unavailable",
+      "url": "https://github.com/hakkisagdic/neo-vs-morpheus"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=early+exit+neural+classification&limit=120"
+      "code": "unavailable",
+      "url": "https://github.com/hardel-dw/jev.mods"
+    },
+    {
+      "code": "unavailable",
+      "url": "https://github.com/iamno1special/typesafe-sdk-godot"
+    },
+    {
+      "code": "unavailable",
+      "url": "https://github.com/intern_lm/intern-decision"
     }
   ],
-  "excluded_discoveries": 315,
-  "index_revision": "133313cf8963f2b6bed960abb0152fd14cbb6731",
-  "network_requests": 4028,
+  "excluded_discoveries": 305,
+  "index_revision": "99015c7fe7038e648a7bcb3f5ce3e6705c12c481",
+  "network_requests": 4058,
   "phase_budget_seconds": {
     "ecosystem": 840,
     "research": 240
   },
-  "preserved_after_failure": 30,
+  "preserved_after_failure": 35,
   "privacy_rejected_records": 0,
   "retry_budget_exhausted": false,
   "retry_budget_exhausted_phases": [],
   "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-21T09:24:29+00:00",
+  "started_at": "2026-10-21T20:12:57+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources.",
-  "carried_forward_pending_count": 47,
+  "carried_forward_pending_count": 12,
   "carried_forward_pending_urls": [
-    "https://arxiv.org/abs/2307.13692",
-    "https://arxiv.org/abs/2310.02527",
-    "https://arxiv.org/abs/2310.08491",
-    "https://arxiv.org/abs/2401.02009",
-    "https://arxiv.org/abs/2401.06591",
-    "https://arxiv.org/abs/2409.18645",
-    "https://arxiv.org/abs/2411.03659",
-    "https://arxiv.org/abs/2501.11721",
-    "https://arxiv.org/abs/2503.23339",
-    "https://arxiv.org/abs/2503.23899",
-    "https://arxiv.org/abs/2505.08775",
-    "https://arxiv.org/abs/2505.13388",
-    "https://arxiv.org/abs/2508.02886",
-    "https://arxiv.org/abs/2509.25534",
-    "https://arxiv.org/abs/2510.02663",
-    "https://arxiv.org/abs/2511.16139",
-    "https://arxiv.org/abs/2511.17689",
-    "https://arxiv.org/abs/2512.21402",
-    "https://arxiv.org/abs/2601.03023",
-    "https://arxiv.org/abs/2601.15161",
-    "https://arxiv.org/abs/2601.16669",
+    "https://aclanthology.org/2023.acl-long.368",
     "https://arxiv.org/abs/2601.22155",
-    "https://arxiv.org/abs/2602.03619",
-    "https://arxiv.org/abs/2602.08321",
-    "https://arxiv.org/abs/2602.10367",
-    "https://arxiv.org/abs/2603.01343",
-    "https://arxiv.org/abs/2603.03142",
-    "https://arxiv.org/abs/2603.03330",
-    "https://arxiv.org/abs/2603.26710",
-    "https://arxiv.org/abs/2604.02795",
-    "https://arxiv.org/abs/2604.05306",
-    "https://arxiv.org/abs/2604.27629",
-    "https://arxiv.org/abs/2606.00251",
-    "https://arxiv.org/abs/2606.05112",
-    "https://arxiv.org/abs/2606.27264",
-    "https://arxiv.org/abs/2607.25659",
     "https://arxiv.org/abs/2609.11414",
-    "https://arxiv.org/abs/2609.16816",
-    "https://arxiv.org/abs/2609.34274",
-    "https://arxiv.org/abs/2609.39071",
-    "https://arxiv.org/abs/2610.01938",
-    "https://arxiv.org/abs/2610.12758",
-    "https://arxiv.org/abs/2610.22314",
     "https://doi.org/10.48550/arxiv.2601.03042",
+    "https://doi.org/10.48550/arxiv.2610.22929",
     "https://github.com/dabit3/jev-experiments",
     "https://github.com/etsabary/jev-1.14-comparison-benchmark",
-    "https://github.com/hakkisagdic/sosariaai"
+    "https://github.com/hakkisagdic/sosariaai",
+    "https://github.com/jevplays-games/jev-factorio-agent",
+    "https://github.com/jundot/omlx",
+    "https://huggingface.co/datasets/social-jev/desta",
+    "https://huggingface.co/datasets/social-jev/maud"
   ],
   "pending_carry_note": "Absent candidates retained from the prior unmerged bot PR with original evidence and retrieval dates; not newly fetched or accepted into main."
 }
