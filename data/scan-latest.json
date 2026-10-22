@@ -1,5 +1,5 @@
 {
-  "added_count": 511,
+  "added_count": 596,
   "added_urls": [
     "https://aclanthology.org/2024.naacl-long.301",
     "https://aclanthology.org/2025.findings-naacl.441",
@@ -87,6 +87,10 @@
     "https://arxiv.org/abs/2610.26793",
     "https://arxiv.org/abs/2610.27677",
     "https://arxiv.org/abs/2610.28435",
+    "https://arxiv.org/abs/2610.28826",
+    "https://arxiv.org/abs/2610.28827",
+    "https://arxiv.org/abs/2610.29052",
+    "https://arxiv.org/abs/2610.30090",
     "https://github.com/1000luca/flexdm",
     "https://github.com/7starsseeker/dsh-fact-check",
     "https://github.com/adelvillar1/blend1",
@@ -96,24 +100,20 @@
     "https://github.com/agentculture/jev-factory",
     "https://github.com/agentiloop/agent.xcf.ai",
     "https://github.com/aianytime/jev-crash-course",
-    "https://github.com/akivet/mica",
-    "https://github.com/akramovic1/jev-pilot",
-    "https://github.com/aleria-ml/aleria-judge",
-    "https://github.com/ali-master/jev-browser-agent",
-    "https://github.com/alpkeskin/jev-guardrail"
+    "https://github.com/akivet/mica"
   ],
   "arxiv_discovery": {
-    "direct_candidates": 145,
-    "entries": 221,
+    "direct_candidates": 149,
+    "entries": 227,
     "known_skipped": 107,
     "pages": 2,
     "query_complete": true,
-    "total_results": 221,
+    "total_results": 227,
     "unavailable_new": 0,
-    "verified_new": 38
+    "verified_new": 42
   },
   "changed": true,
-  "changed_count": 428,
+  "changed_count": 450,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -128,7 +128,6 @@
     "https://arxiv.org/abs/1701.06538",
     "https://arxiv.org/abs/1706.03762",
     "https://arxiv.org/abs/1706.04599",
-    "https://arxiv.org/abs/1906.00274",
     "https://arxiv.org/abs/1909.05855",
     "https://arxiv.org/abs/1910.14599",
     "https://arxiv.org/abs/2003.04807",
@@ -159,7 +158,6 @@
     "https://arxiv.org/abs/2505.09388",
     "https://arxiv.org/abs/2507.18546",
     "https://arxiv.org/abs/2510.01237",
-    "https://arxiv.org/abs/2510.06528",
     "https://arxiv.org/abs/2510.08731",
     "https://arxiv.org/abs/2510.26835",
     "https://arxiv.org/abs/2512.16899",
@@ -182,6 +180,7 @@
     "https://arxiv.org/abs/2609.32160",
     "https://arxiv.org/abs/2609.33209",
     "https://arxiv.org/abs/2609.33401",
+    "https://arxiv.org/abs/2609.34227",
     "https://arxiv.org/abs/2609.35342",
     "https://arxiv.org/abs/2609.36965",
     "https://arxiv.org/abs/2609.37647",
@@ -214,22 +213,23 @@
     "https://docs.typesafe.ai/agent-skill",
     "https://docs.typesafe.ai/concepts/how-to-build-with-system-one",
     "https://docs.typesafe.ai/concepts/state",
-    "https://docs.typesafe.ai/concepts/system-one"
+    "https://docs.typesafe.ai/concepts/system-one",
+    "https://docs.typesafe.ai/concepts/use-case-map"
   ],
-  "completed_at": "2026-10-21T20:15:34+00:00",
+  "completed_at": "2026-10-22T09:29:52+00:00",
   "counts": {
-    "abstract_checked": 1967,
-    "checked_sources": 4772,
-    "content_screened": 2801,
+    "abstract_checked": 1972,
+    "checked_sources": 4851,
+    "content_screened": 2875,
     "duplicate_records": 21,
     "editorial_reviewed": 4,
-    "metadata_only": 63,
-    "raw_records": 4856,
-    "unique_records": 4835
+    "metadata_only": 69,
+    "raw_records": 4941,
+    "unique_records": 4920
   },
   "curation_excluded_count": 3,
   "dry_run": false,
-  "duplicate_candidates_skipped": 12,
+  "duplicate_candidates_skipped": 17,
   "editorial_examples_truncated": false,
   "editorial_refresh_candidates": [
     {
@@ -354,7 +354,7 @@
     },
     {
       "note": "Pinned primary abstract preserved without a grade change; observed version: https://arxiv.org/abs/2610.22066v2. Maintainer review is required before replacing the pinned evidence.",
-      "observed_abstract_page_sha256": "cac1954ebaa4f9d2c94275e401f57148cbb73866ce44701d2df78d96a3a7dde9",
+      "observed_abstract_page_sha256": "ed0c26091f9e384327ae37e4a33a3ef49450ea5cd0c51e70b40fcad0fa144c7e",
       "observed_abstract_sha256": "42fb228ac2f90cf10f8d36d9a1f91910799883260f9fba72d76137ffbd46cbcb",
       "observed_content_sha256": "42fb228ac2f90cf10f8d36d9a1f91910799883260f9fba72d76137ffbd46cbcb",
       "observed_first_submitted": "2026-10-15",
@@ -369,18 +369,18 @@
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "91ded377ac0038e7b19aaca7984a491c3739ff753e32d9549d6e39210ef5256d",
+      "observed_content_sha256": "3c98356e4e1884bd234ec52ef41fecb4aba8d6862964255e19a899957ef9f9f9",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "243a2c72bebfff94e1a8f7d047b4a3b60b5efa8869972a8d62818245b615f2c3",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/99015c7fe7038e648a7bcb3f5ce3e6705c12c481/README.md",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/d9962113a1acc95c2d7522c2babfb989afbeb034/README.md",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index"
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "a0fffc4a594a71a28b4a4d5a2cf32bfedbe8366a127dc271a7919d3359cd2988",
+      "observed_content_sha256": "da1586d5508abd7f2953876caf6757d2e5c6d353ec656a553af07be9fb6c7044",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "23496572ce8da74277208b5796060331b366b015a800f281e7df21960a9ef609",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/99015c7fe7038e648a7bcb3f5ce3e6705c12c481/data/index.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/d9962113a1acc95c2d7522c2babfb989afbeb034/data/index.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/index.json"
     },
     {
@@ -388,24 +388,24 @@
       "observed_content_sha256": "bf299b4961972eae6c8c6924c494e934205e72eab1aa062b9b3457eebcbc1bdc",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "c952b113916d255d926b27e4fc629a767d929f32ba68af0f058caee77fc4bf86",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/99015c7fe7038e648a7bcb3f5ce3e6705c12c481/data/methodology.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/d9962113a1acc95c2d7522c2babfb989afbeb034/data/methodology.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/methodology.json"
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "eb527d1a83d2481c669f756f3775ad91c91341875de2bcf36485e9108d85160e",
+      "observed_content_sha256": "f4747f3c1f27f16ba725286334d07b78502dff38934c6c66e62f1a5fdc13071e",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "7b5a4586e1260d58dd534721d5f7ce278718effe469d3912747cff48cc7b8a51",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/99015c7fe7038e648a7bcb3f5ce3e6705c12c481/data/v03.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/d9962113a1acc95c2d7522c2babfb989afbeb034/data/v03.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/v03.json"
     }
   ],
   "editorial_review_required_count": 13,
   "error_code_counts": {
-    "insufficient_content": 89,
-    "unavailable": 68
+    "insufficient_content": 97,
+    "unavailable": 69
   },
-  "error_count": 157,
+  "error_count": 166,
   "error_examples_count": 100,
   "error_examples_truncated": true,
   "errors": [
@@ -467,6 +467,10 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://github.com/all-hands-ai/openhands"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://github.com/anthropics/skills"
     },
     {
@@ -500,6 +504,10 @@
     {
       "code": "insufficient_content",
       "url": "https://github.com/deepdave98/jev-playground"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://github.com/deepseek-ai/deepseek-harness"
     },
     {
       "code": "insufficient_content",
@@ -723,6 +731,10 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/GGLab/PARADISE"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://huggingface.co/datasets/GroNLP/ik-nlp-22_winemag"
     },
     {
@@ -732,6 +744,14 @@
     {
       "code": "insufficient_content",
       "url": "https://huggingface.co/datasets/SetFit/sst5"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/Zhengping/UNLI"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/bogdanminko/wildguardmix-cleaned"
     },
     {
       "code": "insufficient_content",
@@ -748,6 +768,18 @@
     {
       "code": "insufficient_content",
       "url": "https://huggingface.co/datasets/liminghao1630/API-Bank"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/tasksource/clcd-english"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/tasksource/dynahate"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://huggingface.co/datasets/tasksource/hate_speech18"
     },
     {
       "code": "insufficient_content",
@@ -776,43 +808,11 @@
     {
       "code": "unavailable",
       "url": "https://github.com/agentiloop/bossman"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/arelit/phishnchips"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/bestagentkits/typesafe-demo-mcp"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/chenstarmr/jev-chat-windows"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/fastino-ai/flashdeberta"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/hakkisagdic/neo-vs-morpheus"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/hardel-dw/jev.mods"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/iamno1special/typesafe-sdk-godot"
-    },
-    {
-      "code": "unavailable",
-      "url": "https://github.com/intern_lm/intern-decision"
     }
   ],
-  "excluded_discoveries": 305,
-  "index_revision": "99015c7fe7038e648a7bcb3f5ce3e6705c12c481",
-  "network_requests": 4058,
+  "excluded_discoveries": 312,
+  "index_revision": "d9962113a1acc95c2d7522c2babfb989afbeb034",
+  "network_requests": 4162,
   "phase_budget_seconds": {
     "ecosystem": 840,
     "research": 240
@@ -823,7 +823,7 @@
   "retry_budget_exhausted_phases": [],
   "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-21T20:12:57+00:00",
+  "started_at": "2026-10-22T09:27:01+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources.",
   "carried_forward_pending_count": 12,
@@ -837,7 +837,7 @@
     "https://github.com/etsabary/jev-1.14-comparison-benchmark",
     "https://github.com/hakkisagdic/sosariaai",
     "https://github.com/jevplays-games/jev-factorio-agent",
-    "https://github.com/jundot/omlx",
+    "https://huggingface.co/Nace-DeepInfra/Drex-Max-v1",
     "https://huggingface.co/datasets/social-jev/desta",
     "https://huggingface.co/datasets/social-jev/maud"
   ],
