@@ -1,5 +1,5 @@
 {
-  "added_count": 584,
+  "added_count": 642,
   "added_urls": [
     "https://aclanthology.org/2024.naacl-long.301",
     "https://aclanthology.org/2025.findings-naacl.441",
@@ -37,6 +37,7 @@
     "https://arxiv.org/abs/2506.00641",
     "https://arxiv.org/abs/2506.20923",
     "https://arxiv.org/abs/2506.21252",
+    "https://arxiv.org/abs/2508.07662",
     "https://arxiv.org/abs/2509.23938",
     "https://arxiv.org/abs/2510.10444",
     "https://arxiv.org/abs/2510.18596",
@@ -94,13 +95,12 @@
     "https://arxiv.org/abs/2610.30090",
     "https://arxiv.org/abs/2610.30777",
     "https://arxiv.org/abs/2610.30947",
+    "https://arxiv.org/abs/2610.30970",
     "https://github.com/1000luca/flexdm",
     "https://github.com/7starsseeker/dsh-fact-check",
+    "https://github.com/abeldzan/jev-rs",
     "https://github.com/adelvillar1/blend1",
-    "https://github.com/adelvillar1/sem1",
-    "https://github.com/adelvillar1/sys1",
-    "https://github.com/adorosario/jev-rag-claim-verification",
-    "https://github.com/agentculture/jev-factory"
+    "https://github.com/adelvillar1/sem1"
   ],
   "arxiv_discovery": {
     "direct_candidates": 151,
@@ -113,7 +113,7 @@
     "verified_new": 44
   },
   "changed": true,
-  "changed_count": 475,
+  "changed_count": 487,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -128,11 +128,13 @@
     "https://arxiv.org/abs/1701.06538",
     "https://arxiv.org/abs/1706.03762",
     "https://arxiv.org/abs/1706.04599",
+    "https://arxiv.org/abs/1906.00274",
     "https://arxiv.org/abs/1909.05855",
     "https://arxiv.org/abs/1910.14599",
     "https://arxiv.org/abs/2003.04807",
     "https://arxiv.org/abs/2011.03088",
     "https://arxiv.org/abs/2203.05482",
+    "https://arxiv.org/abs/2209.06293",
     "https://arxiv.org/abs/2209.06794",
     "https://arxiv.org/abs/2210.09261",
     "https://arxiv.org/abs/2212.10947",
@@ -212,20 +214,18 @@
     "https://dev.to/nandakishor_m_6cc0adfde9f/i-built-non-autoregressive-decision-models-a-year-ago-then-a-frontier-lab-called-it-a-18me",
     "https://docs.typesafe.ai/agent-skill",
     "https://docs.typesafe.ai/concepts/how-to-build-with-system-one",
-    "https://docs.typesafe.ai/concepts/state",
-    "https://docs.typesafe.ai/concepts/system-one",
-    "https://docs.typesafe.ai/concepts/use-case-map"
+    "https://docs.typesafe.ai/concepts/state"
   ],
-  "completed_at": "2026-10-23T09:26:01+00:00",
+  "completed_at": "2026-10-23T20:00:48+00:00",
   "counts": {
-    "abstract_checked": 1937,
-    "checked_sources": 4838,
-    "content_screened": 2897,
+    "abstract_checked": 1980,
+    "checked_sources": 4896,
+    "content_screened": 2912,
     "duplicate_records": 22,
     "editorial_reviewed": 4,
     "metadata_only": 69,
-    "raw_records": 4929,
-    "unique_records": 4907
+    "raw_records": 4987,
+    "unique_records": 4965
   },
   "curation_excluded_count": 3,
   "dry_run": false,
@@ -339,7 +339,7 @@
     },
     {
       "note": "Pinned primary abstract preserved without a grade change; observed version: https://arxiv.org/abs/2610.21411v2. Maintainer review is required before replacing the pinned evidence.",
-      "observed_abstract_page_sha256": "c6c234dc8f2dce7086487883771a37f677cc98b072951997f5e1a8a21343740b",
+      "observed_abstract_page_sha256": "7e3c4cf108a948ba982b0fd37eb8c26ec80e3d0ddf5af25cea86be1fcbf30a63",
       "observed_abstract_sha256": "097a055e166e2bee05e94fa0cd5e1d716b7e2432adb8f992d42286d519ae4313",
       "observed_content_sha256": "097a055e166e2bee05e94fa0cd5e1d716b7e2432adb8f992d42286d519ae4313",
       "observed_first_submitted": "2026-10-15",
@@ -417,11 +417,10 @@
   ],
   "editorial_review_required_count": 14,
   "error_code_counts": {
-    "insufficient_content": 96,
-    "paper_query_failed:retry_after_exceeded": 15,
-    "unavailable": 70
+    "insufficient_content": 95,
+    "unavailable": 72
   },
-  "error_count": 181,
+  "error_count": 167,
   "error_examples_count": 100,
   "error_examples_truncated": true,
   "errors": [
@@ -480,10 +479,6 @@
     {
       "code": "insufficient_content",
       "url": "https://github.com/all-hands-ai/openhands"
-    },
-    {
-      "code": "insufficient_content",
-      "url": "https://github.com/anthropics/skills"
     },
     {
       "code": "insufficient_content",
@@ -810,83 +805,48 @@
       "url": "https://huggingface.co/spaces/ai-forever/FRIDA-Decisions"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judge+bias&limit=120"
+      "code": "unavailable",
+      "url": "https://anonymous.4open.science/r/jev_ordinal_scale_bia"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judge+consistency&limit=120"
+      "code": "unavailable",
+      "url": "https://cs.rochester.edu/u/nhossain/humicroedit.html"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judges+uncertainty&limit=120"
+      "code": "unavailable",
+      "url": "https://github.com/0xleonhack/tellagent"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+model+routing&limit=120"
+      "code": "unavailable",
+      "url": "https://github.com/adelvillar1/gen1"
+    },
+    {
+      "code": "unavailable",
+      "url": "https://github.com/agentiloop/bossman"
     }
   ],
-  "excluded_discoveries": 312,
+  "excluded_discoveries": 311,
   "index_revision": "0b5ecaf2396891e76c13a19aa17b874b59abcc37",
-  "network_requests": 4193,
+  "network_requests": 4222,
   "phase_budget_seconds": {
     "ecosystem": 840,
     "research": 240
   },
-  "preserved_after_failure": 36,
+  "preserved_after_failure": 38,
   "privacy_rejected_records": 0,
   "retry_budget_exhausted": false,
   "retry_budget_exhausted_phases": [],
   "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-23T09:23:29+00:00",
+  "started_at": "2026-10-23T19:58:14+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources.",
-  "carried_forward_pending_count": 55,
+  "carried_forward_pending_count": 16,
   "carried_forward_pending_urls": [
     "https://aclanthology.org/2023.acl-long.368",
-    "https://arxiv.org/abs/2307.13692",
-    "https://arxiv.org/abs/2310.02527",
-    "https://arxiv.org/abs/2310.08491",
-    "https://arxiv.org/abs/2401.02009",
-    "https://arxiv.org/abs/2401.06591",
-    "https://arxiv.org/abs/2411.03659",
-    "https://arxiv.org/abs/2501.11721",
-    "https://arxiv.org/abs/2503.23339",
-    "https://arxiv.org/abs/2503.23899",
-    "https://arxiv.org/abs/2505.08775",
-    "https://arxiv.org/abs/2505.13388",
-    "https://arxiv.org/abs/2508.02886",
-    "https://arxiv.org/abs/2509.25534",
-    "https://arxiv.org/abs/2510.02663",
-    "https://arxiv.org/abs/2511.16139",
-    "https://arxiv.org/abs/2511.17689",
-    "https://arxiv.org/abs/2512.21402",
-    "https://arxiv.org/abs/2601.03023",
-    "https://arxiv.org/abs/2601.15161",
-    "https://arxiv.org/abs/2601.16669",
     "https://arxiv.org/abs/2601.22155",
-    "https://arxiv.org/abs/2602.03619",
-    "https://arxiv.org/abs/2602.08321",
-    "https://arxiv.org/abs/2602.10367",
-    "https://arxiv.org/abs/2603.01343",
-    "https://arxiv.org/abs/2603.03142",
-    "https://arxiv.org/abs/2603.03330",
-    "https://arxiv.org/abs/2603.26710",
-    "https://arxiv.org/abs/2604.02795",
-    "https://arxiv.org/abs/2604.05306",
-    "https://arxiv.org/abs/2604.27629",
-    "https://arxiv.org/abs/2606.00251",
-    "https://arxiv.org/abs/2606.05112",
-    "https://arxiv.org/abs/2606.27264",
-    "https://arxiv.org/abs/2607.25659",
     "https://arxiv.org/abs/2609.11414",
-    "https://arxiv.org/abs/2609.16816",
-    "https://arxiv.org/abs/2609.34274",
-    "https://arxiv.org/abs/2609.39071",
-    "https://arxiv.org/abs/2610.01938",
-    "https://arxiv.org/abs/2610.12758",
-    "https://arxiv.org/abs/2610.22314",
+    "https://doi.org/10.1186/s11689-025-09668-8",
     "https://doi.org/10.48550/arxiv.2601.03042",
     "https://doi.org/10.48550/arxiv.2610.22929",
     "https://github.com/dabit3/jev-experiments",
