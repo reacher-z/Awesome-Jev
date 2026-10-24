@@ -1,5 +1,5 @@
 {
-  "added_count": 602,
+  "added_count": 652,
   "added_urls": [
     "https://aclanthology.org/2024.naacl-long.301",
     "https://aclanthology.org/2025.findings-naacl.441",
@@ -113,7 +113,7 @@
     "verified_new": 44
   },
   "changed": true,
-  "changed_count": 489,
+  "changed_count": 493,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -216,20 +216,20 @@
     "https://docs.typesafe.ai/cookbooks/autoformat",
     "https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery"
   ],
-  "completed_at": "2026-10-24T08:57:42+00:00",
+  "completed_at": "2026-10-24T18:51:24+00:00",
   "counts": {
-    "abstract_checked": 1939,
-    "checked_sources": 4856,
-    "content_screened": 2913,
+    "abstract_checked": 1981,
+    "checked_sources": 4906,
+    "content_screened": 2921,
     "duplicate_records": 22,
     "editorial_reviewed": 4,
     "metadata_only": 69,
-    "raw_records": 4947,
-    "unique_records": 4925
+    "raw_records": 4997,
+    "unique_records": 4975
   },
-  "curation_excluded_count": 2,
+  "curation_excluded_count": 3,
   "dry_run": false,
-  "duplicate_candidates_skipped": 19,
+  "duplicate_candidates_skipped": 18,
   "editorial_examples_truncated": false,
   "editorial_refresh_candidates": [
     {
@@ -264,7 +264,7 @@
     },
     {
       "note": "Pinned primary abstract preserved without a grade change; observed version: https://arxiv.org/abs/2610.00381v1. Maintainer review is required before replacing the pinned evidence.",
-      "observed_abstract_page_sha256": "977a292cea521aa54ef5cd63ce27d40c12256db001dae39e111893008fd74d2e",
+      "observed_abstract_page_sha256": "685d7de0549cf16cdb551ad0fc3ad148600f7139d773c38638ff2ecf301938a1",
       "observed_abstract_sha256": "74415286ed9eb2560fa34125ad501015d02034eda2ead91ae827355534042b9a",
       "observed_content_sha256": "74415286ed9eb2560fa34125ad501015d02034eda2ead91ae827355534042b9a",
       "observed_first_submitted": "2026-09-30",
@@ -369,7 +369,7 @@
     },
     {
       "note": "Pinned primary abstract preserved without a grade change; observed version: https://arxiv.org/abs/2610.22066v2. Maintainer review is required before replacing the pinned evidence.",
-      "observed_abstract_page_sha256": "cac1954ebaa4f9d2c94275e401f57148cbb73866ce44701d2df78d96a3a7dde9",
+      "observed_abstract_page_sha256": "ed0c26091f9e384327ae37e4a33a3ef49450ea5cd0c51e70b40fcad0fa144c7e",
       "observed_abstract_sha256": "42fb228ac2f90cf10f8d36d9a1f91910799883260f9fba72d76137ffbd46cbcb",
       "observed_content_sha256": "42fb228ac2f90cf10f8d36d9a1f91910799883260f9fba72d76137ffbd46cbcb",
       "observed_first_submitted": "2026-10-15",
@@ -418,10 +418,10 @@
   "editorial_review_required_count": 14,
   "error_code_counts": {
     "insufficient_content": 95,
-    "paper_query_failed:retry_after_exceeded": 15,
-    "unavailable": 72
+    "paper_query_failed:retry_after_exceeded": 4,
+    "unavailable": 73
   },
-  "error_count": 182,
+  "error_count": 172,
   "error_examples_count": 100,
   "error_examples_truncated": true,
   "errors": [
@@ -807,28 +807,28 @@
     },
     {
       "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judge+bias&limit=120"
+      "url": "https://huggingface.co/api/papers/search?q=cost+sensitive+classification&limit=120"
     },
     {
       "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judge+consistency&limit=120"
+      "url": "https://huggingface.co/api/papers/search?q=efficient+classifier+early+exit&limit=120"
     },
     {
       "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+judges+uncertainty&limit=120"
+      "url": "https://huggingface.co/api/papers/search?q=learning+to+route+language+models&limit=120"
     },
     {
       "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=LLM+model+routing&limit=120"
+      "url": "https://huggingface.co/api/papers/search?q=model+routing+calibrated+confidence&limit=120"
     },
     {
-      "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=adaptive+inference+language+models&limit=120"
+      "code": "unavailable",
+      "url": "https://anonymous.4open.science/r/jev_ordinal_scale_bia"
     }
   ],
-  "excluded_discoveries": 311,
+  "excluded_discoveries": 312,
   "index_revision": "0b5ecaf2396891e76c13a19aa17b874b59abcc37",
-  "network_requests": 4222,
+  "network_requests": 4235,
   "phase_budget_seconds": {
     "ecosystem": 840,
     "research": 240
@@ -839,58 +839,18 @@
   "retry_budget_exhausted_phases": [],
   "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-24T08:55:15+00:00",
+  "started_at": "2026-10-24T18:49:21+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources.",
-  "carried_forward_pending_count": 57,
+  "carried_forward_pending_count": 17,
   "carried_forward_pending_urls": [
     "https://aclanthology.org/2023.acl-long.368",
-    "https://arxiv.org/abs/2307.13692",
-    "https://arxiv.org/abs/2310.02527",
-    "https://arxiv.org/abs/2310.08491",
-    "https://arxiv.org/abs/2401.02009",
-    "https://arxiv.org/abs/2401.06591",
-    "https://arxiv.org/abs/2411.03659",
-    "https://arxiv.org/abs/2501.11721",
-    "https://arxiv.org/abs/2503.23339",
-    "https://arxiv.org/abs/2503.23899",
-    "https://arxiv.org/abs/2505.08775",
-    "https://arxiv.org/abs/2505.13388",
-    "https://arxiv.org/abs/2508.02886",
-    "https://arxiv.org/abs/2509.25534",
-    "https://arxiv.org/abs/2510.02663",
-    "https://arxiv.org/abs/2511.16139",
-    "https://arxiv.org/abs/2511.17689",
-    "https://arxiv.org/abs/2512.21402",
-    "https://arxiv.org/abs/2601.03023",
-    "https://arxiv.org/abs/2601.15161",
-    "https://arxiv.org/abs/2601.16669",
     "https://arxiv.org/abs/2601.22155",
-    "https://arxiv.org/abs/2602.03619",
-    "https://arxiv.org/abs/2602.08321",
-    "https://arxiv.org/abs/2602.10367",
-    "https://arxiv.org/abs/2603.01343",
-    "https://arxiv.org/abs/2603.03142",
-    "https://arxiv.org/abs/2603.03330",
-    "https://arxiv.org/abs/2603.26710",
-    "https://arxiv.org/abs/2604.02795",
-    "https://arxiv.org/abs/2604.05306",
-    "https://arxiv.org/abs/2604.27629",
-    "https://arxiv.org/abs/2606.00251",
-    "https://arxiv.org/abs/2606.05112",
-    "https://arxiv.org/abs/2606.27264",
-    "https://arxiv.org/abs/2607.25659",
     "https://arxiv.org/abs/2609.11414",
-    "https://arxiv.org/abs/2609.16816",
-    "https://arxiv.org/abs/2609.34274",
-    "https://arxiv.org/abs/2609.39071",
-    "https://arxiv.org/abs/2610.01938",
-    "https://arxiv.org/abs/2610.12758",
-    "https://arxiv.org/abs/2610.19705",
-    "https://arxiv.org/abs/2610.22314",
-    "https://doi.org/10.1186/s11689-025-09668-8",
     "https://doi.org/10.48550/arxiv.2601.03042",
     "https://doi.org/10.48550/arxiv.2610.22929",
+    "https://doi.org/10.48550/arxiv.2610.29067",
+    "https://doi.org/10.6084/m9.figshare.c.8296935",
     "https://github.com/dabit3/jev-experiments",
     "https://github.com/etsabary/jev-1.14-comparison-benchmark",
     "https://github.com/hakkisagdic/sosariaai",
