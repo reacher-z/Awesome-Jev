@@ -1,8 +1,9 @@
 {
-  "added_count": 613,
+  "added_count": 617,
   "added_urls": [
     "https://aclanthology.org/2024.naacl-long.301",
     "https://aclanthology.org/2025.findings-naacl.441",
+    "https://aclanthology.org/2026.lrec-1.546",
     "https://arxiv.org/abs/1011.0686",
     "https://arxiv.org/abs/1508.05326",
     "https://arxiv.org/abs/1704.05426",
@@ -99,8 +100,7 @@
     "https://github.com/1000luca/flexdm",
     "https://github.com/7starsseeker/dsh-fact-check",
     "https://github.com/abeldzan/jev-rs",
-    "https://github.com/adelvillar1/blend1",
-    "https://github.com/adelvillar1/sem1"
+    "https://github.com/adelvillar1/blend1"
   ],
   "arxiv_discovery": {
     "direct_candidates": 151,
@@ -113,7 +113,7 @@
     "verified_new": 44
   },
   "changed": true,
-  "changed_count": 498,
+  "changed_count": 507,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -216,16 +216,16 @@
     "https://docs.typesafe.ai/concepts/system-one",
     "https://docs.typesafe.ai/concepts/use-case-map"
   ],
-  "completed_at": "2026-10-25T09:13:35+00:00",
+  "completed_at": "2026-10-25T19:07:13+00:00",
   "counts": {
     "abstract_checked": 1940,
-    "checked_sources": 4867,
-    "content_screened": 2923,
-    "duplicate_records": 22,
+    "checked_sources": 4872,
+    "content_screened": 2928,
+    "duplicate_records": 21,
     "editorial_reviewed": 4,
     "metadata_only": 69,
-    "raw_records": 4958,
-    "unique_records": 4936
+    "raw_records": 4962,
+    "unique_records": 4941
   },
   "curation_excluded_count": 3,
   "dry_run": false,
@@ -417,11 +417,11 @@
   ],
   "editorial_review_required_count": 14,
   "error_code_counts": {
-    "insufficient_content": 95,
-    "paper_query_failed:retry_after_exceeded": 14,
-    "unavailable": 73
+    "insufficient_content": 94,
+    "paper_query_failed:retry_after_exceeded": 15,
+    "unavailable": 74
   },
-  "error_count": 182,
+  "error_count": 183,
   "error_examples_count": 100,
   "error_examples_truncated": true,
   "errors": [
@@ -551,7 +551,7 @@
     },
     {
       "code": "insufficient_content",
-      "url": "https://github.com/jaimebuelta/jev-webinar"
+      "url": "https://github.com/jaimebuelta/jev-workshop"
     },
     {
       "code": "insufficient_content",
@@ -596,10 +596,6 @@
     {
       "code": "insufficient_content",
       "url": "https://github.com/mlc-ai/xgrammar"
-    },
-    {
-      "code": "insufficient_content",
-      "url": "https://github.com/morluto/rea"
     },
     {
       "code": "insufficient_content",
@@ -815,6 +811,10 @@
     },
     {
       "code": "paper_query_failed:retry_after_exceeded",
+      "url": "https://huggingface.co/api/papers/search?q=LLM+judges+uncertainty&limit=120"
+    },
+    {
+      "code": "paper_query_failed:retry_after_exceeded",
       "url": "https://huggingface.co/api/papers/search?q=LLM+model+routing&limit=120"
     },
     {
@@ -826,9 +826,9 @@
       "url": "https://huggingface.co/api/papers/search?q=calibrating+language+model+evaluators&limit=120"
     }
   ],
-  "excluded_discoveries": 312,
+  "excluded_discoveries": 313,
   "index_revision": "0b5ecaf2396891e76c13a19aa17b874b59abcc37",
-  "network_requests": 4237,
+  "network_requests": 4248,
   "phase_budget_seconds": {
     "ecosystem": 840,
     "research": 240
@@ -839,10 +839,10 @@
   "retry_budget_exhausted_phases": [],
   "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-25T09:11:36+00:00",
+  "started_at": "2026-10-25T19:05:31+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources.",
-  "carried_forward_pending_count": 58,
+  "carried_forward_pending_count": 61,
   "carried_forward_pending_urls": [
     "https://aclanthology.org/2023.acl-long.368",
     "https://arxiv.org/abs/2307.13692",
@@ -850,6 +850,7 @@
     "https://arxiv.org/abs/2310.08491",
     "https://arxiv.org/abs/2401.02009",
     "https://arxiv.org/abs/2401.06591",
+    "https://arxiv.org/abs/2409.18645",
     "https://arxiv.org/abs/2411.03659",
     "https://arxiv.org/abs/2501.11721",
     "https://arxiv.org/abs/2503.23339",
@@ -895,6 +896,8 @@
     "https://github.com/dabit3/jev-experiments",
     "https://github.com/etsabary/jev-1.14-comparison-benchmark",
     "https://github.com/hakkisagdic/sosariaai",
+    "https://github.com/jaimebuelta/jev-webinar",
+    "https://github.com/jevplay-games/jev-factorio-agent",
     "https://github.com/jevplays-games/jev-factorio-agent",
     "https://huggingface.co/Nace-DeepInfra/Drex-Max-v1",
     "https://huggingface.co/PelaAI/KnowLine-26B-A4B-Gen2",
