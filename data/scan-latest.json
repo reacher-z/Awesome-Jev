@@ -1,5 +1,5 @@
 {
-  "added_count": 652,
+  "added_count": 613,
   "added_urls": [
     "https://aclanthology.org/2024.naacl-long.301",
     "https://aclanthology.org/2025.findings-naacl.441",
@@ -113,7 +113,7 @@
     "verified_new": 44
   },
   "changed": true,
-  "changed_count": 493,
+  "changed_count": 498,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -128,7 +128,6 @@
     "https://arxiv.org/abs/1701.06538",
     "https://arxiv.org/abs/1706.03762",
     "https://arxiv.org/abs/1706.04599",
-    "https://arxiv.org/abs/1906.00274",
     "https://arxiv.org/abs/1909.05855",
     "https://arxiv.org/abs/1910.14599",
     "https://arxiv.org/abs/2003.04807",
@@ -142,6 +141,7 @@
     "https://arxiv.org/abs/2304.08244",
     "https://arxiv.org/abs/2305.15334",
     "https://arxiv.org/abs/2309.06180",
+    "https://arxiv.org/abs/2310.16049",
     "https://arxiv.org/abs/2312.04350",
     "https://arxiv.org/abs/2401.03065",
     "https://arxiv.org/abs/2402.04494",
@@ -152,14 +152,15 @@
     "https://arxiv.org/abs/2406.15657",
     "https://arxiv.org/abs/2407.12883",
     "https://arxiv.org/abs/2409.19839",
+    "https://arxiv.org/abs/2502.14786",
     "https://arxiv.org/abs/2503.01763",
     "https://arxiv.org/abs/2503.23303",
     "https://arxiv.org/abs/2505.09388",
     "https://arxiv.org/abs/2507.18546",
     "https://arxiv.org/abs/2510.01237",
-    "https://arxiv.org/abs/2510.06528",
     "https://arxiv.org/abs/2510.08731",
     "https://arxiv.org/abs/2510.26835",
+    "https://arxiv.org/abs/2512.16899",
     "https://arxiv.org/abs/2607.02770",
     "https://arxiv.org/abs/2609.08183",
     "https://arxiv.org/abs/2609.14973",
@@ -179,6 +180,7 @@
     "https://arxiv.org/abs/2609.32160",
     "https://arxiv.org/abs/2609.33209",
     "https://arxiv.org/abs/2609.33401",
+    "https://arxiv.org/abs/2609.34227",
     "https://arxiv.org/abs/2609.35342",
     "https://arxiv.org/abs/2609.36965",
     "https://arxiv.org/abs/2609.37647",
@@ -212,24 +214,22 @@
     "https://docs.typesafe.ai/concepts/how-to-build-with-system-one",
     "https://docs.typesafe.ai/concepts/state",
     "https://docs.typesafe.ai/concepts/system-one",
-    "https://docs.typesafe.ai/concepts/use-case-map",
-    "https://docs.typesafe.ai/cookbooks/autoformat",
-    "https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery"
+    "https://docs.typesafe.ai/concepts/use-case-map"
   ],
-  "completed_at": "2026-10-24T18:51:24+00:00",
+  "completed_at": "2026-10-25T09:13:35+00:00",
   "counts": {
-    "abstract_checked": 1981,
-    "checked_sources": 4906,
-    "content_screened": 2921,
+    "abstract_checked": 1940,
+    "checked_sources": 4867,
+    "content_screened": 2923,
     "duplicate_records": 22,
     "editorial_reviewed": 4,
     "metadata_only": 69,
-    "raw_records": 4997,
-    "unique_records": 4975
+    "raw_records": 4958,
+    "unique_records": 4936
   },
   "curation_excluded_count": 3,
   "dry_run": false,
-  "duplicate_candidates_skipped": 18,
+  "duplicate_candidates_skipped": 19,
   "editorial_examples_truncated": false,
   "editorial_refresh_candidates": [
     {
@@ -418,10 +418,10 @@
   "editorial_review_required_count": 14,
   "error_code_counts": {
     "insufficient_content": 95,
-    "paper_query_failed:retry_after_exceeded": 4,
+    "paper_query_failed:retry_after_exceeded": 14,
     "unavailable": 73
   },
-  "error_count": 172,
+  "error_count": 182,
   "error_examples_count": 100,
   "error_examples_truncated": true,
   "errors": [
@@ -807,28 +807,28 @@
     },
     {
       "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=cost+sensitive+classification&limit=120"
+      "url": "https://huggingface.co/api/papers/search?q=LLM+judge+bias&limit=120"
     },
     {
       "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=efficient+classifier+early+exit&limit=120"
+      "url": "https://huggingface.co/api/papers/search?q=LLM+judge+consistency&limit=120"
     },
     {
       "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=learning+to+route+language+models&limit=120"
+      "url": "https://huggingface.co/api/papers/search?q=LLM+model+routing&limit=120"
     },
     {
       "code": "paper_query_failed:retry_after_exceeded",
-      "url": "https://huggingface.co/api/papers/search?q=model+routing+calibrated+confidence&limit=120"
+      "url": "https://huggingface.co/api/papers/search?q=adaptive+inference+language+models&limit=120"
     },
     {
-      "code": "unavailable",
-      "url": "https://anonymous.4open.science/r/jev_ordinal_scale_bia"
+      "code": "paper_query_failed:retry_after_exceeded",
+      "url": "https://huggingface.co/api/papers/search?q=calibrating+language+model+evaluators&limit=120"
     }
   ],
   "excluded_discoveries": 312,
   "index_revision": "0b5ecaf2396891e76c13a19aa17b874b59abcc37",
-  "network_requests": 4235,
+  "network_requests": 4237,
   "phase_budget_seconds": {
     "ecosystem": 840,
     "research": 240
@@ -839,14 +839,55 @@
   "retry_budget_exhausted_phases": [],
   "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-24T18:49:21+00:00",
+  "started_at": "2026-10-25T09:11:36+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources.",
-  "carried_forward_pending_count": 17,
+  "carried_forward_pending_count": 58,
   "carried_forward_pending_urls": [
     "https://aclanthology.org/2023.acl-long.368",
+    "https://arxiv.org/abs/2307.13692",
+    "https://arxiv.org/abs/2310.02527",
+    "https://arxiv.org/abs/2310.08491",
+    "https://arxiv.org/abs/2401.02009",
+    "https://arxiv.org/abs/2401.06591",
+    "https://arxiv.org/abs/2411.03659",
+    "https://arxiv.org/abs/2501.11721",
+    "https://arxiv.org/abs/2503.23339",
+    "https://arxiv.org/abs/2503.23899",
+    "https://arxiv.org/abs/2505.08775",
+    "https://arxiv.org/abs/2505.13388",
+    "https://arxiv.org/abs/2508.02886",
+    "https://arxiv.org/abs/2509.25534",
+    "https://arxiv.org/abs/2510.02663",
+    "https://arxiv.org/abs/2511.16139",
+    "https://arxiv.org/abs/2511.17689",
+    "https://arxiv.org/abs/2512.21402",
+    "https://arxiv.org/abs/2601.03023",
+    "https://arxiv.org/abs/2601.15161",
+    "https://arxiv.org/abs/2601.16669",
     "https://arxiv.org/abs/2601.22155",
+    "https://arxiv.org/abs/2602.03619",
+    "https://arxiv.org/abs/2602.08321",
+    "https://arxiv.org/abs/2602.10367",
+    "https://arxiv.org/abs/2603.01343",
+    "https://arxiv.org/abs/2603.03142",
+    "https://arxiv.org/abs/2603.03330",
+    "https://arxiv.org/abs/2603.26710",
+    "https://arxiv.org/abs/2604.02795",
+    "https://arxiv.org/abs/2604.05306",
+    "https://arxiv.org/abs/2604.27629",
+    "https://arxiv.org/abs/2606.00251",
+    "https://arxiv.org/abs/2606.05112",
+    "https://arxiv.org/abs/2606.27264",
+    "https://arxiv.org/abs/2607.25659",
     "https://arxiv.org/abs/2609.11414",
+    "https://arxiv.org/abs/2609.16816",
+    "https://arxiv.org/abs/2609.34274",
+    "https://arxiv.org/abs/2609.39071",
+    "https://arxiv.org/abs/2610.01938",
+    "https://arxiv.org/abs/2610.12758",
+    "https://arxiv.org/abs/2610.19705",
+    "https://arxiv.org/abs/2610.22314",
     "https://doi.org/10.48550/arxiv.2601.03042",
     "https://doi.org/10.48550/arxiv.2610.22929",
     "https://doi.org/10.48550/arxiv.2610.29067",
