@@ -1,5 +1,5 @@
 {
-  "added_count": 722,
+  "added_count": 701,
   "added_urls": [
     "https://aclanthology.org/2024.naacl-long.301",
     "https://aclanthology.org/2025.findings-naacl.441",
@@ -113,7 +113,7 @@
     "verified_new": 60
   },
   "changed": true,
-  "changed_count": 557,
+  "changed_count": 560,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -125,6 +125,7 @@
     "https://aclanthology.org/2025.naacl-long.174",
     "https://artificialanalysis.ai/evaluations/artificial-analysis-decision-index",
     "https://artificialanalysis.ai/methodology/decision-index",
+    "https://arxiv.org/abs/1701.06538",
     "https://arxiv.org/abs/1706.03762",
     "https://arxiv.org/abs/1706.04599",
     "https://arxiv.org/abs/1906.00274",
@@ -152,11 +153,12 @@
     "https://arxiv.org/abs/2406.15657",
     "https://arxiv.org/abs/2407.12883",
     "https://arxiv.org/abs/2409.19839",
+    "https://arxiv.org/abs/2502.14786",
     "https://arxiv.org/abs/2503.01763",
     "https://arxiv.org/abs/2503.23303",
+    "https://arxiv.org/abs/2505.09388",
     "https://arxiv.org/abs/2507.18546",
     "https://arxiv.org/abs/2510.01237",
-    "https://arxiv.org/abs/2510.06528",
     "https://arxiv.org/abs/2510.08731",
     "https://arxiv.org/abs/2510.26835",
     "https://arxiv.org/abs/2512.16899",
@@ -208,28 +210,26 @@
     "https://arxiv.org/abs/2610.21244",
     "https://arxiv.org/abs/2610.21412",
     "https://arxiv.org/abs/2610.22131",
+    "https://dev.to/mapika/decider-one-forward-pass-typed-decisions-calibrated-probabilities-32c9",
     "https://dev.to/nandakishor_m_6cc0adfde9f/i-built-non-autoregressive-decision-models-a-year-ago-then-a-frontier-lab-called-it-a-18me",
     "https://docs.typesafe.ai/agent-skill",
     "https://docs.typesafe.ai/concepts/how-to-build-with-system-one",
-    "https://docs.typesafe.ai/concepts/state",
-    "https://docs.typesafe.ai/concepts/system-one",
-    "https://docs.typesafe.ai/concepts/use-case-map",
-    "https://docs.typesafe.ai/cookbooks/autoformat"
+    "https://docs.typesafe.ai/concepts/state"
   ],
-  "completed_at": "2026-10-28T10:40:29+00:00",
+  "completed_at": "2026-10-28T21:10:42+00:00",
   "counts": {
-    "abstract_checked": 2017,
-    "checked_sources": 4975,
-    "content_screened": 2954,
+    "abstract_checked": 1974,
+    "checked_sources": 4952,
+    "content_screened": 2974,
     "duplicate_records": 22,
     "editorial_reviewed": 4,
-    "metadata_only": 70,
-    "raw_records": 5067,
-    "unique_records": 5045
+    "metadata_only": 72,
+    "raw_records": 5046,
+    "unique_records": 5024
   },
   "curation_excluded_count": 2,
   "dry_run": false,
-  "duplicate_candidates_skipped": 19,
+  "duplicate_candidates_skipped": 18,
   "editorial_examples_truncated": false,
   "editorial_refresh_candidates": [
     {
@@ -399,18 +399,18 @@
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "ae670fc4563ba713ff65245df7edc417b6d2cf50a9344fe448635901c34754b1",
+      "observed_content_sha256": "7d5f8016f94d4b0f53725cc25778424f801592cb23b11cb14b6c71cb759c3be2",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "243a2c72bebfff94e1a8f7d047b4a3b60b5efa8869972a8d62818245b615f2c3",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/8088f239a434a0e9f6fc172827f4821a5fa56b08/README.md",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/354f4d8d852d2bcc48168fd321e589c08b9fb71d/README.md",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index"
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "f3a7ab7a6417a856808439bceda61e55eac380e7514a52b51dc7c606bdf64c0b",
+      "observed_content_sha256": "c82aba321affb114e34931b499a19d83495c14af03e69e492ecdad76c0572d2c",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "23496572ce8da74277208b5796060331b366b015a800f281e7df21960a9ef609",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/8088f239a434a0e9f6fc172827f4821a5fa56b08/data/index.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/354f4d8d852d2bcc48168fd321e589c08b9fb71d/data/index.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/index.json"
     },
     {
@@ -418,34 +418,31 @@
       "observed_content_sha256": "bf299b4961972eae6c8c6924c494e934205e72eab1aa062b9b3457eebcbc1bdc",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "c952b113916d255d926b27e4fc629a767d929f32ba68af0f058caee77fc4bf86",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/8088f239a434a0e9f6fc172827f4821a5fa56b08/data/methodology.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/354f4d8d852d2bcc48168fd321e589c08b9fb71d/data/methodology.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/methodology.json"
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "e25ef77e12a1067815e8f7a737aa9f6ee2bf4a210afd7a3b02db27a54e7e0727",
+      "observed_content_sha256": "f02a77e841de8ba701bd878282c5b2e724539a0fdd2dc810cf0861e87ff298c7",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "7b5a4586e1260d58dd534721d5f7ce278718effe469d3912747cff48cc7b8a51",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/8088f239a434a0e9f6fc172827f4821a5fa56b08/data/v03.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/354f4d8d852d2bcc48168fd321e589c08b9fb71d/data/v03.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/v03.json"
     }
   ],
   "editorial_review_required_count": 15,
   "error_code_counts": {
     "insufficient_content": 101,
-    "unavailable": 75
+    "paper_query_failed:retry_after_exceeded": 15,
+    "unavailable": 76
   },
-  "error_count": 176,
+  "error_count": 192,
   "error_examples_count": 100,
   "error_examples_truncated": true,
   "errors": [
     {
       "code": "insufficient_content",
       "url": "https://contrastive-lm.notion.site"
-    },
-    {
-      "code": "insufficient_content",
-      "url": "https://dev.to/mapika/decider-one-forward-pass-typed-decisions-calibrated-probabilities-32c9"
     },
     {
       "code": "insufficient_content",
@@ -777,6 +774,10 @@
     },
     {
       "code": "insufficient_content",
+      "url": "https://huggingface.co/OneShotOrg/OneShot"
+    },
+    {
+      "code": "insufficient_content",
       "url": "https://huggingface.co/datasets/GGLab/PARADISE"
     },
     {
@@ -840,27 +841,74 @@
       "url": "https://huggingface.co/datasets/zhiqiulin/GenAI-Bench-800"
     }
   ],
-  "excluded_discoveries": 330,
-  "index_revision": "8088f239a434a0e9f6fc172827f4821a5fa56b08",
-  "network_requests": 4333,
+  "excluded_discoveries": 329,
+  "index_revision": "354f4d8d852d2bcc48168fd321e589c08b9fb71d",
+  "network_requests": 4354,
   "phase_budget_seconds": {
     "ecosystem": 840,
     "research": 240
   },
-  "preserved_after_failure": 37,
+  "preserved_after_failure": 36,
   "privacy_rejected_records": 0,
   "retry_budget_exhausted": false,
   "retry_budget_exhausted_phases": [],
   "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-28T10:37:56+00:00",
+  "started_at": "2026-10-28T21:08:39+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources.",
-  "carried_forward_pending_count": 28,
+  "carried_forward_pending_count": 77,
   "carried_forward_pending_urls": [
     "https://aclanthology.org/2023.acl-long.368",
+    "https://arxiv.org/abs/2307.13692",
+    "https://arxiv.org/abs/2310.02527",
+    "https://arxiv.org/abs/2310.08491",
+    "https://arxiv.org/abs/2401.02009",
+    "https://arxiv.org/abs/2401.06591",
+    "https://arxiv.org/abs/2411.03659",
+    "https://arxiv.org/abs/2501.11721",
+    "https://arxiv.org/abs/2503.23339",
+    "https://arxiv.org/abs/2503.23899",
+    "https://arxiv.org/abs/2505.08775",
+    "https://arxiv.org/abs/2505.13388",
+    "https://arxiv.org/abs/2508.02886",
+    "https://arxiv.org/abs/2509.25534",
+    "https://arxiv.org/abs/2510.02663",
+    "https://arxiv.org/abs/2511.16139",
+    "https://arxiv.org/abs/2511.17689",
+    "https://arxiv.org/abs/2512.21402",
+    "https://arxiv.org/abs/2601.03023",
+    "https://arxiv.org/abs/2601.15161",
+    "https://arxiv.org/abs/2601.16669",
     "https://arxiv.org/abs/2601.22155",
+    "https://arxiv.org/abs/2602.03619",
+    "https://arxiv.org/abs/2602.08321",
+    "https://arxiv.org/abs/2602.10367",
+    "https://arxiv.org/abs/2603.01343",
+    "https://arxiv.org/abs/2603.03142",
+    "https://arxiv.org/abs/2603.03330",
+    "https://arxiv.org/abs/2603.26710",
+    "https://arxiv.org/abs/2604.02795",
+    "https://arxiv.org/abs/2604.05306",
+    "https://arxiv.org/abs/2604.27629",
+    "https://arxiv.org/abs/2606.00251",
+    "https://arxiv.org/abs/2606.05112",
+    "https://arxiv.org/abs/2606.27264",
+    "https://arxiv.org/abs/2607.25659",
+    "https://arxiv.org/abs/2609.00434",
+    "https://arxiv.org/abs/2609.11414",
+    "https://arxiv.org/abs/2609.16816",
+    "https://arxiv.org/abs/2609.34274",
+    "https://arxiv.org/abs/2609.39071",
+    "https://arxiv.org/abs/2610.01938",
+    "https://arxiv.org/abs/2610.12758",
+    "https://arxiv.org/abs/2610.19705",
+    "https://arxiv.org/abs/2610.22314",
+    "https://arxiv.org/abs/2610.26511",
+    "https://arxiv.org/abs/2610.27993",
+    "https://arxiv.org/abs/2610.29225",
     "https://doi.org/10.1186/s11689-025-09668-8",
+    "https://doi.org/10.48550/arxiv.2601.03042",
     "https://doi.org/10.48550/arxiv.2610.22929",
     "https://doi.org/10.48550/arxiv.2610.29067",
     "https://github.com/dabit3/jev-experiments",
@@ -870,6 +918,7 @@
     "https://github.com/jevplay-games/jev-factorio-agent",
     "https://github.com/jevplays-games/jev-factorio-agent",
     "https://github.com/juanlentino/connector-for-typesafe-jev",
+    "https://github.com/oxygenailab/fuckopencodefree",
     "https://huggingface.co/Nace-DeepInfra/Drex-Max-v1",
     "https://huggingface.co/PelaAI/KnowLine-26B-A4B-Gen2",
     "https://huggingface.co/PelaAI/KnowLine-4B-Gen5",
@@ -885,7 +934,8 @@
     "https://huggingface.co/datasets/social-jev/desta",
     "https://huggingface.co/datasets/social-jev/maud",
     "https://huggingface.co/datasets/visualwebbench/VisualWebBench",
-    "https://huggingface.co/misa-jsc/misa-ai-2.0-decision-plus"
+    "https://huggingface.co/misa-jsc/misa-ai-2.0-decision-plus",
+    "https://huggingface.co/victorbennett/Verdin-4B"
   ],
   "pending_carry_note": "Absent candidates retained from the prior unmerged bot PR with original evidence and retrieval dates; not newly fetched or accepted into main."
 }
