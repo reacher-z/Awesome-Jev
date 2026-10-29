@@ -1,5 +1,5 @@
 {
-  "added_count": 704,
+  "added_count": 715,
   "added_urls": [
     "https://aclanthology.org/2024.naacl-long.301",
     "https://aclanthology.org/2025.findings-naacl.441",
@@ -113,7 +113,7 @@
     "verified_new": 60
   },
   "changed": true,
-  "changed_count": 561,
+  "changed_count": 575,
   "changed_urls": [
     "https://aclanthology.org/2021.acl-long.29",
     "https://aclanthology.org/2021.findings-emnlp.164",
@@ -129,12 +129,15 @@
     "https://arxiv.org/abs/1706.03762",
     "https://arxiv.org/abs/1706.04599",
     "https://arxiv.org/abs/1906.00274",
+    "https://arxiv.org/abs/1909.05855",
     "https://arxiv.org/abs/1910.14599",
     "https://arxiv.org/abs/2003.04807",
     "https://arxiv.org/abs/2011.03088",
     "https://arxiv.org/abs/2203.05482",
     "https://arxiv.org/abs/2209.06293",
+    "https://arxiv.org/abs/2209.06794",
     "https://arxiv.org/abs/2210.09261",
+    "https://arxiv.org/abs/2212.10947",
     "https://arxiv.org/abs/2303.15343",
     "https://arxiv.org/abs/2304.08244",
     "https://arxiv.org/abs/2305.15334",
@@ -146,16 +149,20 @@
     "https://arxiv.org/abs/2402.05099",
     "https://arxiv.org/abs/2403.12031",
     "https://arxiv.org/abs/2404.00242",
+    "https://arxiv.org/abs/2406.01574",
     "https://arxiv.org/abs/2406.15657",
     "https://arxiv.org/abs/2407.12883",
     "https://arxiv.org/abs/2409.19839",
     "https://arxiv.org/abs/2502.14786",
+    "https://arxiv.org/abs/2503.01763",
     "https://arxiv.org/abs/2503.23303",
     "https://arxiv.org/abs/2505.09388",
     "https://arxiv.org/abs/2507.18546",
     "https://arxiv.org/abs/2510.01237",
+    "https://arxiv.org/abs/2510.06528",
     "https://arxiv.org/abs/2510.08731",
     "https://arxiv.org/abs/2510.26835",
+    "https://arxiv.org/abs/2512.16899",
     "https://arxiv.org/abs/2607.02770",
     "https://arxiv.org/abs/2609.08183",
     "https://arxiv.org/abs/2609.14973",
@@ -205,31 +212,24 @@
     "https://arxiv.org/abs/2610.21412",
     "https://arxiv.org/abs/2610.22131",
     "https://dev.to/mapika/decider-one-forward-pass-typed-decisions-calibrated-probabilities-32c9",
-    "https://dev.to/nandakishor_m_6cc0adfde9f/i-built-non-autoregressive-decision-models-a-year-ago-then-a-frontier-lab-called-it-a-18me",
     "https://docs.typesafe.ai/agent-skill",
     "https://docs.typesafe.ai/concepts/how-to-build-with-system-one",
-    "https://docs.typesafe.ai/concepts/state",
-    "https://docs.typesafe.ai/concepts/system-one",
-    "https://docs.typesafe.ai/concepts/use-case-map",
-    "https://docs.typesafe.ai/cookbooks/autoformat",
-    "https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery",
-    "https://docs.typesafe.ai/cookbooks/basic_memory",
-    "https://docs.typesafe.ai/cookbooks/classification_using_confidence"
+    "https://docs.typesafe.ai/concepts/state"
   ],
-  "completed_at": "2026-10-29T10:58:23+00:00",
+  "completed_at": "2026-10-29T21:13:48+00:00",
   "counts": {
-    "abstract_checked": 1975,
-    "checked_sources": 4955,
-    "content_screened": 2976,
-    "duplicate_records": 22,
+    "abstract_checked": 1976,
+    "checked_sources": 4967,
+    "content_screened": 2987,
+    "duplicate_records": 21,
     "editorial_reviewed": 4,
     "metadata_only": 72,
-    "raw_records": 5049,
-    "unique_records": 5027
+    "raw_records": 5060,
+    "unique_records": 5039
   },
   "curation_excluded_count": 2,
   "dry_run": false,
-  "duplicate_candidates_skipped": 18,
+  "duplicate_candidates_skipped": 19,
   "editorial_examples_truncated": false,
   "editorial_refresh_candidates": [
     {
@@ -399,18 +399,18 @@
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "7d5f8016f94d4b0f53725cc25778424f801592cb23b11cb14b6c71cb759c3be2",
+      "observed_content_sha256": "1602d0e99a56d4dd1f60dff735f71563223be2a2bab44abb4cc428a90f52b967",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "243a2c72bebfff94e1a8f7d047b4a3b60b5efa8869972a8d62818245b615f2c3",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/354f4d8d852d2bcc48168fd321e589c08b9fb71d/README.md",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/c130faf65f82e81d3bdefb01e758c712dc5c5199/README.md",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index"
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "c82aba321affb114e34931b499a19d83495c14af03e69e492ecdad76c0572d2c",
+      "observed_content_sha256": "bdfdd5ff3e7700f66e27b4d31274830d8136344d732487a00f74af5c936c72e2",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "23496572ce8da74277208b5796060331b366b015a800f281e7df21960a9ef609",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/354f4d8d852d2bcc48168fd321e589c08b9fb71d/data/index.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/c130faf65f82e81d3bdefb01e758c712dc5c5199/data/index.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/index.json"
     },
     {
@@ -418,31 +418,35 @@
       "observed_content_sha256": "bf299b4961972eae6c8c6924c494e934205e72eab1aa062b9b3457eebcbc1bdc",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "c952b113916d255d926b27e4fc629a767d929f32ba68af0f058caee77fc4bf86",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/354f4d8d852d2bcc48168fd321e589c08b9fb71d/data/methodology.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/c130faf65f82e81d3bdefb01e758c712dc5c5199/data/methodology.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/methodology.json"
     },
     {
       "note": "Prior reviewed record preserved; changed content requires maintainer review.",
-      "observed_content_sha256": "f02a77e841de8ba701bd878282c5b2e724539a0fdd2dc810cf0861e87ff298c7",
+      "observed_content_sha256": "733115c01c4b6c7b78705235fb6fe522323bbf2dc7b2d271ff59f4a0fac29031",
       "observed_verification_level": "content_screened",
       "old_content_sha256": "7b5a4586e1260d58dd534721d5f7ce278718effe469d3912747cff48cc7b8a51",
-      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/354f4d8d852d2bcc48168fd321e589c08b9fb71d/data/v03.json",
+      "retrieved_url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/raw/c130faf65f82e81d3bdefb01e758c712dc5c5199/data/v03.json",
       "url": "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/data/v03.json"
     }
   ],
   "editorial_review_required_count": 15,
   "error_code_counts": {
-    "insufficient_content": 100,
+    "insufficient_content": 101,
     "paper_query_failed:retry_after_exceeded": 15,
-    "unavailable": 78
+    "unavailable": 79
   },
-  "error_count": 193,
+  "error_count": 195,
   "error_examples_count": 100,
   "error_examples_truncated": true,
   "errors": [
     {
       "code": "insufficient_content",
       "url": "https://contrastive-lm.notion.site"
+    },
+    {
+      "code": "insufficient_content",
+      "url": "https://dev.to/nandakishor_m_6cc0adfde9f/i-built-non-autoregressive-decision-models-a-year-ago-then-a-frontier-lab-called-it-a-18me"
     },
     {
       "code": "insufficient_content",
@@ -835,29 +839,25 @@
     {
       "code": "insufficient_content",
       "url": "https://huggingface.co/datasets/zhiqiulin/GenAI-Bench-800"
-    },
-    {
-      "code": "insufficient_content",
-      "url": "https://huggingface.co/spaces/ai-forever/FRIDA-Decisions"
     }
   ],
-  "excluded_discoveries": 330,
-  "index_revision": "354f4d8d852d2bcc48168fd321e589c08b9fb71d",
-  "network_requests": 4367,
+  "excluded_discoveries": 333,
+  "index_revision": "c130faf65f82e81d3bdefb01e758c712dc5c5199",
+  "network_requests": 4388,
   "phase_budget_seconds": {
     "ecosystem": 840,
     "research": 240
   },
-  "preserved_after_failure": 36,
+  "preserved_after_failure": 37,
   "privacy_rejected_records": 0,
   "retry_budget_exhausted": false,
   "retry_budget_exhausted_phases": [],
   "retry_budget_seconds": 1080,
   "schema_version": 1,
-  "started_at": "2026-10-29T10:55:46+00:00",
+  "started_at": "2026-10-29T21:11:44+00:00",
   "status": "partial",
   "verification_note": "Public document or original-abstract machine screening only. Pinned primary abstracts and editorial records are preserved; their source changes require maintainer review. Metadata-only records do not count as checked sources.",
-  "carried_forward_pending_count": 78,
+  "carried_forward_pending_count": 83,
   "carried_forward_pending_urls": [
     "https://aclanthology.org/2023.acl-long.368",
     "https://arxiv.org/abs/2307.13692",
@@ -865,6 +865,7 @@
     "https://arxiv.org/abs/2310.08491",
     "https://arxiv.org/abs/2401.02009",
     "https://arxiv.org/abs/2401.06591",
+    "https://arxiv.org/abs/2409.18645",
     "https://arxiv.org/abs/2411.03659",
     "https://arxiv.org/abs/2501.11721",
     "https://arxiv.org/abs/2503.23339",
@@ -920,13 +921,17 @@
     "https://github.com/jevplays-games/jev-factorio-agent",
     "https://github.com/juanlentino/connector-for-typesafe-jev",
     "https://github.com/oxygenailab/fuckopencodefree",
+    "https://github.com/starsailsclover/fuckopencodefree",
+    "https://github.com/wswsddd/inference-code",
     "https://huggingface.co/Nace-DeepInfra/Drex-Max-v1",
     "https://huggingface.co/PelaAI/KnowLine-26B-A4B-Gen2",
     "https://huggingface.co/PelaAI/KnowLine-4B-Gen5",
     "https://huggingface.co/RBDash-Team/RBDash-Decision-v0.1",
+    "https://huggingface.co/WangSenQWQ/Senova-4B",
     "https://huggingface.co/datasets/MMInstruction/ArxivQA",
     "https://huggingface.co/datasets/TIGER-Lab/Mantis-Instruct",
     "https://huggingface.co/datasets/TIGER-Lab/ViRL39K",
+    "https://huggingface.co/datasets/WangSenQWQ/Senova-4B-decision-index-results",
     "https://huggingface.co/datasets/X-LANCE/WebSRC_v1.0",
     "https://huggingface.co/datasets/allenai/pixmo-docs",
     "https://huggingface.co/datasets/array/SAT",
